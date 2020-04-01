@@ -1,6 +1,6 @@
-change:_reporder:weapons<html>
+<html>
 <div class="sheet-charinfo">
-  <div class = "sheet-header"> INFO TESTING GITHUB</div>
+  <div class = "sheet-header"> INFO </div>
   <div class="sheet-row">
     <label> Name:
       <input type = "text" name = "attr_name" />
@@ -138,13 +138,19 @@ change:_reporder:weapons<html>
     <label> EXP:
       <input type = "number" name = "attr_EXP" min = "0" max = "100" value = "0"/>
     </label>
+      <label> Atk Type:
+        <select name="attr_atktype" style = "width: 10%;">
+          <option>Physical</option>
+          <option>Magical</option>
+        </select>
+      </label>
     <label>
       Weaknesses:
       <span name ="attr_Weaknesses"></span>
     </label>
-
   </div>
 </div>
+<!-- Battalion -->
 <div class = "sheet-checks">
   <div class = "sheet-header">BATTALION/SUPPORTS</div>
   <table>
@@ -169,6 +175,10 @@ change:_reporder:weapons<html>
       <td><input type = "number" name = "attr_Critb" value = "0"></td>
     </tr>
     <tr>
+      <td><span>Crit Avo</span></td>
+      <td><input type = "number" name = "attr_Critavob" value = "0"></td>
+    </tr>
+    <tr>
       <td><span>Avo</span></td>
       <td><input type = "number" name = "attr_Avob" value = "0"></td>
     </tr>
@@ -185,10 +195,6 @@ change:_reporder:weapons<html>
       <td><input type = "number" name = "attr_Chab" value = "0"></td>
     </tr>
     <tr>
-      <td><span>Crit Avo</span></td>
-      <td><input type = "number" name = "attr_Critavob" value = "0"></td>
-    </tr>
-    <tr>
       <td><span>Gambit Hit</span></td>
       <td><input type = "number" name = "attr_Ghitb" value = "0"></td>
     </tr>
@@ -203,7 +209,7 @@ change:_reporder:weapons<html>
   <tr>
     <td><input type = "number" name = "attr_SSlot" value = "1" min = "1"/></td>
   </tr>
-  <fieldset class = "repeating_weapons">
+  <fieldset class = "repeating_spells">
     <table>
       <tr>
         <th>Spell Name</th>
@@ -292,7 +298,7 @@ change:_reporder:weapons<html>
     </div>
   </fieldset>
 </div>
-
+<!-- Values -->
 <div class = "sheet-currentvals">
   <div class= sheet-row>
     <table>
@@ -300,7 +306,6 @@ change:_reporder:weapons<html>
         <th>HP</th>
         <th>Hit</th>
         <th>Crit</th>
-        <th>Avo</th>
         <th>Crit Avo</th>
         <th>G Hit</th>
         <th>G Avo</th>
@@ -309,15 +314,30 @@ change:_reporder:weapons<html>
         <td><span name = "attr_HP_current"></span> / <span name = "attr_HP_current_max"> </span></td>
         <td><span name = "attr_Hit">0</span></td>
         <td><span name = "attr_Crit">0</span></td>
-        <td><span name = "attr_Avo">0</span></td>
         <td><span name = "attr_Ddg">0</span></td>
+        <td><span name = "attr_Avo">0</span></td>
         <td><span name = "attr_Ghit">0</span></td>
+      </tr>
+      <tr class="sheet-labelrow">
+        <th>Phys</th>
+        <th>Mag</th>
+        <th>Prot</th>
+        <th>Res</th>
+        <th>AS</th>
+        <th>Avo</th>
+      </tr>
+      <tr>
+        <td><span name = "attr_Dmgtot">0</span></td>
+        <td><span name = "attr_MDmgtot">0</span></td>
+        <td><span name = "attr_Protot">0</span></td>
+        <td><span name = "attr_Restot">0</span></td>
+        <td><span name = "attr_Atkspd">0</span></td>
         <td><span name = "attr_Gavo">0</span></td>
       </tr>
     </table>
   </div>
 </div>
-
+<!-- Attributes -->
 <div class="sheet-mainstats">
   <div class = "sheet-header"> ATTRIBUTES</div>
   <table>
@@ -585,7 +605,7 @@ change:_reporder:weapons<html>
     </tr>
   </table>
 </div>
-
+<!-- Weapons -->
 <div class = "sheet-weapons">
   <div class = "sheet-header">WEAPONS</div>
   <tr>
@@ -795,8 +815,13 @@ change:_reporder:weapons<html>
   <input name="attr_Hit" value = "0" hidden>
   <input name="attr_Crit" value = "0" hidden>
   <input name="attr_Avo" value = "0" hidden>
+  <input name="attr_Dmgtot" value = "0" hidden>
+  <input name="attr_Protot" value = "0" hidden>
+  <input name="attr_Restot" value = "0" hidden>
   <input name="attr_Ghit" value = "0" hidden>
   <input name="attr_Gavo" value = "0" hidden>
+  <input name = "attr_Atkspd" value = "0" hidden>
+  <input name = "attr_MDmgtot" value = "0" hidden>
   <!--Firstmost weapon values, excludes hit/crit because that's already calculated-->
   <input name= "attr_Weaknesses" value = "" hidden>
   <input type = "checkbox" value="0" name = "attr_isPromo"/>
@@ -807,7 +832,6 @@ change:_reporder:weapons<html>
   <input name = "attr_Avomod" value = "0" hidden>
   <input name = "attr_Ddgmod" value = "0" hidden>
   <input name = "attr_Dmgmod" value = "0" hidden>
-
   <input name = "attr_UACounter" value = "0" type = "checkbox" hidden>
 </div>
 <script type="text/worker">
@@ -4674,41 +4698,151 @@ on("change:Mov_total",function(eventInfo){
     }
   });
 });
-
-//Hit
-on("change:Skl_total change:Lck_total change:Hitmod change:repeating_weapons:Hit change:_reporder:weapons remove:repeating_weapons change:Hitb change:WSlot", function(eventInfo) {
+//PhysDmg
+on("change:Str_total change:repeating_weapons:Mt change:_reporder:weapons remove:repeating_weapons change:Physb change:WSlot", function(eventInfo) {
   getAttrs(["WSlot"], function(v) {
     getSectionIDsOrdered("repeating_weapons", function(idarray) {
       slotnum = v.WSlot
       fID = idarray[Number(slotnum)-1];
       log("fID is" + fID)
-      getAttrs(["Skl_total","Lck_total","Hitmod","repeating_weapons_"+fID+"_hit", "Hitb"], function(v) {
+      getAttrs(["Str_total", "repeating_weapons_"+fID+"_Mt", "Physb"], function(v) {
         log(JSON.stringify(v))
-        let nindex = Object.keys(v)[3];
+        let nindex = Object.keys(v)[1];
         log(nindex)
-        let wHit = parseInt(v[nindex])||0;
-        log("wHit is " + wHit)
-        let Skl = v.Skl_total;
-        let Lck = v.Lck_total;
-        let Mod = v.Hitmod;
-        let Bonus = v.Hitb;
+        let wMt = parseInt(v[nindex])||0;
+        log("wMt is " + wMt)
+        let Str = v.Str_total;
+        let Bonus = v.Physb;
         setAttrs({
-          Hit: Math.round((Skl) + wHit) + Number(Bonus)+ Number(Mod)
+          Dmgtot: Math.round((Str) + wMt) + Number(Bonus)
         });
-        console.log(Math.round((Skl) + wHit));
-        console.log("Hitmod is" + Mod)
+        console.log(Math.round((Str) + wMt));
       });
     });
   });
 });
-
-//Crit
-on("change:Skl_total change:Lck_total change:Critmod change:repeating_weapons:Crit change:_reporder:weapons remove:repeating_weapons change:Critb change:WSlot", function() {
+//MagDmg
+on("change:Mag_total change:repeating_weapons:Mt change:_reporder:weapons remove:repeating_weapons change:Magb change:WSlot", function(eventInfo) {
   getAttrs(["WSlot"], function(v) {
     getSectionIDsOrdered("repeating_weapons", function(idarray) {
       slotnum = v.WSlot
       fID = idarray[Number(slotnum)-1];
-    getAttrs(["Skl_total","Lck_total","Critmod","repeating_weapons_"+fID+"_crit","Critb"], function(v) {
+      log("fID is" + fID)
+      getAttrs(["Mag_total", "repeating_weapons_"+fID+"_Mt", "Magb"], function(v) {
+        log(JSON.stringify(v))
+        let nindex = Object.keys(v)[1];
+        log(nindex)
+        let wMt = parseInt(v[nindex])||0;
+        log("wMt is " + wMt)
+        let Mag = v.Mag_total;
+        let Bonus = v.Magb;
+        setAttrs({
+          MDmgtot: Math.round((Mag) + wMt) + Number(Bonus)
+        });
+        console.log(Math.round((Mag) + wMt));
+      });
+    });
+  });
+});
+//Prot
+on("change:Def_total change:Protb", function() {
+  getAttrs(["Def_total","Protb"], function(v) {
+    setAttrs({
+      Protot: Number(v.Def_total) + Number(v.Protb)
+    });
+  });
+});
+//Res
+on("change:Res_total change:Resb", function() {
+  getAttrs(["Res_total","Resb"], function(v) {
+    setAttrs({
+      Restot: Number(v.Res_total) + Number(v.Resb)
+    });
+  });
+});
+//Hit
+on("change:Skl_total change:Lck_total change:Hitmod change:repeating_weapons:Hit change:repeating_spells:Hit change:_reporder:weapons change:_reporder:spells remove:repeating_weapons remove:repeating_spells change:Hitb change:WSlot change:SSlot change:atktype", function(eventInfo) {
+  getAttrs(["WSlot","SSlot","atktype"], function(v) {
+    if (v.atktype == "Physical"){
+      getSectionIDsOrdered("repeating_weapons", function(idarray) {
+        slotnum = v.WSlot
+        fID = idarray[Number(slotnum)-1];
+        log("fID is" + fID)
+        getAttrs(["Skl_total","Lck_total","Hitmod","repeating_weapons_"+fID+"_hit", "Hitb"], function(v) {
+          log(JSON.stringify(v))
+          let nindex = Object.keys(v)[3];
+          log(nindex)
+          let wHit = parseInt(v[nindex])||0;
+          log("wHit is " + wHit)
+          let Skl = v.Skl_total;
+          let Lck = v.Lck_total;
+          let Mod = v.Hitmod;
+          let Bonus = v.Hitb;
+          setAttrs({
+            Hit: Math.round((Skl) + wHit) + Number(Bonus)+ Number(Mod)
+          });
+          console.log(Math.round((Skl) + wHit));
+          console.log("Hitmod is" + Mod)
+        });
+      });
+    }
+    if (v.atktype == "Magical"){
+      getSectionIDsOrdered("repeating_spells", function(idarray) {
+        slotnum = v.SSlot
+        fID = idarray[Number(slotnum)-1];
+        log("fID is" + fID)
+        getAttrs(["Skl_total","Lck_total","Hitmod","repeating_spells_"+fID+"_hit", "Hitb"], function(v) {
+          log(JSON.stringify(v))
+          let nindex = Object.keys(v)[3];
+          log(nindex)
+          let wHit = parseInt(v[nindex])||0;
+          log("wHit is " + wHit)
+          let Skl = v.Skl_total;
+          let Lck = v.Lck_total;
+          let Mod = v.Hitmod;
+          let Bonus = v.Hitb;
+          setAttrs({
+            Hit: Math.round((Skl) + wHit) + Number(Bonus)+ Number(Mod)
+          });
+          console.log(Math.round((Skl) + wHit));
+          console.log("Hitmod is" + Mod)
+        });
+      });
+    }
+
+  });
+});
+
+//Crit
+on("change:Skl_total change:Lck_total change:Critmod change:repeating_weapons:Crit change:repeating_spells:Crit change:_reporder:weapons change:_reporder:spells remove:repeating_weapons remove:repeating_spells change:Critb change:WSlot change:SSlot change:atktype", function() {
+  getAttrs(["WSlot","SSlot","atktype"], function(v) {
+    if (v.atktype == "Physical"){
+      getSectionIDsOrdered("repeating_weapons", function(idarray) {
+        slotnum = v.WSlot
+        fID = idarray[Number(slotnum)-1];
+      getAttrs(["Skl_total","Lck_total","Critmod","repeating_weapons_"+fID+"_crit","Critb"], function(v) {
+        log(JSON.stringify(v))
+        let nindex = Object.keys(v)[3];
+        log(nindex)
+        let wCrit = parseInt(v[nindex])||0;
+        log("wCrit is" + wCrit)
+        let SklC = v.Skl_total;
+        let LckC = v.Lck_total;
+        let ModC = v.Critmod;
+        let BonC = v.Critb;
+        setAttrs({
+          Crit: Math.round((SklC / 2) + (LckC / 2)  + wCrit) +Number(BonC) + Number(ModC)
+        });
+        console.log(Math.round((SklC / 2) + (LckC / 2) + wCrit));
+        console.log("Critmod is" + ModC)
+      });
+    });
+  }
+  if (v.atktype == "Magical"){
+    getSectionIDsOrdered("repeating_spells", function(idarray) {
+      slotnum = v.SSlot
+      fID = idarray[Number(slotnum)-1];
+    getAttrs(["Skl_total","Lck_total","Critmod","repeating_spells_"+fID+"_crit","Critb"], function(v) {
       log(JSON.stringify(v))
       let nindex = Object.keys(v)[3];
       log(nindex)
@@ -4725,6 +4859,7 @@ on("change:Skl_total change:Lck_total change:Critmod change:repeating_weapons:Cr
       console.log("Critmod is" + ModC)
     });
   });
+}
 });
 });
 //Avo
