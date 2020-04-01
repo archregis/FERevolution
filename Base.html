@@ -1,4 +1,10 @@
 <html>
+<div>
+    <button type="action" name="act_character" >Character</button>
+    <button type="action" name="act_abilities" >Abilities</button>
+</div>
+<input type='hidden' class='sheet-tabstoggle' name='attr_sheetTab'  value='character'  />
+<div class='sheet-character'>
 <div class="sheet-charinfo">
   <div class = "sheet-header"> INFO </div>
   <div class="sheet-row">
@@ -315,8 +321,8 @@
         <td><span name = "attr_Hit">0</span></td>
         <td><span name = "attr_Crit">0</span></td>
         <td><span name = "attr_Ddg">0</span></td>
-        <td><span name = "attr_Avo">0</span></td>
         <td><span name = "attr_Ghit">0</span></td>
+        <td><span name = "attr_Gavo">0</span></td>
       </tr>
       <tr class="sheet-labelrow">
         <th>Phys</th>
@@ -332,7 +338,7 @@
         <td><span name = "attr_Protot">0</span></td>
         <td><span name = "attr_Restot">0</span></td>
         <td><span name = "attr_Atkspd">0</span></td>
-        <td><span name = "attr_Gavo">0</span></td>
+        <td><span name = "attr_Avo">0</span></td>
       </tr>
     </table>
   </div>
@@ -708,7 +714,28 @@
     </div>
   </fieldset>
 </div>
-
+</div>
+<!-- Second Page -->
+<div class='sheet-abilities'>
+  <div class="sheet-abilityinfo">
+  <div class = "sheet-header"> Abilities </div>
+    <textarea name="attr_abilitylist" type="text" style="width:400px; height:1000px"></textarea>
+</div>
+<!-- <div class="sheet-supportinfo">
+<div class = "sheet-header"> Supports </div>
+  <textarea name="attr_abilitylist" type="text" style="width:400px; height:1000px"></textarea>
+</div>
+</div> -->
+<script type="text/worker">
+    const buttonlist = ["character","abilities"];
+    buttonlist.forEach(button => {
+        on(`clicked:${button}`, function() {
+            setAttrs({
+                sheetTab: button
+            });
+        });
+    });
+</script>
 <!--The section of the ~forbidden~ inputs. This should always go last.-->
 <div class = "hidden">
   <input name="attr_WSlot" value = "1" hidden>
@@ -4861,6 +4888,65 @@ on("change:Skl_total change:Lck_total change:Critmod change:repeating_weapons:Cr
   });
 }
 });
+});
+//AtkSpd
+on("change:Spd_total change:Str_total change:repeating_weapons:Wt change:repeating_spells:Wt change:_reporder:weapons change:_reporder:spells remove:repeating_weapons remove:repeating_spells change:WSlot change:SSlot change:atktype", function() {
+  getAttrs(["WSlot","SSlot","atktype"], function(v) {
+    if (v.atktype == "Physical"){
+      getSectionIDsOrdered("repeating_weapons", function(idarray) {
+        slotnum = v.WSlot
+        fID = idarray[Number(slotnum)-1];
+        getAttrs(["Spd_total","repeating_weapons_"+fID+"_Wt", "Str_total"], function(v) {
+          log(JSON.stringify(v))
+          let nindex = Object.keys(v)[1];
+          log(nindex)
+          let wWt = parseInt(v[nindex])||0;
+          log("wWt is" + wWt)
+          let SpdS = v.Spd_total;
+          let StrS = v.Str_total;
+          aspd = Math.round(Number(SpdS) - wWt + Number(StrS)/5);
+          if (aspd>SpdS) {
+            setAttrs({
+              Atkspd: SpdS
+            });
+          }
+          else {
+            setAttrs({
+              Atkspd: aspd
+            });
+          }
+        });
+      });
+    }
+    if (v.atktype == "Magical"){
+      getSectionIDsOrdered("repeating_spells", function(idarray) {
+        slotnum = v.SSlot
+        fID = idarray[Number(slotnum)-1];
+        getAttrs(["Spd_total","repeating_spells_"+fID+"_Wt", "Str_total"], function(v) {
+          log(JSON.stringify(v))
+          let nindex = Object.keys(v)[1];
+          log(nindex)
+          let wWt = parseInt(v[nindex])||0;
+          log("wWt is" + wWt)
+          let SpdS = v.Spd_total;
+          let StrS = v.Str_total;
+          let aspd
+          aspd = Number(SpdS) - Number(wWt) + (Number(StrS)/5);
+          aspd = Math.round(Number(SpdS) - wWt + Number(StrS)/5);
+          if (aspd>SpdS) {
+            setAttrs({
+              Atkspd: SpdS
+            });
+          }
+          else {
+            setAttrs({
+              Atkspd: aspd
+            });
+          }
+        });
+      });
+    }
+  });
 });
 //Avo
 on("change:Spd_total change:Lck_total change:Avomod change:Avob", function() {
