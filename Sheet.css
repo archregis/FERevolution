@@ -44,34 +44,34 @@
 }
 .charsheet .sheet-abilityinfo{
     background-color: #f3f3f3;
-    width: 50%
+    font-size: 16px;
+    width: 45%
     min-width: 30%
     max-width: 70%
     padding-left: 5px;
     display: inline-block;
     clear:both;
     margin-bottom:10px;
-    margin-right:10px;
-    margin-left:10px;
+    margin-right:5px;
+    margin-left:5px;
     border-right: #f3f3f3 4px solid;
     border-left: #f3f3f3 4px solid;
     float:left
 }
-/* .charsheet .sheet-supportinfo{
+.charsheet .sheet-supportinfo{
     background-color: #f3f3f3;
-    width: 50%
+    width: 45%
     min-width: 30%
     max-width: 70%
     padding-left: 5px;
     display: inline-block;
     clear:both;
     margin-bottom:10px;
-    margin-right:10px;
-    margin-left:10px;
+    margin-right:5px;
+    margin-left:5px;
     border-right: #f3f3f3 4px solid;
     border-left: #f3f3f3 4px solid;
-    float:right
-} */
+}
 .charsheet .sheet-checks {
     background-color: #f3f3f3;
     width:27%;
