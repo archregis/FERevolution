@@ -1,7 +1,8 @@
 <html>
 <div>
     <button type="action" name="act_character" >Character</button>
-    <button type="action" name="act_abilities" >Abilities</button>
+    <button type="action" name="act_misc" >Misc</button>
+    <button type="action" name="act_equip" >Abilities</button>
 </div>
 <input type='hidden' class='sheet-tabstoggle' name='attr_sheetTab'  value='character'  />
 <div class='sheet-character'>
@@ -509,6 +510,7 @@
       <th>Weap. Type</th>
       <th>EXP</th>
       <th>Rank</th>
+      <th>Gain</th>
     </tr>
     <input name = "attr_SwordU" value = "1" type = "checkbox" class = "sheet-swordinput hidden" hidden>
     <input name = "attr_LanceU" value = "1" type = "checkbox" class = "sheet-lanceinput hidden" hidden>
@@ -524,59 +526,70 @@
 
 
     <tr class = "sheet-swordsrow">
-      <td>Swords/Katanas</td>
+      <td>Swords</td>
       <td><input type = "number" value = "0" name = "attr_SwordEXP" min = "0" max = "1000"></td>
       <td><span name = "attr_Swordrank"></span></td>
+      <td><input type = "number" value = "0" name = "attr_SwordGain" min = "0" max = "100"></td>
     </tr>
     <tr class = "sheet-lancesrow">
-      <td>Lances/Naginata</td>
+      <td>Lances</td>
       <td><input type = "number" value = "0" name = "attr_LanceEXP" min = "0" max = "1000"></td>
       <td><span name = "attr_Lancerank"></span></td>
+      <td><input type = "number" value = "0" name = "attr_LanceGain" min = "0" max = "100"></td>
     </tr>
     <tr class = "sheet-axesrow">
-      <td>Axes/Clubs</td>
+      <td>Axes</td>
       <td><input type = "number" value = "0" name = "attr_AxeEXP" min = "0" max = "1000"></td>
       <td><span name = "attr_Axerank"></span></td>
+      <td><input type = "number" value = "0" name = "attr_AxeGain" min = "0" max = "100"></td>
     </tr>
     <tr class = "sheet-bowsrow">
-      <td>Bows/Yumi</td>
+      <td>Bows</td>
       <td><input type = "number" value = "0" name = "attr_BowEXP" min = "0" max = "1000"></td>
       <td><span name = "attr_Bowrank"></span></td>
+      <td><input type = "number" value = "0" name = "attr_BowGain" min = "0" max = "100"></td>
     </tr>
     <tr class = "sheet-brawlingrow">
       <td>Brawling</td>
       <td><input type = "number" value = "0" name = "attr_BrawlEXP" min = "0" max = "1000"></td>
       <td><span name = "attr_Brawlrank"></span></td>
+      <td><input type = "number" value = "0" name = "attr_BrawlGain" min = "0" max = "100"></td>
     </tr>
     <tr class = "sheet-hiddenrow">
-      <td>Hidden</td>
+      <td>Hidden Weapons</td>
       <td><input type = "number" value = "0" name = "attr_HiddenEXP" min = "0" max = "1000"></td>
       <td><span name = "attr_Hiddenrank"></span></td>
+      <td><input type = "number" value = "0" name = "attr_HiddenGain" min = "0" max = "100"></td>
     </tr>
     <tr class = "sheet-reasonrow">
       <td>Reason</td>
       <td><input type = "number" value = "0" name = "attr_ReasonEXP" min = "0" max = "1000"></td>
       <td><span name = "attr_Reasonrank"></span></td>
+      <td><input type = "number" value = "0" name = "attr_ReasonGain" min = "0" max = "100"></td>
     </tr>
     <tr class = "sheet-faithrow">
       <td>Faith</td>
       <td><input type = "number" value = "0" name = "attr_FaithEXP" min = "0" max = "1000"></td>
       <td><span name = "attr_Faithrank"></span></td>
+      <td><input type = "number" value = "0" name = "attr_FaithGain" min = "0" max = "100"></td>
     </tr>
     <tr class = "sheet-authorityrow">
       <td>Authority</td>
       <td><input type = "number" value = "0" name = "attr_AuthorityEXP" min = "0" max = "1000"></td>
       <td><span name = "attr_Authorityrank"></span></td>
+      <td><input type = "number" value = "0" name = "attr_AuthorityGain" min = "0" max = "100"></td>
     </tr>
     <tr class = "sheet-armorrow">
       <td>Heavy Armor</td>
       <td><input type = "number" value = "0" name = "attr_ArmorEXP" min = "0" max = "1000"></td>
       <td><span name = "attr_Armorrank"></span></td>
+      <td><input type = "number" value = "0" name = "attr_ArmorGain" min = "0" max = "100"></td>
     </tr>
     <tr class = "sheet-ridingrow">
       <td>Riding</td>
       <td><input type = "number" value = "0" name = "attr_RidingEXP" min = "0" max = "1000"></td>
       <td><span name = "attr_Ridingrank"></span></td>
+      <td><input type = "number" value = "0" name = "attr_RidingGain" min = "0" max = "100"></td>
     </tr>
 
 
@@ -630,11 +643,11 @@
         <td><input name = "attr_WName" type = "text"></td>
         <td>
           <select name = "attr_WType">
-            <option>Sword/Katana</option>
-            <option>Lance/Nagin.</option>
-            <option>Axe/Club</option>
-            <option>Bow/Yumi</option>
-            <option>Brawl</option>
+            <option>Sword</option>
+            <option>Lance</option>
+            <option>Axe</option>
+            <option>Bow</option>
+            <option>Gauntlet</option>
             <option>Hidden Weapon</option>
 
           </select>
@@ -716,18 +729,80 @@
 </div>
 </div>
 <!-- Second Page -->
-<div class='sheet-abilities'>
+<div class='sheet-misc'>
   <div class="sheet-abilityinfo">
-  <div class = "sheet-header"> Abilities </div>
+  <div class = "sheet-header"> Skills </div>
     <textarea name="attr_abilitylist" type="text" style="width:350px; height:1000px"></textarea>
-</div>
+  </div>
 <div class="sheet-supportinfo">
 <div class = "sheet-header"> Supports </div>
   <textarea name="attr_abilitylist" type="text" style="width:350px; height:1000px"></textarea>
 </div>
 </div>
+<!-- Third Page -->
+<div class='sheet-equip'>
+  <div class="sheet-mainstats">
+    <div class = "sheet-header">WEAPON PROWESSES</div>
+    <table>
+      <tr>
+        <th>Weap. Type</th>
+        <th>Hit</th>
+        <th>Avo</th>
+        <th>Crit Avo</th>
+      </tr>
+      <tr>
+        <th>Sword</th>
+        <td><input type = "number" value = "0" name = "attr_SwordHit" min = "0" max = "100"></td>
+        <td><input type = "number" value = "0" name = "attr_SwordAvo" min = "0" max = "100"></td>
+        <td><input type = "number" value = "0" name = "attr_SwordCAvo" min = "0" max = "100"></td>
+      </tr>
+      <tr>
+        <th>Lance</th>
+        <td><input type = "number" value = "0" name = "attr_LanceHit" min = "0" max = "100"></td>
+        <td><input type = "number" value = "0" name = "attr_LanceAvo" min = "0" max = "100"></td>
+        <td><input type = "number" value = "0" name = "attr_LanceCAvo" min = "0" max = "100"></td>
+      </tr>
+      <tr>
+        <th>Axe</th>
+        <td><input type = "number" value = "0" name = "attr_AxeHit" min = "0" max = "100"></td>
+        <td><input type = "number" value = "0" name = "attr_AxeAvo" min = "0" max = "100"></td>
+        <td><input type = "number" value = "0" name = "attr_AxeCAvo" min = "0" max = "100"></td>
+      </tr>
+      <tr>
+        <th>Bow</th>
+        <td><input type = "number" value = "0" name = "attr_BowHit" min = "0" max = "100"></td>
+        <td><input type = "number" value = "0" name = "attr_BowAvo" min = "0" max = "100"></td>
+        <td><input type = "number" value = "0" name = "attr_BowCAvo" min = "0" max = "100"></td>
+      </tr>
+      <tr>
+        <th>Brawling</th>
+        <td><input type = "number" value = "0" name = "attr_BrawlHit" min = "0" max = "100"></td>
+        <td><input type = "number" value = "0" name = "attr_BrawlAvo" min = "0" max = "100"></td>
+        <td><input type = "number" value = "0" name = "attr_BrawlCAvo" min = "0" max = "100"></td>
+      </tr>
+      <tr>
+        <th>Hidden Weapon</th>
+        <td><input type = "number" value = "0" name = "attr_ReasonHit" min = "0" max = "100"></td>
+        <td><input type = "number" value = "0" name = "attr_ReasonAvo" min = "0" max = "100"></td>
+        <td><input type = "number" value = "0" name = "attr_ReasonCAvo" min = "0" max = "100"></td>
+      </tr>
+      <tr>
+        <th>Reason</th>
+        <td><input type = "number" value = "0" name = "attr_ReasonHit" min = "0" max = "100"></td>
+        <td><input type = "number" value = "0" name = "attr_ReasonAvo" min = "0" max = "100"></td>
+        <td><input type = "number" value = "0" name = "attr_ReasonCAvo" min = "0" max = "100"></td>
+      </tr>
+      <tr>
+        <th>Faith</th>
+        <td><input type = "number" value = "0" name = "attr_FaithHit" min = "0" max = "100"></td>
+        <td><input type = "number" value = "0" name = "attr_FaithAvo" min = "0" max = "100"></td>
+        <td><input type = "number" value = "0" name = "attr_FaithCAvo" min = "0" max = "100"></td>
+      </tr>
+    </table>
+  </div>
+</div>
 <script type="text/worker">
-    const buttonlist = ["character","abilities"];
+    const buttonlist = ["character","misc","equip"];
     buttonlist.forEach(button => {
         on(`clicked:${button}`, function() {
             setAttrs({
@@ -4787,6 +4862,7 @@ on("change:Res_total change:Resb", function() {
     });
   });
 });
+
 //Hit
 on("change:Skl_total change:Lck_total change:Hitmod change:repeating_weapons:Hit change:repeating_spells:Hit change:_reporder:weapons change:_reporder:spells remove:repeating_weapons remove:repeating_spells change:Hitb change:WSlot change:SSlot change:atktype", function(eventInfo) {
   getAttrs(["WSlot","SSlot","atktype"], function(v) {
