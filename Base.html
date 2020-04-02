@@ -1,7 +1,8 @@
 <html>
 <div>
     <button type="action" name="act_character" >Character</button>
-    <button type="action" name="act_abilities" >Abilities</button>
+    <button type="action" name="act_misc" >Misc</button>
+    <button type="action" name="act_equip" >Abilities</button>
 </div>
 <input type='hidden' class='sheet-tabstoggle' name='attr_sheetTab'  value='character'  />
 <div class='sheet-character'>
@@ -509,6 +510,7 @@
       <th>Weap. Type</th>
       <th>EXP</th>
       <th>Rank</th>
+      <th>Gain</th>
     </tr>
     <input name = "attr_SwordU" value = "1" type = "checkbox" class = "sheet-swordinput hidden" hidden>
     <input name = "attr_LanceU" value = "1" type = "checkbox" class = "sheet-lanceinput hidden" hidden>
@@ -524,59 +526,70 @@
 
 
     <tr class = "sheet-swordsrow">
-      <td>Swords/Katanas</td>
+      <td>Swords</td>
       <td><input type = "number" value = "0" name = "attr_SwordEXP" min = "0" max = "1000"></td>
       <td><span name = "attr_Swordrank"></span></td>
+      <td><input type = "number" value = "0" name = "attr_SwordGain" min = "0" max = "100"></td>
     </tr>
     <tr class = "sheet-lancesrow">
-      <td>Lances/Naginata</td>
+      <td>Lances</td>
       <td><input type = "number" value = "0" name = "attr_LanceEXP" min = "0" max = "1000"></td>
       <td><span name = "attr_Lancerank"></span></td>
+      <td><input type = "number" value = "0" name = "attr_LanceGain" min = "0" max = "100"></td>
     </tr>
     <tr class = "sheet-axesrow">
-      <td>Axes/Clubs</td>
+      <td>Axes</td>
       <td><input type = "number" value = "0" name = "attr_AxeEXP" min = "0" max = "1000"></td>
       <td><span name = "attr_Axerank"></span></td>
+      <td><input type = "number" value = "0" name = "attr_AxeGain" min = "0" max = "100"></td>
     </tr>
     <tr class = "sheet-bowsrow">
-      <td>Bows/Yumi</td>
+      <td>Bows</td>
       <td><input type = "number" value = "0" name = "attr_BowEXP" min = "0" max = "1000"></td>
       <td><span name = "attr_Bowrank"></span></td>
+      <td><input type = "number" value = "0" name = "attr_BowGain" min = "0" max = "100"></td>
     </tr>
     <tr class = "sheet-brawlingrow">
       <td>Brawling</td>
       <td><input type = "number" value = "0" name = "attr_BrawlEXP" min = "0" max = "1000"></td>
       <td><span name = "attr_Brawlrank"></span></td>
+      <td><input type = "number" value = "0" name = "attr_BrawlGain" min = "0" max = "100"></td>
     </tr>
     <tr class = "sheet-hiddenrow">
-      <td>Hidden</td>
+      <td>Hidden Weapons</td>
       <td><input type = "number" value = "0" name = "attr_HiddenEXP" min = "0" max = "1000"></td>
       <td><span name = "attr_Hiddenrank"></span></td>
+      <td><input type = "number" value = "0" name = "attr_HiddenGain" min = "0" max = "100"></td>
     </tr>
     <tr class = "sheet-reasonrow">
       <td>Reason</td>
       <td><input type = "number" value = "0" name = "attr_ReasonEXP" min = "0" max = "1000"></td>
       <td><span name = "attr_Reasonrank"></span></td>
+      <td><input type = "number" value = "0" name = "attr_ReasonGain" min = "0" max = "100"></td>
     </tr>
     <tr class = "sheet-faithrow">
       <td>Faith</td>
       <td><input type = "number" value = "0" name = "attr_FaithEXP" min = "0" max = "1000"></td>
       <td><span name = "attr_Faithrank"></span></td>
+      <td><input type = "number" value = "0" name = "attr_FaithGain" min = "0" max = "100"></td>
     </tr>
     <tr class = "sheet-authorityrow">
       <td>Authority</td>
       <td><input type = "number" value = "0" name = "attr_AuthorityEXP" min = "0" max = "1000"></td>
       <td><span name = "attr_Authorityrank"></span></td>
+      <td><input type = "number" value = "0" name = "attr_AuthorityGain" min = "0" max = "100"></td>
     </tr>
     <tr class = "sheet-armorrow">
       <td>Heavy Armor</td>
       <td><input type = "number" value = "0" name = "attr_ArmorEXP" min = "0" max = "1000"></td>
       <td><span name = "attr_Armorrank"></span></td>
+      <td><input type = "number" value = "0" name = "attr_ArmorGain" min = "0" max = "100"></td>
     </tr>
     <tr class = "sheet-ridingrow">
       <td>Riding</td>
       <td><input type = "number" value = "0" name = "attr_RidingEXP" min = "0" max = "1000"></td>
       <td><span name = "attr_Ridingrank"></span></td>
+      <td><input type = "number" value = "0" name = "attr_RidingGain" min = "0" max = "100"></td>
     </tr>
 
 
@@ -630,11 +643,11 @@
         <td><input name = "attr_WName" type = "text"></td>
         <td>
           <select name = "attr_WType">
-            <option>Sword/Katana</option>
-            <option>Lance/Nagin.</option>
-            <option>Axe/Club</option>
-            <option>Bow/Yumi</option>
-            <option>Brawl</option>
+            <option>Sword</option>
+            <option>Lance</option>
+            <option>Axe</option>
+            <option>Bow</option>
+            <option>Gauntlet</option>
             <option>Hidden Weapon</option>
 
           </select>
@@ -716,9 +729,9 @@
 </div>
 </div>
 <!-- Second Page -->
-<div class='sheet-abilities'>
+<div class='sheet-misc'>
   <div class="sheet-abilityinfo">
-  <div class = "sheet-header"> Abilities </div>
+  <div class = "sheet-header"> Skills </div>
     <textarea name="attr_abilitylist" type="text" style="width:350px; height:1000px"></textarea>
 </div>
 <div class="sheet-supportinfo">
@@ -726,8 +739,70 @@
   <textarea name="attr_abilitylist" type="text" style="width:350px; height:1000px"></textarea>
 </div>
 </div>
+<!-- Third Page -->
+<div class='sheet-equip'>
+  <div class="sheet-mainstats">
+    <div class = "sheet-header">WEAPON PROWESSES</div>
+    <table>
+      <tr>
+        <th>Weap. Type</th>
+        <th>Hit</th>
+        <th>Avo</th>
+        <th>Crit Avo</th>
+      </tr>
+      <tr>
+        <th>Sword</th>
+        <td><input type = "number" value = "0" name = "attr_SwordHit" min = "0" max = "100"></td>
+        <td><input type = "number" value = "0" name = "attr_SwordAvo" min = "0" max = "100"></td>
+        <td><input type = "number" value = "0" name = "attr_SwordCAvo" min = "0" max = "100"></td>
+      </tr>
+      <tr>
+        <th>Lance</th>
+        <td><input type = "number" value = "0" name = "attr_LanceHit" min = "0" max = "100"></td>
+        <td><input type = "number" value = "0" name = "attr_LanceAvo" min = "0" max = "100"></td>
+        <td><input type = "number" value = "0" name = "attr_LanceCAvo" min = "0" max = "100"></td>
+      </tr>
+      <tr>
+        <th>Axe</th>
+        <td><input type = "number" value = "0" name = "attr_AxeHit" min = "0" max = "100"></td>
+        <td><input type = "number" value = "0" name = "attr_AxeAvo" min = "0" max = "100"></td>
+        <td><input type = "number" value = "0" name = "attr_AxeCAvo" min = "0" max = "100"></td>
+      </tr>
+      <tr>
+        <th>Bow</th>
+        <td><input type = "number" value = "0" name = "attr_BowHit" min = "0" max = "100"></td>
+        <td><input type = "number" value = "0" name = "attr_BowAvo" min = "0" max = "100"></td>
+        <td><input type = "number" value = "0" name = "attr_BowCAvo" min = "0" max = "100"></td>
+      </tr>
+      <tr>
+        <th>Brawling</th>
+        <td><input type = "number" value = "0" name = "attr_BrawlHit" min = "0" max = "100"></td>
+        <td><input type = "number" value = "0" name = "attr_BrawlAvo" min = "0" max = "100"></td>
+        <td><input type = "number" value = "0" name = "attr_BrawlCAvo" min = "0" max = "100"></td>
+      </tr>
+      <tr>
+        <th>Hidden Weapon</th>
+        <td><input type = "number" value = "0" name = "attr_ReasonHit" min = "0" max = "100"></td>
+        <td><input type = "number" value = "0" name = "attr_ReasonAvo" min = "0" max = "100"></td>
+        <td><input type = "number" value = "0" name = "attr_ReasonCAvo" min = "0" max = "100"></td>
+      </tr>
+      <tr>
+        <th>Reason</th>
+        <td><input type = "number" value = "0" name = "attr_ReasonHit" min = "0" max = "100"></td>
+        <td><input type = "number" value = "0" name = "attr_ReasonAvo" min = "0" max = "100"></td>
+        <td><input type = "number" value = "0" name = "attr_ReasonCAvo" min = "0" max = "100"></td>
+      </tr>
+      <tr>
+        <th>Faith</th>
+        <td><input type = "number" value = "0" name = "attr_FaithHit" min = "0" max = "100"></td>
+        <td><input type = "number" value = "0" name = "attr_FaithAvo" min = "0" max = "100"></td>
+        <td><input type = "number" value = "0" name = "attr_FaithCAvo" min = "0" max = "100"></td>
+      </tr>
+    </table>
+  </div>
+</div>
 <script type="text/worker">
-    const buttonlist = ["character","abilities"];
+    const buttonlist = ["character","misc","equip"];
     buttonlist.forEach(button => {
         on(`clicked:${button}`, function() {
             setAttrs({
@@ -736,8 +811,13 @@
         });
     });
 </script>
+
 <!--The section of the ~forbidden~ inputs. This should always go last.-->
 <div class = "hidden">
+  <input name="attr_ProwHit" value = "0" hidden>
+    <input name="attr_SwordHit" value = "0" hidden>
+  <input name="attr_ProwAvo" value = "0" hidden>
+  <input name="attr_ProwCAvo" value = "0" hidden>
   <input name="attr_WSlot" value = "1" hidden>
   <input name="attr_HP_sf" value = "0" hidden>
   <input name="attr_HP_total" value = "0" hidden>
@@ -3697,8 +3777,9 @@ on("change:SwordEXP", function(eventInfo) {
     console.log(Rank)
     if ((currEXP >= 40) && (Rank == "E")){
       Rank = "E+";
+      let r = currEXP-40;
       setAttrs({
-        SwordEXP: 0
+        SwordEXP: r
       });
     }
     if ((currEXP >= 60) && (Rank == "E+")){
@@ -4749,13 +4830,13 @@ on("change:Str_total change:repeating_weapons:Mt change:_reporder:weapons remove
   });
 });
 //MagDmg
-on("change:Mag_total change:repeating_weapons:Mt change:_reporder:weapons remove:repeating_weapons change:Magb change:WSlot", function(eventInfo) {
-  getAttrs(["WSlot"], function(v) {
-    getSectionIDsOrdered("repeating_weapons", function(idarray) {
-      slotnum = v.WSlot
+on("change:Mag_total change:repeating_spells:Mt change:_reporder:spells remove:repeating_spells change:Magb change:SSlot", function(eventInfo) {
+  getAttrs(["SSlot"], function(v) {
+    getSectionIDsOrdered("repeating_spells", function(idarray) {
+      slotnum = v.SSlot
       fID = idarray[Number(slotnum)-1];
       log("fID is" + fID)
-      getAttrs(["Mag_total", "repeating_weapons_"+fID+"_Mt", "Magb"], function(v) {
+      getAttrs(["Mag_total", "repeating_spells_"+fID+"_Mt", "Magb"], function(v) {
         log(JSON.stringify(v))
         let nindex = Object.keys(v)[1];
         log(nindex)
@@ -4787,15 +4868,68 @@ on("change:Res_total change:Resb", function() {
     });
   });
 });
-//Hit
-on("change:Skl_total change:Lck_total change:Hitmod change:repeating_weapons:Hit change:repeating_spells:Hit change:_reporder:weapons change:_reporder:spells remove:repeating_weapons remove:repeating_spells change:Hitb change:WSlot change:SSlot change:atktype", function(eventInfo) {
+//PROWESSES
+function setProw(twep, wepn, tHit, tAvo, tCAvo){
+  if (twep == wepn) {
+    setAttrs({
+      ProwHit: tHit
+    });
+    setAttrs({
+      ProwAvo: tAvo
+    });
+    setAttrs({
+      ProwCAvo: tCAvo
+    });
+  };
+}
+on("change:SwordHit change:LanceHit change:AxeHit change:BowHit change:BrawlHit change:HiddenHit change:ReasonHit change:FaithHit change:SwordAvo change:LanceAvo change:AxeAvo change:BowAvo change:BrawlAvo change:HiddenAvo change:ReasonAvo change:FaithAvo change:SwordCAvo change:LanceCAvo change:AxeCAvo change:BowCAvo change:BrawlCAvo change:HiddenCAvo change:ReasonCAvo change:FaithCAvo change:repeating_weapons:WType change:repeating_spells:SType change:_reporder:weapons change:_reporder:spells remove:repeating_weapons remove:repeating_spells change:WSlot change:SSlot change:atktype", function(eventInfo) {
   getAttrs(["WSlot","SSlot","atktype"], function(v) {
     if (v.atktype == "Physical"){
       getSectionIDsOrdered("repeating_weapons", function(idarray) {
         slotnum = v.WSlot
         fID = idarray[Number(slotnum)-1];
         log("fID is" + fID)
-        getAttrs(["Skl_total","Lck_total","Hitmod","repeating_weapons_"+fID+"_hit", "Hitb"], function(v) {
+
+        getAttrs(["repeating_weapons_"+fID+"_WType","SwordHit","LanceHit","AxeHit","BowHit","BrawlHit","HiddenHit","SwordAvo","LanceAvo","AxeAvo","BowAvo","BrawlAvo","HiddenAvo","SwordCAvo","LanceCAvo","AxeCAvo","BowCAvo","BrawlCAvo","HiddenCAvo"], function(v) {
+          log(JSON.stringify(v))
+          let nindex = Object.keys(v)[0];
+          let weptype = v[nindex];
+          setProw(weptype, "Sword", v.SwordHit, v.SwordAvo, v.SwordCAvo)
+          setProw(weptype, "Lance", v.LanceHit, v.LanceAvo, v.LanceCAvo)
+          setProw(weptype, "Axe", v.AxeHit, v.AxeAvo, v.AxeCAvo)
+          setProw(weptype, "Bow", v.BowHit, v.BowAvo, v.BowCAvo)
+          setProw(weptype, "Gaunlet", v.BrawlHit, v.BrawlAvo, v.BrawlCAvo)
+          setProw(weptype, "Hidden Weapon", v.HiddenHit, v.HiddenAvo, v.HiddenCAvo)
+        });
+      });
+    }
+    if (v.atktype == "Magical"){
+      getSectionIDsOrdered("repeating_spells", function(idarray) {
+        slotnum = v.SSlot
+        fID = idarray[Number(slotnum)-1];
+        log("fID is" + fID)
+
+        getAttrs(["repeating_spells_"+fID+"_SType","ReasonHit","ReasonAvo","ReasonCAvo","FaithHit","FaithAvo","FaithCAvo"], function(v) {
+          log(JSON.stringify(v))
+          let nindex = Object.keys(v)[0];
+          let weptype = v[nindex];
+          setProw(weptype, "Reason", v.ReasonHit, v.ReasonAvo, v.ReasonCAvo)
+          setProw(weptype, "Faith", v.FaithHit, v.FaithAvo, v.FaithCAvo)
+        });
+      });
+    }
+  });
+});
+
+//Hit
+on("change:Skl_total change:Lck_total change:Hitmod change:repeating_weapons:Hit change:repeating_spells:Hit change:_reporder:weapons change:_reporder:spells remove:repeating_weapons remove:repeating_spells change:Hitb change:WSlot change:SSlot change:atktype change:ProwHit", function(eventInfo) {
+  getAttrs(["WSlot","SSlot","atktype"], function(v) {
+    if (v.atktype == "Physical"){
+      getSectionIDsOrdered("repeating_weapons", function(idarray) {
+        slotnum = v.WSlot
+        fID = idarray[Number(slotnum)-1];
+        log("fID is" + fID)
+        getAttrs(["Skl_total","Lck_total","Hitmod","repeating_weapons_"+fID+"_hit", "Hitb", "ProwHit"], function(v) {
           log(JSON.stringify(v))
           let nindex = Object.keys(v)[3];
           log(nindex)
@@ -4806,7 +4940,7 @@ on("change:Skl_total change:Lck_total change:Hitmod change:repeating_weapons:Hit
           let Mod = v.Hitmod;
           let Bonus = v.Hitb;
           setAttrs({
-            Hit: Math.round((Skl) + wHit) + Number(Bonus)+ Number(Mod)
+            Hit: Math.round((Skl) + wHit) + Number(Bonus)+ Number(Mod) + Number(v.ProwHit)
           });
           console.log(Math.round((Skl) + wHit));
           console.log("Hitmod is" + Mod)
@@ -4818,7 +4952,7 @@ on("change:Skl_total change:Lck_total change:Hitmod change:repeating_weapons:Hit
         slotnum = v.SSlot
         fID = idarray[Number(slotnum)-1];
         log("fID is" + fID)
-        getAttrs(["Skl_total","Lck_total","Hitmod","repeating_spells_"+fID+"_hit", "Hitb"], function(v) {
+        getAttrs(["Skl_total","Lck_total","Hitmod","repeating_spells_"+fID+"_hit", "Hitb", "ProwHit"], function(v) {
           log(JSON.stringify(v))
           let nindex = Object.keys(v)[3];
           log(nindex)
@@ -4829,7 +4963,7 @@ on("change:Skl_total change:Lck_total change:Hitmod change:repeating_weapons:Hit
           let Mod = v.Hitmod;
           let Bonus = v.Hitb;
           setAttrs({
-            Hit: Math.round((Skl) + wHit) + Number(Bonus)+ Number(Mod)
+            Hit: Math.round((Skl) + wHit) + Number(Bonus)+ Number(Mod) + Number(v.ProwHit)
           });
           console.log(Math.round((Skl) + wHit));
           console.log("Hitmod is" + Mod)
@@ -4949,23 +5083,23 @@ on("change:Spd_total change:Str_total change:repeating_weapons:Wt change:repeati
   });
 });
 //Avo
-on("change:Spd_total change:Lck_total change:Avomod change:Avob", function() {
-  getAttrs(["Spd_total", "Lck_total","Avomod","Avob"], function(v) {
+on("change:Spd_total change:Lck_total change:Avomod change:Avob change:ProwAvo", function() {
+  getAttrs(["Spd_total", "Lck_total","Avomod","Avob","ProwAvo"], function(v) {
     Spd = v.Spd_total;
     LckA = v.Lck_total;
     BonA = v.Avob;
     setAttrs({
-      Avo: Math.round(Spd) +Number(BonA) + Number(v.Avomod)
+      Avo: Math.round(Spd) +Number(BonA) + Number(v.ProwAvo) + Number(v.Avomod)
     });
   });
 });
 //Critavo
-on("change:Lck_total change:Ddgmod change:Critavob", function() {
-  getAttrs(["Lck_total", "Avomod", "Critavob"], function(v) {
+on("change:Lck_total change:Ddgmod change:Critavob change:ProwCAvo", function() {
+  getAttrs(["Lck_total", "Avomod", "Critavob","ProwCAvo"], function(v) {
     Lck = v.Lck_total;
     Cavo = v.Critavob;
     setAttrs({
-      Ddg: 100 + Number(Lck) + Number(Cavo) + Number(v.Avomod)
+      Ddg: 100 + Number(Lck) + Number(Cavo) + Number(v.ProwCAvo) + Number(v.Avomod)
     });
   });
 });
