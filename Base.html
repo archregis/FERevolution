@@ -733,7 +733,7 @@
   <div class="sheet-abilityinfo">
   <div class = "sheet-header"> Skills </div>
     <textarea name="attr_abilitylist" type="text" style="width:350px; height:1000px"></textarea>
-  </div>
+</div>
 <div class="sheet-supportinfo">
 <div class = "sheet-header"> Supports </div>
   <textarea name="attr_abilitylist" type="text" style="width:350px; height:1000px"></textarea>
@@ -811,8 +811,13 @@
         });
     });
 </script>
+
 <!--The section of the ~forbidden~ inputs. This should always go last.-->
 <div class = "hidden">
+  <input name="attr_ProwHit" value = "0" hidden>
+    <input name="attr_SwordHit" value = "0" hidden>
+  <input name="attr_ProwAvo" value = "0" hidden>
+  <input name="attr_ProwCAvo" value = "0" hidden>
   <input name="attr_WSlot" value = "1" hidden>
   <input name="attr_HP_sf" value = "0" hidden>
   <input name="attr_HP_total" value = "0" hidden>
@@ -4862,16 +4867,43 @@ on("change:Res_total change:Resb", function() {
     });
   });
 });
-
-//Hit
-on("change:Skl_total change:Lck_total change:Hitmod change:repeating_weapons:Hit change:repeating_spells:Hit change:_reporder:weapons change:_reporder:spells remove:repeating_weapons remove:repeating_spells change:Hitb change:WSlot change:SSlot change:atktype", function(eventInfo) {
+//PROWESSES
+on("change:SwordHit change:LanceHit change:AxeHit change:BowHit change:BrawlHit change:HiddenHit change:ReasonHit change:FaithHit change: change:repeating_weapons:WType change:repeating_spells:SType change:_reporder:weapons change:_reporder:spells remove:repeating_weapons remove:repeating_spells change:WSlot change:SSlot change:atktype", function(eventInfo) {
   getAttrs(["WSlot","SSlot","atktype"], function(v) {
     if (v.atktype == "Physical"){
       getSectionIDsOrdered("repeating_weapons", function(idarray) {
         slotnum = v.WSlot
         fID = idarray[Number(slotnum)-1];
         log("fID is" + fID)
-        getAttrs(["Skl_total","Lck_total","Hitmod","repeating_weapons_"+fID+"_hit", "Hitb"], function(v) {
+        setAttrs({
+          GHitb: 99
+        });
+        getAttrs(["repeating_weapons_"+fID+"_WType","SwordHit","LanceHit","AxeHit","BowHit","BrawlHit","HiddenHit","SwordAvo","LanceAvo","AxeAvo","BowAvo","BrawlAvo","HiddenAvo","SwordCAvo","LanceCAvo","AxeCAvo","BowCAvo","BrawlCAvo","HiddenCAvo"], function(v) {
+          log(JSON.stringify(v))
+          let nindex = Object.keys(v)[0];
+          let weptype = v[nindex];
+          if (weptype == "Sword") {
+            setAttrs({
+              ProwHit: v.SwordHit
+          // //     ProwAvo: v.SwordAvo;
+          // //     ProwCAvo: v.SwordCAvo;
+            });
+          };
+        });
+      });
+    }
+  });
+});
+
+//Hit
+on("change:Skl_total change:Lck_total change:Hitmod change:repeating_weapons:Hit change:repeating_spells:Hit change:_reporder:weapons change:_reporder:spells remove:repeating_weapons remove:repeating_spells change:Hitb change:WSlot change:SSlot change:atktype change:ProwHit", function(eventInfo) {
+  getAttrs(["WSlot","SSlot","atktype"], function(v) {
+    if (v.atktype == "Physical"){
+      getSectionIDsOrdered("repeating_weapons", function(idarray) {
+        slotnum = v.WSlot
+        fID = idarray[Number(slotnum)-1];
+        log("fID is" + fID)
+        getAttrs(["Skl_total","Lck_total","Hitmod","repeating_weapons_"+fID+"_hit", "Hitb", "ProwHit"], function(v) {
           log(JSON.stringify(v))
           let nindex = Object.keys(v)[3];
           log(nindex)
@@ -4882,7 +4914,7 @@ on("change:Skl_total change:Lck_total change:Hitmod change:repeating_weapons:Hit
           let Mod = v.Hitmod;
           let Bonus = v.Hitb;
           setAttrs({
-            Hit: Math.round((Skl) + wHit) + Number(Bonus)+ Number(Mod)
+            Hit: Math.round((Skl) + wHit) + Number(Bonus)+ Number(Mod) + Number(v.ProwHit)
           });
           console.log(Math.round((Skl) + wHit));
           console.log("Hitmod is" + Mod)
