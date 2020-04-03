@@ -48,95 +48,11 @@
       <!--I'd love to have this change based on the status of the promo checkbox, but I don't think that's possible given that you can't use IDs in Roll20-->
       <select name = "attr_Class">
         <option selected disabled hidden></option>
-        <option>Archer</option>
         <option>Conscript</option>
-        <option>Apothecary</option>
-        <option>Cavalier</option>
-        <option>Cleric</option>
-        <option>Dark Mage</option>
-        <option>Fighter</option>
-        <option>Griffin Rider</option>
-        <option>Kitsune</option>
-        <option>Knight</option>
-        <option>Lord</option>
-        <option>Anima Mage</option>
-        <option>Mercenary</option>
-        <option>Light Mage</option>
         <option>Myrmidon</option>
-        <option>Ninja</option>
-        <option>Pegasus Knight</option>
-        <option>Oni Savage</option>
         <option>Soldier</option>
-        <option>Thief</option>
-        <option>Troubadour</option>
-        <option>Villager</option>
-        <option>Wolfskin</option>
-        <option>Wyvern Rider</option>
-        <option>Dancer</option>
-        <option>Manakete</option>
-        <option>Laguz</option>
-        <option>Ballistician</option>
-        <option>Dread Fighter</option>
-        <option>Lodestar</option>
-        <option>Vanguard</option>
-        <option>Witch</option>
-        <option>Tactician</option>
-        <option>Rifleman</option>
-        <option disabled>----</option>
-        <option>Sniper</option>
-        <option>Bow Knight</option>
-        <option>Merchant</option>
-        <option>Mechanist</option>
-        <option>Paladin</option>
-        <option>Great Knight</option>
-        <option>War Cleric</option>
-        <option>Sage</option>
-        <option>Druid</option>
-        <option>Dark Knight</option>
-        <option>Warrior</option>
-        <option>Hero</option>
-        <option>Griffin Lord</option>
-        <option>Light Flier</option>
-        <option>Ninetails</option>
-        <option>General</option>
-        <option>Great Lord</option>
-        <option>Basara</option>
-        <option>Swordmaster</option>
-        <option>Assassin</option>
-        <option>Master Ninja</option>
-        <option>Falcon Knight</option>
-        <option>Dark Flier</option>
-        <option>Halberdier</option>
-        <option>Trickster</option>
-        <option>Noble</option>
-        <option>Valkyrie</option>
-        <option>Master of Arms</option>
-        <option>Wolfssegner</option>
-        <option>Managarm</option>
-        <option>Great Laguz</option>
-        <option>Wyvern Lord</option>
-        <option>Revenant Knight</option>
-        <option>Grandmaster</option>
-        <option>Gunslinger</option>
-        <option>Hunter</option>
-        <option>Berserker</option>
-        <option disabled>----</option>
-        <option>Ranger</option>
-        <option>Acrobat</option>
-        <option>Bonewalker</option>
-        <option>Mogall</option>
-        <option>Mauthe</option>
-        <option>Bael</option>
-        <option>Tarvos</option>
-        <option>Gargoyle</option>
-        <option>Ranger Knight</option>
-        <option>Performer</option>
-        <option>Wight</option>
-        <option>Arch Mogall</option>
-        <option>Gwyllgi</option>
-        <option>Elder Bael</option>
-        <option>Maeduin</option>
-        <option>Deathgoyle</option>
+        <option>Fighter</option>
+        <option>Monk</option>
       </select>
     </label>
     <label> Level:
@@ -955,37 +871,7 @@ var getSectionIDsOrdered = function (sectionName, callback) {
 };
 
 //Unpromoted Class Bases
-const Archer = {
-  "Name": "Archer",
-  "HP_b": 17,
-  "Str_b": 5,
-  "Mag_b": 0,
-  "Skl_b": 7,
-  "Spd_b": 5,
-  "Lck_b": 2,
-  "Def_b": 4,
-  "Res_b": 1,
-  "Mov_b": 5,
-  "HP_g": 45,
-  "Str_g": 15,
-  "Mag_g": 0,
-  "Skl_g": 30,
-  "Spd_g": 15,
-  "Lck_g": 5,
-  "Def_g": 10,
-  "Res_g": 5,
-  "HP_c": 60,
-  "Str_c": 26,
-  "Mag_c": 20,
-  "Skl_c": 29,
-  "Spd_c": 25,
-  "Lck_c": 30,
-  "Def_c": 25,
-  "Res_c": 21,
-  "Mov_c": 7,
-  "Weapons": "4",
-  "Wepcaps": "B"
-}
+
 const Conscript = {
   "Name": "Conscript",
   "HP_b": 0,
@@ -1016,6 +902,161 @@ const Conscript = {
   "Mov_c": 12,
   "Weapons": "1 2 3 4 5 6 7 8 9 10 11",
   "Wepcaps": "B B B B B B B B B B B"
+}
+const Monk = {
+  "Name": "Monk",
+  "HP_b": 0,
+  "Str_b": 0,
+  "Mag_b": 0,
+  "Skl_b": 0,
+  "Spd_b": 0,
+  "Lck_b": 0,
+  "Def_b": 0,
+  "Res_b": 1,
+  "Mov_b": 4,
+  "HP_g": 5,
+  "Str_g": 0,
+  "Mag_g": 0,
+  "Skl_g": 0,
+  "Spd_g": 0,
+  "Lck_g": 0,
+  "Def_g": 0,
+  "Res_g": 5,
+  "HP_c": 99,
+  "Str_c": 99,
+  "Mag_c": 99,
+  "Skl_c": 99,
+  "Spd_c": 99,
+  "Lck_c": 99,
+  "Def_c": 99,
+  "Res_c": 99,
+  "Mov_c": 12,
+  "Weapons": "1 2 3 4 5 6 7 8 9 10 11",
+  "Wepcaps": "B B B B B B B B B B B"
+}
+const Fighter = {
+  "Name": "Fighter",
+  "HP_b": 0,
+  "Str_b": 1,
+  "Mag_b": 0,
+  "Skl_b": 0,
+  "Spd_b": 0,
+  "Lck_b": 0,
+  "Def_b": 0,
+  "Res_b": 0,
+  "Mov_b": 4,
+  "HP_g": 10,
+  "Str_g": 0,
+  "Mag_g": 0,
+  "Skl_g": 0,
+  "Spd_g": 5,
+  "Lck_g": 0,
+  "Def_g": 0,
+  "Res_g": -5,
+  "HP_c": 99,
+  "Str_c": 99,
+  "Mag_c": 99,
+  "Skl_c": 99,
+  "Spd_c": 99,
+  "Lck_c": 99,
+  "Def_c": 99,
+  "Res_c": 99,
+  "Mov_c": 12,
+  "Weapons": "1 2 3 4 5 6 7 8 9 10 11",
+  "Wepcaps": "B B B B B B B B B B B"
+}
+const Myrmidon = {
+  "Name": "Myrmidon",
+  "HP_b": 0,
+  "Str_b": 0,
+  "Mag_b": 0,
+  "Skl_b": 0,
+  "Spd_b": 1,
+  "Lck_b": 0,
+  "Def_b": 0,
+  "Res_b": 0,
+  "Mov_b": 4,
+  "HP_g": 10,
+  "Str_g": 0,
+  "Mag_g": 0,
+  "Skl_g": 0,
+  "Spd_g": 5,
+  "Lck_g": 0,
+  "Def_g": 0,
+  "Res_g": -5,
+  "HP_c": 99,
+  "Str_c": 99,
+  "Mag_c": 99,
+  "Skl_c": 99,
+  "Spd_c": 99,
+  "Lck_c": 99,
+  "Def_c": 99,
+  "Res_c": 99,
+  "Mov_c": 12,
+  "Weapons": "1 2 3 4 5 6 7 8 9 10 11",
+  "Wepcaps": "B B B B B B B B B B B"
+}
+const Soldier = {
+  "Name": "Soldier",
+  "HP_b": 0,
+  "Str_b": 0,
+  "Mag_b": 0,
+  "Skl_b": 1,
+  "Spd_b": 0,
+  "Lck_b": 0,
+  "Def_b": 0,
+  "Res_b": 0,
+  "Mov_b": 4,
+  "HP_g": 10,
+  "Str_g": 0,
+  "Mag_g": 0,
+  "Skl_g": 5,
+  "Spd_g": 0,
+  "Lck_g": 0,
+  "Def_g": 0,
+  "Res_g": -5,
+  "HP_c": 99,
+  "Str_c": 99,
+  "Mag_c": 99,
+  "Skl_c": 99,
+  "Spd_c": 99,
+  "Lck_c": 99,
+  "Def_c": 99,
+  "Res_c": 99,
+  "Mov_c": 12,
+  "Weapons": "1 2 3 4 5 6 7 8 9 10 11",
+  "Wepcaps": "B B B B B B B B B B B"
+}
+const Archer = {
+  "Name": "Archer",
+  "HP_b": 17,
+  "Str_b": 5,
+  "Mag_b": 0,
+  "Skl_b": 7,
+  "Spd_b": 5,
+  "Lck_b": 2,
+  "Def_b": 4,
+  "Res_b": 1,
+  "Mov_b": 5,
+  "HP_g": 45,
+  "Str_g": 15,
+  "Mag_g": 0,
+  "Skl_g": 30,
+  "Spd_g": 15,
+  "Lck_g": 5,
+  "Def_g": 10,
+  "Res_g": 5,
+  "HP_c": 60,
+  "Str_c": 26,
+  "Mag_c": 20,
+  "Skl_c": 29,
+  "Spd_c": 25,
+  "Lck_c": 30,
+  "Def_c": 25,
+  "Res_c": 21,
+  "Mov_c": 7,
+  "Weapons": "4",
+  "Wepcaps": "B"
 }
 const Apothecary = {
   "Name": "Apothecary",
@@ -1141,37 +1182,7 @@ const Dark_Mage = {
   "Weapons": "9",
   "Wepcaps": "B"
 }
-const Fighter = {
-  "Name": "Fighter",
-  "HP_b": 19,
-  "Str_b": 7,
-  "Mag_b": 0,
-  "Skl_b": 6,
-  "Spd_b": 6,
-  "Lck_b": 2,
-  "Def_b": 4,
-  "Res_b": 1,
-  "Mov_b": 5,
-  "HP_g": 45,
-  "Str_g": 25,
-  "Mag_g": 0,
-  "Skl_g": 20,
-  "Spd_g": 25,
-  "Lck_g": 0,
-  "Def_g": 10,
-  "Res_g": 5,
-  "HP_c": 60,
-  "Str_c": 29,
-  "Mag_c": 20,
-  "Skl_c": 26,
-  "Spd_c": 25,
-  "Lck_c": 30,
-  "Def_c": 25,
-  "Res_c": 23,
-  "Mov_c": 7,
-  "Weapons": "3",
-  "Wepcaps": "B"
-}
+
 const Griffin_Rider = {
   "Name": "Griffin Rider",
   "HP_b": 17,
@@ -1389,37 +1400,7 @@ const Light_Mage = {
   "Weapons": "8",
   "Wepcaps": "B"
 };
-const Myrmidon = {
-  "Name": "Myrmidon",
-  "HP_b": 16,
-  "Str_b": 4,
-  "Mag_b": 1,
-  "Skl_b": 9,
-  "Spd_b": 10,
-  "Lck_b": 0,
-  "Def_b": 4,
-  "Res_b": 1,
-  "Mov_b": 5,
-  "HP_g": 40,
-  "Str_g": 20,
-  "Mag_g": 0,
-  "Skl_g": 15,
-  "Spd_g": 25,
-  "Lck_g": 15,
-  "Def_g": 5,
-  "Res_g": 5,
-  "HP_c": 60,
-  "Str_c": 24,
-  "Mag_c": 22,
-  "Skl_c": 27,
-  "Spd_c": 28,
-  "Lck_c": 30,
-  "Def_c": 22,
-  "Res_c": 24,
-  "Mov_c": 7,
-  "Weapons": "1",
-  "Wepcaps": "B"
-}
+
 const Ninja = {
   "Name": "Ninja",
   "HP_b": 16,
@@ -1513,37 +1494,7 @@ const Oni_Savage = {
   "Weapons": "3",
   "Wepcaps": "B"
 }
-const Soldier = {
-  "Name": "Soldier",
-  "HP_b": 17,
-  "Str_b": 6,
-  "Mag_b": 0,
-  "Skl_b": 6,
-  "Spd_b": 6,
-  "Lck_b": 2,
-  "Def_b": 5,
-  "Res_b": 2,
-  "Mov_b": 5,
-  "HP_g": 45,
-  "Str_g": 15,
-  "Mag_g": 0,
-  "Skl_g": 15,
-  "Spd_g": 15,
-  "Lck_g": 5,
-  "Def_g": 10,
-  "Res_g": 5,
-  "HP_c": 60,
-  "Str_c": 27,
-  "Mag_c": 20,
-  "Skl_c": 28,
-  "Spd_c": 27,
-  "Lck_c": 26,
-  "Def_c": 28,
-  "Res_c": 27,
-  "Mov_c": 7,
-  "Weapons": "2",
-  "Wepcaps": "B"
-}
+
 const Thief = {
   "Name": "Thief",
   "HP_b": 16,
@@ -3157,7 +3108,7 @@ const Berserker = {
   "Wepcaps": "S"
 }
 
-const unPr_classList = [ Archer, Conscript, Apothecary, Cavalier, Cleric, Dark_Mage, Fighter, Griffin_Rider, Kitsune, Knight, Lord, Anima_Mage, Mercenary, Light_Mage, Myrmidon, Ninja, Pegasus_Knight, Oni_Savage, Soldier, Thief, Troubadour, Villager, Wolfskin, Wyvern_Rider, Dancer, Manakete, Laguz, Ballistician, Dread_Fighter, Lodestar, Vanguard, Witch, Tactician, Rifleman];
+const unPr_classList = [ Archer, Monk, Conscript, Cavalier, Cleric, Dark_Mage, Fighter, Griffin_Rider, Kitsune, Knight, Lord, Mercenary, Myrmidon, Ninja, Pegasus_Knight, Soldier, Thief, Troubadour, Villager, Wyvern_Rider, Dancer, Manakete, Laguz, Dread_Fighter, Vanguard, Tactician, Rifleman];
 const Pr_classList = [Sniper, Bow_Knight, Merchant, Mechanist, Paladin, Great_Knight, War_Cleric, Sage, Druid, Dark_Knight, Warrior, Hero, Griffin_Lord, Light_Flier, Ninetails, General, Great_Lord, Basara, Swordmaster, Assassin, Master_Ninja, Falcon_Knight, Dark_Flier, Halberdier, Trickster, Noble, Valkyrie, Master_of_Arms, Wolfssegner, Managarm, Great_Laguz, Wyvern_Lord, Revenant_Knight, Grandmaster, Gunslinger, Hunter, Berserker];
 const Laguz_alt = ["Bonewalker","Mogall","Mauthe","Bael","Tarvos","Gargoyle"];
 const GLaguz_alt = ["Wight","Arch Mogall","Gwyllgi","Elder Bael","Maeduin","Deathgoyle"];
