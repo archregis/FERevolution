@@ -3765,6 +3765,61 @@ on("change:Survival_check change:Res_total change:Lck_total",function(eventInfo)
 });
 
 //Weapon ranks!
+
+function setRank(tRank, currEXP){
+  let Rank = tRank;
+  let r = currEXP;
+  if ((currEXP >= 40) && (Rank == "E")){
+    Rank = "E+";
+    r = currEXP-40;
+  }
+  if ((currEXP >= 60) && (Rank == "E+")){
+    Rank = "D";
+    r = currEXP-60;
+  }
+  if ((currEXP >= 80) && (Rank == "D")){
+    Rank = "D+";
+    r = currEXP-80
+  }
+  if ((currEXP >= 120) && (Rank == "D+")){
+    Rank = "C";
+    r = currEXP-120;
+  }
+  if ((currEXP >= 160) && (Rank == "C")){
+    Rank = "C+";
+      r = currEXP-160;
+  }
+  if ((currEXP >= 220) && (Rank == "C+")){
+    Rank = "B";
+      r = currEXP-220;
+  }
+  if ((currEXP >= 280) && (Rank == "B")){
+    Rank = "B+";
+      r = currEXP-280;
+  }
+  if ((currEXP >= 360) && (Rank == "B+")){
+    Rank = "A";
+      r = currEXP-360;
+  }
+  if ((currEXP >= 440) && (Rank == "A")){
+    Rank = "A+";
+      r = currEXP-440;
+  }
+  if ((currEXP >= 540) && (Rank == "A+")){
+    Rank = "S";
+      r = currEXP-540;
+  }
+  if ((currEXP >= 640) && (Rank == "S")){
+    Rank = "S+";
+      r = currEXP-640;
+  }
+  if (currEXP > 999){
+    Rank = "E";
+      r = 0;
+  }
+  return [Rank, r]
+}
+
 let maxRank;
 let Rank;
 on("change:SwordEXP", function(eventInfo) {
@@ -3775,81 +3830,13 @@ on("change:SwordEXP", function(eventInfo) {
     console.log(currEXP)
     Rank = values.Swordrank;
     console.log(Rank)
-    if ((currEXP >= 40) && (Rank == "E")){
-      Rank = "E+";
-      let r = currEXP-40;
-      setAttrs({
-        SwordEXP: r
-      });
-    }
-    if ((currEXP >= 60) && (Rank == "E+")){
-      Rank = "D";
-      setAttrs({
-        SwordEXP: 0
-      });
-    }
-    if ((currEXP >= 80) && (Rank == "D")){
-      Rank = "D+";
-      setAttrs({
-        SwordEXP: 0
-      });
-    }
-    if ((currEXP >= 120) && (Rank == "D+")){
-      Rank = "C";
-      setAttrs({
-        SwordEXP: 0
-      });
-    }
-    if ((currEXP >= 160) && (Rank == "C")){
-      Rank = "C+";
-      setAttrs({
-        SwordEXP: 0
-      });
-    }
-    if ((currEXP >= 220) && (Rank == "C+")){
-      Rank = "B";
-      setAttrs({
-        SwordEXP: 0
-      });
-    }
-    if ((currEXP >= 280) && (Rank == "B")){
-      Rank = "B+";
-      setAttrs({
-        SwordEXP: 0
-      });
-    }
-    if ((currEXP >= 360) && (Rank == "B+")){
-      Rank = "A";
-      setAttrs({
-        SwordEXP: 0
-      });
-    }
-    if ((currEXP >= 440) && (Rank == "A")){
-      Rank = "A+";
-      setAttrs({
-        SwordEXP: 0
-      });
-    }
-    if ((currEXP >= 540) && (Rank == "A+")){
-      Rank = "S";
-      setAttrs({
-        SwordEXP: 0
-      });
-    }
-    if ((currEXP >= 640) && (Rank == "S")){
-      Rank = "S+";
-      setAttrs({
-        SwordEXP: 0
-      });
-    }
-    if (currEXP > 999){
-      Rank = "E";
-    }
-
+    tRanks = setRank(Rank, currEXP);
     setAttrs({
-      Swordrank: Rank
+      SwordEXP: tRanks[1]
     });
-
+    setAttrs({
+      Swordrank: tRanks[0]
+    })
   });
 });
 
@@ -3861,81 +3848,14 @@ on("change:LanceEXP", function(eventInfo) {
     console.log(currEXP)
     Rank = values.Lancerank;
     console.log(Rank)
-    if ((currEXP >= 40) && (Rank == "E")){
-      Rank = "E+";
-      setAttrs({
-        LanceEXP: 0
-      });
-    }
-    if ((currEXP >= 60) && (Rank == "E+")){
-      Rank = "D";
-      setAttrs({
-        LanceEXP: 0
-      });
-    }
-    if ((currEXP >= 80) && (Rank == "D")){
-      Rank = "D+";
-      setAttrs({
-        LanceEXP: 0
-      });
-    }
-    if ((currEXP >= 120) && (Rank == "D+")){
-      Rank = "C";
-      setAttrs({
-        LanceEXP: 0
-      });
-    }
-    if ((currEXP >= 160) && (Rank == "C")){
-      Rank = "C+";
-      setAttrs({
-        LanceEXP: 0
-      });
-    }
-    if ((currEXP >= 220) && (Rank == "C+")){
-      Rank = "B";
-      setAttrs({
-        LanceEXP: 0
-      });
-    }
-    if ((currEXP >= 280) && (Rank == "B")){
-      Rank = "B+";
-      setAttrs({
-        LanceEXP: 0
-      });
-    }
-    if ((currEXP >= 360) && (Rank == "B+")){
-      Rank = "A";
-      setAttrs({
-        LanceEXP: 0
-      });
-    }
-    if ((currEXP >= 440) && (Rank == "A")){
-      Rank = "A+";
-      setAttrs({
-        LanceEXP: 0
-      });
-    }
-    if ((currEXP >= 540) && (Rank == "A+")){
-      Rank = "S";
-      setAttrs({
-        LanceEXP: 0
-      });
-    }
-    if ((currEXP >= 640) && (Rank == "S")){
-      Rank = "S+";
-      setAttrs({
-        LanceEXP: 0
-      });
-    }
-    if (currEXP > 999){
-      Rank = "E";
-    }
-
+    tRanks = setRank(Rank, currEXP);
     setAttrs({
-      Lancerank: Rank
+      LanceEXP: tRanks[1]
     });
-
+    setAttrs({
+      Lancerank: tRanks[0]
   });
+});
 });
 on("change:AxeEXP", function(eventInfo) {
   getAttrs(["Axerank_max", "AxeEXP", "Axerank"], function(values) {
@@ -3945,81 +3865,14 @@ on("change:AxeEXP", function(eventInfo) {
     console.log(currEXP)
     Rank = values.Axerank;
     console.log(Rank)
-    if ((currEXP >= 40) && (Rank == "E")){
-      Rank = "E+";
-      setAttrs({
-        AxeEXP: 0
-      });
-    }
-    if ((currEXP >= 60) && (Rank == "E+")){
-      Rank = "D";
-      setAttrs({
-        AxeEXP: 0
-      });
-    }
-    if ((currEXP >= 80) && (Rank == "D")){
-      Rank = "D+";
-      setAttrs({
-        AxeEXP: 0
-      });
-    }
-    if ((currEXP >= 120) && (Rank == "D+")){
-      Rank = "C";
-      setAttrs({
-        AxeEXP: 0
-      });
-    }
-    if ((currEXP >= 160) && (Rank == "C")){
-      Rank = "C+";
-      setAttrs({
-        AxeEXP: 0
-      });
-    }
-    if ((currEXP >= 220) && (Rank == "C+")){
-      Rank = "B";
-      setAttrs({
-        AxeEXP: 0
-      });
-    }
-    if ((currEXP >= 280) && (Rank == "B")){
-      Rank = "B+";
-      setAttrs({
-        AxeEXP: 0
-      });
-    }
-    if ((currEXP >= 360) && (Rank == "B+")){
-      Rank = "A";
-      setAttrs({
-        AxeEXP: 0
-      });
-    }
-    if ((currEXP >= 440) && (Rank == "A")){
-      Rank = "A+";
-      setAttrs({
-        AxeEXP: 0
-      });
-    }
-    if ((currEXP >= 540) && (Rank == "A+")){
-      Rank = "S";
-      setAttrs({
-        AxeEXP: 0
-      });
-    }
-    if ((currEXP >= 640) && (Rank == "S")){
-      Rank = "S+";
-      setAttrs({
-        AxeEXP: 0
-      });
-    }
-    if (currEXP > 999){
-      Rank = "E";
-    }
-
+    tRanks = setRank(Rank, currEXP);
     setAttrs({
-      Axerank: Rank
+      AxeEXP: tRanks[1]
     });
-
+    setAttrs({
+      Axerank: tRanks[0]
   });
+});
 });
 on("change:BowEXP", function(eventInfo) {
   getAttrs(["Bowrank_max", "BowEXP", "Bowrank"], function(values) {
@@ -4029,83 +3882,15 @@ on("change:BowEXP", function(eventInfo) {
     console.log(currEXP)
     Rank = values.Bowrank;
     console.log(Rank)
-    if ((currEXP >= 40) && (Rank == "E")){
-      Rank = "E+";
-      setAttrs({
-        BowEXP: 0
-      });
-    }
-    if ((currEXP >= 60) && (Rank == "E+")){
-      Rank = "D";
-      setAttrs({
-        BowEXP: 0
-      });
-    }
-    if ((currEXP >= 80) && (Rank == "D")){
-      Rank = "D+";
-      setAttrs({
-        BowEXP: 0
-      });
-    }
-    if ((currEXP >= 120) && (Rank == "D+")){
-      Rank = "C";
-      setAttrs({
-        BowEXP: 0
-      });
-    }
-    if ((currEXP >= 160) && (Rank == "C")){
-      Rank = "C+";
-      setAttrs({
-        BowEXP: 0
-      });
-    }
-    if ((currEXP >= 220) && (Rank == "C+")){
-      Rank = "B";
-      setAttrs({
-        BowEXP: 0
-      });
-    }
-    if ((currEXP >= 280) && (Rank == "B")){
-      Rank = "B+";
-      setAttrs({
-        BowEXP: 0
-      });
-    }
-    if ((currEXP >= 360) && (Rank == "B+")){
-      Rank = "A";
-      setAttrs({
-        BowEXP: 0
-      });
-    }
-    if ((currEXP >= 440) && (Rank == "A")){
-      Rank = "A+";
-      setAttrs({
-        BowEXP: 0
-      });
-    }
-    if ((currEXP >= 540) && (Rank == "A+")){
-      Rank = "S";
-      setAttrs({
-        BowEXP: 0
-      });
-    }
-    if ((currEXP >= 640) && (Rank == "S")){
-      Rank = "S+";
-      setAttrs({
-        BowEXP: 0
-      });
-    }
-    if (currEXP > 999){
-      Rank = "E";
-    }
-
+    tRanks = setRank(Rank, currEXP);
     setAttrs({
-      Bowrank: Rank
+      BowEXP: tRanks[1]
     });
-
+    setAttrs({
+      Bowrank: tRanks[0]
   });
 });
-
+});
 on("change:BrawlEXP", function(eventInfo) {
   getAttrs(["Brawlrank_max", "BrawlEXP", "Brawlrank"], function(values) {
     maxRank = values.Brawlrank_max
@@ -4114,83 +3899,15 @@ on("change:BrawlEXP", function(eventInfo) {
     console.log(currEXP)
     Rank = values.Brawlrank;
     console.log(Rank)
-    if ((currEXP >= 40) && (Rank == "E")){
-      Rank = "E+";
-      setAttrs({
-        BrawlEXP: 0
-      });
-    }
-    if ((currEXP >= 60) && (Rank == "E+")){
-      Rank = "D";
-      setAttrs({
-        BrawlEXP: 0
-      });
-    }
-    if ((currEXP >= 80) && (Rank == "D")){
-      Rank = "D+";
-      setAttrs({
-        BrawlEXP: 0
-      });
-    }
-    if ((currEXP >= 120) && (Rank == "D+")){
-      Rank = "C";
-      setAttrs({
-        BrawlEXP: 0
-      });
-    }
-    if ((currEXP >= 160) && (Rank == "C")){
-      Rank = "C+";
-      setAttrs({
-        BrawlEXP: 0
-      });
-    }
-    if ((currEXP >= 220) && (Rank == "C+")){
-      Rank = "B";
-      setAttrs({
-        BrawlEXP: 0
-      });
-    }
-    if ((currEXP >= 280) && (Rank == "B")){
-      Rank = "B+";
-      setAttrs({
-        BrawlEXP: 0
-      });
-    }
-    if ((currEXP >= 360) && (Rank == "B+")){
-      Rank = "A";
-      setAttrs({
-        BrawlEXP: 0
-      });
-    }
-    if ((currEXP >= 440) && (Rank == "A")){
-      Rank = "A+";
-      setAttrs({
-        BrawlEXP: 0
-      });
-    }
-    if ((currEXP >= 540) && (Rank == "A+")){
-      Rank = "S";
-      setAttrs({
-        BrawlEXP: 0
-      });
-    }
-    if ((currEXP >= 640) && (Rank == "S")){
-      Rank = "S+";
-      setAttrs({
-        BrawlEXP: 0
-      });
-    }
-    if (currEXP > 999){
-      Rank = "E";
-    }
-
+    tRanks = setRank(Rank, currEXP);
     setAttrs({
-      Brawlrank: Rank
+      BrawlEXP: tRanks[1]
     });
-
+    setAttrs({
+      Brawlrank: tRanks[0]
   });
 });
-
+});
 on("change:HiddenEXP", function(eventInfo) {
   getAttrs(["Hiddenrank_max", "HiddenEXP", "Hiddenrank"], function(values) {
     maxRank = values.Hiddenrank_max
@@ -4199,251 +3916,14 @@ on("change:HiddenEXP", function(eventInfo) {
     console.log(currEXP)
     Rank = values.Hiddenrank;
     console.log(Rank)
-    if ((currEXP >= 40) && (Rank == "E")){
-      Rank = "E+";
-      setAttrs({
-        HiddenEXP: 0
-      });
-    }
-    if ((currEXP >= 60) && (Rank == "E+")){
-      Rank = "D";
-      setAttrs({
-        HiddenEXP: 0
-      });
-    }
-    if ((currEXP >= 80) && (Rank == "D")){
-      Rank = "D+";
-      setAttrs({
-        HiddenEXP: 0
-      });
-    }
-    if ((currEXP >= 120) && (Rank == "D+")){
-      Rank = "C";
-      setAttrs({
-        HiddenEXP: 0
-      });
-    }
-    if ((currEXP >= 160) && (Rank == "C")){
-      Rank = "C+";
-      setAttrs({
-        HiddenEXP: 0
-      });
-    }
-    if ((currEXP >= 220) && (Rank == "C+")){
-      Rank = "B";
-      setAttrs({
-        HiddenEXP: 0
-      });
-    }
-    if ((currEXP >= 280) && (Rank == "B")){
-      Rank = "B+";
-      setAttrs({
-        HiddenEXP: 0
-      });
-    }
-    if ((currEXP >= 360) && (Rank == "B+")){
-      Rank = "A";
-      setAttrs({
-        HiddenEXP: 0
-      });
-    }
-    if ((currEXP >= 440) && (Rank == "A")){
-      Rank = "A+";
-      setAttrs({
-        HiddenEXP: 0
-      });
-    }
-    if ((currEXP >= 540) && (Rank == "A+")){
-      Rank = "S";
-      setAttrs({
-        HiddenEXP: 0
-      });
-    }
-    if ((currEXP >= 640) && (Rank == "S")){
-      Rank = "S+";
-      setAttrs({
-        HiddenEXP: 0
-      });
-    }
-    if (currEXP > 999){
-      Rank = "E";
-    }
-
+    tRanks = setRank(Rank, currEXP);
     setAttrs({
-      Hiddenrank: Rank
+      HiddenEXP: tRanks[1]
     });
-
+    setAttrs({
+      Hiddenrank: tRanks[0]
   });
 });
-
-on("change:AuthorityEXP", function(eventInfo) {
-  getAttrs(["Authorityrank_max", "AuthorityEXP", "Authorityrank"], function(values) {
-    maxRank = values.Authorityrank_max
-    console.log(maxRank)
-    currEXP = values.AuthorityEXP;
-    console.log(currEXP)
-    Rank = values.Authorityrank;
-    console.log(Rank)
-    if ((currEXP >= 40) && (Rank == "E")){
-      Rank = "E+";
-      setAttrs({
-        AuthorityEXP: 0
-      });
-    }
-    if ((currEXP >= 60) && (Rank == "E+")){
-      Rank = "D";
-      setAttrs({
-        AuthorityEXP: 0
-      });
-    }
-    if ((currEXP >= 80) && (Rank == "D")){
-      Rank = "D+";
-      setAttrs({
-        AuthorityEXP: 0
-      });
-    }
-    if ((currEXP >= 120) && (Rank == "D+")){
-      Rank = "C";
-      setAttrs({
-        AuthorityEXP: 0
-      });
-    }
-    if ((currEXP >= 160) && (Rank == "C")){
-      Rank = "C+";
-      setAttrs({
-        AuthorityEXP: 0
-      });
-    }
-    if ((currEXP >= 220) && (Rank == "C+")){
-      Rank = "B";
-      setAttrs({
-        AuthorityEXP: 0
-      });
-    }
-    if ((currEXP >= 280) && (Rank == "B")){
-      Rank = "B+";
-      setAttrs({
-        AuthorityEXP: 0
-      });
-    }
-    if ((currEXP >= 360) && (Rank == "B+")){
-      Rank = "A";
-      setAttrs({
-        AuthorityEXP: 0
-      });
-    }
-    if ((currEXP >= 440) && (Rank == "A")){
-      Rank = "A+";
-      setAttrs({
-        AuthorityEXP: 0
-      });
-    }
-    if ((currEXP >= 540) && (Rank == "A+")){
-      Rank = "S";
-      setAttrs({
-        AuthorityEXP: 0
-      });
-    }
-    if ((currEXP >= 640) && (Rank == "S")){
-      Rank = "S+";
-      setAttrs({
-        AuthorityEXP: 0
-      });
-    }
-    if (currEXP > 999){
-      Rank = "E";
-    }
-
-    setAttrs({
-      Authorityrank: Rank
-    });
-
-  });
-});
-
-on("change:FaithEXP", function(eventInfo) {
-  getAttrs(["Faithrank_max", "FaithEXP", "Faithrank"], function(values) {
-    maxRank = values.Faithrank_max
-    console.log(maxRank)
-    currEXP = values.FaithEXP;
-    console.log(currEXP)
-    Rank = values.Faithrank;
-    console.log(Rank)
-    if ((currEXP >= 40) && (Rank == "E")){
-      Rank = "E+";
-      setAttrs({
-        FaithEXP: 0
-      });
-    }
-    if ((currEXP >= 60) && (Rank == "E+")){
-      Rank = "D";
-      setAttrs({
-        FaithEXP: 0
-      });
-    }
-    if ((currEXP >= 80) && (Rank == "D")){
-      Rank = "D+";
-      setAttrs({
-        FaithEXP: 0
-      });
-    }
-    if ((currEXP >= 120) && (Rank == "D+")){
-      Rank = "C";
-      setAttrs({
-        FaithEXP: 0
-      });
-    }
-    if ((currEXP >= 160) && (Rank == "C")){
-      Rank = "C+";
-      setAttrs({
-        FaithEXP: 0
-      });
-    }
-    if ((currEXP >= 220) && (Rank == "C+")){
-      Rank = "B";
-      setAttrs({
-        FaithEXP: 0
-      });
-    }
-    if ((currEXP >= 280) && (Rank == "B")){
-      Rank = "B+";
-      setAttrs({
-        FaithEXP: 0
-      });
-    }
-    if ((currEXP >= 360) && (Rank == "B+")){
-      Rank = "A";
-      setAttrs({
-        FaithEXP: 0
-      });
-    }
-    if ((currEXP >= 440) && (Rank == "A")){
-      Rank = "A+";
-      setAttrs({
-        FaithEXP: 0
-      });
-    }
-    if ((currEXP >= 540) && (Rank == "A+")){
-      Rank = "S";
-      setAttrs({
-        FaithEXP: 0
-      });
-    }
-    if ((currEXP >= 640) && (Rank == "S")){
-      Rank = "S+";
-      setAttrs({
-        FaithEXP: 0
-      });
-    }
-    if (currEXP > 999){
-      Rank = "E";
-    }
-
-    setAttrs({
-      Faithrank: Rank
-    });
-
-  });
 });
 on("change:ReasonEXP", function(eventInfo) {
   getAttrs(["Reasonrank_max", "ReasonEXP", "Reasonrank"], function(values) {
@@ -4453,81 +3933,48 @@ on("change:ReasonEXP", function(eventInfo) {
     console.log(currEXP)
     Rank = values.Reasonrank;
     console.log(Rank)
-    if ((currEXP >= 40) && (Rank == "E")){
-      Rank = "E+";
-      setAttrs({
-        ReasonEXP: 0
-      });
-    }
-    if ((currEXP >= 60) && (Rank == "E+")){
-      Rank = "D";
-      setAttrs({
-        ReasonEXP: 0
-      });
-    }
-    if ((currEXP >= 80) && (Rank == "D")){
-      Rank = "D+";
-      setAttrs({
-        ReasonEXP: 0
-      });
-    }
-    if ((currEXP >= 120) && (Rank == "D+")){
-      Rank = "C";
-      setAttrs({
-        ReasonEXP: 0
-      });
-    }
-    if ((currEXP >= 160) && (Rank == "C")){
-      Rank = "C+";
-      setAttrs({
-        ReasonEXP: 0
-      });
-    }
-    if ((currEXP >= 220) && (Rank == "C+")){
-      Rank = "B";
-      setAttrs({
-        ReasonEXP: 0
-      });
-    }
-    if ((currEXP >= 280) && (Rank == "B")){
-      Rank = "B+";
-      setAttrs({
-        ReasonEXP: 0
-      });
-    }
-    if ((currEXP >= 360) && (Rank == "B+")){
-      Rank = "A";
-      setAttrs({
-        ReasonEXP: 0
-      });
-    }
-    if ((currEXP >= 440) && (Rank == "A")){
-      Rank = "A+";
-      setAttrs({
-        ReasonEXP: 0
-      });
-    }
-    if ((currEXP >= 540) && (Rank == "A+")){
-      Rank = "S";
-      setAttrs({
-        ReasonEXP: 0
-      });
-    }
-    if ((currEXP >= 640) && (Rank == "S")){
-      Rank = "S+";
-      setAttrs({
-        ReasonEXP: 0
-      });
-    }
-    if (currEXP > 999){
-      Rank = "E";
-    }
-
+    tRanks = setRank(Rank, currEXP);
     setAttrs({
-      Reasonrank: Rank
+      ReasonEXP: tRanks[1]
     });
-
+    setAttrs({
+      Reasonrank: tRanks[0]
   });
+});
+});
+on("change:FaithEXP", function(eventInfo) {
+  getAttrs(["Faithrank_max", "FaithEXP", "Faithrank"], function(values) {
+    maxRank = values.Faithrank_max
+    console.log(maxRank)
+    currEXP = values.FaithEXP;
+    console.log(currEXP)
+    Rank = values.Faithrank;
+    console.log(Rank)
+    tRanks = setRank(Rank, currEXP);
+    setAttrs({
+      FaithEXP: tRanks[1]
+    });
+    setAttrs({
+      Faithrank: tRanks[0]
+  });
+});
+});
+on("change:AuthorityEXP", function(eventInfo) {
+  getAttrs(["Authorityrank_max", "AuthorityEXP", "Authorityrank"], function(values) {
+    maxRank = values.Authorityrank_max
+    console.log(maxRank)
+    currEXP = values.AuthorityEXP;
+    console.log(currEXP)
+    Rank = values.Authorityrank;
+    console.log(Rank)
+    tRanks = setRank(Rank, currEXP);
+    setAttrs({
+      AuthorityEXP: tRanks[1]
+    });
+    setAttrs({
+      Authorityrank: tRanks[0]
+  });
+});
 });
 on("change:ArmorEXP", function(eventInfo) {
   getAttrs(["Armorrank_max", "ArmorEXP", "Armorrank"], function(values) {
@@ -4537,81 +3984,14 @@ on("change:ArmorEXP", function(eventInfo) {
     console.log(currEXP)
     Rank = values.Armorrank;
     console.log(Rank)
-    if ((currEXP >= 40) && (Rank == "E")){
-      Rank = "E+";
-      setAttrs({
-        ArmorEXP: 0
-      });
-    }
-    if ((currEXP >= 60) && (Rank == "E+")){
-      Rank = "D";
-      setAttrs({
-        ArmorEXP: 0
-      });
-    }
-    if ((currEXP >= 80) && (Rank == "D")){
-      Rank = "D+";
-      setAttrs({
-        ArmorEXP: 0
-      });
-    }
-    if ((currEXP >= 120) && (Rank == "D+")){
-      Rank = "C";
-      setAttrs({
-        ArmorEXP: 0
-      });
-    }
-    if ((currEXP >= 160) && (Rank == "C")){
-      Rank = "C+";
-      setAttrs({
-        ArmorEXP: 0
-      });
-    }
-    if ((currEXP >= 220) && (Rank == "C+")){
-      Rank = "B";
-      setAttrs({
-        ArmorEXP: 0
-      });
-    }
-    if ((currEXP >= 280) && (Rank == "B")){
-      Rank = "B+";
-      setAttrs({
-        ArmorEXP: 0
-      });
-    }
-    if ((currEXP >= 360) && (Rank == "B+")){
-      Rank = "A";
-      setAttrs({
-        ArmorEXP: 0
-      });
-    }
-    if ((currEXP >= 440) && (Rank == "A")){
-      Rank = "A+";
-      setAttrs({
-        ArmorEXP: 0
-      });
-    }
-    if ((currEXP >= 540) && (Rank == "A+")){
-      Rank = "S";
-      setAttrs({
-        ArmorEXP: 0
-      });
-    }
-    if ((currEXP >= 640) && (Rank == "S")){
-      Rank = "S+";
-      setAttrs({
-        ArmorEXP: 0
-      });
-    }
-    if (currEXP > 999){
-      Rank = "E";
-    }
-
+    tRanks = setRank(Rank, currEXP);
     setAttrs({
-      Armorrank: Rank
+      ArmorEXP: tRanks[1]
     });
-
+    setAttrs({
+      Armorrank: tRanks[0]
   });
+});
 });
 on("change:RidingEXP", function(eventInfo) {
   getAttrs(["Ridingrank_max", "RidingEXP", "Ridingrank"], function(values) {
@@ -4621,83 +4001,16 @@ on("change:RidingEXP", function(eventInfo) {
     console.log(currEXP)
     Rank = values.Ridingrank;
     console.log(Rank)
-    if ((currEXP >= 40) && (Rank == "E")){
-      Rank = "E+";
-      setAttrs({
-        RidingEXP: 0
-      });
-    }
-    if ((currEXP >= 60) && (Rank == "E+")){
-      Rank = "D";
-      setAttrs({
-        RidingEXP: 0
-      });
-    }
-    if ((currEXP >= 80) && (Rank == "D")){
-      Rank = "D+";
-      setAttrs({
-        RidingEXP: 0
-      });
-    }
-    if ((currEXP >= 120) && (Rank == "D+")){
-      Rank = "C";
-      setAttrs({
-        RidingEXP: 0
-      });
-    }
-    if ((currEXP >= 160) && (Rank == "C")){
-      Rank = "C+";
-      setAttrs({
-        RidingEXP: 0
-      });
-    }
-    if ((currEXP >= 220) && (Rank == "C+")){
-      Rank = "B";
-      setAttrs({
-        RidingEXP: 0
-      });
-    }
-    if ((currEXP >= 280) && (Rank == "B")){
-      Rank = "B+";
-      setAttrs({
-        RidingEXP: 0
-      });
-    }
-    if ((currEXP >= 360) && (Rank == "B+")){
-      Rank = "A";
-      setAttrs({
-        RidingEXP: 0
-      });
-    }
-    if ((currEXP >= 440) && (Rank == "A")){
-      Rank = "A+";
-      setAttrs({
-        RidingEXP: 0
-      });
-    }
-    if ((currEXP >= 540) && (Rank == "A+")){
-      Rank = "S";
-      setAttrs({
-        RidingEXP: 0
-      });
-    }
-    if ((currEXP >= 640) && (Rank == "S")){
-      Rank = "S+";
-      setAttrs({
-        RidingEXP: 0
-      });
-    }
-    if (currEXP > 999){
-      Rank = "E";
-    }
-
+    tRanks = setRank(Rank, currEXP);
     setAttrs({
-      Ridingrank: Rank
+      RidingEXP: tRanks[1]
     });
-
+    setAttrs({
+      Ridingrank: tRanks[0]
   });
 });
 
+});
 on("change:EXP", function(eventInfo) {
   getAttrs(["EXP", "Level"], function(values) {
     cEXP = values.EXP
