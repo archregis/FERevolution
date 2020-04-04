@@ -62,7 +62,7 @@
       <input type = "number" name = "attr_EXP" min = "0" max = "100" value = "0"/>
     </label>
       <label> Atk Type:
-        <select name="attr_atktype" style = "width: 10%;">
+        <select name="attr_atktype" value = "Physical" style = "width: 10%;">
           <option>Physical</option>
           <option>Magical</option>
         </select>
@@ -730,7 +730,9 @@
 
 <!--The section of the ~forbidden~ inputs. This should always go last.-->
 <div class = "hidden">
+  <input name="attr_currWep" value = "Sword" hidden>
   <input name="attr_ProwHit" value = "0" hidden>
+  <input name="attr_atktype" value = "Physical" hidden>
     <input name="attr_SwordHit" value = "0" hidden>
   <input name="attr_ProwAvo" value = "0" hidden>
   <input name="attr_ProwCAvo" value = "0" hidden>
@@ -4093,6 +4095,44 @@ on("change:Str_total change:repeating_weapons:Mt change:_reporder:weapons remove
     });
   });
 });
+//Weapon Type
+on("change:repeating_weapons:WType change:repeating_spells:SType change:atktype change:_reporder:weapons change:_reporder:spells remove:repeating_spells remove:repeating_weapons change:WSlot change:SSlot", function(eventInfo) {
+  getAttrs(["WSlot","SSlot","atktype"], function(v) {
+    if (v.atktype == "Physical"){
+      getSectionIDsOrdered("repeating_weapons", function(idarray) {
+        slotnum = v.WSlot
+        fID = idarray[Number(slotnum)-1];
+        log("fID is" + fID)
+        getAttrs(["repeating_weapons_"+fID+"_WType"], function(v) {
+          log(JSON.stringify(v))
+          let nindex = Object.keys(v)[0];
+          log(nindex)
+          let weptype = v[nindex];
+          setAttrs({
+            currWep: weptype
+          });
+        });
+      });
+    }
+    if (v.atktype == "Magical"){
+      getSectionIDsOrdered("repeating_spells", function(idarray) {
+        slotnum = v.SSlot
+        fID = idarray[Number(slotnum)-1];
+        log("fID is" + fID)
+        getAttrs(["repeating_spells_"+fID+"_SType"], function(v) {
+          log(JSON.stringify(v))
+          let nindex = Object.keys(v)[0];
+          log(nindex)
+          let weptype = v[nindex];
+          setAttrs({
+            currWep: weptype
+          });
+        });
+      });
+    }
+  });
+});
+
 //MagDmg
 on("change:Mag_total change:repeating_spells:Mt change:_reporder:spells remove:repeating_spells change:Magb change:SSlot", function(eventInfo) {
   getAttrs(["SSlot"], function(v) {
@@ -4467,9 +4507,11 @@ on("change:Species change:Class", function(eventInfo) {
 
 //Initialize values for API, because ded
 on("sheet:opened", function(){
-  getAttrs(["EXP","SwordEXP","LanceEXP","AxeEXP","BowEXP","BrawlEXP","HiddenEXP","ReasonEXP","FaithEXP","AuthorityEXP","RidingEXP","ArmorEXP","Level","HP_i","Str_i","Mag_i","Skl_i","Spd_i","Lck_i","Def_i","Res_i","Mov_i","HP_bd","Str_bd","Mag_bd","Skl_bd","Spd_bd","Lck_bd","Def_bd","Res_bd","Mov_bd","item_uses0","item_uses1","item_uses2","Swordrank","Lancerank","Axerank","Bowrank","Brawlrank","Hiddenrank","Reasonrank","Faithrank","Authorityrank","Ridingrank","Armorrank","Hitmod","Critmod","Avomod","Ddgmod","Dmgmod","Hitmod_class","Hitb","Physb","Magb","Critb","Avob","Protb","Resb","Chab","Critavob","Ghitb","Critmod_class","Avomod_class","Ddgmod_class","fid"], function(v){
+  getAttrs(["currWep","atktype","EXP","SwordEXP","LanceEXP","AxeEXP","BowEXP","BrawlEXP","HiddenEXP","ReasonEXP","FaithEXP","AuthorityEXP","RidingEXP","ArmorEXP","Level","HP_i","Str_i","Mag_i","Skl_i","Spd_i","Lck_i","Def_i","Res_i","Mov_i","HP_bd","Str_bd","Mag_bd","Skl_bd","Spd_bd","Lck_bd","Def_bd","Res_bd","Mov_bd","item_uses0","item_uses1","item_uses2","Swordrank","Lancerank","Axerank","Bowrank","Brawlrank","Hiddenrank","Reasonrank","Faithrank","Authorityrank","Ridingrank","Armorrank","Hitmod","Critmod","Avomod","Ddgmod","Dmgmod","Hitmod_class","Hitb","Physb","Magb","Critb","Avob","Protb","Resb","Chab","Critavob","Ghitb","Critmod_class","Avomod_class","Ddgmod_class","fid"], function(v){
     setAttrs({
       EXP: v.EXP,
+      currWep: v.currWep,
+      atktype: v.atktype,
       SwordEXP: v.SwordEXP,
       LanceEXP: v.LanceEXP,
       AxeEXP: v.AxeEXP,
