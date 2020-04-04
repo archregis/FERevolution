@@ -137,6 +137,7 @@
       <tr>
         <th>Spell Name</th>
         <th>Type</th>
+        <th>Uses</th>
       </tr>
       <tr class = "sheet-thicc">
         <td><input name = "attr_SName" type = "text"></td>
@@ -146,6 +147,7 @@
             <option>Faith</option>
           </select>
         </td>
+                <td><input type = "number" name = "attr_Uses" value = "1" min = "0"/></td>
       </tr>
     </table>
       <input type="checkbox" class="sheet-toggle-stats">
@@ -153,7 +155,6 @@
       <table class = "sheet-hiddenstats">
       <tr>
         <th>Weight</th>
-        <th>Uses</th>
         <th>Might</th>
         <th>Hit</th>
         <th>Crit</th>
@@ -161,7 +162,6 @@
       </tr>
       <tr>
         <td><input type = "number" name = "attr_Wt" value = "0"/></td>
-        <td><input type = "number" name = "attr_Uses" value = "1" min = "0"/></td>
         <td><input type = "number" name = "attr_Mt" value = "0"/></td>
         <td><input type = "number" name = "attr_Hit" value = "0"/></td>
         <td><input type = "number" name = "attr_Crit" value = "0"/></td>
@@ -216,7 +216,7 @@
 
     <div class = "sheet-hiddenskill">
       <label style = "font-size: 13px; font-weight: bold"> Weapon Skill
-        <textarea name = "attr_Skill_wp"></textarea>
+        <input name = "attr_Skill_wp" type = "text"></input>
       </label>
     </div>
   </fieldset>
@@ -234,7 +234,7 @@
         <th>G Avo</th>
       </tr>
       <tr>
-        <td><span name = "attr_HP_current"></span> / <span name = "attr_HP_current_max"> </span></td>
+        <td><input name = "attr_HP_current" type = "number"></input> / <span name = "attr_HP_current_max"> </span></td>
         <td><span name = "attr_Hit">0</span></td>
         <td><span name = "attr_Crit">0</span></td>
         <td><span name = "attr_Ddg">0</span></td>
@@ -439,6 +439,7 @@
     <input name = "attr_AuthorityU" value = "1" type = "checkbox" class = "sheet-authorityinput hidden" hidden>
     <input name = "attr_ArmorU" value = "1" type = "checkbox" class = "sheet-armorinput hidden" hidden>
     <input name = "attr_RidingU" value = "1" type = "checkbox" class = "sheet-ridinginput hidden" hidden>
+    <input name = "attr_FlyingU" value = "1" type = "checkbox" class = "sheet-flyinginput hidden" hidden>
 
 
     <tr class = "sheet-swordsrow">
@@ -507,7 +508,12 @@
       <td><span name = "attr_Ridingrank"></span></td>
       <td><input type = "number" value = "0" name = "attr_RidingGain" min = "0" max = "100"></td>
     </tr>
-
+    <tr class = "sheet-flyingrow">
+      <td>Flying</td>
+      <td><input type = "number" value = "0" name = "attr_FlyingEXP" min = "0" max = "1000"></td>
+      <td><span name = "attr_Flyingrank"></span></td>
+      <td><input type = "number" value = "0" name = "attr_FlyingGain" min = "0" max = "100"></td>
+    </tr>
 
   </table>
 </div>
@@ -554,6 +560,7 @@
       <tr>
         <th>Weapon Name</th>
         <th>Type</th>
+        <th>Uses</th>
       </tr>
       <tr class = "sheet-thicc">
         <td><input name = "attr_WName" type = "text"></td>
@@ -568,6 +575,7 @@
 
           </select>
         </td>
+        <td><input type = "number" name = "attr_Uses" value = "1" min = "0"/></td>
       </tr>
     </table>
       <input type="checkbox" class="sheet-toggle-stats">
@@ -575,7 +583,6 @@
       <table class = "sheet-hiddenstats">
       <tr>
         <th>Weight</th>
-        <th>Uses</th>
         <th>Might</th>
         <th>Hit</th>
         <th>Crit</th>
@@ -583,7 +590,6 @@
       </tr>
       <tr>
         <td><input type = "number" name = "attr_Wt" value = "0"/></td>
-        <td><input type = "number" name = "attr_Uses" value = "1" min = "0"/></td>
         <td><input type = "number" name = "attr_Mt" value = "0"/></td>
         <td><input type = "number" name = "attr_Hit" value = "0"/></td>
         <td><input type = "number" name = "attr_Crit" value = "0"/></td>
@@ -638,7 +644,7 @@
 
     <div class = "sheet-hiddenskill">
       <label style = "font-size: 13px; font-weight: bold"> Weapon Skill
-        <textarea name = "attr_Skill_wp"></textarea>
+        <input name = "attr_Skill_wp" type = "text"></input>
       </label>
     </div>
   </fieldset>
@@ -652,7 +658,7 @@
 </div>
 <div class="sheet-supportinfo">
 <div class = "sheet-header"> Supports </div>
-  <textarea name="attr_abilitylist" type="text" style="width:350px; height:1000px"></textarea>
+  <textarea name="attr_supportlist" type="text" style="width:350px; height:1000px"></textarea>
 </div>
 </div>
 <!-- Third Page -->
@@ -698,9 +704,9 @@
       </tr>
       <tr>
         <th>Hidden Weapon</th>
-        <td><input type = "number" value = "0" name = "attr_ReasonHit" min = "0" max = "100"></td>
-        <td><input type = "number" value = "0" name = "attr_ReasonAvo" min = "0" max = "100"></td>
-        <td><input type = "number" value = "0" name = "attr_ReasonCAvo" min = "0" max = "100"></td>
+        <td><input type = "number" value = "0" name = "attr_HiddenHit" min = "0" max = "100"></td>
+        <td><input type = "number" value = "0" name = "attr_HiddenAvo" min = "0" max = "100"></td>
+        <td><input type = "number" value = "0" name = "attr_HiddenCAvo" min = "0" max = "100"></td>
       </tr>
       <tr>
         <th>Reason</th>
@@ -713,6 +719,29 @@
         <td><input type = "number" value = "0" name = "attr_FaithHit" min = "0" max = "100"></td>
         <td><input type = "number" value = "0" name = "attr_FaithAvo" min = "0" max = "100"></td>
         <td><input type = "number" value = "0" name = "attr_FaithCAvo" min = "0" max = "100"></td>
+      </tr>
+    </table>
+  </div>
+  <div class = "sheet-weapons">
+    <div class = "sheet-header">Class EXP</div>
+    <table>
+      <tr>
+        <th>Class Name</th>
+        <th>EXP</th>
+        <th>Gain</th>
+      </tr>
+      <tr>
+        <td><input name = "attr_class_name0" type="text">
+        <td><input name = "attr_class_exp0" type = "number" min = "0" value = "0"></td>
+        <td><input name = "attr_class_gain0" type = "number" min = "0" value = "0"></td>
+      </tr>
+      <tr>
+        <td><input name = "attr_class_name1" type="text">
+        <td><input name = "attr_class_exp1" type = "number" min = "0" value = "0"></td>
+      </tr>
+      <tr>
+        <td><input name = "attr_class_name2" type="text">
+        <td><input name = "attr_class_exp2" type = "number" min = "0" value = "0"></td>
       </tr>
     </table>
   </div>
@@ -731,6 +760,11 @@
 <!--The section of the ~forbidden~ inputs. This should always go last.-->
 <div class = "hidden">
   <input name="attr_currWep" value = "Sword" hidden>
+  <input name="attr_currDesc" value = "Attack!" hidden>
+  <input name="attr_class_exp0" value = "0" hidden>
+  <input name="attr_class_exp1" value = "0" hidden>
+  <input name="attr_class_exp2" value = "0" hidden>
+  <input name="attr_class_gain0" value = "0" hidden>
   <input name="attr_ProwHit" value = "0" hidden>
   <input name="attr_atktype" value = "Physical" hidden>
     <input name="attr_SwordHit" value = "0" hidden>
@@ -826,6 +860,7 @@
   <input name="attr_Reasonrank" value = "E" type = "text" hidden>
   <input name="attr_Armorrank" value = "E" type = "text" hidden>
   <input name="attr_Ridingrank" value = "E" type = "text" hidden>
+  <input name="attr_Flyingrank" value = "E" type = "text" hidden>
   <input name="attr_Swordrank_max" value = "E" type = "text" hidden>
   <input name="attr_Lancerank_max" value = "E" type = "text" hidden>
   <input name="attr_Axerank_max" value = "E" type = "text" hidden>
@@ -837,6 +872,7 @@
   <input name="attr_Reasonrank_max" value = "E" type = "text" hidden>
   <input name="attr_Armorrank_max" value = "E" type = "text" hidden>
   <input name="attr_Ridingrank_max" value = "E" type = "text" hidden>
+  <input name="attr_Flyingrank_max" value = "E" type = "text" hidden>
   <input name="attr_Hit" value = "0" hidden>
   <input name="attr_Crit" value = "0" hidden>
   <input name="attr_Avo" value = "0" hidden>
@@ -902,8 +938,8 @@ const Conscript = {
   "Def_c": 99,
   "Res_c": 99,
   "Mov_c": 12,
-  "Weapons": "1 2 3 4 5 6 7 8 9 10 11",
-  "Wepcaps": "B B B B B B B B B B B"
+  "Weapons": "1 2 3 4 5 6 7 8 9 10 11 12",
+  "Wepcaps": "B B B B B B B B B B B B"
 }
 const Monk = {
   "Name": "Monk",
@@ -3255,13 +3291,13 @@ on("change:class", function(eventInfo) {
     FaithU: 0,
     AuthorityU: 0,
     ArmorU: 0,
-    RidingU: 0
-
+    RidingU: 0,
+    FlyingU: 0
   };
-  const class_Weps = ["Sword", "Lance", "Axe", "Bow", "Brawl", "Hidden", "Reason", "Faith", "Authority", "Armor", "Riding"];
+  const class_Weps = ["Sword", "Lance", "Axe", "Bow", "Brawl", "Hidden", "Reason", "Faith", "Authority", "Armor", "Riding", "Flying"];
   let i;
   let j = 0;
-  for(i = 1; i <= 11; i++) {
+  for(i = 1; i <= 12; i++) {
     let index = wepvals.indexOf(i);
     if( index != -1 ) {
       let prefix = class_Weps[i-1];
@@ -3946,6 +3982,23 @@ on("change:ArmorEXP", function(eventInfo) {
   });
 });
 });
+on("change:FlyingEXP", function(eventInfo) {
+  getAttrs(["Flyingrank_max", "FlyingEXP", "Flyingrank"], function(values) {
+    maxRank = values.Flyingrank_max
+    console.log(maxRank)
+    currEXP = values.FlyingEXP;
+    console.log(currEXP)
+    Rank = values.Flyingrank;
+    console.log(Rank)
+    tRanks = setRank(Rank, currEXP);
+    setAttrs({
+      FlyingEXP: tRanks[1]
+    });
+    setAttrs({
+      Flyingrank: tRanks[0]
+  });
+});
+});
 on("change:RidingEXP", function(eventInfo) {
   getAttrs(["Ridingrank_max", "RidingEXP", "Ridingrank"], function(values) {
     maxRank = values.Ridingrank_max
@@ -4126,6 +4179,45 @@ on("change:repeating_weapons:WType change:repeating_spells:SType change:atktype 
           let weptype = v[nindex];
           setAttrs({
             currWep: weptype
+          });
+        });
+      });
+    }
+  });
+});
+
+//wep desc
+
+on("change:repeating_weapons:Skill_wp change:repeating_spells:Skill_wp change:atktype change:_reporder:weapons change:_reporder:spells remove:repeating_spells remove:repeating_weapons change:WSlot change:SSlot", function(eventInfo) {
+  getAttrs(["WSlot","SSlot","atktype"], function(v) {
+    if (v.atktype == "Physical"){
+      getSectionIDsOrdered("repeating_weapons", function(idarray) {
+        slotnum = v.WSlot
+        fID = idarray[Number(slotnum)-1];
+        log("fID is" + fID)
+        getAttrs(["repeating_weapons_"+fID+"_Skill_wp"], function(v) {
+          log(JSON.stringify(v))
+          let nindex = Object.keys(v)[0];
+          log(nindex)
+          let wepdesc = v[nindex];
+          setAttrs({
+            currDesc: wepdesc
+          });
+        });
+      });
+    }
+    if (v.atktype == "Magical"){
+      getSectionIDsOrdered("repeating_spells", function(idarray) {
+        slotnum = v.SSlot
+        fID = idarray[Number(slotnum)-1];
+        log("fID is" + fID)
+        getAttrs(["repeating_spells_"+fID+"_Skill_wp"], function(v) {
+          log(JSON.stringify(v))
+          let nindex = Object.keys(v)[0];
+          log(nindex)
+          let wepdesc = v[nindex];
+          setAttrs({
+            currDesc: wepdesc
           });
         });
       });
@@ -4507,11 +4599,26 @@ on("change:Species change:Class", function(eventInfo) {
 
 //Initialize values for API, because ded
 on("sheet:opened", function(){
-  getAttrs(["currWep","atktype","EXP","SwordEXP","LanceEXP","AxeEXP","BowEXP","BrawlEXP","HiddenEXP","ReasonEXP","FaithEXP","AuthorityEXP","RidingEXP","ArmorEXP","Level","HP_i","Str_i","Mag_i","Skl_i","Spd_i","Lck_i","Def_i","Res_i","Mov_i","HP_bd","Str_bd","Mag_bd","Skl_bd","Spd_bd","Lck_bd","Def_bd","Res_bd","Mov_bd","item_uses0","item_uses1","item_uses2","Swordrank","Lancerank","Axerank","Bowrank","Brawlrank","Hiddenrank","Reasonrank","Faithrank","Authorityrank","Ridingrank","Armorrank","Hitmod","Critmod","Avomod","Ddgmod","Dmgmod","Hitmod_class","Hitb","Physb","Magb","Critb","Avob","Protb","Resb","Chab","Critavob","Ghitb","Critmod_class","Avomod_class","Ddgmod_class","fid"], function(v){
+  getAttrs(["class_exp0","class_gain0","currDesc","currWep","atktype","EXP","SwordEXP","LanceEXP","AxeEXP","BowEXP","BrawlEXP","HiddenEXP","ReasonEXP","FaithEXP","AuthorityEXP","RidingEXP","ArmorEXP","FlyingEXP","Flyingrank","Level","HP_i","Str_i","Mag_i","Skl_i","Spd_i","Lck_i","Def_i","Res_i","Mov_i","HP_bd","Str_bd","Mag_bd","Skl_bd","Spd_bd","Lck_bd","Def_bd","Res_bd","Mov_bd","item_uses0","item_uses1","item_uses2","Swordrank","Lancerank","Axerank","Bowrank","Brawlrank","Hiddenrank","Reasonrank","Faithrank","Authorityrank","Ridingrank","Armorrank","Hitmod","Critmod","Avomod","Ddgmod","Dmgmod","Hitmod_class","Hitb","Physb","Magb","Critb","Avob","Protb","Resb","Chab","Critavob","Ghitb","Critmod_class","Avomod_class","Ddgmod_class","fid","SwordGain","LanceGain","AxeGain","BowGain","BrawlGain","HiddenGain","ReasonGain","FaithGain","AuthorityGain","RidingGain","ArmorGain","FlyingGain"], function(v){
     setAttrs({
       EXP: v.EXP,
+      class_exp0: v.class_exp0,
+      class_gain0: v.class_gain0,
+      currDesc: v.currDesc,
       currWep: v.currWep,
       atktype: v.atktype,
+      SwordGain: v.SwordGain,
+      LanceGain: v.LanceGain,
+      AxeGain: v.AxeGain,
+      BowGain: v.BowGain,
+      BrawlGain: v.BrawlGain,
+      HiddenGain: v.HiddenGain,
+      ReasonGain: v.ReasonGain,
+      AuthorityGain: v.AuthorityGain,
+      FaithGain: v.FaithGain,
+      ArmorGain: v.ArmorGain,
+      RidingGain: v.RidingGain,
+      FlyingGain: v.FlyingGain,
       SwordEXP: v.SwordEXP,
       LanceEXP: v.LanceEXP,
       AxeEXP: v.AxeEXP,
@@ -4523,6 +4630,8 @@ on("sheet:opened", function(){
       FaithEXP: v.FaithEXP,
       ArmorEXP: v.ArmorEXP,
       RidingEXP: v.RidingEXP,
+      FlyingEXP: v.FlyingEXP,
+      Flyingrank: v.Flyingrank,
       Swordrank: v.Swordrank,
       Lancerank: v.Lancerank,
       Axerank: v.Axerank,

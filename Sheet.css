@@ -342,6 +342,15 @@ background-color: #f3f3f3;
     background-color: #FFF;
     color: rgb(85, 85, 85);
 }
+.charsheet input.sheet-flyinginput:checked ~ table .sheet-flyingrow{
+    background-color: #f3f3f3;
+    color: #353535;
+    pointer-events:all;
+}
+.charsheet input.sheet-flyinginput:checked ~ table .sheet-flyingrow input{
+    background-color: #FFF;
+    color: rgb(85, 85, 85);
+}
 .charsheet .sheet-skills input{
     width:60%;
 }
