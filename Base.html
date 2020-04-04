@@ -4467,7 +4467,7 @@ on("change:Species change:Class", function(eventInfo) {
 
 //Initialize values for API, because ded
 on("sheet:opened", function(){
-  getAttrs(["EXP","SwordEXP","LanceEXP","AxeEXP","BowEXP","Brawlrank","Hiddenrank","Reasonrank","Faithrank","Authorityrank","Ridingrank","Armorrank","Level","HP_i","Str_i","Mag_i","Skl_i","Spd_i","Lck_i","Def_i","Res_i","Mov_i","HP_bd","Str_bd","Mag_bd","Skl_bd","Spd_bd","Lck_bd","Def_bd","Res_bd","Mov_bd","item_uses0","item_uses1","item_uses2","Swordrank","Lancerank","Axerank","Bowrank","Brawlrank","Hiddenrank","Reasonrank","Faithrank","Authorityrank","Ridingrank","Armorrank","Hitmod","Critmod","Avomod","Ddgmod","Dmgmod","Hitmod_class","Hitb","Physb","Magb","Critb","Avob","Protb","Resb","Chab","Critavob","Ghitb","Critmod_class","Avomod_class","Ddgmod_class","fid"], function(v){
+  getAttrs(["EXP","SwordEXP","LanceEXP","AxeEXP","BowEXP","BrawlEXP","HiddenEXP","ReasonEXP","FaithEXP","AuthorityEXP","RidingEXP","ArmorEXP","Level","HP_i","Str_i","Mag_i","Skl_i","Spd_i","Lck_i","Def_i","Res_i","Mov_i","HP_bd","Str_bd","Mag_bd","Skl_bd","Spd_bd","Lck_bd","Def_bd","Res_bd","Mov_bd","item_uses0","item_uses1","item_uses2","Swordrank","Lancerank","Axerank","Bowrank","Brawlrank","Hiddenrank","Reasonrank","Faithrank","Authorityrank","Ridingrank","Armorrank","Hitmod","Critmod","Avomod","Ddgmod","Dmgmod","Hitmod_class","Hitb","Physb","Magb","Critb","Avob","Protb","Resb","Chab","Critavob","Ghitb","Critmod_class","Avomod_class","Ddgmod_class","fid"], function(v){
     setAttrs({
       EXP: v.EXP,
       SwordEXP: v.SwordEXP,
