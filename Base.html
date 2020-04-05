@@ -759,6 +759,9 @@
 
 <!--The section of the ~forbidden~ inputs. This should always go last.-->
 <div class = "hidden">
+  <input name="attr_currEff" value = " " hidden>
+  <input name="attr_currMt" value = "0" hidden>
+  <input name="attr_effdmg" value = "0" hidden>
   <input name="attr_currWep" value = "Sword" hidden>
   <input name="attr_currDesc" value = "Attack!" hidden>
   <input name="attr_class_exp0" value = "0" hidden>
@@ -881,7 +884,7 @@
   <input name="attr_Restot" value = "0" hidden>
   <input name="attr_Ghit" value = "0" hidden>
   <input name="attr_Gavo" value = "0" hidden>
-  <input name = "attr_Atkspd" value = "0" hidden>
+  <input name = "attr_Atkspd" value = "0" min = "0" hidden>
   <input name = "attr_MDmgtot" value = "0" hidden>
   <!--Firstmost weapon values, excludes hit/crit because that's already calculated-->
   <input name= "attr_Weaknesses" value = "" hidden>
@@ -4126,13 +4129,13 @@ on("change:Mov_total",function(eventInfo){
   });
 });
 //PhysDmg
-on("change:Str_total change:repeating_weapons:Mt change:_reporder:weapons remove:repeating_weapons change:Physb change:WSlot", function(eventInfo) {
+on("change:Str_total change:repeating_weapons:Mt change:_reporder:weapons remove:repeating_weapons change:Physb change:WSlot change:effdmg", function(eventInfo) {
   getAttrs(["WSlot"], function(v) {
     getSectionIDsOrdered("repeating_weapons", function(idarray) {
       slotnum = v.WSlot
       fID = idarray[Number(slotnum)-1];
       log("fID is" + fID)
-      getAttrs(["Str_total", "repeating_weapons_"+fID+"_Mt", "Physb"], function(v) {
+      getAttrs(["Str_total", "repeating_weapons_"+fID+"_Mt", "Physb","effdmg"], function(v) {
         log(JSON.stringify(v))
         let nindex = Object.keys(v)[1];
         log(nindex)
@@ -4141,7 +4144,7 @@ on("change:Str_total change:repeating_weapons:Mt change:_reporder:weapons remove
         let Str = v.Str_total;
         let Bonus = v.Physb;
         setAttrs({
-          Dmgtot: Math.round((Str) + wMt) + Number(Bonus)
+          Dmgtot: Math.round((Str) + wMt) + Number(v.effdmg) + Number(Bonus)
         });
         console.log(Math.round((Str) + wMt));
       });
@@ -4225,6 +4228,49 @@ on("change:repeating_weapons:Skill_wp change:repeating_spells:Skill_wp change:at
   });
 });
 
+//Strengths
+
+on("change:repeating_weapons:Strengths change:repeating_spells:Strengths change:atktype change:_reporder:weapons change:_reporder:spells remove:repeating_spells remove:repeating_weapons change:WSlot change:SSlot", function(eventInfo) {
+  getAttrs(["WSlot","SSlot","atktype"], function(v) {
+    if (v.atktype == "Physical"){
+      getSectionIDsOrdered("repeating_weapons", function(idarray) {
+        slotnum = v.WSlot
+        fID = idarray[Number(slotnum)-1];
+        log("fID is" + fID)
+        getAttrs(["repeating_weapons_"+fID+"_Strengths","repeating_weapons_"+fID+"_Mt"], function(v) {
+          log(JSON.stringify(v))
+          let nindex = Object.keys(v)[0];
+          let nindex2 = Object.keys(v)[1];
+
+          log(nindex)
+          let wepstr = v[nindex];
+          let wepmt = v[nindex2];
+          setAttrs({
+            currEff: wepstr,
+            currMt: wepmt
+          });
+        });
+      });
+    }
+    if (v.atktype == "Magical"){
+      getSectionIDsOrdered("repeating_spells", function(idarray) {
+        slotnum = v.SSlot
+        fID = idarray[Number(slotnum)-1];
+        log("fID is" + fID)
+        getAttrs(["repeating_spells_"+fID+"_Strengths"], function(v) {
+          log(JSON.stringify(v))
+          let nindex = Object.keys(v)[0];
+          log(nindex)
+          let wepdesc = v[nindex];
+          setAttrs({
+            currEff: wepstr
+          });
+        });
+      });
+    }
+  });
+});
+
 //MagDmg
 on("change:Mag_total change:repeating_spells:Mt change:_reporder:spells remove:repeating_spells change:Magb change:SSlot", function(eventInfo) {
   getAttrs(["SSlot"], function(v) {
@@ -4232,7 +4278,7 @@ on("change:Mag_total change:repeating_spells:Mt change:_reporder:spells remove:r
       slotnum = v.SSlot
       fID = idarray[Number(slotnum)-1];
       log("fID is" + fID)
-      getAttrs(["Mag_total", "repeating_spells_"+fID+"_Mt", "Magb"], function(v) {
+      getAttrs(["Mag_total", "repeating_spells_"+fID+"_Mt", "Magb", "effdmg"], function(v) {
         log(JSON.stringify(v))
         let nindex = Object.keys(v)[1];
         log(nindex)
@@ -4241,7 +4287,7 @@ on("change:Mag_total change:repeating_spells:Mt change:_reporder:spells remove:r
         let Mag = v.Mag_total;
         let Bonus = v.Magb;
         setAttrs({
-          MDmgtot: Math.round((Mag) + wMt) + Number(Bonus)
+          MDmgtot: Math.round((Mag) + wMt) + Number(v.effdmg) + Number(Bonus)
         });
         console.log(Math.round((Mag) + wMt));
       });
@@ -4294,7 +4340,7 @@ on("change:SwordHit change:LanceHit change:AxeHit change:BowHit change:BrawlHit 
           setProw(weptype, "Lance", v.LanceHit, v.LanceAvo, v.LanceCAvo)
           setProw(weptype, "Axe", v.AxeHit, v.AxeAvo, v.AxeCAvo)
           setProw(weptype, "Bow", v.BowHit, v.BowAvo, v.BowCAvo)
-          setProw(weptype, "Gaunlet", v.BrawlHit, v.BrawlAvo, v.BrawlCAvo)
+          setProw(weptype, "Gauntlet", v.BrawlHit, v.BrawlAvo, v.BrawlCAvo)
           setProw(weptype, "Hidden Weapon", v.HiddenHit, v.HiddenAvo, v.HiddenCAvo)
         });
       });
@@ -4434,7 +4480,7 @@ on("change:Spd_total change:Str_total change:repeating_weapons:Wt change:repeati
           log("wWt is" + wWt)
           let SpdS = v.Spd_total;
           let StrS = v.Str_total;
-          aspd = Math.round(Number(SpdS) - wWt + Number(StrS)/5);
+          aspd = Math.floor(Number(SpdS) - wWt + Number(StrS)/5);
           if (aspd>SpdS) {
             setAttrs({
               Atkspd: SpdS
@@ -4480,8 +4526,8 @@ on("change:Spd_total change:Str_total change:repeating_weapons:Wt change:repeati
 });
 //Avo
 on("change:Spd_total change:Lck_total change:Avomod change:Avob change:ProwAvo", function() {
-  getAttrs(["Spd_total", "Lck_total","Avomod","Avob","ProwAvo"], function(v) {
-    Spd = v.Spd_total;
+  getAttrs(["Atkspd", "Lck_total","Avomod","Avob","ProwAvo"], function(v) {
+    Spd = v.Atkspd;
     LckA = v.Lck_total;
     BonA = v.Avob;
     setAttrs({
@@ -4599,9 +4645,12 @@ on("change:Species change:Class", function(eventInfo) {
 
 //Initialize values for API, because ded
 on("sheet:opened", function(){
-  getAttrs(["class_exp0","class_gain0","currDesc","currWep","atktype","EXP","SwordEXP","LanceEXP","AxeEXP","BowEXP","BrawlEXP","HiddenEXP","ReasonEXP","FaithEXP","AuthorityEXP","RidingEXP","ArmorEXP","FlyingEXP","Flyingrank","Level","HP_i","Str_i","Mag_i","Skl_i","Spd_i","Lck_i","Def_i","Res_i","Mov_i","HP_bd","Str_bd","Mag_bd","Skl_bd","Spd_bd","Lck_bd","Def_bd","Res_bd","Mov_bd","item_uses0","item_uses1","item_uses2","Swordrank","Lancerank","Axerank","Bowrank","Brawlrank","Hiddenrank","Reasonrank","Faithrank","Authorityrank","Ridingrank","Armorrank","Hitmod","Critmod","Avomod","Ddgmod","Dmgmod","Hitmod_class","Hitb","Physb","Magb","Critb","Avob","Protb","Resb","Chab","Critavob","Ghitb","Critmod_class","Avomod_class","Ddgmod_class","fid","SwordGain","LanceGain","AxeGain","BowGain","BrawlGain","HiddenGain","ReasonGain","FaithGain","AuthorityGain","RidingGain","ArmorGain","FlyingGain"], function(v){
+  getAttrs(["effdmg","currEff","currMt","class_exp0","class_gain0","currDesc","currWep","atktype","EXP","SwordEXP","LanceEXP","AxeEXP","BowEXP","BrawlEXP","HiddenEXP","ReasonEXP","FaithEXP","AuthorityEXP","RidingEXP","ArmorEXP","FlyingEXP","Flyingrank","Level","HP_i","Str_i","Mag_i","Skl_i","Spd_i","Lck_i","Def_i","Res_i","Mov_i","HP_bd","Str_bd","Mag_bd","Skl_bd","Spd_bd","Lck_bd","Def_bd","Res_bd","Mov_bd","item_uses0","item_uses1","item_uses2","Swordrank","Lancerank","Axerank","Bowrank","Brawlrank","Hiddenrank","Reasonrank","Faithrank","Authorityrank","Ridingrank","Armorrank","Hitmod","Critmod","Avomod","Ddgmod","Dmgmod","Hitmod_class","Hitb","Physb","Magb","Critb","Avob","Protb","Resb","Chab","Critavob","Ghitb","Critmod_class","Avomod_class","Ddgmod_class","fid","SwordGain","LanceGain","AxeGain","BowGain","BrawlGain","HiddenGain","ReasonGain","FaithGain","AuthorityGain","RidingGain","ArmorGain","FlyingGain"], function(v){
     setAttrs({
       EXP: v.EXP,
+      effdmg: 0,
+      currEff: v.currEff,
+      currMt: v.currMt,
       class_exp0: v.class_exp0,
       class_gain0: v.class_gain0,
       currDesc: v.currDesc,

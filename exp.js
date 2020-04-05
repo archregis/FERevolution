@@ -35,6 +35,101 @@ on('chat:message', function(msg) {
       who = 'character|' + who.id;
     }
 
+    if (EXPAmod>1){
+         let wtype = getAttrByName(attacker.id, "currWep");
+    let dtype = findObjs({ characterid: attacker.id, name: "atktype"},{ caseInsensitive: true })[0];
+    let ctype = dtype.get("current");
+    log(ctype);
+
+    let Gain = Number(getAttrByName(attacker.id, 'WSlot'));
+    log(wtype);
+    let swGain = findObjs({ characterid: attacker.id, name: "SwordGain", type: "attribute"})[0];
+    let laGain = findObjs({ characterid: attacker.id, name: "LanceGain", type: "attribute"})[0];
+    let axGain = findObjs({ characterid: attacker.id, name: "AxeGain", type: "attribute"})[0];
+    let boGain = findObjs({ characterid: attacker.id, name: "BowGain", type: "attribute"})[0];
+    let brGain = findObjs({ characterid: attacker.id, name: "BrawlGain", type: "attribute"})[0];
+    let hiGain = findObjs({ characterid: attacker.id, name: "HiddenGain", type: "attribute"})[0];
+    let reGain = findObjs({ characterid: attacker.id, name: "ReasonGain", type: "attribute"})[0];
+    let faGain = findObjs({ characterid: attacker.id, name: "FaithGain", type: "attribute"})[0];
+
+    let swEXP = findObjs({ characterid: attacker.id, name: "SwordEXP", type: "attribute"})[0];
+    let laEXP = findObjs({ characterid: attacker.id, name: "LanceEXP", type: "attribute"})[0];
+    let axEXP = findObjs({ characterid: attacker.id, name: "AxeEXP", type: "attribute"})[0];
+    let boEXP = findObjs({ characterid: attacker.id, name: "BowEXP", type: "attribute"})[0];
+    let brEXP = findObjs({ characterid: attacker.id, name: "BrawlEXP", type: "attribute"})[0];
+    let hiEXP = findObjs({ characterid: attacker.id, name: "HiddenEXP", type: "attribute"})[0];
+    let reEXP = findObjs({ characterid: attacker.id, name: "ReasonEXP", type: "attribute"})[0];
+    let faEXP = findObjs({ characterid: attacker.id, name: "FaithEXP", type: "attribute"})[0];
+
+    if (wtype == "Sword"){
+      let WepEXP = Number(swEXP.get("current"));
+     WepEXP += Number(swGain.get("current"));
+     swEXP.setWithWorker("current",WepEXP);
+    }
+    if (wtype == "Lance"){
+      let WepEXP = Number(laEXP.get("current"));
+     WepEXP += Number(laGain.get("current"));
+     laEXP.setWithWorker("current",WepEXP);
+    }
+    if (wtype == "Axe"){
+      let WepEXP = Number(axEXP.get("current"));
+     WepEXP += Number(axGain.get("current"));
+     axEXP.setWithWorker("current",WepEXP);
+    }
+    if (wtype == "Bow"){
+      let WepEXP = Number(boEXP.get("current"));
+     WepEXP += Number(boGain.get("current"));
+     boEXP.setWithWorker("current",WepEXP);
+    }
+    if (wtype == "Gauntlet"){
+      let WepEXP = Number(brEXP.get("current"));
+      log(WepEXP)
+     WepEXP += Number(brGain.get("current"));
+     brEXP.setWithWorker("current",WepEXP);
+     log("Gauntlet")
+    }
+    if (wtype == "Hidden Weapon"){
+      let WepEXP = Number(hiEXP.get("current"));
+     WepEXP += Number(hiGain.get("current"));
+     hiEXP.setWithWorker("current",WepEXP);
+    }
+    if (wtype == "Reason"){
+      let WepEXP = Number(reEXP.get("current"));
+     WepEXP += Number(reGain.get("current"));
+     reEXP.setWithWorker("current",WepEXP);
+    }
+    if (wtype == "Faith"){
+      let WepEXP = Number(faEXP.get("current"));
+     WepEXP += Number(faGain.get("current"));
+     faEXP.setWithWorker("current",WepEXP);
+    }
+    }
+    // let auGain = findObjs({ characterid: attacker.id, name: "AuthorityGain", type: "attribute"})[0];
+    // let arGain = findObjs({ characterid: attacker.id, name: "ArmorGain", type: "attribute"})[0];
+    // let riGain = findObjs({ characterid: attacker.id, name: "RidingGain", type: "attribute"})[0];
+    // let flGain = findObjs({ characterid: attacker.id, name: "FlyingGain", type: "attribute"})[0];
+    // let auEXP = findObjs({ characterid: attacker.id, name: "AuthorityEXP", type: "attribute"})[0];
+    // let arEXP = findObjs({ characterid: attacker.id, name: "ArmorEXP", type: "attribute"})[0];
+    // let riEXP = findObjs({ characterid: attacker.id, name: "RidingEXP", type: "attribute"})[0];
+    // let flEXP = findObjs({ characterid: attacker.id, name: "FlyingEXP", type: "attribute"})[0];
+    let classGain = findObjs({ characterid: attacker.id, name: "class_gain0", type: "attribute"})[0];
+    let classEXP = findObjs({ characterid: attacker.id, name: "class_exp0", type: "attribute"})[0];
+    let tclassEXP = Number(classEXP.get("current"));
+    tclassEXP += Number(classGain.get("current"));
+    classEXP.setWithWorker("current",tclassEXP);
+    // let nauEXP = Number(auEXP.get("current"));
+    // nauEXP += Number(auGain.get("current"));
+    // auEXP.setWithWorker("current",nauEXP);
+    // let narEXP = Number(arEXP.get("current"));
+    // narEXP += Number(arGain.get("current"));
+    // arEXP.setWithWorker("current",narEXP);
+    // let nriEXP = Number(riEXP.get("current"));
+    // nriEXP += Number(riGain.get("current"));
+    // riEXP.setWithWorker("current",nriEXP);
+    // let nflEXP = Number(flEXP.get("current"));
+    // nflEXP += Number(flGain.get("current"));
+    // flEXP.setWithWorker("current",nflEXP);
+
     EXPA += EXPAmod;
     log(EXPAmod);
     CurrEXP.set("current",EXPA);
