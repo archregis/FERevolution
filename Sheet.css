@@ -43,6 +43,15 @@
     clear:both;
     margin-bottom:10px;
 }
+.charsheet .sheet-prowess{
+background-color: #f3f3f3;
+width: 60%;
+padding-left: 5px;
+display: inline-block;
+clear:both;
+margin-bottom:10px;
+}
+
 .charsheet .sheet-abilityinfo{
     background-color: #f3f3f3;
     font-size: 16px;
@@ -83,6 +92,17 @@
     clear:both;
     margin-bottom:10px;
 }
+.charsheet .sheet-classexp {
+    background-color: #f3f3f3;
+    width:35%;
+    padding-right: 5px;
+    padding-left: 5px;
+    float: right;
+    display: inline-block;
+    clear:both;
+    margin-bottom:10px;
+}
+
 .charsheet .sheet-spells {
     background-color: #f3f3f3;
     width:27%;
@@ -192,7 +212,7 @@
     float:left;
     margin-right: 1.5vh;
 }
-.charsheet .sheet-weapons,.charsheet .sheet-inventory,.charsheet .sheet-skills{
+.charsheet .sheet-weapons,.charsheet .sheet-inventory,.charsheet .sheet-skills,.charsheet .sheet-inventory,.charsheet .sheet-classexp{
     clear:both;
     overflow:auto;
     position:relative;
