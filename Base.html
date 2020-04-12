@@ -28,8 +28,8 @@
         <option>Half-Kitsune</option>
         <option>Wolfskin</option>
         <option>Half-Wolfskin</option>
-        <option>Laguz</option>
-        <option>Half-Laguz</option>
+        <option>Beast-Laguz</option>
+        <option>Bird-Laguz</option>
         <option>Monster</option>
         <option>Construct</option>
         <option>Other</option>
@@ -859,6 +859,7 @@
   <input name="attr_HP_sf" value = "0" hidden>
   <input name="attr_HP_total" value = "0" hidden>
   <input name="attr_HP_rg" value = "0" hidden>
+  <input name="attr_HP_rb" value = "0" hidden>
   <input name="attr_HP_gf" value = "0" hidden>
   <input name="attr_HP_gtotal" value = "0" hidden>
   <input name="attr_HP_total_max" value = "0" hidden>
@@ -867,52 +868,61 @@
   <input name="attr_Str_sf" value = "0" hidden>
   <input name="attr_Str_total" value = "0" hidden>
   <input name="attr_Str_rg" value = "0" hidden>
+  <input name="attr_Str_rb" value = "0" hidden>
   <input name="attr_Str_gf" value = "0" hidden>
   <input name="attr_Str_gtotal" value = "0" hidden>
   <input name="attr_Str_total_max" value = "0" hidden>
   <input name="attr_Mag_sf" value = "0" hidden>
   <input name="attr_Mag_total" value = "0" hidden>
   <input name="attr_Mag_rg" value = "0" hidden>
+  <input name="attr_Mag_rb" value = "0" hidden>
   <input name="attr_Mag_gf" value = "0" hidden>
   <input name="attr_Mag_gtotal" value = "0" hidden>
   <input name="attr_Mag_total_max" value = "0" hidden>
   <input name="attr_Skl_sf" value = "0" hidden>
   <input name="attr_Skl_total" value = "0" hidden>
   <input name="attr_Skl_rg" value = "0" hidden>
+  <input name="attr_Skl_rb" value = "0" hidden>
   <input name="attr_Skl_gf" value = "0" hidden>
   <input name="attr_Skl_gtotal" value = "0" hidden>
   <input name="attr_Skl_total_max" value = "0" hidden>
   <input name="attr_Spd_sf" value = "0" hidden>
   <input name="attr_Spd_total" value = "0" hidden>
   <input name="attr_Spd_rg" value = "0" hidden>
+  <input name="attr_Spd_rb" value = "0" hidden>
   <input name="attr_Spd_gf" value = "0" hidden>
   <input name="attr_Spd_gtotal" value = "0" hidden>
   <input name="attr_Spd_total_max" value = "0" hidden>
   <input name="attr_Lck_sf" value = "0" hidden>
   <input name="attr_Lck_total" value = "0" hidden>
   <input name="attr_Lck_rg" value = "0" hidden>
+  <input name="attr_Lck_rb" value = "0" hidden>
   <input name="attr_Lck_gf" value = "0" hidden>
   <input name="attr_Lck_gtotal" value = "0" hidden>
   <input name="attr_Lck_total_max" value = "0" hidden>
   <input name="attr_Def_sf" value = "0" hidden>
   <input name="attr_Def_total" value = "0" hidden>
   <input name="attr_Def_rg" value = "0" hidden>
+  <input name="attr_Def_rb" value = "0" hidden>
   <input name="attr_Def_gf" value = "0" hidden>
   <input name="attr_Def_gtotal" value = "0" hidden>
   <input name="attr_Def_total_max" value = "0" hidden>
   <input name="attr_Res_sf" value = "0" hidden>
   <input name="attr_Res_total" value = "0" hidden>
   <input name="attr_Res_rg" value = "0" hidden>
+  <input name="attr_Res_rb" value = "0" hidden>
   <input name="attr_Res_gf" value = "0" hidden>
   <input name="attr_Res_gtotal" value = "0" hidden>
   <input name="attr_Res_total_max" value = "0" hidden>
   <input name="attr_Cha_sf" value = "0" hidden>
   <input name="attr_Cha_total" value = "0" hidden>
   <input name="attr_Cha_rg" value = "0" hidden>
+  <input name="attr_Cha_rb" value = "0" hidden>
   <input name="attr_Cha_gf" value = "0" hidden>
   <input name="attr_Cha_gtotal" value = "0" hidden>
   <input name="attr_Cha_total_max" value = "0" hidden>
   <input name="attr_Mov_sf" value = "0" hidden>
+  <input name="attr_Mov_rb" value = "0" hidden>
   <input name="attr_Mov_total" value = "0" hidden>
   <input name="attr_Mov_total_max" value = "0" hidden>
   <input name="attr_Athletics_total" value = "0" hidden>
@@ -3243,15 +3253,25 @@ let wepcaps;
 let attrs;
 
 //racial growths
-const r_names = ["Human","Manakete","Half-Manakete","Kitsune","Half-Kitsune","Wolfskin","Half-Wolfskin","Laguz","Half-Laguz","Monster","Other"];
-const r_HP_g = [0,20,20,0,0,25,25,15,15,15,0];
-const r_Str_g = [0,10,10,10,10,20,20,10,10,10,0];
-const r_Mag_g = [0,-10,-10,-15,-15,-20,-20,-10,-10,-10,0];
-const r_Skl_g = [0,-10,-10,0,0,-5,-5,10,10,10,0];
-const r_Spd_g = [0,-10,-10,10,10,0,0,10,10,10,0];
-const r_Lck_g = [0,20,20,20,20,0,0,0,0,0,0];
-const r_Def_g = [0,10,10,-10,-10,10,10,0,0,0,0];
-const r_Res_g = [0,0,0,10,10,-5,-5,-10,-10,-10,0];
+const r_names = ["Human","Manakete","Half-Manakete","Kitsune","Half-Kitsune","Wolfskin","Half-Wolfskin","Beast-Laguz","Bird-Laguz","Monster","Other"];
+const r_HP_g = [0,0,0,0,0,0,0,0,0,0,0];
+const r_Str_g = [0,0,0,0,0,0,0,0,0,0,0];
+const r_Mag_g = [0,0,0,0,0,0,0,0,0,0,0];
+const r_Skl_g = [0,0,0,0,0,0,0,0,0,0,0];
+const r_Spd_g = [0,0,0,0,0,0,0,0,0,0,0];
+const r_Lck_g = [0,0,0,0,0,0,0,0,0,0,0];
+const r_Def_g = [0,0,0,0,0,0,0,0,0,0,0];
+const r_Res_g = [0,0,0,0,0,0,0,0,0,0,0];
+const r_HP_b = [0,0,0,0,0,0,0,5,3,0,0];
+const r_Str_b = [0,0,0,0,0,0,0,5,3,0,0];
+const r_Mag_b = [0,0,0,0,0,0,0,5,3,0,0];
+const r_Skl_b = [0,0,0,0,0,0,0,5,3,0,0];
+const r_Spd_b = [0,0,0,0,0,0,0,5,3,0,0];
+const r_Lck_b = [0,0,0,0,0,0,0,5,3,0,0];
+const r_Def_b = [0,0,0,0,0,0,0,5,3,0,0];
+const r_Res_b = [0,0,0,0,0,0,0,5,3,0,0];
+const r_Cha_b = [0,0,0,0,0,0,0,5,3,0,0];
+const r_Mov_b = [0,0,0,0,0,0,0,0,2,0,0];
 
 on("change:class", function(eventInfo) {
   //Actual code
@@ -3409,166 +3429,175 @@ on("change:Species", function(eventinfo) {
       Spd_rg: r_Spd_g[raceIndex],
       Lck_rg: r_Lck_g[raceIndex],
       Def_rg: r_Def_g[raceIndex],
-      Res_rg: r_Res_g[raceIndex]
-
+      Res_rg: r_Res_g[raceIndex],
+      HP_rb: r_HP_b[raceIndex],
+      Str_rb: r_Str_b[raceIndex],
+      Mag_rb: r_Mag_b[raceIndex],
+      Skl_rb: r_Skl_b[raceIndex],
+      Spd_rb: r_Spd_b[raceIndex],
+      Lck_rb: r_Lck_b[raceIndex],
+      Def_rb: r_Def_b[raceIndex],
+      Res_rb: r_Res_b[raceIndex],
+      Cha_rb: r_Cha_b[raceIndex],
+      Mov_rb: r_Mov_b[raceIndex],
     });
   }
   console.log("Growths set for " +currentrace+"!");
 });
 
 //Base total scripts! Unfortunately, this isn't the end of the scripting, and the load times are just gonna get longer and longer. :(
-on("change:HP_sf change:HP_i change:HP_bd change:repeating_weapons:HP_wp change:_reporder:weapons change:WSlot", function(eventInfo) {
+on("change:HP_sf change:HP_i change:HP_rb change:HP_bd change:repeating_weapons:HP_wp change:_reporder:weapons change:WSlot", function(eventInfo) {
   getAttrs(["WSlot"], function(v){
     getSectionIDsOrdered("repeating_weapons", function(idarray) {
       fID = idarray[0];
-      getAttrs(["HP_sf", "HP_i","HP_bd","HP_total","repeating_weapons_"+fID+"_HP_wp"], function(v) {
+      getAttrs(["HP_sf", "HP_i","HP_bd","HP_total","repeating_weapons_"+fID+"_HP_wp","HP_rb"], function(v) {
         log(JSON.stringify(v))
         let nindex = Object.keys(v)[4];
         log(nindex)
         let wp = parseInt(v[nindex])||0;
         log(wp)
         setAttrs({
-          HP_total: Number(v.HP_sf) + Number(v.HP_i) + Number(v.HP_bd) + wp,
-          HP_current_max: Number(v.HP_sf) + Number(v.HP_i) + Number(v.HP_bd) + wp
+          HP_total: Number(v.HP_sf) + Number(v.HP_i) + Number(v.HP_bd) + Number(v.HP_rb) + wp,
+          HP_current_max: Number(v.HP_sf) + Number(v.HP_i) + Number(v.HP_bd) + Number(v.HP_rb) + wp
         });
         log(Number(v.HP_sf) + Number(v.HP_i) + Number(v.HP_bd) + wp);
       });
     });
   });
 });
-on("change:Str_sf change:Str_i change:Str_bd change:repeating_weapons:Str_wp change:_reporder:weapons", function(eventInfo) {
+on("change:Str_sf change:Str_i change:Str_bd change:Str_rb change:repeating_weapons:Str_wp change:_reporder:weapons", function(eventInfo) {
   getSectionIDsOrdered("repeating_weapons", function(idarray) {
     fID = idarray[0];
-    getAttrs(["Str_sf", "Str_i","Str_bd","Str_total","repeating_weapons_"+fID+"_Str_wp"], function(v) {
+    getAttrs(["Str_sf", "Str_i","Str_bd","Str_total","repeating_weapons_"+fID+"_Str_wp","Str_rb"], function(v) {
       log(JSON.stringify(v))
       let nindex = Object.keys(v)[4];
       log(nindex)
       let wp = parseInt(v[nindex])||0;
       log(wp)
       setAttrs({
-        Str_total: Number(v.Str_sf) + Number(v.Str_i) + Number(v.Str_bd) + wp,
+        Str_total: Number(v.Str_sf) + Number(v.Str_i) + Number(v.Str_bd) + Number(v.Str_rb) + wp,
       });
-      log(Number(v.Str_sf) + Number(v.Str_i) + Number(v.Str_bd) + wp);
+      log(Number(v.Str_sf) + Number(v.Str_i) + Number(v.Str_bd) + Number(v.Str_rb) + wp);
     });
   });
 });
-on("change:Mag_sf change:Mag_i change:Mag_bd change:repeating_weapons:Mag_wp change:_reporder:weapons", function(eventInfo) {
+on("change:Mag_sf change:Mag_i change:Mag_bd change:Mag_rb change:repeating_weapons:Mag_wp change:_reporder:weapons", function(eventInfo) {
   getSectionIDsOrdered("repeating_weapons", function(idarray) {
     fID = idarray[0];
-    getAttrs(["Mag_sf", "Mag_i","Mag_bd","Mag_total","repeating_weapons_"+fID+"_Mag_wp"], function(v) {
+    getAttrs(["Mag_sf", "Mag_i","Mag_bd","Mag_total","repeating_weapons_"+fID+"_Mag_wp","Mag_rb"], function(v) {
       log(JSON.stringify(v))
       let nindex = Object.keys(v)[4];
       log(nindex)
       let wp = parseInt(v[nindex])||0;
       log(wp)
       setAttrs({
-        Mag_total: Number(v.Mag_sf) + Number(v.Mag_i) + Number(v.Mag_bd) + wp,
+        Mag_total: Number(v.Mag_sf) + Number(v.Mag_i) + Number(v.Mag_rb) + Number(v.Mag_bd) + wp,
       });
       log(Number(v.Mag_sf) + Number(v.Mag_i) + Number(v.Mag_bd) + wp);
     });
   });
 });
-on("change:Skl_sf change:Skl_i change:Skl_bd change:repeating_weapons:Skl_wp change:_reporder:weapons", function(eventInfo) {
+on("change:Skl_sf change:Skl_i change:Skl_bd change:Skl_rb change:repeating_weapons:Skl_wp change:_reporder:weapons", function(eventInfo) {
   getSectionIDsOrdered("repeating_weapons", function(idarray) {
     fID = idarray[0];
-    getAttrs(["Skl_sf", "Skl_i","Skl_bd","Skl_total","repeating_weapons_"+fID+"_Skl_wp"], function(v) {
+    getAttrs(["Skl_sf", "Skl_i","Skl_bd","Skl_total","repeating_weapons_"+fID+"_Skl_wp","Skl_rb"], function(v) {
       log(JSON.stringify(v))
       let nindex = Object.keys(v)[4];
       log(nindex)
       let wp = parseInt(v[nindex])||0;
       log(wp)
       setAttrs({
-        Skl_total: Number(v.Skl_sf) + Number(v.Skl_i) + Number(v.Skl_bd) + wp,
+        Skl_total: Number(v.Skl_sf) + Number(v.Skl_i) + Number(v.Skl_bd) + Number(v.Skl_rb) + wp,
       });
       log(Number(v.Skl_sf) + Number(v.Skl_i) + Number(v.Skl_bd) + wp);
     });
   });
 });
-on("change:Spd_sf change:Spd_i change:Spd_bd change:repeating_weapons:Spd_wp change:_reporder:weapons", function(eventInfo) {
+on("change:Spd_sf change:Spd_i change:Spd_bd change:Spd_rb change:repeating_weapons:Spd_wp change:_reporder:weapons", function(eventInfo) {
   getSectionIDsOrdered("repeating_weapons", function(idarray) {
     fID = idarray[0];
-    getAttrs(["Spd_sf", "Spd_i","Spd_bd","Spd_total","repeating_weapons_"+fID+"_Spd_wp"], function(v) {
+    getAttrs(["Spd_sf", "Spd_i","Spd_bd","Spd_total","repeating_weapons_"+fID+"_Spd_wp","Spd_rb"], function(v) {
       log(JSON.stringify(v))
       let nindex = Object.keys(v)[4];
       log(nindex)
       let wp = parseInt(v[nindex])||0;
       log(wp)
       setAttrs({
-        Spd_total: Number(v.Spd_sf) + Number(v.Spd_i) + Number(v.Spd_bd) + wp,
+        Spd_total: Number(v.Spd_sf) + Number(v.Spd_i) + Number(v.Spd_bd) + Number(v.Spd_rb) + wp,
       });
       log(Number(v.Spd_sf) + Number(v.Spd_i) + Number(v.Spd_bd) + wp);
     });
   });
 });
-on("change:Lck_sf change:Lck_i change:Lck_bd change:repeating_weapons:Lck_wp change:_reporder:weapons", function(eventInfo) {
+on("change:Lck_sf change:Lck_i change:Lck_bd change:Lck_rb change:repeating_weapons:Lck_wp change:_reporder:weapons", function(eventInfo) {
   getSectionIDsOrdered("repeating_weapons", function(idarray) {
     fID = idarray[0];
-    getAttrs(["Lck_sf", "Lck_i","Lck_bd","Lck_total","repeating_weapons_"+fID+"_Lck_wp"], function(v) {
+    getAttrs(["Lck_sf", "Lck_i","Lck_bd","Lck_total","repeating_weapons_"+fID+"_Lck_wp","Lck_rb"], function(v) {
       log(JSON.stringify(v))
       let nindex = Object.keys(v)[4];
       log(nindex)
       let wp = parseInt(v[nindex])||0;
       log(wp)
       setAttrs({
-        Lck_total: Number(v.Lck_sf) + Number(v.Lck_i) + Number(v.Lck_bd) + wp,
+        Lck_total: Number(v.Lck_sf) + Number(v.Lck_i) + Number(v.Lck_rb) + Number(v.Lck_bd) + wp,
       });
       log(Number(v.Lck_sf) + Number(v.Lck_i) + Number(v.Lck_bd) + wp);
     });
   });
 });
-on("change:Def_sf change:Def_i change:Def_bd change:repeating_weapons:Def_wp change:_reporder:weapons", function(eventInfo) {
+on("change:Def_sf change:Def_i change:Def_bd change:Def_rb change:repeating_weapons:Def_wp change:_reporder:weapons", function(eventInfo) {
   getSectionIDsOrdered("repeating_weapons", function(idarray) {
     fID = idarray[0];
-    getAttrs(["Def_sf", "Def_i","Def_bd","Def_total","repeating_weapons_"+fID+"_Def_wp"], function(v) {
+    getAttrs(["Def_sf", "Def_i","Def_bd","Def_total","repeating_weapons_"+fID+"_Def_wp","Def_rb"], function(v) {
       log(JSON.stringify(v))
       let nindex = Object.keys(v)[4];
       log(nindex)
       let wp = parseInt(v[nindex])||0;
       log(wp)
       setAttrs({
-        Def_total: Number(v.Def_sf) + Number(v.Def_i) + Number(v.Def_bd) + wp,
+        Def_total: Number(v.Def_sf) + Number(v.Def_i) + Number(v.Def_rb) + Number(v.Def_bd) + wp,
       });
       log(Number(v.Def_sf) + Number(v.Def_i) + Number(v.Def_bd) + wp);
     });
   });
 });
-on("change:Res_sf change:Res_i change:Res_bd change:repeating_weapons:Res_wp change:_reporder:weapons", function(eventInfo) {
+on("change:Res_sf change:Res_i change:Res_bd change:Res_rb change:repeating_weapons:Res_wp change:_reporder:weapons", function(eventInfo) {
   getSectionIDsOrdered("repeating_weapons", function(idarray) {
     fID = idarray[0];
-    getAttrs(["Res_sf", "Res_i","Res_bd","Res_total","repeating_weapons_"+fID+"_Res_wp"], function(v) {
+    getAttrs(["Res_sf", "Res_i","Res_bd","Res_total","repeating_weapons_"+fID+"_Res_wp","Res_rb"], function(v) {
       log(JSON.stringify(v))
       let nindex = Object.keys(v)[4];
       log(nindex)
       let wp = parseInt(v[nindex])||0;
       log(wp)
       setAttrs({
-        Res_total: Number(v.Res_sf) + Number(v.Res_i) + Number(v.Res_bd) + wp,
+        Res_total: Number(v.Res_sf) + Number(v.Res_i) + Number(v.Res_bd) + Number(v.Res_rb) + wp,
       });
       log(Number(v.Res_sf) + Number(v.Res_i) + Number(v.Res_bd) + wp);
     });
   });
 });
-on("change:Cha_sf change:Cha_i change:Cha_bd change:repeating_weapons:Cha_wp change:_reporder:weapons change:Chab", function(eventInfo) {
+on("change:Cha_sf change:Cha_i change:Cha_bd change:Cha_rb change:repeating_weapons:Cha_wp change:_reporder:weapons change:Chab", function(eventInfo) {
   getSectionIDsOrdered("repeating_weapons", function(idarray) {
     fID = idarray[0];
-    getAttrs(["Cha_sf", "Cha_i","Cha_bd","Cha_total","repeating_weapons_"+fID+"_Cha_wp","Chab"], function(v) {
+    getAttrs(["Cha_sf", "Cha_i","Cha_bd","Cha_total","repeating_weapons_"+fID+"_Cha_wp","Chab","Cha_rb"], function(v) {
       log(JSON.stringify(v))
       let nindex = Object.keys(v)[4];
       log(nindex)
       let wp = parseInt(v[nindex])||0;
       log(wp)
       setAttrs({
-        Cha_total: Number(v.Cha_sf) + Number(v.Cha_i) + Number(v.Cha_bd) + Number(v.Chab)+ wp,
+        Cha_total: Number(v.Cha_sf) + Number(v.Cha_i) + Number(v.Cha_rb) + Number(v.Cha_bd) + Number(v.Chab)+ wp,
       });
       log(Number(v.Cha_sf) + Number(v.Cha_i) + Number(v.Cha_bd) + Number(v.Chab) + wp);
     });
   });
 });
 //no mov modifiers lmao
-on("change:Mov_sf change:Mov_i change:Mov_bd", function(eventInfo) {
-  getAttrs(["Mov_sf", "Mov_i","Mov_bd"], function(values) {
+on("change:Mov_sf change:Mov_rb change:Mov_i change:Mov_bd", function(eventInfo) {
+  getAttrs(["Mov_sf", "Mov_i","Mov_bd","Mov_rb"], function(values) {
     setAttrs({
-      Mov_total: Number(values.Mov_sf) + Number(values.Mov_i) + Number(values.Mov_bd)
+      Mov_total: Number(values.Mov_sf) + Number(values.Mov_i) + Number(values.Mov_rb) + Number(values.Mov_bd)
     });
   });
 });
@@ -4761,7 +4790,7 @@ on("change:Spd_total change:Str_total change:repeating_weapons:Wt change:repeati
   });
 });
 //Avo
-on("change:Spd_total change:Lck_total change:Avomod change:Avob change:ProwAvo", function() {
+on("change:Atkspd change:Lck_total change:Avomod change:Avob change:ProwAvo", function() {
   getAttrs(["Atkspd", "Lck_total","Avomod","Avob","ProwAvo"], function(v) {
     Spd = v.Atkspd;
     LckA = v.Lck_total;
@@ -4881,7 +4910,7 @@ on("change:Species change:Class", function(eventInfo) {
 
 //Initialize values for API, because ded
 on("sheet:opened", function(){
-  getAttrs(["weplist","splist","colist","effdmg","currEff","currMt","class_exp0","class_gain0","currDesc","currWep","atktype","EXP","SwordEXP","LanceEXP","AxeEXP","BowEXP","BrawlEXP","HiddenEXP","ReasonEXP","FaithEXP","AuthorityEXP","RidingEXP","ArmorEXP","FlyingEXP","Flyingrank","Level","HP_i","Str_i","Mag_i","Skl_i","Spd_i","Lck_i","Def_i","Res_i","Mov_i","HP_bd","Str_bd","Mag_bd","Skl_bd","Spd_bd","Lck_bd","Def_bd","Res_bd","Mov_bd","item_uses0","item_uses1","item_uses2","Swordrank","Lancerank","Axerank","Bowrank","Brawlrank","Hiddenrank","Reasonrank","Faithrank","Authorityrank","Ridingrank","Armorrank","Hitmod","Critmod","Avomod","Ddgmod","Dmgmod","Hitmod_class","Hitb","Physb","Magb","Critb","Avob","Protb","Resb","Chab","Critavob","Ghitb","Critmod_class","Avomod_class","Ddgmod_class","fid","SwordGain","LanceGain","AxeGain","BowGain","BrawlGain","HiddenGain","ReasonGain","FaithGain","AuthorityGain","RidingGain","ArmorGain","FlyingGain"], function(v){
+  getAttrs(["weplist","splist","colist","effdmg","currEff","currMt","class_exp0","class_gain0","currDesc","currWep","atktype","EXP","SwordEXP","LanceEXP","AxeEXP","BowEXP","BrawlEXP","HiddenEXP","ReasonEXP","FaithEXP","AuthorityEXP","RidingEXP","ArmorEXP","FlyingEXP","Flyingrank","Level","HP_i","Str_i","Mag_i","Skl_i","Spd_i","Lck_i","Def_i","Res_i","Mov_i","HP_bd","Str_bd","Mag_bd","Skl_bd","Spd_bd","Lck_bd","Def_bd","Res_bd","Mov_bd","HP_rb","Str_rb","Mag_rb","Skl_rb","Spd_rb","Lck_rb","Def_rb","Res_rb","Mov_rb","item_uses0","item_uses1","item_uses2","Swordrank","Lancerank","Axerank","Bowrank","Brawlrank","Hiddenrank","Reasonrank","Faithrank","Authorityrank","Ridingrank","Armorrank","Hitmod","Critmod","Avomod","Ddgmod","Dmgmod","Hitmod_class","Hitb","Physb","Magb","Critb","Avob","Protb","Resb","Chab","Critavob","Ghitb","Critmod_class","Avomod_class","Ddgmod_class","fid","SwordGain","LanceGain","AxeGain","BowGain","BrawlGain","HiddenGain","ReasonGain","FaithGain","AuthorityGain","RidingGain","ArmorGain","FlyingGain"], function(v){
     setAttrs({
       EXP: v.EXP,
       splist: v.splist,
@@ -4950,6 +4979,15 @@ on("sheet:opened", function(){
       Def_bd: v.Def_bd,
       Res_bd: v.Res_bd,
       Mov_bd: v.Mov_bd,
+      HP_rb: v.HP_rb,
+      Str_rb: v.Str_rb,
+      Mag_rb: v.Mag_rb,
+      Skl_rb: v.Skl_rb,
+      Spd_rb: v.Spd_rb,
+      Lck_rb: v.Lck_rb,
+      Def_rb: v.Def_rb,
+      Res_rb: v.Res_rb,
+      Mov_rb: v.Mov_rb,
       item_uses0: v.item_uses0,
       item_uses1: v.item_uses1,
       item_uses2: v.item_uses2,
