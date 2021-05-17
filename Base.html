@@ -2762,41 +2762,6 @@ on("change:repeating_weapons change:_reporder:weapons remove:repeating_weapons",
   });
 });
 
-on("change:Species change:Class", function(eventInfo) {
-  setAttrs({
-    Weaknesses: ""
-  });
-  let weaklist = [];
-  getAttrs(["Species","Class"], function(v){
-    //Armor
-    if ((v.Class === "Knight")||(v.Class === "Great Knight")||(v.Class === "General")){
-      weaklist.push("Armor");
-    }
-    //Dragon
-    if ((v.Class == "Wyvern Rider")||(v.Class == "Wyvern Lord")||(v.Class == "Revenant Knight")|| (v.Species == "Manakete")||(v.Species == "Half-Manakete")){
-      weaklist.push("Dragon");
-    }
-    //Beast
-    if ((v.Class == "Cavalier")||(v.Class == "Troubadour")||(v.Class == "Pegasus Knight")||(v.Class == "Griffin Rider")||(v.Class == "Paladin")||(v.Class == "Great Knight")||(v.Class == "Falcon Knight")||(v.Class == "Dark Flier")||(v.Class == "Griffin Lord")||(v.Class == "Light Flier")||(v.Class == "Bow Knight")||(v.Class == "Dark Knight")||(v.Class == "Valkyrie")||(v.Species == "Kitsune")||(v.Species == "Half-Kitsune")||(v.Species == "Wolfskin")||(v.Species == "Half-Wolfskin")||(v.Species == "Laguz")||(v.Species == "Half-Laguz")){
-      weaklist.push("Beast");
-    }
-    //Flier
-    if ((v.Class == "Pegasus Knight")||(v.Class == "Griffin Rider")||(v.Class == "Wyvern Rider")||(v.Class == "Falcon Knight")||(v.Class == "Dark Flier")||(v.Class == "Griffin Lord")||(v.Class == "Light Flier")||(v.Class == "Wyvern Lord")||(v.Class == "Revenant Knight")){
-      weaklist.push("Flier");
-    }
-    //monster
-    if((v.Species == "Monster")){
-      weaklist.push("Monster");
-    }
-    if((v.Species == "Construct")){
-      weaklist.push("Construct")
-    }
-    setAttrs({
-      Weaknesses: weaklist.join(", ")
-    });
-  });
-});
-
 //Initialize values for API, because ded
 on("sheet:opened", function(){
   getAttrs(["weplist","splist","colist","effdmg","currEff","currName","currMt","class_exp0","class_gain0","currDesc","currWep","atktype","EXP","SwordEXP","LanceEXP","AxeEXP","BowEXP","BrawlEXP","HiddenEXP","ReasonEXP","FaithEXP","AuthorityEXP","RidingEXP","ArmorEXP","FlyingEXP","Flyingrank","Level","HP_i","Str_i","Mag_i","Skl_i","Spd_i","Lck_i","Def_i","Res_i","Mov_i","HP_bd","Str_bd","Mag_bd","Skl_bd","Spd_bd","Lck_bd","Def_bd","Res_bd","Mov_bd","HP_rb","Str_rb","Mag_rb","Skl_rb","Spd_rb","Lck_rb","Def_rb","Res_rb","Mov_rb","item_uses0","item_uses1","item_uses2","Swordrank","Lancerank","Axerank","Bowrank","Brawlrank","Hiddenrank","Reasonrank","Faithrank","Authorityrank","Ridingrank","Armorrank","Hitmod","Critmod","Avomod","Ddgmod","Dmgmod","Hitmod_class","Hitb","Physb","Magb","Critb","Avob","Protb","Resb","Chab","Critavob","Ghitb","Critmod_class","Avomod_class","Ddgmod_class","fid","SwordGain","LanceGain","AxeGain","BowGain","BrawlGain","HiddenGain","ReasonGain","FaithGain","AuthorityGain","RidingGain","ArmorGain","FlyingGain"], function(v){
