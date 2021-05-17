@@ -65,55 +65,6 @@
 </div>
 <!-- Battalion -->
 <div class = "sheet-checks">
-  <div class = "sheet-header">BATTALION/SUPPORTS</div>
-  <table>
-    <tr>
-      <th>Stat</th>
-      <th>Bonus</th>
-    </tr>
-    <tr>
-      <td><span>Phys</span></td>
-      <td><input type = "number" name = "attr_Physb" value = "0"></td>
-    </tr>
-    <tr>
-      <td><span>Mag</span></td>
-      <td><input type = "number" name = "attr_Magb" value = "0"></td>
-    </tr>
-    <tr>
-      <td><span>Hit</span></td>
-      <td><input type = "number" name = "attr_Hitb" value = "0"></td>
-    </tr>
-    <tr>
-      <td><span>Crit</span></td>
-      <td><input type = "number" name = "attr_Critb" value = "0"></td>
-    </tr>
-    <tr>
-      <td><span>Crit Avo</span></td>
-      <td><input type = "number" name = "attr_Critavob" value = "0"></td>
-    </tr>
-    <tr>
-      <td><span>Avo</span></td>
-      <td><input type = "number" name = "attr_Avob" value = "0"></td>
-    </tr>
-    <tr>
-      <td><span>Prot</span></td>
-      <td><input type = "number" name = "attr_Protb" value = "0"></td>
-    </tr>
-    <tr>
-      <td><span>Res</span></td>
-      <td><input type = "number" name = "attr_Resb" value = "0"></td>
-    </tr>
-    <tr>
-      <td><span>Cha</span></td>
-      <td><input type = "number" name = "attr_Chab" value = "0"></td>
-    </tr>
-    <tr>
-      <td><span>Gambit Hit</span></td>
-      <td><input type = "number" name = "attr_Ghitb" value = "0"></td>
-    </tr>
-  </table>
-</div>
-<div class = "sheet-checks">
   <div class = "sheet-header">INITIATIVE</div>
   <table>
     <tr>
@@ -155,7 +106,6 @@
           <select name = "attr_SType">
             <option>Reason</option>
             <option>Faith</option>
-            <option>Gambit</option>
             <option>Sword</option>
             <option>Axe</option>
           </select>
@@ -223,7 +173,6 @@
         <td><input name = "attr_Lck_wp" type = "number" value = "0"></td>
         <td><input name = "attr_Def_wp" type = "number" value = "0"></td>
         <td><input name = "attr_Res_wp" type = "number" value = "0"></td>
-        <td><input name = "attr_Cha_wp" type = "number" value = "0"></td>
       </tr>
     </table>
 
@@ -254,8 +203,6 @@
         <td><span name = "attr_Hit">0</span></td>
         <td><span name = "attr_Crit">0</span></td>
         <td><span name = "attr_Ddg">0</span></td>
-        <td><span name = "attr_Ghit">0</span></td>
-        <td><span name = "attr_Gavo">0</span></td>
       </tr>
       <tr class="sheet-labelrow">
         <th>Phys</th>
@@ -407,18 +354,6 @@
       <td><span name = "attr_Res_gf" value = "0">0</span></td>
       <td><input name="attr_Res_gi" type="number" value = "0"></td>
       <td><span name="attr_Res_gtotal">0</span></td>
-    </tr>
-    <tr class="Cha">
-      <td class="sheet-statlabel">Cha</td>
-      <td><span name = "attr_Cha_sf" value = "0">0</span></td>
-      <td><input name="attr_Cha_i" type="number" value = "0"></td>
-      <td><input name="attr_Cha_bd" type="number" value = "0"></td>
-      <td><span name = "attr_Cha_total">0</span></td>
-      <td class="sheet-div"> </td>
-      <td><span name = "attr_Cha_rg" value = "0">0</span></td>
-      <td><span name = "attr_Cha_gf" value = "0">0</span></td>
-      <td><input name="attr_Cha_gi" type="number" value = "0"></td>
-      <td><span name="attr_Cha_gtotal">0</span></td>
     </tr>
 
     <tr class="Mov">
@@ -588,7 +523,6 @@
             <option>Bow</option>
             <option>Gauntlet</option>
             <option>Hidden Weapon</option>
-            <option>Gambit</option>
           </select>
         </td>
         <td><input type = "number" name = "attr_Uses" value = "1" min = "0"/></td>
@@ -654,7 +588,6 @@
         <td><input name = "attr_Lck_wp" type = "number" value = "0"></td>
         <td><input name = "attr_Def_wp" type = "number" value = "0"></td>
         <td><input name = "attr_Res_wp" type = "number" value = "0"></td>
-        <td><input name = "attr_Cha_wp" type = "number" value = "0"></td>
       </tr>
     </table>
 
@@ -946,13 +879,6 @@
   <input name="attr_Res_gf" value = "0" hidden>
   <input name="attr_Res_gtotal" value = "0" hidden>
   <input name="attr_Res_total_max" value = "0" hidden>
-  <input name="attr_Cha_sf" value = "0" hidden>
-  <input name="attr_Cha_total" value = "0" hidden>
-  <input name="attr_Cha_rg" value = "0" hidden>
-  <input name="attr_Cha_rb" value = "0" hidden>
-  <input name="attr_Cha_gf" value = "0" hidden>
-  <input name="attr_Cha_gtotal" value = "0" hidden>
-  <input name="attr_Cha_total_max" value = "0" hidden>
   <input name="attr_Mov_sf" value = "0" hidden>
   <input name="attr_Mov_rb" value = "0" hidden>
   <input name="attr_Mov_total" value = "0" hidden>
@@ -1006,8 +932,6 @@
   <input name="attr_Dmgtot" value = "0" hidden>
   <input name="attr_Protot" value = "0" hidden>
   <input name="attr_Restot" value = "0" hidden>
-  <input name="attr_Ghit" value = "0" hidden>
-  <input name="attr_Gavo" value = "0" hidden>
   <input name = "attr_Atkspd" value = "0" min = "0" hidden>
   <input name = "attr_MDmgtot" value = "0" hidden>
   <!--Firstmost weapon values, excludes hit/crit because that's already calculated-->
@@ -1061,7 +985,6 @@ const r_Spd_b = [0,0,0,3,0,0,0,5,3,0,0];
 const r_Lck_b = [0,0,0,3,0,0,0,5,3,0,0];
 const r_Def_b = [0,0,0,3,0,0,0,5,3,0,0];
 const r_Res_b = [0,0,0,3,0,0,0,5,3,0,0];
-const r_Cha_b = [0,0,0,3,0,0,0,5,3,0,0];
 const r_Mov_b = [0,0,0,1,0,0,0,0,2,0,0];
 
 on("change:class", function(eventInfo) {
@@ -1229,7 +1152,6 @@ on("change:Species", function(eventinfo) {
       Lck_rb: r_Lck_b[raceIndex],
       Def_rb: r_Def_b[raceIndex],
       Res_rb: r_Res_b[raceIndex],
-      Cha_rb: r_Cha_b[raceIndex],
       Mov_rb: r_Mov_b[raceIndex],
     });
   }
@@ -1389,22 +1311,6 @@ on("change:Res_sf change:Res_i change:Res_bd change:Res_rb change:repeating_weap
     });
   });
 });
-on("change:Cha_sf change:Cha_i change:Cha_bd change:Cha_rb change:repeating_weapons:Cha_wp change:_reporder:weapons change:Chab", function(eventInfo) {
-  getSectionIDsOrdered("repeating_weapons", function(idarray) {
-    fID = idarray[0];
-    getAttrs(["Cha_sf", "Cha_i","Cha_bd","Cha_total","repeating_weapons_"+fID+"_Cha_wp","Chab","Cha_rb"], function(v) {
-      log(JSON.stringify(v))
-      let nindex = Object.keys(v)[4];
-      log(nindex)
-      let wp = parseInt(v[nindex])||0;
-      log(wp)
-      setAttrs({
-        Cha_total: Number(v.Cha_sf) + Number(v.Cha_i) + Number(v.Cha_rb) + Number(v.Cha_bd) + Number(v.Chab),
-      });
-      log(Number(v.Cha_sf) + Number(v.Cha_i) + Number(v.Cha_bd) + Number(v.Chab));
-    });
-  });
-});
 //no mov modifiers lmao
 on("change:Mov_sf change:Mov_rb change:Mov_i change:Mov_bd", function(eventInfo) {
   getAttrs(["Mov_sf", "Mov_i","Mov_bd","Mov_rb"], function(values) {
@@ -1468,13 +1374,6 @@ on("change:Res_rg change:Res_gf change:Res_gi", function(eventInfo) {
   getAttrs(["Res_rg", "Res_gf","Res_gi"], function(values) {
     setAttrs({
       Res_gtotal: Number(values.Res_rg) + Number(values.Res_gf) + Number(values.Res_gi)
-    });
-  });
-});
-on("change:Cha_rg change:Cha_gf change:Cha_gi", function(eventInfo) {
-  getAttrs(["Cha_rg", "Cha_gf","Cha_gi"], function(values) {
-    setAttrs({
-      Cha_gtotal: Number(values.Cha_rg) + Number(values.Cha_gf) + Number(values.Cha_gi)
     });
   });
 });
@@ -1679,268 +1578,7 @@ on("change:Survival_check change:Res_total change:Lck_total",function(eventInfo)
   });
 });
 
-//Weapon ranks!
 
-function setRank(tRank, currEXP){
-  let Rank = tRank;
-  let r = currEXP;
-  if ((currEXP >= 40) && (Rank == "E")){
-    Rank = "E+";
-    r = currEXP-40;
-  }
-  if ((currEXP >= 60) && (Rank == "E+")){
-    Rank = "D";
-    r = currEXP-60;
-  }
-  if ((currEXP >= 80) && (Rank == "D")){
-    Rank = "D+";
-    r = currEXP-80
-  }
-  if ((currEXP >= 120) && (Rank == "D+")){
-    Rank = "C";
-    r = currEXP-120;
-  }
-  if ((currEXP >= 160) && (Rank == "C")){
-    Rank = "C+";
-      r = currEXP-160;
-  }
-  if ((currEXP >= 220) && (Rank == "C+")){
-    Rank = "B";
-      r = currEXP-220;
-  }
-  if ((currEXP >= 280) && (Rank == "B")){
-    Rank = "B+";
-      r = currEXP-280;
-  }
-  if ((currEXP >= 360) && (Rank == "B+")){
-    Rank = "A";
-      r = currEXP-360;
-  }
-  if ((currEXP >= 440) && (Rank == "A")){
-    Rank = "A+";
-      r = currEXP-440;
-  }
-  if ((currEXP >= 760) && (Rank == "A+")){
-    Rank = "S";
-      r = currEXP-760;
-  }
-  if ((currEXP >= 1060) && (Rank == "S")){
-    Rank = "S+";
-      r = currEXP-1060;
-  }
-  if (currEXP > 2000){
-    Rank = "E";
-      r = 0;
-  }
-  return [Rank, r]
-}
-
-let maxRank;
-let Rank;
-on("change:SwordEXP", function(eventInfo) {
-  getAttrs(["Swordrank_max", "SwordEXP", "Swordrank"], function(values) {
-    maxRank = values.Swordrank_max
-    console.log(maxRank)
-    currEXP = values.SwordEXP;
-    console.log(currEXP)
-    Rank = values.Swordrank;
-    console.log(Rank)
-    tRanks = setRank(Rank, currEXP);
-    setAttrs({
-      SwordEXP: tRanks[1]
-    });
-    setAttrs({
-      Swordrank: tRanks[0]
-    })
-  });
-});
-
-on("change:LanceEXP", function(eventInfo) {
-  getAttrs(["Lancerank_max", "LanceEXP", "Lancerank"], function(values) {
-    maxRank = values.Lancerank_max
-    console.log(maxRank)
-    currEXP = values.LanceEXP;
-    console.log(currEXP)
-    Rank = values.Lancerank;
-    console.log(Rank)
-    tRanks = setRank(Rank, currEXP);
-    setAttrs({
-      LanceEXP: tRanks[1]
-    });
-    setAttrs({
-      Lancerank: tRanks[0]
-  });
-});
-});
-on("change:AxeEXP", function(eventInfo) {
-  getAttrs(["Axerank_max", "AxeEXP", "Axerank"], function(values) {
-    maxRank = values.Axerank_max
-    console.log(maxRank)
-    currEXP = values.AxeEXP;
-    console.log(currEXP)
-    Rank = values.Axerank;
-    console.log(Rank)
-    tRanks = setRank(Rank, currEXP);
-    setAttrs({
-      AxeEXP: tRanks[1]
-    });
-    setAttrs({
-      Axerank: tRanks[0]
-  });
-});
-});
-on("change:BowEXP", function(eventInfo) {
-  getAttrs(["Bowrank_max", "BowEXP", "Bowrank"], function(values) {
-    maxRank = values.Bowrank_max
-    console.log(maxRank)
-    currEXP = values.BowEXP;
-    console.log(currEXP)
-    Rank = values.Bowrank;
-    console.log(Rank)
-    tRanks = setRank(Rank, currEXP);
-    setAttrs({
-      BowEXP: tRanks[1]
-    });
-    setAttrs({
-      Bowrank: tRanks[0]
-  });
-});
-});
-on("change:BrawlEXP", function(eventInfo) {
-  getAttrs(["Brawlrank_max", "BrawlEXP", "Brawlrank"], function(values) {
-    maxRank = values.Brawlrank_max
-    console.log(maxRank)
-    currEXP = values.BrawlEXP;
-    console.log(currEXP)
-    Rank = values.Brawlrank;
-    console.log(Rank)
-    tRanks = setRank(Rank, currEXP);
-    setAttrs({
-      BrawlEXP: tRanks[1]
-    });
-    setAttrs({
-      Brawlrank: tRanks[0]
-  });
-});
-});
-on("change:HiddenEXP", function(eventInfo) {
-  getAttrs(["Hiddenrank_max", "HiddenEXP", "Hiddenrank"], function(values) {
-    maxRank = values.Hiddenrank_max
-    console.log(maxRank)
-    currEXP = values.HiddenEXP;
-    console.log(currEXP)
-    Rank = values.Hiddenrank;
-    console.log(Rank)
-    tRanks = setRank(Rank, currEXP);
-    setAttrs({
-      HiddenEXP: tRanks[1]
-    });
-    setAttrs({
-      Hiddenrank: tRanks[0]
-  });
-});
-});
-on("change:ReasonEXP", function(eventInfo) {
-  getAttrs(["Reasonrank_max", "ReasonEXP", "Reasonrank"], function(values) {
-    maxRank = values.Reasonrank_max
-    console.log(maxRank)
-    currEXP = values.ReasonEXP;
-    console.log(currEXP)
-    Rank = values.Reasonrank;
-    console.log(Rank)
-    tRanks = setRank(Rank, currEXP);
-    setAttrs({
-      ReasonEXP: tRanks[1]
-    });
-    setAttrs({
-      Reasonrank: tRanks[0]
-  });
-});
-});
-on("change:FaithEXP", function(eventInfo) {
-  getAttrs(["Faithrank_max", "FaithEXP", "Faithrank"], function(values) {
-    maxRank = values.Faithrank_max
-    console.log(maxRank)
-    currEXP = values.FaithEXP;
-    console.log(currEXP)
-    Rank = values.Faithrank;
-    console.log(Rank)
-    tRanks = setRank(Rank, currEXP);
-    setAttrs({
-      FaithEXP: tRanks[1]
-    });
-    setAttrs({
-      Faithrank: tRanks[0]
-  });
-});
-});
-on("change:AuthorityEXP", function(eventInfo) {
-  getAttrs(["Authorityrank_max", "AuthorityEXP", "Authorityrank"], function(values) {
-    maxRank = values.Authorityrank_max
-    console.log(maxRank)
-    currEXP = values.AuthorityEXP;
-    console.log(currEXP)
-    Rank = values.Authorityrank;
-    console.log(Rank)
-    tRanks = setRank(Rank, currEXP);
-    setAttrs({
-      AuthorityEXP: tRanks[1]
-    });
-    setAttrs({
-      Authorityrank: tRanks[0]
-  });
-});
-});
-on("change:ArmorEXP", function(eventInfo) {
-  getAttrs(["Armorrank_max", "ArmorEXP", "Armorrank"], function(values) {
-    maxRank = values.Armorrank_max
-    console.log(maxRank)
-    currEXP = values.ArmorEXP;
-    console.log(currEXP)
-    Rank = values.Armorrank;
-    console.log(Rank)
-    tRanks = setRank(Rank, currEXP);
-    setAttrs({
-      ArmorEXP: tRanks[1]
-    });
-    setAttrs({
-      Armorrank: tRanks[0]
-  });
-});
-});
-on("change:FlyingEXP", function(eventInfo) {
-  getAttrs(["Flyingrank_max", "FlyingEXP", "Flyingrank"], function(values) {
-    maxRank = values.Flyingrank_max
-    console.log(maxRank)
-    currEXP = values.FlyingEXP;
-    console.log(currEXP)
-    Rank = values.Flyingrank;
-    console.log(Rank)
-    tRanks = setRank(Rank, currEXP);
-    setAttrs({
-      FlyingEXP: tRanks[1]
-    });
-    setAttrs({
-      Flyingrank: tRanks[0]
-  });
-});
-});
-on("change:RidingEXP", function(eventInfo) {
-  getAttrs(["Ridingrank_max", "RidingEXP", "Ridingrank"], function(values) {
-    maxRank = values.Ridingrank_max
-    console.log(maxRank)
-    currEXP = values.RidingEXP;
-    console.log(currEXP)
-    Rank = values.Ridingrank;
-    console.log(Rank)
-    tRanks = setRank(Rank, currEXP);
-    setAttrs({
-      RidingEXP: tRanks[1]
-    });
-    setAttrs({
-      Ridingrank: tRanks[0]
-  });
-});
 
 });
 on("change:EXP", function(eventInfo) {
@@ -2258,13 +1896,13 @@ on("change:repeating_weapons change:repeating_spells change:repeating_weapons:St
   });
 });
 //PhysDmg
-on("change:Str_total change:repeating_weapons:WType change:Cha_total change:repeating_weapons:Mt change:_reporder:weapons remove:repeating_weapons change:Physb change:WSlot change:atktype", function(eventInfo) {
+on("change:Str_total change:repeating_weapons:WType change:repeating_weapons:Mt change:_reporder:weapons remove:repeating_weapons change:Physb change:WSlot change:atktype", function(eventInfo) {
   getAttrs(["WSlot"], function(v) {
     getSectionIDsOrdered("repeating_weapons", function(idarray) {
       slotnum = v.WSlot
       fID = idarray[Number(slotnum)-1];
       log("fID is" + fID)
-      getAttrs(["Str_total", "repeating_weapons_"+fID+"_Mt","repeating_weapons_"+fID+"_WType", "Cha_total", "Physb", "atktype"], function(v) {
+      getAttrs(["Str_total", "repeating_weapons_"+fID+"_Mt","repeating_weapons_"+fID+"_WType", "Physb", "atktype"], function(v) {
         log(JSON.stringify(v))
         let nindex = Object.keys(v)[1];
         let mindex = Object.keys(v)[2];
@@ -2274,17 +1912,11 @@ on("change:Str_total change:repeating_weapons:WType change:Cha_total change:repe
         let Str = v.Str_total;
         let Bonus = v.Physb;
         if (v.atktype == "Physical"){
-          if (v[mindex] == "Gambit"){
-            setAttrs({
-              Dmgtot: Math.floor((Str) + v.Cha_total/5 + wMt) + Number(Bonus),
-            });
-          }
-          else {
             setAttrs({
               Dmgtot: Math.round((Str) + wMt) + Number(Bonus),
               effdmg: Str + 3*wMt + Number(Bonus)
             });
-          }
+
         }
         console.log(Math.round((Str) + wMt));
       });
@@ -2326,7 +1958,7 @@ on("change:Mag_total change:repeating_spells:Mt change:repeating_weapons:SType c
       slotnum = v.SSlot
       fID = idarray[Number(slotnum)-1];
       log("fID is" + fID)
-      getAttrs(["Mag_total", "repeating_spells_"+fID+"_Mt","repeating_spells_"+fID+"_SType", "Cha_total","Magb",], function(v) {
+      getAttrs(["Mag_total","repeating_spells_"+fID+"_Mt","repeating_spells_"+fID+"_SType","Magb",], function(v) {
         log(JSON.stringify(v))
         let nindex = Object.keys(v)[1];
         let mindex = Object.keys(v)[2];
@@ -2335,35 +1967,28 @@ on("change:Mag_total change:repeating_spells:Mt change:repeating_weapons:SType c
         log("wMt is " + wMt)
         let Mag = v.Mag_total;
         let Bonus = v.Magb;
-        if (v[mindex] == "Gambit"){
-          setAttrs({
-            MDmgtot: Math.floor((Mag) + v.Cha_total/5 + wMt) + Number(Bonus),
-          });
-        }
-        else {
           setAttrs({
             MDmgtot: Math.round((Mag) + wMt) + Number(Bonus),
             effdmg: Mag + 3*wMt + Number(Bonus)
           });
-        }
         console.log(Math.round((Mag) + wMt));
       });
     });
   });
 });
 //Prot
-on("change:Def_total change:Protb", function() {
-  getAttrs(["Def_total","Protb"], function(v) {
+on("change:Def_total", function() {
+  getAttrs(["Def_total"], function(v) {
     setAttrs({
-      Protot: Number(v.Def_total) + Number(v.Protb)
+      Protot: Number(v.Def_total)
     });
   });
 });
 //Res
-on("change:Res_total change:Resb", function() {
-  getAttrs(["Res_total","Resb"], function(v) {
+on("change:Res_total", function() {
+  getAttrs(["Res_total"], function(v) {
     setAttrs({
-      Restot: Number(v.Res_total) + Number(v.Resb)
+      Restot: Number(v.Res_total)
     });
   });
 });
@@ -2421,14 +2046,14 @@ on("change:SwordHit change:LanceHit change:AxeHit change:BowHit change:BrawlHit 
 });
 
 //Hit
-on("change:Skl_total change:Lck_total change:Hitmod change:repeating_combat change:repeating_combat:Hit change:repeating_weapons:Hit change:repeating_spells:Hit change:_reporder:weapons change:_reporder:spells remove:repeating_weapons remove:repeating_spells change:Hitb change:WSlot change:SSlot change:atktype change:ProwHit", function(eventInfo) {
+on("change:Skl_total change:Lck_total change:Hitmod change:repeating_combat change:repeating_combat:Hit change:repeating_weapons:Hit change:repeating_spells:Hit change:_reporder:weapons change:_reporder:spells remove:repeating_weapons remove:repeating_spells change:WSlot change:SSlot change:atktype change:ProwHit", function(eventInfo) {
   getAttrs(["WSlot","SSlot","CSlot","atktype"], function(v) {
     if (v.atktype == "Physical"){
       getSectionIDsOrdered("repeating_weapons", function(idarray) {
         slotnum = v.WSlot
         fID = idarray[Number(slotnum)-1];
         log("fID is" + fID)
-        getAttrs(["Skl_total","Lck_total","Hitmod","repeating_weapons_"+fID+"_hit", "Hitb", "ProwHit"], function(v) {
+        getAttrs(["Skl_total","Lck_total","Hitmod","repeating_weapons_"+fID+"_hit", "ProwHit"], function(v) {
           log(JSON.stringify(v))
           let nindex = Object.keys(v)[3];
           log(nindex)
@@ -2437,9 +2062,8 @@ on("change:Skl_total change:Lck_total change:Hitmod change:repeating_combat chan
           let Skl = v.Skl_total;
           let Lck = v.Lck_total;
           let Mod = v.Hitmod;
-          let Bonus = v.Hitb;
           setAttrs({
-            Hit: Math.round((Skl) + wHit) + Number(Bonus)+ Number(Mod) + Number(v.ProwHit),
+            Hit: Math.round((Skl) + wHit) + Number(Mod) + Number(v.ProwHit),
             currHit: wHit
           });
           console.log(Math.round((Skl) + wHit));
@@ -2452,19 +2076,17 @@ on("change:Skl_total change:Lck_total change:Hitmod change:repeating_combat chan
         slotnum = v.CSlot;
         fID = idarray[Number(slotnum)-1];
         log("fID is" + fID)
-        getAttrs(["Skl_total","Lck_total","Hitmod","repeating_combat_"+fID+"_hit", "Hitb", "ProwHit", "currHit"], function(v) {
+        getAttrs(["Skl_total","Lck_total","Hitmod","repeating_combat_"+fID+"_hit", "ProwHit", "currHit"], function(v) {
           log(JSON.stringify(v))
           let nindex = Object.keys(v)[3];
           log(nindex)
           let wHit = parseInt(v[nindex])||0;
-
           log("wHit is " + wHit)
           let Skl = v.Skl_total;
           let Lck = v.Lck_total;
           let Mod = v.Hitmod;
-          let Bonus = v.Hitb;
           setAttrs({
-            Hit: Math.round((Skl) + wHit + Number(v.currHit)) + Number(Bonus)+ Number(Mod) + Number(v.ProwHit),
+            Hit: Math.round((Skl) + wHit + Number(v.currHit)) + Number(Mod) + Number(v.ProwHit),
           });
         });
       });
@@ -2474,7 +2096,7 @@ on("change:Skl_total change:Lck_total change:Hitmod change:repeating_combat chan
         slotnum = v.SSlot
         fID = idarray[Number(slotnum)-1];
         log("fID is" + fID)
-        getAttrs(["Skl_total","Lck_total","Hitmod","repeating_spells_"+fID+"_hit", "Hitb", "ProwHit"], function(v) {
+        getAttrs(["Skl_total","Lck_total","Hitmod","repeating_spells_"+fID+"_hit", "ProwHit"], function(v) {
           log(JSON.stringify(v))
           let nindex = Object.keys(v)[3];
           log(nindex)
@@ -2483,9 +2105,8 @@ on("change:Skl_total change:Lck_total change:Hitmod change:repeating_combat chan
           let Skl = v.Skl_total;
           let Lck = v.Lck_total;
           let Mod = v.Hitmod;
-          let Bonus = v.Hitb;
           setAttrs({
-            Hit: Math.round((Skl) + wHit) + Number(Bonus)+ Number(Mod) + Number(v.ProwHit)
+            Hit: Math.round((Skl) + wHit) + Number(Mod) + Number(v.ProwHit)
           });
           console.log(Math.round((Skl) + wHit));
           console.log("Hitmod is" + Mod)
@@ -2497,13 +2118,13 @@ on("change:Skl_total change:Lck_total change:Hitmod change:repeating_combat chan
 });
 
 //Crit
-on("change:Skl_total change:Lck_total change:Critmod change:repeating_weapons:Crit change:repeating_spells:Crit change:_reporder:weapons change:_reporder:spells remove:repeating_weapons remove:repeating_spells change:Critb change:WSlot change:SSlot change:atktype", function() {
+on("change:Skl_total change:Lck_total change:Critmod change:repeating_weapons:Crit change:repeating_spells:Crit change:_reporder:weapons change:_reporder:spells remove:repeating_weapons remove:repeating_spells change:WSlot change:SSlot change:atktype", function() {
   getAttrs(["WSlot","SSlot","CSlot","atktype"], function(v) {
     if (v.atktype == "Physical"){
       getSectionIDsOrdered("repeating_weapons", function(idarray) {
         slotnum = v.WSlot
         fID = idarray[Number(slotnum)-1];
-      getAttrs(["Skl_total","Lck_total","Critmod","repeating_weapons_"+fID+"_crit","Critb"], function(v) {
+      getAttrs(["Skl_total","Lck_total","Critmod","repeating_weapons_"+fID+"_crit"], function(v) {
         log(JSON.stringify(v))
         let nindex = Object.keys(v)[3];
         log(nindex)
@@ -2512,7 +2133,6 @@ on("change:Skl_total change:Lck_total change:Critmod change:repeating_weapons:Cr
         let SklC = v.Skl_total;
         let LckC = v.Lck_total;
         let ModC = v.Critmod;
-        let BonC = v.Critb;
         setAttrs({
           Crit: Math.floor((SklC / 2) + (LckC / 2)  + wCrit) +Number(BonC) + Number(ModC),
           currCrit : wCrit
@@ -2526,7 +2146,7 @@ on("change:Skl_total change:Lck_total change:Critmod change:repeating_weapons:Cr
     getSectionIDsOrdered("repeating_combat", function(idarray) {
       slotnum = v.CSlot
       fID = idarray[Number(slotnum)-1];
-    getAttrs(["Skl_total","Lck_total","Critmod","repeating_combat_"+fID+"_crit","Critb","currCrit"], function(v) {
+    getAttrs(["Skl_total","Lck_total","Critmod","repeating_combat_"+fID+"_crit","currCrit"], function(v) {
       log(JSON.stringify(v))
       let nindex = Object.keys(v)[3];
       log(nindex)
@@ -2535,9 +2155,9 @@ on("change:Skl_total change:Lck_total change:Critmod change:repeating_weapons:Cr
       let SklC = v.Skl_total;
       let LckC = v.Lck_total;
       let ModC = v.Critmod;
-      let BonC = v.Critb;
+
       setAttrs({
-        Crit: Math.floor((SklC / 2) + (LckC / 2)  + wCrit) +Number(BonC) + Number(ModC) + Number(v.currCrit)
+        Crit: Math.floor((SklC / 2) + (LckC / 2)  + wCrit) + Number(ModC) + Number(v.currCrit)
       });
       console.log(Math.round((SklC / 2) + (LckC / 2) + wCrit));
       console.log("Critmod is" + ModC)
@@ -2548,7 +2168,7 @@ on("change:Skl_total change:Lck_total change:Critmod change:repeating_weapons:Cr
     getSectionIDsOrdered("repeating_spells", function(idarray) {
       slotnum = v.SSlot
       fID = idarray[Number(slotnum)-1];
-    getAttrs(["Skl_total","Lck_total","Critmod","repeating_spells_"+fID+"_crit","Critb"], function(v) {
+    getAttrs(["Skl_total","Lck_total","Critmod","repeating_spells_"+fID+"_crit"], function(v) {
       log(JSON.stringify(v))
       let nindex = Object.keys(v)[3];
       log(nindex)
@@ -2557,9 +2177,8 @@ on("change:Skl_total change:Lck_total change:Critmod change:repeating_weapons:Cr
       let SklC = v.Skl_total;
       let LckC = v.Lck_total;
       let ModC = v.Critmod;
-      let BonC = v.Critb;
       setAttrs({
-        Crit: Math.floor((SklC / 2) + (LckC / 2)  + wCrit) +Number(BonC) + Number(ModC)
+        Crit: Math.floor((SklC / 2) + (LckC / 2)  + wCrit) + Number(ModC)
       });
       console.log(Math.round((SklC / 2) + (LckC / 2) + wCrit));
       console.log("Critmod is" + ModC)
@@ -2644,88 +2263,25 @@ on("change:Spd_total change:All change:Str_total change:repeating_weapons:Wt cha
   });
 });
 //Avo
-on("change:Atkspd change:Lck_total change:Avomod change:Avob change:ProwAvo", function() {
-  getAttrs(["Atkspd", "Lck_total","Avomod","Avob","ProwAvo"], function(v) {
+on("change:Atkspd change:Lck_total change:Avomod change:ProwAvo", function() {
+  getAttrs(["Atkspd", "Lck_total","Avomod","ProwAvo"], function(v) {
     Spd = v.Atkspd;
     LckA = v.Lck_total;
-    BonA = v.Avob;
     setAttrs({
-      Avo: Math.round(Spd) +Number(BonA) + Number(v.ProwAvo) + Number(v.Avomod)
+      Avo: Math.round(Spd) + Number(v.ProwAvo) + Number(v.Avomod)
     });
   });
 });
 //Critavo
-on("change:Lck_total change:Ddgmod change:Critavob change:ProwCAvo", function() {
-  getAttrs(["Lck_total", "Avomod", "Critavob","ProwCAvo"], function(v) {
+on("change:Lck_total change:Ddgmod change:ProwCAvo", function() {
+  getAttrs(["Lck_total", "Avomod","ProwCAvo"], function(v) {
     Lck = v.Lck_total;
-    Cavo = v.Critavob;
     setAttrs({
-      Ddg: 100 + Number(Lck) + Number(Cavo) + Number(v.ProwCAvo) + Number(v.Avomod)
+      Ddg: 100 + Number(Lck) + Number(v.ProwCAvo) + Number(v.Avomod)
     });
   });
 });
-//Gambit Hit
 
-on("change:Cha_total change:Ghitb change:repeating_weapons:Hit change:repeating_spells:Hit change:_reporder:weapons change:_reporder:spells remove:repeating_weapons remove:repeating_spells change:repeating_weapons:WType change:repeating_spells:SType change:WSlot change:SSlot change:atktype change:ProwHit", function(eventInfo) {
-  getAttrs(["WSlot","SSlot","CSlot","atktype"], function(v) {
-    if (v.atktype == "Physical"){
-      getSectionIDsOrdered("repeating_weapons", function(idarray) {
-        slotnum = v.WSlot
-        fID = idarray[Number(slotnum)-1];
-        log("fID is" + fID)
-        getAttrs(["Cha_total","Ghitb","repeating_weapons_"+fID+"_hit","repeating_weapons_"+fID+"_WType"], function(v) {
-          log(JSON.stringify(v))
-          let nindex = Object.keys(v)[2];
-          let mindex = Object.keys(v)[3];
-          log(nindex)
-          let wHit = parseInt(v[nindex])||0;
-          log("wHit is " + wHit)
-          let Cha = v.Cha_total;
-          let Bonus = v.Ghitb;
-          if (v[mindex] == "Gambit"){
-            setAttrs({
-              GHit: Math.round((Cha) + wHit + Number(Bonus)),
-            });
-          }
-        });
-      });
-    }
-    if (v.atktype == "Magical"){
-      getSectionIDsOrdered("repeating_spells", function(idarray) {
-        slotnum = v.SSlot
-        fID = idarray[Number(slotnum)-1];
-        log("fID is" + fID)
-        getAttrs(["Cha_total","Ghitb","repeating_spells_"+fID+"_hit","repeating_spells_"+fID+"_SType"], function(v) {
-          log(JSON.stringify(v))
-          let nindex = Object.keys(v)[2];
-          let mindex = Object.keys(v)[3];
-          log(nindex)
-          let wHit = parseInt(v[nindex])||0;
-          log("wHit is " + wHit)
-          let Cha = v.Cha_total;
-          let Bonus = v.Ghitb;
-          if (v[mindex] == "Gambit"){
-            setAttrs({
-              GHit: Math.round((Cha) + wHit + Number(Bonus)),
-            });
-          }
-        });
-      });
-    }
-
-  });
-});
-
-//Gambit Avo
-on("change:Cha_total change:Avob", function() {
-  getAttrs(["Cha_total", "Avob"], function(v) {
-    Cha = v.Cha_total;
-    GAvo = v.Avob;
-    setAttrs({
-      Gavo: Number(Cha) + Number(GAvo)
-    });
-  });
-});
 //Weapon # limits
 
 /*
@@ -2762,9 +2318,10 @@ on("change:repeating_weapons change:_reporder:weapons remove:repeating_weapons",
   });
 });
 
+
 //Initialize values for API, because ded
 on("sheet:opened", function(){
-  getAttrs(["weplist","splist","colist","effdmg","currEff","currName","currMt","class_exp0","class_gain0","currDesc","currWep","atktype","EXP","SwordEXP","LanceEXP","AxeEXP","BowEXP","BrawlEXP","HiddenEXP","ReasonEXP","FaithEXP","AuthorityEXP","RidingEXP","ArmorEXP","FlyingEXP","Flyingrank","Level","HP_i","Str_i","Mag_i","Skl_i","Spd_i","Lck_i","Def_i","Res_i","Mov_i","HP_bd","Str_bd","Mag_bd","Skl_bd","Spd_bd","Lck_bd","Def_bd","Res_bd","Mov_bd","HP_rb","Str_rb","Mag_rb","Skl_rb","Spd_rb","Lck_rb","Def_rb","Res_rb","Mov_rb","item_uses0","item_uses1","item_uses2","Swordrank","Lancerank","Axerank","Bowrank","Brawlrank","Hiddenrank","Reasonrank","Faithrank","Authorityrank","Ridingrank","Armorrank","Hitmod","Critmod","Avomod","Ddgmod","Dmgmod","Hitmod_class","Hitb","Physb","Magb","Critb","Avob","Protb","Resb","Chab","Critavob","Ghitb","Critmod_class","Avomod_class","Ddgmod_class","fid","SwordGain","LanceGain","AxeGain","BowGain","BrawlGain","HiddenGain","ReasonGain","FaithGain","AuthorityGain","RidingGain","ArmorGain","FlyingGain"], function(v){
+  getAttrs(["weplist","splist","colist","effdmg","currEff","currName","currMt","class_exp0","class_gain0","currDesc","currWep","atktype","EXP","SwordEXP","LanceEXP","AxeEXP","BowEXP","BrawlEXP","HiddenEXP","ReasonEXP","FaithEXP","AuthorityEXP","RidingEXP","ArmorEXP","FlyingEXP","Flyingrank","Level","HP_i","Str_i","Mag_i","Skl_i","Spd_i","Lck_i","Def_i","Res_i","Mov_i","HP_bd","Str_bd","Mag_bd","Skl_bd","Spd_bd","Lck_bd","Def_bd","Res_bd","Mov_bd","HP_rb","Str_rb","Mag_rb","Skl_rb","Spd_rb","Lck_rb","Def_rb","Res_rb","Mov_rb","item_uses0","item_uses1","item_uses2","Swordrank","Lancerank","Axerank","Bowrank","Brawlrank","Hiddenrank","Reasonrank","Faithrank","Authorityrank","Ridingrank","Armorrank","Hitmod","Critmod","Avomod","Ddgmod","Dmgmod","Hitmod_class","Critmod_class","Avomod_class","Ddgmod_class","fid","SwordGain","LanceGain","AxeGain","BowGain","BrawlGain","HiddenGain","ReasonGain","FaithGain","AuthorityGain","RidingGain","ArmorGain","FlyingGain"], function(v){
     setAttrs({
       EXP: v.EXP,
       splist: v.splist,
@@ -2847,17 +2404,8 @@ on("sheet:opened", function(){
       item_uses1: v.item_uses1,
       item_uses2: v.item_uses2,
       Hitmod: v.Hitmod,
-      Hitb: v.Hitb,
-      Physb: v.Physb,
-      Critb: v.Critb,
-      Avob: v.Avob,
-      Protb: v.Protb,
-      Resb: v.Resb,
-      Chab: v.Chab,
       Critmod: v.Critmod,
       Avomod: v.Avomod,
-      Critavob: v.Critavob,
-      Ghitb: v.Ghitb,
       Ddgmod: v.Ddgmod,
       Dmgmod: v.Dmgmod,
       fid: v.fid
