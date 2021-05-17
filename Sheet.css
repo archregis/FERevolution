@@ -225,11 +225,11 @@
     border-bottom-width: 2px;
     font-weight: bold;
 }
-.charsheet .sheet-wepprof, .charsheet .sheet-inventory {
+.charsheet .sheet-wepprof {
     float:left;
     margin-right: 1.5vh;
 }
-.charsheet .sheet-weapons, .charsheet .sheet-combat, .charsheet .sheet-spells, .charsheet .sheet-skills{
+.charsheet .sheet-weapons, .charsheet .sheet-combat, .charsheet .sheet-spells,.charsheet .sheet-skills,.charsheet .sheet-inventory{
     clear:both;
     overflow:hidden;
     position:relative;
@@ -249,7 +249,7 @@
 .charsheet .sheet-tinylabel select{
     width:13%;
 }
-.charsheet .sheet-wepprof,.charsheet .sheet-inventory,.charsheet .sheet-weapons,.charsheet .sheet-skills{
+.charsheet .sheet-wepprof,.charsheet .sheet-weapons,.charsheet .sheet-inventory,.charsheet .sheet-skills{
     width: 33%;
     background-color:#f3f3f3;
     padding-left:5px;
@@ -270,7 +270,7 @@
     width:100%;
 }
 
-.charsheet .sheet-weapons .sheet-header{
+.charsheet .sheet-weapons .sheet-header,.charsheet .sheet-inventory .sheet-header{
     border-right:none;
 }
 .charsheet .repitem:not(:first-child){
@@ -416,6 +416,11 @@ background-color: #f3f3f3;
 }
 .charsheet .sheet-inventory select{
     width:70%;
+}
+.charsheet .sheet-inventory {
+    float:left;
+    margin-top:1.5vh;
+    width: 32.3%;
 }
 .charsheet input.sheet-toggle-stats {
     border: none;
