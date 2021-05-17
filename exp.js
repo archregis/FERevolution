@@ -35,6 +35,102 @@ on('chat:message', function(msg) {
       who = 'character|' + who.id;
     }
 
+    if (EXPAmod>1){
+         let wtype = getAttrByName(attacker.id, "currWep");
+    let dtype = findObjs({ characterid: attacker.id, name: "atktype"},{ caseInsensitive: true })[0];
+    let ctype = dtype.get("current");
+    log(ctype);
+
+    let Gain = Number(getAttrByName(attacker.id, 'WSlot'));
+    log(wtype);
+    let swGain = Number(getAttrByName(attacker.id, 'SwordGain'));
+    let laGain = Number(getAttrByName(attacker.id, 'LanceGain'));
+    let axGain = Number(getAttrByName(attacker.id, 'AxeGain'));
+    let boGain = Number(getAttrByName(attacker.id, 'BowGain'));
+    let brGain = Number(getAttrByName(attacker.id, 'BrawlGain'));
+    let hiGain = Number(getAttrByName(attacker.id, 'HiddenGain'));
+    let reGain = Number(getAttrByName(attacker.id, 'ReasonGain'));
+    let faGain = Number(getAttrByName(attacker.id, 'FaithGain'));
+
+    let swEXP = findObjs({ characterid: attacker.id, name: "SwordEXP", type: "attribute"})[0];
+    let laEXP = findObjs({ characterid: attacker.id, name: "LanceEXP", type: "attribute"})[0];
+    let axEXP = findObjs({ characterid: attacker.id, name: "AxeEXP", type: "attribute"})[0];
+    let boEXP = findObjs({ characterid: attacker.id, name: "BowEXP", type: "attribute"})[0];
+    let brEXP = findObjs({ characterid: attacker.id, name: "BrawlEXP", type: "attribute"})[0];
+    let hiEXP = findObjs({ characterid: attacker.id, name: "HiddenEXP", type: "attribute"})[0];
+    let reEXP = findObjs({ characterid: attacker.id, name: "ReasonEXP", type: "attribute"})[0];
+    let faEXP = findObjs({ characterid: attacker.id, name: "FaithEXP", type: "attribute"})[0];
+
+    if (wtype == "Sword"){
+      let WepEXP = Number(swEXP.get("current"));
+     WepEXP += swGain;
+     swEXP.setWithWorker("current",WepEXP);
+    }
+    if (wtype == "Lance"){
+      let WepEXP = Number(laEXP.get("current"));
+     WepEXP += laGain;
+     laEXP.setWithWorker("current",WepEXP);
+    }
+    if (wtype == "Axe"){
+      let WepEXP = Number(axEXP.get("current"));
+     WepEXP += axGain;
+     axEXP.setWithWorker("current",WepEXP);
+    }
+    if (wtype == "Bow"){
+      let WepEXP = Number(boEXP.get("current"));
+     WepEXP += boGain;
+     boEXP.setWithWorker("current",WepEXP);
+    }
+    if (wtype == "Gauntlet"){
+      let WepEXP = Number(brEXP.get("current"));
+      log(WepEXP)
+     WepEXP += brGain;
+     brEXP.setWithWorker("current",WepEXP);
+     log("Gauntlet")
+    }
+    if (wtype == "Hidden Weapon"){
+      let WepEXP = Number(hiEXP.get("current"));
+     WepEXP += hiGain;
+     hiEXP.setWithWorker("current",WepEXP);
+    }
+    if (wtype == "Reason"){
+      let WepEXP = Number(reEXP.get("current"));
+     WepEXP += reGain;
+     reEXP.setWithWorker("current",WepEXP);
+    }
+    if (wtype == "Faith"){
+      let WepEXP = Number(faEXP.get("current"));
+     WepEXP += faGain;
+     faEXP.setWithWorker("current",WepEXP);
+    }
+    }
+    let auGain = Number(getAttrByName(attacker.id, 'AuthorityGain'));
+    let arGain = Number(getAttrByName(attacker.id, 'ArmorGain'));
+    let riGain = Number(getAttrByName(attacker.id, 'RidingGain'));
+    let flGain = Number(getAttrByName(attacker.id, 'FlyingGain'));
+    let auEXP = findObjs({ characterid: attacker.id, name: "AuthorityEXP", type: "attribute"})[0];
+    let arEXP = findObjs({ characterid: attacker.id, name: "ArmorEXP", type: "attribute"})[0];
+    let riEXP = findObjs({ characterid: attacker.id, name: "RidingEXP", type: "attribute"})[0];
+    let flEXP = findObjs({ characterid: attacker.id, name: "FlyingEXP", type: "attribute"})[0];
+
+    let classGain = findObjs({ characterid: attacker.id, name: "class_gain0", type: "attribute"})[0];
+    let classEXP = findObjs({ characterid: attacker.id, name: "class_exp0", type: "attribute"})[0];
+    let tclassEXP = Number(classEXP.get("current"));
+    tclassEXP += Number(classGain.get("current"));
+    classEXP.setWithWorker("current",tclassEXP);
+    let nauEXP = Number(auEXP.get("current"));
+    nauEXP += auGain;
+    auEXP.setWithWorker("current",nauEXP);
+    let narEXP = Number(arEXP.get("current"));
+    narEXP += arGain;
+    arEXP.setWithWorker("current",narEXP);
+    let nriEXP = Number(riEXP.get("current"));
+    nriEXP += riGain;
+    riEXP.setWithWorker("current",nriEXP);
+    let nflEXP = Number(flEXP.get("current"));
+    nflEXP += flGain;
+    flEXP.setWithWorker("current",nflEXP);
+
     EXPA += EXPAmod;
     log(EXPAmod);
     CurrEXP.set("current",EXPA);

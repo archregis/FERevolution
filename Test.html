@@ -24,7 +24,7 @@
         <option>Human</option>
         <option>Manakete</option>
         <option>Half-Manakete</option>
-        <option>Enkindled</option>
+        <option>Kitsune</option>
         <option>Half-Kitsune</option>
         <option>Wolfskin</option>
         <option>Half-Wolfskin</option>
@@ -72,13 +72,11 @@
         <option>Dark Flier</option>
         <option>Dark Saint</option>
         <option>Death Knight</option>
-        <option>Draco Lord</option>
         <option>Dread Fighter</option>
         <option>Earthwarden</option>
         <option>Falcoknight</option>
         <option>Firebrand</option>
         <option>Fortress Knight</option>
-        <option>General</option>
         <option>Grandmaster</option>
         <option>Great Knight</option>
         <option>Gremory</option>
@@ -110,7 +108,6 @@
         <option>Sentinel</option>
         <option>Shadow</option>
         <option>Sharpshooter</option>
-        <option>Sky Rider</option>
         <option>Sniper</option>
         <option>Sorceress</option>
         <option>Stahlfaust</option>
@@ -127,7 +124,6 @@
         <option>War Cleric</option>
         <option>War Master</option>
         <option>Warlock</option>
-        <option>Warrior</option>
         <option>Wu Shaman</option>
         <option>Wyvern Knight</option>
         <option>Wyvern Lord</option>
@@ -138,7 +134,7 @@
       <input type = "number" name = "attr_Level" min = "1"  max = "40" value = "1"/>
     </label>
     <label> EXP:
-      <input type = "number" name = "attr_EXP" min = "0" max = "200" value = "0"/>
+      <input type = "number" name = "attr_EXP" min = "0" max = "100" value = "0"/>
     </label>
       <label> Atk Type:
         <select name="attr_atktype" value = "Physical" style = "width: 10%;">
@@ -1065,7 +1061,7 @@
   <input name="attr_Medicine_total" value = "0" hidden>
   <input name="attr_Perception_total" value = "0" hidden>
   <input name="attr_Survival_total" value = "0" hidden>
-  <input name="attr_EXP" value = "0" min = "0" max = "200" hidden>
+  <input name="attr_EXP" value = "0" min = "0" max = "100" hidden>
   <input name="attr_Swordrank" value = "E" type = "text" hidden>
   <input name="attr_Lancerank" value = "E" type = "text" hidden>
   <input name="attr_Axerank" value = "E" type = "text" hidden>
@@ -1158,68 +1154,6 @@ const Conscript = {
   "Weapons": "1 2 3 4 5 6 7 8 9 10 11 12",
   "Wepcaps": "S+ S+ S+ S+ S+ S+ S+ S+ S+ S+ S+ S+"
 }
-const Draco_Lord = {
-  "Name": "Draco Lord",
-  "HP_b": 3,
-  "Str_b": 5,
-  "Mag_b": 0,
-  "Skl_b": 0,
-  "Spd_b": 0,
-  "Lck_b": 0,
-  "Def_b": 4,
-  "Res_b": 3,
-  "Mov_b": 8,
-  "HP_g": 30,
-  "Str_g": 15,
-  "Mag_g": -5,
-  "Skl_g": 0,
-  "Spd_g": 0,
-  "Lck_g": 0,
-  "Def_g": 15,
-  "Res_g": 10,
-  "HP_c": 99,
-  "Str_c": 99,
-  "Mag_c": 99,
-  "Skl_c": 99,
-  "Spd_c": 99,
-  "Lck_c": 99,
-  "Def_c": 99,
-  "Res_c": 99,
-  "Mov_c": 12,
-  "Weapons": "1 2 3 4 5 6 7 8 9 10 11 12",
-  "Wepcaps": "S+ S+ S+ S+ S+ S+ S+ S+ S+ S+ S+ S+"
-}
-const Justice = {
-  "Name": "Justice",
-  "HP_b": 1,
-  "Str_b": 1,
-  "Mag_b": 2,
-  "Skl_b": 1,
-  "Spd_b": 1,
-  "Lck_b": 0,
-  "Def_b": 0,
-  "Res_b": 2,
-  "Mov_b": 6,
-  "HP_g": 20,
-  "Str_g": 10,
-  "Mag_g": 10,
-  "Skl_g": 5,
-  "Spd_g": 0,
-  "Lck_g": 0,
-  "Def_g": 0,
-  "Res_g": 0,
-  "HP_c": 99,
-  "Str_c": 99,
-  "Mag_c": 99,
-  "Skl_c": 99,
-  "Spd_c": 99,
-  "Lck_c": 99,
-  "Def_c": 99,
-  "Res_c": 99,
-  "Mov_c": 12,
-  "Weapons": "1 2 3 4 5 6 7 8 9 10 11 12",
-  "Wepcaps": "S+ S+ S+ S+ S+ S+ S+ S+ S+ S+ S+ S+"
-}
 const Falcoknight = {
   "Name": "Falcoknight",
   "HP_b": 0,
@@ -1228,17 +1162,17 @@ const Falcoknight = {
   "Skl_b": 4,
   "Spd_b": 5,
   "Lck_b": 0,
-  "Def_b": 0,
-  "Res_b": 4,
+  "Def_b": 4,
+  "Res_b": 0,
   "Mov_b": 8,
   "HP_g": 30,
   "Str_g": 10,
   "Mag_g": 0,
-  "Skl_g": 0,
-  "Spd_g": 20,
+  "Skl_g": 10,
+  "Spd_g": 0,
   "Lck_g": 0,
-  "Def_g": 0,
-  "Res_g": 5,
+  "Def_g": 10,
+  "Res_g": 0,
   "HP_c": 99,
   "Str_c": 99,
   "Mag_c": 99,
@@ -1478,7 +1412,7 @@ const Raven_Queen = {
   "Lck_b": 0,
   "Def_b": 0,
   "Res_b": 4,
-  "Mov_b": 6,
+  "Mov_b": 8,
   "HP_g": 10,
   "Str_g": 10,
   "Mag_g": 0,
@@ -1486,6 +1420,37 @@ const Raven_Queen = {
   "Spd_g": 30,
   "Lck_g": 0,
   "Def_g": 0,
+  "Res_g": 0,
+  "HP_c": 99,
+  "Str_c": 99,
+  "Mag_c": 99,
+  "Skl_c": 99,
+  "Spd_c": 99,
+  "Lck_c": 99,
+  "Def_c": 99,
+  "Res_c": 99,
+  "Mov_c": 12,
+  "Weapons": "1 2 3 4 5 6 7 8 9 10 11 12",
+  "Wepcaps": "S+ S+ S+ S+ S+ S+ S+ S+ S+ S+ S+ S+"
+}
+const Bow_Knight = {
+  "Name": "Bow Knight",
+  "HP_b": 2,
+  "Str_b": 1,
+  "Mag_b": 0,
+  "Skl_b": 3,
+  "Spd_b": 1,
+  "Lck_b": 1,
+  "Def_b": 1,
+  "Res_b": 0,
+  "Mov_b": 8,
+  "HP_g": 20,
+  "Str_g": 5,
+  "Mag_g": 0,
+  "Skl_g": 15,
+  "Spd_g": 5,
+  "Lck_g": 0,
+  "Def_g": 5,
   "Res_g": 0,
   "HP_c": 99,
   "Str_c": 99,
@@ -1602,7 +1567,7 @@ const Lord_of_War = {
   "Lck_b": 0,
   "Def_b": 0,
   "Res_b": 0,
-  "Mov_b": 5,
+  "Mov_b": 6,
   "HP_g": 15,
   "Str_g": 20,
   "Mag_g": 20,
@@ -1821,41 +1786,10 @@ const Juggernaut = {
   "Res_b": 0,
   "Mov_b": 6,
   "HP_g": 40,
-  "Str_g": 25,
+  "Str_g": 15,
   "Mag_g": 0,
   "Skl_g": 10,
   "Spd_g": 10,
-  "Lck_g": 0,
-  "Def_g": 5,
-  "Res_g": 0,
-  "HP_c": 99,
-  "Str_c": 99,
-  "Mag_c": 99,
-  "Skl_c": 99,
-  "Spd_c": 99,
-  "Lck_c": 99,
-  "Def_c": 99,
-  "Res_c": 99,
-  "Mov_c": 12,
-  "Weapons": "1 2 3 4 5 6 7 8 9 10 11 12",
-  "Wepcaps": "S+ S+ S+ S+ S+ S+ S+ S+ S+ S+ S+ S+"
-}
-const Bow_Knight = {
-  "Name": "Bow Knight",
-  "HP_b": 2,
-  "Str_b": 1,
-  "Mag_b": 0,
-  "Skl_b": 3,
-  "Spd_b": 1,
-  "Lck_b": 1,
-  "Def_b": 1,
-  "Res_b": 0,
-  "Mov_b": 8,
-  "HP_g": 20,
-  "Str_g": 5,
-  "Mag_g": 0,
-  "Skl_g": 15,
-  "Spd_g": 5,
   "Lck_g": 0,
   "Def_g": 5,
   "Res_g": 0,
@@ -1982,223 +1916,6 @@ const Sentinel = {
   "Spd_g": 0,
   "Lck_g": 0,
   "Def_g": 10,
-  "Res_g": 0,
-  "HP_c": 99,
-  "Str_c": 99,
-  "Mag_c": 99,
-  "Skl_c": 99,
-  "Spd_c": 99,
-  "Lck_c": 99,
-  "Def_c": 99,
-  "Res_c": 99,
-  "Mov_c": 12,
-  "Weapons": "1 2 3 4 5 6 7 8 9 10 11 12",
-  "Wepcaps": "S+ S+ S+ S+ S+ S+ S+ S+ S+ S+ S+ S+"
-}
-const Death_Knight = {
-  "Name": "Death Knight",
-  "HP_b": 2,
-  "Str_b": 6,
-  "Mag_b": 0,
-  "Skl_b": 0,
-  "Spd_b": -2,
-  "Lck_b": 0,
-  "Def_b": 3,
-  "Res_b": 0,
-  "Mov_b": 7,
-  "HP_g": 30,
-  "Str_g": 20,
-  "Mag_g": 0,
-  "Skl_g": 0,
-  "Spd_g": -5,
-  "Lck_g": 0,
-  "Def_g": 5,
-  "Res_g": 5,
-  "HP_c": 99,
-  "Str_c": 99,
-  "Mag_c": 99,
-  "Skl_c": 99,
-  "Spd_c": 99,
-  "Lck_c": 99,
-  "Def_c": 99,
-  "Res_c": 99,
-  "Mov_c": 12,
-  "Weapons": "1 2 3 4 5 6 7 8 9 10 11 12",
-  "Wepcaps": "S+ S+ S+ S+ S+ S+ S+ S+ S+ S+ S+ S+"
-}
-const Dark_Saint = {
-  "Name": "Dark Saint",
-  "HP_b": 0,
-  "Str_b": 0,
-  "Mag_b": 6,
-  "Skl_b": 2,
-  "Spd_b": 1,
-  "Lck_b": 0,
-  "Def_b": 0,
-  "Res_b": 3,
-  "Mov_b": 5,
-  "HP_g": 10,
-  "Str_g": -10,
-  "Mag_g": 20,
-  "Skl_g": 10,
-  "Spd_g": 5,
-  "Lck_g": 0,
-  "Def_g": 0,
-  "Res_g": 5,
-  "HP_c": 99,
-  "Str_c": 99,
-  "Mag_c": 99,
-  "Skl_c": 99,
-  "Spd_c": 99,
-  "Lck_c": 99,
-  "Def_c": 99,
-  "Res_c": 99,
-  "Mov_c": 12,
-  "Weapons": "1 2 3 4 5 6 7 8 9 10 11 12",
-  "Wepcaps": "S+ S+ S+ S+ S+ S+ S+ S+ S+ S+ S+ S+"
-}
-const Marshall = {
-  "Name": "Marshall",
-  "HP_b": 6,
-  "Str_b": 2,
-  "Mag_b": 0,
-  "Skl_b": 0,
-  "Spd_b": -8,
-  "Lck_b": 0,
-  "Def_b": 12,
-  "Res_b": 0,
-  "Mov_b": 5,
-  "HP_g": 45,
-  "Str_g": 15,
-  "Mag_g": 0,
-  "Skl_g": 0,
-  "Spd_g": -15,
-  "Lck_g": 0,
-  "Def_g": 30,
-  "Res_g": 5,
-  "HP_c": 99,
-  "Str_c": 99,
-  "Mag_c": 99,
-  "Skl_c": 99,
-  "Spd_c": 99,
-  "Lck_c": 99,
-  "Def_c": 99,
-  "Res_c": 99,
-  "Mov_c": 12,
-  "Weapons": "1 2 3 4 5 6 7 8 9 10 11 12",
-  "Wepcaps": "S+ S+ S+ S+ S+ S+ S+ S+ S+ S+ S+ S+"
-}
-const General = {
-  "Name": "General",
-  "HP_b": 6,
-  "Str_b": 2,
-  "Mag_b": 0,
-  "Skl_b": 0,
-  "Spd_b": -8,
-  "Lck_b": 0,
-  "Def_b": 12,
-  "Res_b": 0,
-  "Mov_b": 5,
-  "HP_g": 45,
-  "Str_g": 20,
-  "Mag_g": 0,
-  "Skl_g": 0,
-  "Spd_g": -15,
-  "Lck_g": 0,
-  "Def_g": 25,
-  "Res_g": 5,
-  "HP_c": 99,
-  "Str_c": 99,
-  "Mag_c": 99,
-  "Skl_c": 99,
-  "Spd_c": 99,
-  "Lck_c": 99,
-  "Def_c": 99,
-  "Res_c": 99,
-  "Mov_c": 12,
-  "Weapons": "1 2 3 4 5 6 7 8 9 10 11 12",
-  "Wepcaps": "S+ S+ S+ S+ S+ S+ S+ S+ S+ S+ S+ S+"
-}
-const Reaper = {
-  "Name": "Reaper",
-  "HP_b": 3,
-  "Str_b": 3,
-  "Mag_b": 2,
-  "Skl_b": 0,
-  "Spd_b": 1,
-  "Lck_b": 0,
-  "Def_b": 0,
-  "Res_b": 2,
-  "Mov_b": 6,
-  "HP_g": 20,
-  "Str_g": 15,
-  "Mag_g": 20,
-  "Skl_g": 0,
-  "Spd_g": 10,
-  "Lck_g": 0,
-  "Def_g": 0,
-  "Res_g": 15,
-  "HP_c": 99,
-  "Str_c": 99,
-  "Mag_c": 99,
-  "Skl_c": 99,
-  "Spd_c": 99,
-  "Lck_c": 99,
-  "Def_c": 99,
-  "Res_c": 99,
-  "Mov_c": 12,
-  "Weapons": "1 2 3 4 5 6 7 8 9 10 11 12",
-  "Wepcaps": "S+ S+ S+ S+ S+ S+ S+ S+ S+ S+ S+ S+"
-}
-const Arch_Heretic = {
-  "Name": "Arch Heretic",
-  "HP_b": 4,
-  "Str_b": 3,
-  "Mag_b": 2,
-  "Skl_b": 0,
-  "Spd_b": 0,
-  "Lck_b": 0,
-  "Def_b": 1,
-  "Res_b": 2,
-  "Mov_b": 6,
-  "HP_g": 15,
-  "Str_g": 25,
-  "Mag_g": 15,
-  "Skl_g": 0,
-  "Spd_g": 0,
-  "Lck_g": 0,
-  "Def_g": 10,
-  "Res_g": 15,
-  "HP_c": 99,
-  "Str_c": 99,
-  "Mag_c": 99,
-  "Skl_c": 99,
-  "Spd_c": 99,
-  "Lck_c": 99,
-  "Def_c": 99,
-  "Res_c": 99,
-  "Mov_c": 12,
-  "Weapons": "1 2 3 4 5 6 7 8 9 10 11 12",
-  "Wepcaps": "S+ S+ S+ S+ S+ S+ S+ S+ S+ S+ S+ S+"
-}
-const Gunslinger = {
-  "Name": "Gunslinger",
-  "HP_b": 0,
-  "Str_b": 3,
-  "Mag_b": 0,
-  "Skl_b": 5,
-  "Spd_b": 3,
-  "Lck_b": 0,
-  "Def_b": 0,
-  "Res_b": 0,
-  "Mov_b": 6,
-  "HP_g": 10,
-  "Str_g": 20,
-  "Mag_g": 0,
-  "Skl_g": 10,
-  "Spd_g": 15,
-  "Lck_g": 10,
-  "Def_g": 5,
   "Res_g": 0,
   "HP_c": 99,
   "Str_c": 99,
@@ -2378,13 +2095,13 @@ const Gryphon_Knight = {
   "Def_b": 3,
   "Res_b": 0,
   "Mov_b": 8,
-  "HP_g": 25,
-  "Str_g": 20,
-  "Mag_g": -5,
+  "HP_g": 0,
+  "Str_g": 0,
+  "Mag_g": 0,
   "Skl_g": 0,
-  "Spd_g": 10,
+  "Spd_g": 0,
   "Lck_g": 0,
-  "Def_g": 5,
+  "Def_g": 0,
   "Res_g": 0,
   "HP_c": 99,
   "Str_c": 99,
@@ -2448,6 +2165,192 @@ const Great_Knight = {
   "Lck_g": 0,
   "Def_g": 20,
   "Res_g": -10,
+  "HP_c": 99,
+  "Str_c": 99,
+  "Mag_c": 99,
+  "Skl_c": 99,
+  "Spd_c": 99,
+  "Lck_c": 99,
+  "Def_c": 99,
+  "Res_c": 99,
+  "Mov_c": 12,
+  "Weapons": "1 2 3 4 5 6 7 8 9 10 11 12",
+  "Wepcaps": "S+ S+ S+ S+ S+ S+ S+ S+ S+ S+ S+ S+"
+}
+const Death_Knight = {
+  "Name": "Death Knight",
+  "HP_b": 2,
+  "Str_b": 6,
+  "Mag_b": 0,
+  "Skl_b": 0,
+  "Spd_b": -2,
+  "Lck_b": 0,
+  "Def_b": 3,
+  "Res_b": 0,
+  "Mov_b": 7,
+  "HP_g": 30,
+  "Str_g": 20,
+  "Mag_g": 0,
+  "Skl_g": 0,
+  "Spd_g": -5,
+  "Lck_g": 0,
+  "Def_g": 5,
+  "Res_g": 5,
+  "HP_c": 99,
+  "Str_c": 99,
+  "Mag_c": 99,
+  "Skl_c": 99,
+  "Spd_c": 99,
+  "Lck_c": 99,
+  "Def_c": 99,
+  "Res_c": 99,
+  "Mov_c": 12,
+  "Weapons": "1 2 3 4 5 6 7 8 9 10 11 12",
+  "Wepcaps": "S+ S+ S+ S+ S+ S+ S+ S+ S+ S+ S+ S+"
+}
+const Dark_Saint = {
+  "Name": "Dark Saint",
+  "HP_b": 0,
+  "Str_b": 0,
+  "Mag_b": 6,
+  "Skl_b": 2,
+  "Spd_b": 1,
+  "Lck_b": 0,
+  "Def_b": 0,
+  "Res_b": 3,
+  "Mov_b": 5,
+  "HP_g": 10,
+  "Str_g": -10,
+  "Mag_g": 20,
+  "Skl_g": 10,
+  "Spd_g": 5,
+  "Lck_g": 0,
+  "Def_g": 0,
+  "Res_g": 5,
+  "HP_c": 99,
+  "Str_c": 99,
+  "Mag_c": 99,
+  "Skl_c": 99,
+  "Spd_c": 99,
+  "Lck_c": 99,
+  "Def_c": 99,
+  "Res_c": 99,
+  "Mov_c": 12,
+  "Weapons": "1 2 3 4 5 6 7 8 9 10 11 12",
+  "Wepcaps": "S+ S+ S+ S+ S+ S+ S+ S+ S+ S+ S+ S+"
+}
+const Marshall = {
+  "Name": "Marshall",
+  "HP_b": 6,
+  "Str_b": 2,
+  "Mag_b": 0,
+  "Skl_b": 0,
+  "Spd_b": -8,
+  "Lck_b": 0,
+  "Def_b": 12,
+  "Res_b": 0,
+  "Mov_b": 6,
+  "HP_g": 45,
+  "Str_g": 15,
+  "Mag_g": 0,
+  "Skl_g": 0,
+  "Spd_g": -15,
+  "Lck_g": 0,
+  "Def_g": 30,
+  "Res_g": 5,
+  "HP_c": 99,
+  "Str_c": 99,
+  "Mag_c": 99,
+  "Skl_c": 99,
+  "Spd_c": 99,
+  "Lck_c": 99,
+  "Def_c": 99,
+  "Res_c": 99,
+  "Mov_c": 12,
+  "Weapons": "1 2 3 4 5 6 7 8 9 10 11 12",
+  "Wepcaps": "S+ S+ S+ S+ S+ S+ S+ S+ S+ S+ S+ S+"
+}
+const Reaper = {
+  "Name": "Reaper",
+  "HP_b": 3,
+  "Str_b": 3,
+  "Mag_b": 2,
+  "Skl_b": 0,
+  "Spd_b": 1,
+  "Lck_b": 0,
+  "Def_b": 0,
+  "Res_b": 2,
+  "Mov_b": 6,
+  "HP_g": 20,
+  "Str_g": 15,
+  "Mag_g": 20,
+  "Skl_g": 0,
+  "Spd_g": 10,
+  "Lck_g": 0,
+  "Def_g": 0,
+  "Res_g": 15,
+  "HP_c": 99,
+  "Str_c": 99,
+  "Mag_c": 99,
+  "Skl_c": 99,
+  "Spd_c": 99,
+  "Lck_c": 99,
+  "Def_c": 99,
+  "Res_c": 99,
+  "Mov_c": 12,
+  "Weapons": "1 2 3 4 5 6 7 8 9 10 11 12",
+  "Wepcaps": "S+ S+ S+ S+ S+ S+ S+ S+ S+ S+ S+ S+"
+}
+const Arch_Heretic = {
+  "Name": "Arch Heretic",
+  "HP_b": 4,
+  "Str_b": 3,
+  "Mag_b": 2,
+  "Skl_b": 0,
+  "Spd_b": 0,
+  "Lck_b": 0,
+  "Def_b": 1,
+  "Res_b": 2,
+  "Mov_b": 6,
+  "HP_g": 15,
+  "Str_g": 25,
+  "Mag_g": 15,
+  "Skl_g": 0,
+  "Spd_g": 0,
+  "Lck_g": 0,
+  "Def_g": 10,
+  "Res_g": 15,
+  "HP_c": 99,
+  "Str_c": 99,
+  "Mag_c": 99,
+  "Skl_c": 99,
+  "Spd_c": 99,
+  "Lck_c": 99,
+  "Def_c": 99,
+  "Res_c": 99,
+  "Mov_c": 12,
+  "Weapons": "1 2 3 4 5 6 7 8 9 10 11 12",
+  "Wepcaps": "S+ S+ S+ S+ S+ S+ S+ S+ S+ S+ S+ S+"
+}
+const Gunslinger = {
+  "Name": "Gunslinger",
+  "HP_b": 0,
+  "Str_b": 3,
+  "Mag_b": 0,
+  "Skl_b": 5,
+  "Spd_b": 3,
+  "Lck_b": 0,
+  "Def_b": 0,
+  "Res_b": 0,
+  "Mov_b": 6,
+  "HP_g": 10,
+  "Str_g": 20,
+  "Mag_g": 0,
+  "Skl_g": 10,
+  "Spd_g": 15,
+  "Lck_g": 10,
+  "Def_g": 5,
+  "Res_g": 0,
   "HP_c": 99,
   "Str_c": 99,
   "Mag_c": 99,
@@ -4803,6 +4706,37 @@ const Ninetails = {
   "Weapons": "10",
   "Wepcaps": "S"
 }
+const General = {
+  "Name": "General",
+  "HP_b": 28,
+  "Str_b": 12,
+  "Mag_b": 0,
+  "Skl_b": 7,
+  "Spd_b": 4,
+  "Lck_b": 0,
+  "Def_b": 15,
+  "Res_b": 3,
+  "Mov_b": 5,
+  "HP_g": 50,
+  "Str_g": 20,
+  "Mag_g": 0,
+  "Skl_g": 15,
+  "Spd_g": 0,
+  "Lck_g": 10,
+  "Def_g": 20,
+  "Res_g": 5,
+  "HP_c": 80,
+  "Str_c": 50,
+  "Mag_c": 30,
+  "Skl_c": 41,
+  "Spd_c": 35,
+  "Lck_c": 45,
+  "Def_c": 50,
+  "Res_c": 35,
+  "Mov_c": 7,
+  "Weapons": "2 3",
+  "Wepcaps": "A B"
+}
 const Great_Lord = {
   "Name": "Great Lord",
   "HP_b": 23,
@@ -5082,6 +5016,7 @@ const Great_Laguz = {
   "Weapons": "10",
   "Wepcaps": "S"
 }
+
 const Revenant_Knight = {
   "Name": "Revenant Knight",
   "HP_b": 18,
@@ -5113,6 +5048,7 @@ const Revenant_Knight = {
   "Weapons": "3 7",
   "Wepcaps": "A B"
 }
+
 const Hunter = {
   "Name": "Hunter",
   "HP_b": 18,
@@ -5144,71 +5080,9 @@ const Hunter = {
   "Weapons": "6 8",
   "Wepcaps": "A A"
 }
-const Sorceress = {
-  "Name": "Sorceress",
-  "HP_b": 0,
-  "Str_b": 0,
-  "Mag_b": 5,
-  "Skl_b": 1,
-  "Spd_b": 1,
-  "Lck_b": 0,
-  "Def_b": 0,
-  "Res_b": 4,
-  "Mov_b": 5,
-  "HP_g": 5,
-  "Str_g": -10,
-  "Mag_g": 25,
-  "Skl_g": 10,
-  "Spd_g": 5,
-  "Lck_g": 0,
-  "Def_g": 0,
-  "Res_g": 5,
-  "HP_c": 99,
-  "Str_c": 99,
-  "Mag_c": 99,
-  "Skl_c": 99,
-  "Spd_c": 99,
-  "Lck_c": 99,
-  "Def_c": 99,
-  "Res_c": 99,
-  "Mov_c": 12,
-  "Weapons": "1 2 3 4 5 6 7 8 9 10 11 12",
-  "Wepcaps": "S+ S+ S+ S+ S+ S+ S+ S+ S+ S+ S+ S+"
-}
-const Twilight_Ranger = {
-  "Name": "Twilight Ranger",
-  "HP_b": 0,
-  "Str_b": 3,
-  "Mag_b": 0,
-  "Skl_b": 4,
-  "Spd_b": 3,
-  "Lck_b": 0,
-  "Def_b": 0,
-  "Res_b": 0,
-  "Mov_b": 6,
-  "HP_g": 20,
-  "Str_g": 20,
-  "Mag_g": 0,
-  "Skl_g": 20,
-  "Spd_g": 20,
-  "Lck_g": 0,
-  "Def_g": 0,
-  "Res_g": 0,
-  "HP_c": 99,
-  "Str_c": 99,
-  "Mag_c": 99,
-  "Skl_c": 99,
-  "Spd_c": 99,
-  "Lck_c": 99,
-  "Def_c": 99,
-  "Res_c": 99,
-  "Mov_c": 12,
-  "Weapons": "1 2 3 4 5 6 7 8 9 10 11 12",
-  "Wepcaps": "S+ S+ S+ S+ S+ S+ S+ S+ S+ S+ S+ S+"
-}
 
-const unPr_classList = [Marshall, Reaper, Arch_Heretic, Queen_of_Crows, Death_Knight, Dark_Saint, Radiant_Swordsman, Vermillion_Sage, Juggernaut, Lord_of_War, Shadow, Archbishop, Infernal_Marksman, Falcoknight, Champion, Thief_of_Stars, Trueblade, Earthwarden, Gremory, Cerulean_Sage, Sword_Saint, Mortal_Savant, Raven_Queen, Master_Knight, Sentinel, Conqueror, Brawler, Red_Mage, Maid, Monk, Boss, Crow_Knight, Mage, Uhlan, Archer, Brigand, Monk, Conscript, Gravekeeper, Cavalier, Priest, Dark_Mage, Fighter, Griffin_Rider, Kitsune, Armored_Knight, Lord, Mercenary, Myrmidon, Ninja, Pegasus_Knight, Soldier, Thief, Troubadour, Villager, Wyvern_Rider, Dancer, Manakete, Laguz, Dread_Fighter, Vanguard, Tactician, Rifleman];
-const Pr_classList = [Draco_Lord, General, Twilight_Ranger, Justice, Sorceress, King, Firebrand, War_Master, Wu_Shaman, Holy_Knight, Gryphon_Knight, Berserker, Sharpshooter, Crow_Master, Wyvern_Knight, Gryphon_Rider, High_Lord, Capa, Cryptkeeper, Grappler, Crimson_Mage, Stahlfaust, Head_Maid, Fortress_Knight, Sky_Rider, Warlock, Bishop, Dark_Bishop, Sniper, Bow_Knight, Merchant, Mechanist, Paladin, Great_Knight, War_Cleric, Sage, Druid, Dark_Knight, Warrior, Hero, Griffin_Lord, Light_Flier, Ninetails, Great_Lord, Basara, Swordmaster, Assassin, Master_Ninja, Falcon_Knight, Dark_Flier, Halberdier, Trickster, Noble, Valkyrie, Master_of_Arms, Wolfssegner, Managarm, Great_Laguz, Wyvern_Lord, Revenant_Knight, Grandmaster, Gunslinger, Hunter];
+const unPr_classList = [Brawler, Red_Mage, Maid, Monk, Boss, Crow_Knight, Mage, Uhlan, Archer, Brigand, Monk, Conscript, Gravekeeper, Cavalier, Priest, Dark_Mage, Fighter, Griffin_Rider, Kitsune, Armored_Knight, Lord, Mercenary, Myrmidon, Ninja, Pegasus_Knight, Soldier, Thief, Troubadour, Villager, Wyvern_Rider, Dancer, Manakete, Laguz, Dread_Fighter, Vanguard, Tactician, Rifleman];
+const Pr_classList = [Marshall, Reaper, Arch_Heretic, Queen_of_Crows, Death_Knight, Dark_Saint, Radiant_Swordsman, Vermillion_Sage, Juggernaut, Lord_of_War, Shadow, Archbishop, Infernal_Marksman, Falcoknight, Champion, Thief_of_Stars, Trueblade, Earthwarden, Gremory, Cerulean_Sage, Sword_Saint, Mortal_Savant, Raven_Queen, Master_Knight, Adventurer, Twilight_Ranger, Sorceress, Justice, Sentinel, Conqueror, King, Firebrand, War_Master, Wu_Shaman, Holy_Knight, Gryphon_Knight, Berserker, Sharpshooter, Crow_Master, Wyvern_Knight, Gryphon_Rider, High_Lord, Capa, Cryptkeeper, Grappler, Crimson_Mage, Stahlfaust, Head_Maid, Fortress_Knight, Sky_Rider, Warlock, Bishop, Dark_Bishop, Sniper, Bow_Knight, Merchant, Mechanist, Paladin, Great_Knight, War_Cleric, Sage, Druid, Dark_Knight, Warrior, Hero, Griffin_Lord, Light_Flier, Ninetails, General, Great_Lord, Basara, Swordmaster, Assassin, Master_Ninja, Falcon_Knight, Dark_Flier, Halberdier, Trickster, Noble, Valkyrie, Master_of_Arms, Wolfssegner, Managarm, Great_Laguz, Wyvern_Lord, Revenant_Knight, Grandmaster, Gunslinger, Hunter];
 const Laguz_alt = ["Bonewalker","Mogall","Mauthe","Bael","Tarvos","Gargoyle"];
 const GLaguz_alt = ["Wight","Arch Mogall","Gwyllgi","Elder Bael","Maeduin","Deathgoyle"];
 
@@ -5219,7 +5093,7 @@ let wepcaps;
 let attrs;
 
 //racial growths
-const r_names = ["Human","Manakete","Half-Manakete","Enkindled","Half-Kitsune","Wolfskin","Half-Wolfskin","Beast-Laguz","Bird-Laguz","Monster","Other"];
+const r_names = ["Human","Manakete","Half-Manakete","Kitsune","Half-Kitsune","Wolfskin","Half-Wolfskin","Beast-Laguz","Bird-Laguz","Monster","Other"];
 const r_HP_g = [0,0,0,0,0,0,0,0,0,0,0];
 const r_Str_g = [0,0,0,0,0,0,0,0,0,0,0];
 const r_Mag_g = [0,0,0,0,0,0,0,0,0,0,0];
@@ -5228,16 +5102,16 @@ const r_Spd_g = [0,0,0,0,0,0,0,0,0,0,0];
 const r_Lck_g = [0,0,0,0,0,0,0,0,0,0,0];
 const r_Def_g = [0,0,0,0,0,0,0,0,0,0,0];
 const r_Res_g = [0,0,0,0,0,0,0,0,0,0,0];
-const r_HP_b = [0,0,0,3,0,0,0,5,3,0,0];
-const r_Str_b = [0,0,0,3,0,0,0,5,3,0,0];
-const r_Mag_b = [0,0,0,3,0,0,0,5,3,0,0];
-const r_Skl_b = [0,0,0,3,0,0,0,5,3,0,0];
-const r_Spd_b = [0,0,0,3,0,0,0,5,3,0,0];
-const r_Lck_b = [0,0,0,3,0,0,0,5,3,0,0];
-const r_Def_b = [0,0,0,3,0,0,0,5,3,0,0];
-const r_Res_b = [0,0,0,3,0,0,0,5,3,0,0];
-const r_Cha_b = [0,0,0,3,0,0,0,5,3,0,0];
-const r_Mov_b = [0,0,0,1,0,0,0,0,2,0,0];
+const r_HP_b = [0,0,0,0,0,0,0,5,3,0,0];
+const r_Str_b = [0,0,0,0,0,0,0,5,3,0,0];
+const r_Mag_b = [0,0,0,0,0,0,0,5,3,0,0];
+const r_Skl_b = [0,0,0,0,0,0,0,5,3,0,0];
+const r_Spd_b = [0,0,0,0,0,0,0,5,3,0,0];
+const r_Lck_b = [0,0,0,0,0,0,0,5,3,0,0];
+const r_Def_b = [0,0,0,0,0,0,0,5,3,0,0];
+const r_Res_b = [0,0,0,0,0,0,0,5,3,0,0];
+const r_Cha_b = [0,0,0,0,0,0,0,5,3,0,0];
+const r_Mov_b = [0,0,0,0,0,0,0,0,2,0,0];
 
 on("change:class", function(eventInfo) {
   //Actual code
@@ -6124,7 +5998,7 @@ on("change:EXP", function(eventInfo) {
     console.log(maxRank)
     clevel = values.Level
     console.log(clevel)
-    if (cEXP >= 300) {
+    if (cEXP >= 100) {
       clevel++;
       setAttrs({
         EXP: 0
