@@ -204,23 +204,20 @@
         <th>Hit</th>
         <th>Crit</th>
         <th>Crit Avo</th>
-        <th>G Hit</th>
-        <th>G Avo</th>
+        <th>AS</th>
       </tr>
       <tr>
         <td><input name = "attr_HP_current" type = "number"></input> / <span name = "attr_HP_current_max"> </span></td>
         <td><span name = "attr_Hit">0</span></td>
         <td><span name = "attr_Crit">0</span></td>
         <td><span name = "attr_Ddg">0</span></td>
-        <td><span name = "attr_Ghit">0</span></td>
-        <td><span name = "attr_Gavo">0</span></td>
+        <td><span name = "attr_Atkspd">0</span></td>
       </tr>
       <tr class="sheet-labelrow">
         <th>Phys</th>
         <th>Mag</th>
         <th>Prot</th>
         <th>Res</th>
-        <th>AS</th>
         <th>Avo</th>
       </tr>
       <tr>
@@ -228,7 +225,6 @@
         <td><span name = "attr_MDmgtot">0</span></td>
         <td><span name = "attr_Protot">0</span></td>
         <td><span name = "attr_Restot">0</span></td>
-        <td><span name = "attr_Atkspd">0</span></td>
         <td><span name = "attr_Avo">0</span></td>
       </tr>
     </table>
@@ -953,7 +949,6 @@
   <input name="attr_Protot" value = "0" hidden>
   <input name="attr_Restot" value = "0" hidden>
   <input name="attr_Ghit" value = "0" hidden>
-  <input name="attr_Gavo" value = "0" hidden>
   <input name = "attr_Atkspd" value = "0" min = "0" hidden>
   <input name = "attr_MDmgtot" value = "0" hidden>
   <!--Firstmost weapon values, excludes hit/crit because that's already calculated-->
@@ -2710,15 +2705,7 @@ on("change:Cha_total change:Ghitb change:repeating_weapons:Hit change:repeating_
 });
 
 //Gambit Avo
-on("change:Cha_total change:Avob", function() {
-  getAttrs(["Cha_total", "Avob"], function(v) {
-    Cha = v.Cha_total;
-    GAvo = v.Avob;
-    setAttrs({
-      Gavo: Number(Cha) + Number(GAvo)
-    });
-  });
-});
+
 //Weapon # limits
 
 /*
