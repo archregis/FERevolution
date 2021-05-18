@@ -1896,13 +1896,13 @@ on("change:repeating_weapons change:repeating_spells change:repeating_weapons:St
   });
 });
 //PhysDmg
-on("change:Str_total change:repeating_weapons:WType change:repeating_weapons:Mt change:_reporder:weapons remove:repeating_weapons change:Physb change:WSlot change:atktype", function(eventInfo) {
+on("change:Str_total change:repeating_weapons:WType change:repeating_weapons:Mt change:_reporder:weapons remove:repeating_weapons change:WSlot change:atktype", function(eventInfo) {
   getAttrs(["WSlot"], function(v) {
     getSectionIDsOrdered("repeating_weapons", function(idarray) {
       slotnum = v.WSlot
       fID = idarray[Number(slotnum)-1];
       log("fID is" + fID)
-      getAttrs(["Str_total", "repeating_weapons_"+fID+"_Mt","repeating_weapons_"+fID+"_WType", "Physb", "atktype"], function(v) {
+      getAttrs(["Str_total", "repeating_weapons_"+fID+"_Mt","repeating_weapons_"+fID+"_WType", "atktype"], function(v) {
         log(JSON.stringify(v))
         let nindex = Object.keys(v)[1];
         let mindex = Object.keys(v)[2];
@@ -1910,10 +1910,9 @@ on("change:Str_total change:repeating_weapons:WType change:repeating_weapons:Mt 
         let wMt = parseInt(v[nindex])||0;
         log("wMt is " + wMt)
         let Str = v.Str_total;
-        let Bonus = v.Physb;
         if (v.atktype == "Physical"){
             setAttrs({
-              Dmgtot: Math.round((Str) + wMt) + Number(Bonus),
+              Dmgtot: Math.round((Str) + wMt),
               effdmg: Str + 3*wMt + Number(Bonus)
             });
 
@@ -1924,23 +1923,22 @@ on("change:Str_total change:repeating_weapons:WType change:repeating_weapons:Mt 
   });
 });
 
-on("change:Str_total change:repeating_combat:Mt change:_reporder:combat remove:repeating_combat change:Physb change:CSlot change:atktype", function(eventInfo) {
+on("change:Str_total change:repeating_combat:Mt change:_reporder:combat remove:repeating_combat change:CSlot change:atktype", function(eventInfo) {
   getAttrs(["CSlot"], function(v) {
     getSectionIDsOrdered("repeating_combat", function(idarray) {
       slotnum = v.CSlot
       fID = idarray[Number(slotnum)-1];
       log("fID is" + fID)
-      getAttrs(["Str_total", "repeating_combat_"+fID+"_Mt", "Physb", "atktype", "currMt"], function(v) {
+      getAttrs(["Str_total", "repeating_combat_"+fID+"_Mt", "atktype", "currMt"], function(v) {
         log(JSON.stringify(v))
         let nindex = Object.keys(v)[1];
         log(nindex)
         let wMt = parseInt(v[nindex])||0;
         log("wMt is " + wMt)
         let Str = v.Str_total;
-        let Bonus = v.Physb;
         if (v.atktype == "Combat Art"){
         setAttrs({
-          Dmgtot: Math.round((Str)) + wMt + Number(v.currMt) + Number(Bonus),
+          Dmgtot: Math.round((Str)) + wMt + Number(v.currMt),
           effdmg: Str + 3*wMt + Number(Bonus)
         });
       };
@@ -1952,13 +1950,13 @@ on("change:Str_total change:repeating_combat:Mt change:_reporder:combat remove:r
 
 
 //MagDmg
-on("change:Mag_total change:repeating_spells:Mt change:repeating_weapons:SType change:_reporder:spells remove:repeating_spells change:Magb change:SSlot", function(eventInfo) {
+on("change:Mag_total change:repeating_spells:Mt change:repeating_weapons:SType change:_reporder:spells remove:repeating_spells change:SSlot", function(eventInfo) {
   getAttrs(["SSlot"], function(v) {
     getSectionIDsOrdered("repeating_spells", function(idarray) {
       slotnum = v.SSlot
       fID = idarray[Number(slotnum)-1];
       log("fID is" + fID)
-      getAttrs(["Mag_total","repeating_spells_"+fID+"_Mt","repeating_spells_"+fID+"_SType","Magb",], function(v) {
+      getAttrs(["Mag_total","repeating_spells_"+fID+"_Mt","repeating_spells_"+fID+"_SType",], function(v) {
         log(JSON.stringify(v))
         let nindex = Object.keys(v)[1];
         let mindex = Object.keys(v)[2];
@@ -1966,10 +1964,9 @@ on("change:Mag_total change:repeating_spells:Mt change:repeating_weapons:SType c
         let wMt = parseInt(v[nindex])||0;
         log("wMt is " + wMt)
         let Mag = v.Mag_total;
-        let Bonus = v.Magb;
           setAttrs({
             MDmgtot: Math.round((Mag) + wMt) + Number(Bonus),
-            effdmg: Mag + 3*wMt + Number(Bonus)
+            effdmg: Mag + 3*wMt
           });
         console.log(Math.round((Mag) + wMt));
       });
