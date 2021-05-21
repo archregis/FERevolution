@@ -1182,8 +1182,8 @@ on("change:Mag_sf change:Mag_i change:Mag_bd change:Mag_rb change:repeating_weap
       if (v.FBlow == 0){
       setAttrs({
         Mag_total: Number(v.Mag_sf) + Number(v.Mag_i) + Number(v.Mag_rb) + Number(v.Mag_bd) + wp,
-        MP_sf: Math.max(Math.floor((Number(v.Mag_sf) + Number(v.Mag_i) + Number(v.Mag_rb) + Number(v.Mag_bd))/10),1),
-        MR_sf: Math.max(Math.floor((Number(v.Mag_sf) + Number(v.Mag_i) + Number(v.Mag_rb) + Number(v.Mag_bd))/20),1)
+        MP_sf: Math.max(Math.round((Number(v.Mag_sf) + Number(v.Mag_i) + Number(v.Mag_rb) + Number(v.Mag_bd))/10),1),
+        MR_sf: Math.max(Math.round((Number(v.Mag_sf) + Number(v.Mag_i) + Number(v.Mag_rb) + Number(v.Mag_bd))/20),1)
       });
       }
       if (v.FBlow == 1){
@@ -2094,7 +2094,7 @@ on("change:Str_total change:repeating_weapons:WType change:Cha_total change:repe
         if (v.atktype == "Physical"){
           if (v[mindex] == "Gambit"){
             setAttrs({
-              Dmgtot: Math.floor((Str) + v.Cha_total/5 + wMt) + Number(Bonus),
+              Dmgtot: Math.round((Str) + v.Cha_total/5 + wMt) + Number(Bonus),
             });
           }
           else {
@@ -2155,7 +2155,7 @@ on("change:Mag_total change:repeating_spells:Mt change:repeating_weapons:SType c
         let Bonus = v.Magb;
         if (v[mindex] == "Gambit"){
           setAttrs({
-            MDmgtot: Math.floor((Mag) + v.Cha_total/5 + wMt) + Number(Bonus),
+            MDmgtot: Math.round((Mag) + v.Cha_total/5 + wMt) + Number(Bonus),
           });
         }
         else {
@@ -2332,7 +2332,7 @@ on("change:Skl_total change:Lck_total change:Critmod change:repeating_weapons:Cr
         let ModC = v.Critmod;
         let BonC = v.Critb;
         setAttrs({
-          Crit: Math.floor((SklC / 2) + (LckC / 2)  + wCrit) +Number(BonC) + Number(ModC),
+          Crit: Math.round((SklC / 2) + (LckC / 2)  + wCrit) +Number(BonC) + Number(ModC),
           currCrit : wCrit
         });
         console.log(Math.round((SklC / 2) + (LckC / 2) + wCrit));
@@ -2355,7 +2355,7 @@ on("change:Skl_total change:Lck_total change:Critmod change:repeating_weapons:Cr
       let ModC = v.Critmod;
       let BonC = v.Critb;
       setAttrs({
-        Crit: Math.floor((SklC / 2) + (LckC / 2)  + wCrit) +Number(BonC) + Number(ModC) + Number(v.currCrit)
+        Crit: Math.round((SklC / 2) + (LckC / 2)  + wCrit) +Number(BonC) + Number(ModC) + Number(v.currCrit)
       });
       console.log(Math.round((SklC / 2) + (LckC / 2) + wCrit));
       console.log("Critmod is" + ModC)
@@ -2377,7 +2377,7 @@ on("change:Skl_total change:Lck_total change:Critmod change:repeating_weapons:Cr
       let ModC = v.Critmod;
       let BonC = v.Critb;
       setAttrs({
-        Crit: Math.floor((SklC / 2) + (LckC / 2)  + wCrit) +Number(BonC) + Number(ModC)
+        Crit: Math.round((SklC / 2) + (LckC / 2)  + wCrit) +Number(BonC) + Number(ModC)
       });
       console.log(Math.round((SklC / 2) + (LckC / 2) + wCrit));
       console.log("Critmod is" + ModC)
@@ -2402,10 +2402,10 @@ on("change:Spd_total change:All change:Str_total change:repeating_weapons:Wt cha
           let SpdS = v.Spd_total;
           let StrS = v.Str_total;
           if (v.All == "Player") {
-            aspd = Math.floor(Number(SpdS) - wWt + Number(StrS)/4);
+            aspd = Math.round(Number(SpdS) - wWt + Number(StrS)/5);
           }
           else {
-            aspd = Math.floor(Number(SpdS) - wWt + Number(StrS)/5);
+            aspd = Math.round(Number(SpdS) - wWt + Number(StrS)/5);
           }
           if (aspd>SpdS) {
             setAttrs({
@@ -2441,10 +2441,10 @@ on("change:Spd_total change:All change:Str_total change:repeating_weapons:Wt cha
           let StrS = v.Str_total;
           let aspd
           if (v.All == "Player") {
-            aspd = Math.floor(Number(SpdS) - wWt + Number(StrS)/4);
+            aspd = Math.round(Number(SpdS) - wWt + Number(StrS)/4);
           }
           else {
-            aspd = Math.floor(Number(SpdS) - wWt + Number(StrS)/5);
+            aspd = Math.round(Number(SpdS) - wWt + Number(StrS)/5);
           }
           if (aspd>SpdS) {
             setAttrs({
