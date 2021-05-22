@@ -523,64 +523,146 @@
   <textarea name="attr_supportlist" type="text" style="width:350px; height:1000px"></textarea>
 </div>
 </div>
-<!-- Third Page -->
+<!-- Third Page-->
 <div class='sheet-equip'>
   <div class="sheet-prowess">
-    <div class = "sheet-header">WEAPON PROWESSES</div>
+    <div class = "sheet-header">QUARTZ</div>
     <table>
       <tr>
-        <th>Weap. Type</th>
+        <th>Quartz Number</th>
+        <th>HP</th>
+        <th>MP</th>
+        <th>STR</th>
+        <th>MAG</th>
+        <th>SKL</th>
+        <th>SPD</th>
+        <th>LCK</th>
+        <th>DEF</th>
+        <th>RES</th>
+        <th>MOV</th>
         <th>Hit</th>
         <th>Avo</th>
-        <th>Crit Avo</th>
+        <th>Crit</th>
       </tr>
       <tr>
-        <th>Sword</th>
-        <td><input type = "number" value = "0" name = "attr_SwordHit" min = "0" max = "100"></td>
-        <td><input type = "number" value = "0" name = "attr_SwordAvo" min = "0" max = "100"></td>
-        <td><input type = "number" value = "0" name = "attr_SwordCAvo" min = "0" max = "100"></td>
+        <th>Quartz M</th>
+        <td><input type = "number" value = "0" name = "attr_HP_M" min = "0" max = "100"></td>
+        <td><input type = "number" value = "0" name = "attr_MP_M" min = "0" max = "100"></td>
+        <td><input type = "number" value = "0" name = "attr_Str_M" min = "0" max = "100"></td>
+	<td><input type = "number" value = "0" name = "attr_Mag_M" min = "0" max = "100"></td>
+        <td><input type = "number" value = "0" name = "attr_Skl_M" min = "0" max = "100"></td>
+        <td><input type = "number" value = "0" name = "attr_Lck_M" min = "0" max = "100"></td>
+	<td><input type = "number" value = "0" name = "attr_Def_M" min = "0" max = "100"></td>
+        <td><input type = "number" value = "0" name = "attr_Res_M" min = "0" max = "100"></td>
+        <td><input type = "number" value = "0" name = "attr_Mov_M" min = "0" max = "100"></td>
+	<td><input type = "number" value = "0" name = "attr_Hit_M" min = "0" max = "100"></td>
+        <td><input type = "number" value = "0" name = "attr_Avo_M" min = "0" max = "100"></td>
+        <td><input type = "number" value = "0" name = "attr_Crit_M" min = "0" max = "100"></td>
       </tr>
       <tr>
-        <th>Lance</th>
-        <td><input type = "number" value = "0" name = "attr_LanceHit" min = "0" max = "100"></td>
-        <td><input type = "number" value = "0" name = "attr_LanceAvo" min = "0" max = "100"></td>
-        <td><input type = "number" value = "0" name = "attr_LanceCAvo" min = "0" max = "100"></td>
+        <th>Quartz 1</th>
+        <td><input type = "number" value = "0" name = "attr_HP_1" min = "0" max = "100"></td>
+        <td><input type = "number" value = "0" name = "attr_MP_1" min = "0" max = "100"></td>
+        <td><input type = "number" value = "0" name = "attr_Str_1" min = "0" max = "100"></td>
+	<td><input type = "number" value = "0" name = "attr_Mag_1" min = "0" max = "100"></td>
+        <td><input type = "number" value = "0" name = "attr_Skl_1" min = "0" max = "100"></td>
+        <td><input type = "number" value = "0" name = "attr_Lck_1" min = "0" max = "100"></td>
+	<td><input type = "number" value = "0" name = "attr_Def_1" min = "0" max = "100"></td>
+        <td><input type = "number" value = "0" name = "attr_Res_1" min = "0" max = "100"></td>
+        <td><input type = "number" value = "0" name = "attr_Mov_1" min = "0" max = "100"></td>
+	<td><input type = "number" value = "0" name = "attr_Hit_1" min = "0" max = "100"></td>
+        <td><input type = "number" value = "0" name = "attr_Avo_1" min = "0" max = "100"></td>
+        <td><input type = "number" value = "0" name = "attr_Crit_1" min = "0" max = "100"></td>
       </tr>
       <tr>
-        <th>Axe</th>
-        <td><input type = "number" value = "0" name = "attr_AxeHit" min = "0" max = "100"></td>
-        <td><input type = "number" value = "0" name = "attr_AxeAvo" min = "0" max = "100"></td>
-        <td><input type = "number" value = "0" name = "attr_AxeCAvo" min = "0" max = "100"></td>
+        <th>Quartz 2</th>
+        <td><input type = "number" value = "0" name = "attr_HP_2" min = "0" max = "100"></td>
+        <td><input type = "number" value = "0" name = "attr_MP_2" min = "0" max = "100"></td>
+        <td><input type = "number" value = "0" name = "attr_Str_2" min = "0" max = "100"></td>
+	<td><input type = "number" value = "0" name = "attr_Mag_2" min = "0" max = "100"></td>
+        <td><input type = "number" value = "0" name = "attr_Skl_2" min = "0" max = "100"></td>
+        <td><input type = "number" value = "0" name = "attr_Lck_2" min = "0" max = "100"></td>
+	<td><input type = "number" value = "0" name = "attr_Def_2" min = "0" max = "100"></td>
+        <td><input type = "number" value = "0" name = "attr_Res_2" min = "0" max = "100"></td>
+        <td><input type = "number" value = "0" name = "attr_Mov_2" min = "0" max = "100"></td>
+	<td><input type = "number" value = "0" name = "attr_Hit_2" min = "0" max = "100"></td>
+        <td><input type = "number" value = "0" name = "attr_Avo_2" min = "0" max = "100"></td>
+        <td><input type = "number" value = "0" name = "attr_Crit_2" min = "0" max = "100"></td>
       </tr>
       <tr>
-        <th>Bow</th>
-        <td><input type = "number" value = "0" name = "attr_BowHit" min = "0" max = "100"></td>
-        <td><input type = "number" value = "0" name = "attr_BowAvo" min = "0" max = "100"></td>
-        <td><input type = "number" value = "0" name = "attr_BowCAvo" min = "0" max = "100"></td>
+        <th>Quartz 3</th>
+        <td><input type = "number" value = "0" name = "attr_HP_3" min = "0" max = "100"></td>
+        <td><input type = "number" value = "0" name = "attr_MP_3" min = "0" max = "100"></td>
+        <td><input type = "number" value = "0" name = "attr_Str_3" min = "0" max = "100"></td>
+	<td><input type = "number" value = "0" name = "attr_Mag_3" min = "0" max = "100"></td>
+        <td><input type = "number" value = "0" name = "attr_Skl_3" min = "0" max = "100"></td>
+        <td><input type = "number" value = "0" name = "attr_Lck_3" min = "0" max = "100"></td>
+	<td><input type = "number" value = "0" name = "attr_Def_3" min = "0" max = "100"></td>
+        <td><input type = "number" value = "0" name = "attr_Res_3" min = "0" max = "100"></td>
+        <td><input type = "number" value = "0" name = "attr_Mov_3" min = "0" max = "100"></td>
+	<td><input type = "number" value = "0" name = "attr_Hit_3" min = "0" max = "100"></td>
+        <td><input type = "number" value = "0" name = "attr_Avo_3" min = "0" max = "100"></td>
+        <td><input type = "number" value = "0" name = "attr_Crit_3" min = "0" max = "100"></td>
       </tr>
       <tr>
-        <th>Brawling</th>
-        <td><input type = "number" value = "0" name = "attr_BrawlHit" min = "0" max = "100"></td>
-        <td><input type = "number" value = "0" name = "attr_BrawlAvo" min = "0" max = "100"></td>
-        <td><input type = "number" value = "0" name = "attr_BrawlCAvo" min = "0" max = "100"></td>
+        <th>Quartz 4</th>
+        <td><input type = "number" value = "0" name = "attr_HP_4" min = "0" max = "100"></td>
+        <td><input type = "number" value = "0" name = "attr_MP_4" min = "0" max = "100"></td>
+        <td><input type = "number" value = "0" name = "attr_Str_4" min = "0" max = "100"></td>
+	<td><input type = "number" value = "0" name = "attr_Mag_4" min = "0" max = "100"></td>
+        <td><input type = "number" value = "0" name = "attr_Skl_4" min = "0" max = "100"></td>
+        <td><input type = "number" value = "0" name = "attr_Lck_4" min = "0" max = "100"></td>
+	<td><input type = "number" value = "0" name = "attr_Def_4" min = "0" max = "100"></td>
+        <td><input type = "number" value = "0" name = "attr_Res_4" min = "0" max = "100"></td>
+        <td><input type = "number" value = "0" name = "attr_Mov_4" min = "0" max = "100"></td>
+	<td><input type = "number" value = "0" name = "attr_Hit_4" min = "0" max = "100"></td>
+        <td><input type = "number" value = "0" name = "attr_Avo_4" min = "0" max = "100"></td>
+        <td><input type = "number" value = "0" name = "attr_Crit_4" min = "0" max = "100"></td>
       </tr>
       <tr>
-        <th>Hidden Weapon</th>
-        <td><input type = "number" value = "0" name = "attr_HiddenHit" min = "0" max = "100"></td>
-        <td><input type = "number" value = "0" name = "attr_HiddenAvo" min = "0" max = "100"></td>
-        <td><input type = "number" value = "0" name = "attr_HiddenCAvo" min = "0" max = "100"></td>
+        <th>Quartz 5</th>
+        <td><input type = "number" value = "0" name = "attr_HP_5" min = "0" max = "100"></td>
+        <td><input type = "number" value = "0" name = "attr_MP_5" min = "0" max = "100"></td>
+        <td><input type = "number" value = "0" name = "attr_Str_5" min = "0" max = "100"></td>
+	<td><input type = "number" value = "0" name = "attr_Mag_5" min = "0" max = "100"></td>
+        <td><input type = "number" value = "0" name = "attr_Skl_5" min = "0" max = "100"></td>
+        <td><input type = "number" value = "0" name = "attr_Lck_5" min = "0" max = "100"></td>
+	<td><input type = "number" value = "0" name = "attr_Def_5" min = "0" max = "100"></td>
+        <td><input type = "number" value = "0" name = "attr_Res_5" min = "0" max = "100"></td>
+        <td><input type = "number" value = "0" name = "attr_Mov_5" min = "0" max = "100"></td>
+	<td><input type = "number" value = "0" name = "attr_Hit_5" min = "0" max = "100"></td>
+        <td><input type = "number" value = "0" name = "attr_Avo_5" min = "0" max = "100"></td>
+        <td><input type = "number" value = "0" name = "attr_Crit_5" min = "0" max = "100"></td>
       </tr>
       <tr>
-        <th>Reason</th>
-        <td><input type = "number" value = "0" name = "attr_ReasonHit" min = "0" max = "100"></td>
-        <td><input type = "number" value = "0" name = "attr_ReasonAvo" min = "0" max = "100"></td>
-        <td><input type = "number" value = "0" name = "attr_ReasonCAvo" min = "0" max = "100"></td>
+        <th>Quartz 6</th>
+        <td><input type = "number" value = "0" name = "attr_HP_6" min = "0" max = "100"></td>
+        <td><input type = "number" value = "0" name = "attr_MP_6" min = "0" max = "100"></td>
+        <td><input type = "number" value = "0" name = "attr_Str_6" min = "0" max = "100"></td>
+	<td><input type = "number" value = "0" name = "attr_Mag_6" min = "0" max = "100"></td>
+        <td><input type = "number" value = "0" name = "attr_Skl_6" min = "0" max = "100"></td>
+        <td><input type = "number" value = "0" name = "attr_Lck_6" min = "0" max = "100"></td>
+	<td><input type = "number" value = "0" name = "attr_Def_6" min = "0" max = "100"></td>
+        <td><input type = "number" value = "0" name = "attr_Res_6" min = "0" max = "100"></td>
+        <td><input type = "number" value = "0" name = "attr_Mov_6" min = "0" max = "100"></td>
+	<td><input type = "number" value = "0" name = "attr_Hit_6" min = "0" max = "100"></td>
+        <td><input type = "number" value = "0" name = "attr_Avo_6" min = "0" max = "100"></td>
+        <td><input type = "number" value = "0" name = "attr_Crit_6" min = "0" max = "100"></td>
       </tr>
       <tr>
-        <th>Faith</th>
-        <td><input type = "number" value = "0" name = "attr_FaithHit" min = "0" max = "100"></td>
-        <td><input type = "number" value = "0" name = "attr_FaithAvo" min = "0" max = "100"></td>
-        <td><input type = "number" value = "0" name = "attr_FaithCAvo" min = "0" max = "100"></td>
+        <th>Quartz 7</th>
+        <td><input type = "number" value = "0" name = "attr_HP_7" min = "0" max = "100"></td>
+        <td><input type = "number" value = "0" name = "attr_MP_7" min = "0" max = "100"></td>
+        <td><input type = "number" value = "0" name = "attr_Str_7" min = "0" max = "100"></td>
+	<td><input type = "number" value = "0" name = "attr_Mag_7" min = "0" max = "100"></td>
+        <td><input type = "number" value = "0" name = "attr_Skl_7" min = "0" max = "100"></td>
+        <td><input type = "number" value = "0" name = "attr_Lck_7" min = "0" max = "100"></td>
+	<td><input type = "number" value = "0" name = "attr_Def_7" min = "0" max = "100"></td>
+        <td><input type = "number" value = "0" name = "attr_Res_7" min = "0" max = "100"></td>
+        <td><input type = "number" value = "0" name = "attr_Mov_7" min = "0" max = "100"></td>
+	<td><input type = "number" value = "0" name = "attr_Hit_7" min = "0" max = "100"></td>
+        <td><input type = "number" value = "0" name = "attr_Avo_7" min = "0" max = "100"></td>
+        <td><input type = "number" value = "0" name = "attr_Crit_7" min = "0" max = "100"></td>
       </tr>
     </table>
   </div>
@@ -854,6 +936,113 @@
   <input name="attr_Ghit" value = "0" hidden>
   <input name = "attr_Atkspd" value = "0" min = "0" hidden>
   <input name = "attr_MDmgtot" value = "0" hidden>
+    <input name="attr_HP_M" value = "0" hidden>
+    <input name="attr_HP_1" value = "0" hidden>
+<input name="attr_HP_2" value = "0" hidden>
+<input name="attr_HP_3" value = "0" hidden>
+<input name="attr_HP_4" value = "0" hidden>
+<input name="attr_HP_5" value = "0" hidden>
+<input name="attr_HP_6" value = "0" hidden>
+<input name="attr_HP_7" value = "0" hidden>
+
+<input name="attr_MP_M" value = "0" hidden>
+<input name="attr_MP_1" value = "0" hidden>
+<input name="attr_MP_2" value = "0" hidden>
+<input name="attr_MP_3" value = "0" hidden>
+<input name="attr_MP_4" value = "0" hidden>
+<input name="attr_MP_5" value = "0" hidden>
+<input name="attr_MP_6" value = "0" hidden>
+<input name="attr_MP_7" value = "0" hidden>
+
+<input name="attr_Str_M" value = "0" hidden>
+<input name="attr_Str_1" value = "0" hidden>
+<input name="attr_Str_2" value = "0" hidden>
+<input name="attr_Str_3" value = "0" hidden>
+<input name="attr_Str_4" value = "0" hidden>
+<input name="attr_Str_5" value = "0" hidden>
+<input name="attr_Str_6" value = "0" hidden>
+<input name="attr_Str_7" value = "0" hidden>
+
+<input name="attr_Mag_M" value = "0" hidden>
+<input name="attr_Mag_1" value = "0" hidden>
+<input name="attr_Mag_2" value = "0" hidden>
+<input name="attr_Mag_3" value = "0" hidden>
+<input name="attr_Mag_4" value = "0" hidden>
+<input name="attr_Mag_5" value = "0" hidden>
+<input name="attr_Mag_6" value = "0" hidden>
+<input name="attr_Mag_7" value = "0" hidden>
+
+<input name="attr_Skl_M" value = "0" hidden>
+<input name="attr_Skl_1" value = "0" hidden>
+<input name="attr_Skl_2" value = "0" hidden>
+<input name="attr_Skl_3" value = "0" hidden>
+<input name="attr_Skl_4" value = "0" hidden>
+<input name="attr_Skl_5" value = "0" hidden>
+<input name="attr_Skl_6" value = "0" hidden>
+<input name="attr_Skl_7" value = "0" hidden>
+
+<input name="attr_Lck_M" value = "0" hidden>
+<input name="attr_Lck_1" value = "0" hidden>
+<input name="attr_Lck_2" value = "0" hidden>
+<input name="attr_Lck_3" value = "0" hidden>
+<input name="attr_Lck_4" value = "0" hidden>
+<input name="attr_Lck_5" value = "0" hidden>
+<input name="attr_Lck_6" value = "0" hidden>
+<input name="attr_Lck_7" value = "0" hidden>
+
+<input name="attr_Def_M" value = "0" hidden>
+<input name="attr_Def_1" value = "0" hidden>
+<input name="attr_Def_2" value = "0" hidden>
+<input name="attr_Def_3" value = "0" hidden>
+<input name="attr_Def_4" value = "0" hidden>
+<input name="attr_Def_5" value = "0" hidden>
+<input name="attr_Def_6" value = "0" hidden>
+<input name="attr_Def_7" value = "0" hidden>
+
+<input name="attr_Res_M" value = "0" hidden>
+<input name="attr_Res_1" value = "0" hidden>
+<input name="attr_Res_2" value = "0" hidden>
+<input name="attr_Res_3" value = "0" hidden>
+<input name="attr_Res_4" value = "0" hidden>
+<input name="attr_Res_5" value = "0" hidden>
+<input name="attr_Res_6" value = "0" hidden>
+<input name="attr_Res_7" value = "0" hidden>
+
+<input name="attr_Mov_M" value = "0" hidden>
+<input name="attr_Mov_1" value = "0" hidden>
+<input name="attr_Mov_2" value = "0" hidden>
+<input name="attr_Mov_3" value = "0" hidden>
+<input name="attr_Mov_4" value = "0" hidden>
+<input name="attr_Mov_5" value = "0" hidden>
+<input name="attr_Mov_6" value = "0" hidden>
+<input name="attr_Mov_7" value = "0" hidden>
+
+<input name="attr_Hit_M" value = "0" hidden>
+<input name="attr_Hit_1" value = "0" hidden>
+<input name="attr_Hit_2" value = "0" hidden>
+<input name="attr_Hit_3" value = "0" hidden>
+<input name="attr_Hit_4" value = "0" hidden>
+<input name="attr_Hit_5" value = "0" hidden>
+<input name="attr_Hit_6" value = "0" hidden>
+<input name="attr_Hit_7" value = "0" hidden>
+
+<input name="attr_Avo_M" value = "0" hidden>
+<input name="attr_Avo_1" value = "0" hidden>
+<input name="attr_Avo_2" value = "0" hidden>
+<input name="attr_Avo_3" value = "0" hidden>
+<input name="attr_Avo_4" value = "0" hidden>
+<input name="attr_Avo_5" value = "0" hidden>
+<input name="attr_Avo_6" value = "0" hidden>
+<input name="attr_Avo_7" value = "0" hidden>
+
+<input name="attr_Crit_M" value = "0" hidden>
+<input name="attr_Crit_1" value = "0" hidden>
+<input name="attr_Crit_2" value = "0" hidden>
+<input name="attr_Crit_3" value = "0" hidden>
+<input name="attr_Crit_4" value = "0" hidden>
+<input name="attr_Crit_5" value = "0" hidden>
+<input name="attr_Crit_6" value = "0" hidden>
+<input name="attr_Crit_7" value = "0" hidden>
   <!--Firstmost weapon values, excludes hit/crit because that's already calculated-->
   <input name= "attr_Weaknesses" value = "" hidden>
   <input type = "checkbox" value="0" name = "attr_isPromo"/>
