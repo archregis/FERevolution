@@ -2,7 +2,7 @@
   <div>
       <button type="action" name="act_character" >Character</button>
       <button type="action" name="act_misc" >Misc</button>
-      <button type="action" name="act_equip" >Abilities</button>
+      <button type="action" name="act_equip" >Quartz</button>
   </div>
   <input type='hidden' class='sheet-tabstoggle' name='attr_sheetTab'  value='character'  />
   <div class='sheet-character'>
@@ -186,7 +186,7 @@
         <label style = "font-size: 13px; font-weight: bold"> Weapon Description
           <input name = "attr_Skill_wp" type = "text"></input>
         </label>
-        <label style = "font-size: 13px; font-weight: bold"> Effective Damage
+        <label style = "font-size: 13px; font-weight: bold"> Effect
           <input name = "attr_Eff_wp" type = "text"></input>
         </label>
       </div>
@@ -541,6 +541,8 @@
       <table>
         <tr>
           <th>#</th>
+          <th>Rank</th>
+          <th>Element</th>
           <th>HP</th>
           <th>MP</th>
           <th>STR</th>
@@ -554,10 +556,12 @@
           <th>Hit</th>
           <th>Avo</th>
           <th>Crit</th>
-          <th></th>
+          <th>Quartz</th>
         </tr>
         <tr>
           <th>M</th>
+          <td><input type = "number" value = "1" name = "attr_Rank_M" min = "0" max = "3"></td>
+          <td><input type = "text" maxlength = "6" name = "attr_Ele_M" style = "width: 100%;"></td>
           <td><input type = "number" value = "0" name = "attr_HP_M" min = "0" max = "100"></td>
           <td><input type = "number" value = "0" name = "attr_MP_M" min = "0" max = "100"></td>
           <td><input type = "number" value = "0" name = "attr_Str_M" min = "0" max = "100"></td>
@@ -571,9 +575,12 @@
   	<td><input type = "number" value = "0" name = "attr_Hit_M" min = "0" max = "100"></td>
           <td><input type = "number" value = "0" name = "attr_Avo_M" min = "0" max = "100"></td>
           <td><input type = "number" value = "0" name = "attr_Crit_M" min = "0" max = "100"></td>
+          <td><input type = "text" name = "attr_QName_M" style = "width: 100%;"></td>
         </tr>
         <tr>
           <th>1</th>
+          <td><input type = "number" value = "1" name = "attr_Rank_1" min = "0" max = "3"></td>
+          <td><input type = "text" maxlength = "6" name = "attr_Ele_1" style = "width: 100%;"></td>
           <td><input type = "number" value = "0" name = "attr_HP_1" min = "0" max = "100"></td>
           <td><input type = "number" value = "0" name = "attr_MP_1" min = "0" max = "100"></td>
           <td><input type = "number" value = "0" name = "attr_Str_1" min = "0" max = "100"></td>
@@ -587,9 +594,12 @@
   	<td><input type = "number" value = "0" name = "attr_Hit_1" min = "0" max = "100"></td>
           <td><input type = "number" value = "0" name = "attr_Avo_1" min = "0" max = "100"></td>
           <td><input type = "number" value = "0" name = "attr_Crit_1" min = "0" max = "100"></td>
+          <td><input type = "text" name = "attr_QName_1" style = "width: 100%;"></td>
         </tr>
         <tr>
           <th>2</th>
+          <td><input type = "number" value = "1" name = "attr_Rank_2" min = "0" max = "3"></td>
+          <td><input type = "text" maxlength = "6" name = "attr_Ele_2" style = "width: 100%;"></td>
           <td><input type = "number" value = "0" name = "attr_HP_2" min = "0" max = "100"></td>
           <td><input type = "number" value = "0" name = "attr_MP_2" min = "0" max = "100"></td>
           <td><input type = "number" value = "0" name = "attr_Str_2" min = "0" max = "100"></td>
@@ -603,9 +613,12 @@
   	<td><input type = "number" value = "0" name = "attr_Hit_2" min = "0" max = "100"></td>
           <td><input type = "number" value = "0" name = "attr_Avo_2" min = "0" max = "100"></td>
           <td><input type = "number" value = "0" name = "attr_Crit_2" min = "0" max = "100"></td>
+          <td><input type = "text" name = "attr_QName_2" style = "width: 100%;"></td>
         </tr>
         <tr>
           <th>3</th>
+          <td><input type = "number" value = "1" name = "attr_Rank_3" min = "0" max = "3"></td>
+          <td><input type = "text" maxlength = "6" name = "attr_Ele_3" style = "width: 100%;"></td>
           <td><input type = "number" value = "0" name = "attr_HP_3" min = "0" max = "100"></td>
           <td><input type = "number" value = "0" name = "attr_MP_3" min = "0" max = "100"></td>
           <td><input type = "number" value = "0" name = "attr_Str_3" min = "0" max = "100"></td>
@@ -619,9 +632,12 @@
   	<td><input type = "number" value = "0" name = "attr_Hit_3" min = "0" max = "100"></td>
           <td><input type = "number" value = "0" name = "attr_Avo_3" min = "0" max = "100"></td>
           <td><input type = "number" value = "0" name = "attr_Crit_3" min = "0" max = "100"></td>
+          <td><input type = "text" name = "attr_QName_3" style = "width: 100%;"></td>
         </tr>
         <tr>
           <th>4</th>
+          <td><input type = "number" value = "1" name = "attr_Rank_4" min = "0" max = "3"></td>
+          <td><input type = "text" maxlength = "6" name = "attr_Ele_4" style = "width: 100%;"></td>
           <td><input type = "number" value = "0" name = "attr_HP_4" min = "0" max = "100"></td>
           <td><input type = "number" value = "0" name = "attr_MP_4" min = "0" max = "100"></td>
           <td><input type = "number" value = "0" name = "attr_Str_4" min = "0" max = "100"></td>
@@ -635,9 +651,12 @@
   	<td><input type = "number" value = "0" name = "attr_Hit_4" min = "0" max = "100"></td>
           <td><input type = "number" value = "0" name = "attr_Avo_4" min = "0" max = "100"></td>
           <td><input type = "number" value = "0" name = "attr_Crit_4" min = "0" max = "100"></td>
+          <td><input type = "text" name = "attr_QName_4" style = "width: 100%;"></td>
         </tr>
         <tr>
           <th>5</th>
+          <td><input type = "number" value = "1" name = "attr_Rank_5" min = "0" max = "3"></td>
+          <td><input type = "text" maxlength = "6" name = "attr_Ele_5" style = "width: 100%;"></td>
           <td><input type = "number" value = "0" name = "attr_HP_5" min = "0" max = "100"></td>
           <td><input type = "number" value = "0" name = "attr_MP_5" min = "0" max = "100"></td>
           <td><input type = "number" value = "0" name = "attr_Str_5" min = "0" max = "100"></td>
@@ -651,9 +670,12 @@
   	<td><input type = "number" value = "0" name = "attr_Hit_5" min = "0" max = "100"></td>
           <td><input type = "number" value = "0" name = "attr_Avo_5" min = "0" max = "100"></td>
           <td><input type = "number" value = "0" name = "attr_Crit_5" min = "0" max = "100"></td>
+          <td><input type = "text" name = "attr_QName_5" style = "width: 100%;"></td>
         </tr>
         <tr>
           <th>6</th>
+          <td><input type = "number" value = "1" name = "attr_Rank_6" min = "0" max = "3"></td>
+          <td><input type = "text" maxlength = "6" name = "attr_Ele_6" style = "width: 100%;"></td>
           <td><input type = "number" value = "0" name = "attr_HP_6" min = "0" max = "100"></td>
           <td><input type = "number" value = "0" name = "attr_MP_6" min = "0" max = "100"></td>
           <td><input type = "number" value = "0" name = "attr_Str_6" min = "0" max = "100"></td>
@@ -667,9 +689,12 @@
   	<td><input type = "number" value = "0" name = "attr_Hit_6" min = "0" max = "100"></td>
           <td><input type = "number" value = "0" name = "attr_Avo_6" min = "0" max = "100"></td>
           <td><input type = "number" value = "0" name = "attr_Crit_6" min = "0" max = "100"></td>
+          <td><input type = "text" name = "attr_QName_6" style = "width: 100%;"></td>
         </tr>
         <tr>
           <th>7</th>
+          <td><input type = "number" value = "1" name = "attr_Rank_7" min = "0" max = "3"></td>
+          <td><input type = "text" maxlength = "6" name = "attr_Ele_7" style = "width: 100%;"></td>
           <td><input type = "number" value = "0" name = "attr_HP_7" min = "0" max = "100"></td>
           <td><input type = "number" value = "0" name = "attr_MP_7" min = "0" max = "100"></td>
           <td><input type = "number" value = "0" name = "attr_Str_7" min = "0" max = "100"></td>
@@ -683,9 +708,12 @@
   	<td><input type = "number" value = "0" name = "attr_Hit_7" min = "0" max = "100"></td>
           <td><input type = "number" value = "0" name = "attr_Avo_7" min = "0" max = "100"></td>
           <td><input type = "number" value = "0" name = "attr_Crit_7" min = "0" max = "100"></td>
+          <td><input type = "text" name = "attr_QName_7" style = "width: 100%;"></td>
         </tr>
         <tr>
           <th>Sum</th>
+          <td>---</td>
+          <td>---</td>
               <td><span name = "attr_HP_Qtotal">0</span></td>
               <td><span name = "attr_MP_Qtotal">0</span></td>
               <td><span name = "attr_Str_Qtotal">0</span></td>
@@ -699,9 +727,18 @@
               <td><span name = "attr_Hit_Qtotal">0</span></td>
               <td><span name = "attr_Avo_Qtotal">0</span></td>
               <td><span name = "attr_Crit_Qtotal">0</span></td>
+              <td>---</td>
         </tr>
       </table>
     </div>
+    <div class="sheet-abilityinfo">
+    <div class = "sheet-header"> Quartz </div>
+      <textarea name="attr_Quartzlist" type="text" style="width:350px; height:400px"></textarea>
+  </div>
+  <div class="sheet-supportinfo">
+  <div class = "sheet-header"> Equipment </div>
+    <textarea name="attr_equiplist" type="text" style="width:350px; height:400px"></textarea>
+  </div>
     <!-- <div class = "sheet-classexp">
       <div class = "sheet-header">Class EXP</div>
       <table>
@@ -1377,7 +1414,7 @@
           log(wp)
           setAttrs({
             HP_total: Number(v.HP_sf) + Number(v.HP_i) + Number(v.HP_bd) + Number(v.HP_rb) + Number(v.HP_Qtotal) + wp,
-            HP_current_max: Number(v.HP_sf) + Number(v.HP_i) + Number(v.HP_bd) + Number(v.HP_rb) + wp
+            HP_current_max: Number(v.HP_sf) + Number(v.HP_i) + Number(v.HP_bd) + Number(v.HP_rb) + Number(v.HP_Qtotal) + wp
           });
           log(Number(v.HP_sf) + Number(v.HP_i) + Number(v.HP_bd) + wp);
         });
@@ -1551,14 +1588,6 @@
       });
     });
   });
-  //no mov modifiers lmao
-  on("change:Mov_sf change:Mov_rb change:Mov_i change:Mov_bd change:Mov_Qtotal", function(eventInfo) {
-    getAttrs(["Mov_sf", "Mov_i","Mov_bd","Mov_rb","Mov_Qtotal"], function(values) {
-      setAttrs({
-        Mov_total: Number(values.Mov_sf) + Number(values.Mov_i) + Number(values.Mov_rb) + Number(values.Mov_bd) + Number(v.Mov_Qtotal)
-      });
-    });
-  });
 
   on("change:HP_M change:HP_1 change:HP_2 change:HP_3 change:HP_4 change:HP_5 change:HP_6 change:HP_7", function(eventInfo) {
     getAttrs(["HP_M", "HP_1","HP_2", "HP_3", "HP_4", "HP_5", "HP_6", "HP_7"], function(values) {
@@ -1627,6 +1656,7 @@
     getAttrs(["Mov_M", "Mov_1","Mov_2", "Mov_3", "Mov_4", "Mov_5", "Mov_6", "Mov_7"], function(values) {
       setAttrs({
         Mov_Qtotal: Number(values.Mov_M) + Number(values.Mov_1) + Number(values.Mov_2) + Number(values.Mov_3) + Number(values.Mov_4) + Number(values.Mov_5) + Number(values.Mov_6) + Number(values.Mov_7)
+        // Mov_total: Number(values.Mov_M) + Number(values.Mov_1) + Number(values.Mov_2) + Number(values.Mov_3) + Number(values.Mov_4) + Number(values.Mov_5) + Number(values.Mov_6) + Number(values.Mov_7)
       });
     });
   });
