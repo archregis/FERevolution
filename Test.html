@@ -295,6 +295,7 @@
       <th>Base</th>
       <th>Personal</th>
       <th>Buff/Debuff</th>
+			<th>% Multiplier</th>
       <th>Total</th>
       <th class = "sheet-div"> </th>
       <th>Racial</th>
@@ -308,6 +309,7 @@
       <td><span name="attr_HP_sf" value = "0">0</span></td>
       <td><input type= "number" name = "attr_HP_i" value = "0"/></td>
       <td><input type = "number" name = "attr_HP_bd" value = "0"/></td>
+			<td>--</td>
       <td><span name="attr_HP_total">0</span></td>
       <td class= "sheet-div"> </td>
       <td><span name = "attr_HP_rg" value = "0">0</span></td>
@@ -321,6 +323,7 @@
       <td><span name="attr_MP_sf" value = "0">0</span></td>
       <td><input type= "number" name = "attr_MP_i" value = "0"/></td>
       <td><input type = "number" name = "attr_MP_bd" value = "0"/></td>
+			<td>--</td>
       <td><span name="attr_MP_total">0</span></td>
       <td class= "sheet-div"> </td>
       <td>--</td>
@@ -333,6 +336,7 @@
       <td><span name="attr_MR_sf" value = "0">0</span></td>
       <td><input type= "number" name = "attr_MR_i" value = "0"/></td>
       <td><input type = "number" name = "attr_MR_bd" value = "0"/></td>
+			<td>--</td>
       <td><span name="attr_MPregen">0</span></td>
       <td class= "sheet-div"> </td>
       <td>--</td>
@@ -346,6 +350,7 @@
       <td><span name = "attr_Str_sf" value = "0">0</span></td>
       <td><input name="attr_Str_i" type="number" value = "0"></td>
       <td><input name="attr_Str_bd" type="number" value = "0"></td>
+		  <td><input name="attr_Str_multi" type="number" value = "0"></td>
       <td><span name="attr_Str_total">0</span></td>
       <td class="sheet-div"> </td>
       <td><span name = "attr_Str_rg" value = "0">0</span></td>
@@ -359,6 +364,7 @@
       <td><span name = "attr_Mag_sf" value = "0">0</span></td>
       <td><input name="attr_Mag_i" type="number" value = "0"></td>
       <td><input name="attr_Mag_bd" type="number" value = "0"></td>
+			<td><input name="attr_Mag_multi" type="number" value = "0"></td>
       <td><span name = "attr_Mag_total">0</span></td>
       <td class="sheet-div"> </td>
       <td><span name = "attr_Mag_rg" value = "0">0</span></td>
@@ -372,6 +378,7 @@
       <td><span name = "attr_Skl_sf" value = "0">0</span></td>
       <td><input name="attr_Skl_i" type="number" value = "0"></td>
       <td><input name="attr_Skl_bd" type="number" value = "0"></td>
+			<td>--</td>
       <td><span name = "attr_Skl_total">0</span></td>
       <td class="sheet-div"> </td>
       <td><span name = "attr_Skl_rg" value = "0">0</span></td>
@@ -385,6 +392,7 @@
       <td><span name = "attr_Spd_sf" value = "0">0</span></td>
       <td><input name="attr_Spd_i" type="number" value = "0"></td>
       <td><input name="attr_Spd_bd" type="number" value = "0"></td>
+			<td><input name="attr_Spd_multi" type="number" value = "0"></td>
       <td><span name = "attr_Spd_total">0</span></td>
       <td class="sheet-div"> </td>
       <td><span name = "attr_Spd_rg" value = "0">0</span></td>
@@ -397,6 +405,7 @@
       <td><span name="attr_Avo_sf" value = "0">0</span></td>
       <td><input type= "number" name = "attr_Avo_i" value = "0"/></td>
       <td><input type = "number" name = "attr_Avo_bd" value = "0"/></td>
+			<td>--</td>
       <td><span name="attr_Avo">0</span></td>
       <td class= "sheet-div"> </td>
       <td>--</td>
@@ -409,6 +418,7 @@
       <td><span name = "attr_Lck_sf" value = "0">0</span></td>
       <td><input name="attr_Lck_i" type="number" value = "0"></td>
       <td><input name="attr_Lck_bd" type="number" value = "0"></td>
+		  <td>--</td>
       <td><span name = "attr_Lck_total">0</span></td>
       <td class="sheet-div"> </td>
       <td><span name = "attr_Lck_rg" value = "0">0</span></td>
@@ -422,6 +432,7 @@
       <td><span name = "attr_Def_sf" value = "0">0</span></td>
       <td><input name="attr_Def_i" type="number" value = "0"></td>
       <td><input name="attr_Def_bd" type="number" value = "0"></td>
+			<td><input name="attr_Def_multi" type="number" value = "0"></td>
       <td><span name = "attr_Def_total">0</span></td>
       <td class="sheet-div"> </td>
       <td><span name = "attr_Def_rg" value = "0">0</span></td>
@@ -435,6 +446,7 @@
       <td><span name = "attr_Res_sf" value = "0">0</span></td>
       <td><input name="attr_Res_i" type="number" value = "0"></td>
       <td><input name="attr_Res_bd" type="number" value = "0"></td>
+			<td><input name="attr_Res_multi" type="number" value = "0"></td>
       <td><span name = "attr_Res_total">0</span></td>
       <td class="sheet-div"> </td>
       <td><span name = "attr_Res_rg" value = "0">0</span></td>
@@ -448,6 +460,7 @@
       <td><span name = "attr_Mov_sf" value = "0">0</span></td>
       <td><input name="attr_Mov_i" type="number" value = "0"></td>
       <td><input name="attr_Mov_bd" type="number" value = "0"></td>
+			<td><input name="attr_Mov_multi" type="number" value = "0"></td>
       <td><span name = "attr_Mov_total">0</span></td>
       <td class="sheet-div"> </td>
       <td>--</td>
@@ -1015,6 +1028,12 @@
   <input name="attr_Mov_rb" value = "0" hidden>
   <input name="attr_Mov_total" value = "0" hidden>
   <input name="attr_Mov_total_max" value = "0" hidden>
+	<input name="attr_Str_multi" value = "0" hidden>
+	<input name="attr_Mag_multi" value = "0" hidden>
+	<input name="attr_Spd_multi" value = "0" hidden>
+	<input name="attr_Def_multi" value = "0" hidden>
+	<input name="attr_Res_multi" value = "0" hidden>
+	<input name="attr_Mov_multi" value = "0" hidden>
   <input name="attr_Athletics_total" value = "0" hidden>
   <input name="attr_Arcana_total" value = "0" hidden>
   <input name="attr_History_total" value = "0" hidden>
@@ -1467,50 +1486,37 @@ on("change:HP_sf change:HP_i change:HP_rb change:HP_bd change:repeating_weapons:
     });
   });
 });
-on("change:Str_sf change:Str_i change:Str_bd change:Str_rb change:repeating_weapons:Str_wp change:_reporder:weapons change:DBlow change:Str_Qtotal", function(eventInfo) {
+on("change:Str_sf change:Str_i change:Str_bd change:Str_rb change:repeating_weapons:Str_wp change:_reporder:weapons change:Str_Qtotal change:Str_multi", function(eventInfo) {
   getSectionIDsOrdered("repeating_weapons", function(idarray) {
     fID = idarray[0];
-    getAttrs(["Str_sf", "Str_i","Str_bd","Str_total","repeating_weapons_"+fID+"_Str_wp","Str_rb","DBlow","Str_Qtotal"], function(v) {
+    getAttrs(["Str_sf", "Str_i","Str_bd","Str_total","repeating_weapons_"+fID+"_Str_wp","Str_rb","Str_Qtotal","Str_multi"], function(v) {
       log(JSON.stringify(v))
       let nindex = Object.keys(v)[4];
       log(nindex)
       let wp = parseInt(v[nindex])||0;
       log(wp)
-      if (v.DBlow == 0){
       setAttrs({
-        Str_total: Number(v.Str_sf) + Number(v.Str_i) + Number(v.Str_bd) + Number(v.Str_rb) + Number(v.Str_Qtotal) + wp,
+        Str_total: Math.round((Number(v.Str_sf) + Number(v.Str_i) + Number(v.Str_bd) + Number(v.Str_rb) + Number(v.Str_Qtotal) + wp)*(Number(100+Number(v.Str_multi))/100)),
       });
-      }
-      if (v.DBlow == 1){
-      setAttrs({
-        Str_total: Number(v.Str_sf) + Number(v.Str_i) + Number(v.Str_bd) + Number(v.Str_rb) + 6 + wp,
-      });
-      }
       log(Number(v.Str_sf) + Number(v.Str_i) + Number(v.Str_bd) + Number(v.Str_rb) + wp);
     });
   });
 });
-on("change:Mag_sf change:Mag_i change:Mag_bd change:Mag_rb change:repeating_weapons:Mag_wp change:_reporder:weapons change:FBlow change:Mag_Qtotal", function(eventInfo) {
+on("change:Mag_sf change:Mag_i change:Mag_bd change:Mag_rb change:repeating_weapons:Mag_wp change:_reporder:weapons change:FBlow change:Mag_Qtotal change:Mag_multi", function(eventInfo) {
   getSectionIDsOrdered("repeating_weapons", function(idarray) {
     fID = idarray[0];
-    getAttrs(["Mag_sf", "Mag_i","Mag_bd","Mag_total","repeating_weapons_"+fID+"_Mag_wp","Mag_rb","FBlow","Mag_Qtotal"], function(v) {
+    getAttrs(["Mag_sf", "Mag_i","Mag_bd","Mag_total","repeating_weapons_"+fID+"_Mag_wp","Mag_rb","FBlow","Mag_Qtotal","Mag_multi"], function(v) {
       log(JSON.stringify(v))
       let nindex = Object.keys(v)[4];
       log(nindex)
       let wp = parseInt(v[nindex])||0;
       log(wp)
-      if (v.FBlow == 0){
+			let maghold = Math.round((Number(v.Mag_sf) + Number(v.Mag_i) + Number(v.Mag_rb) + Number(v.Mag_bd) + Number(v.Mag_Qtotal) + wp)*(Number(100+Number(v.Mag_multi))/100))
       setAttrs({
-        Mag_total: Number(v.Mag_sf) + Number(v.Mag_i) + Number(v.Mag_rb) + Number(v.Mag_bd) + Number(v.Mag_Qtotal) + wp,
-        MP_sf: Math.max(Math.round((Number(v.Mag_sf) + Number(v.Mag_i) + Number(v.Mag_rb) + Number(v.Mag_bd) + Number(v.Mag_Qtotal))/10),1),
-        MR_sf: Math.max(Math.round((Number(v.Mag_sf) + Number(v.Mag_i) + Number(v.Mag_rb) + Number(v.Mag_bd) + Number(v.Mag_Qtotal))/20),1)
+        Mag_total: maghold,
+        MP_sf: Math.max(Math.round((Number(v.Mag_sf) + Number(v.Mag_i) + Number(v.Mag_rb) + Number(v.Mag_bd) + Number(v.Mag_Qtotal) + wp)/10),1),
+        MR_sf: Math.max(Math.round((Number(v.Mag_sf) + Number(v.Mag_i) + Number(v.Mag_rb) + Number(v.Mag_bd) + Number(v.Mag_Qtotal) + wp)/20),1)
       });
-      }
-      if (v.FBlow == 1){
-      setAttrs({
-        Mag_total: Number(v.Mag_sf) + Number(v.Mag_i) + Number(v.Mag_rb) + Number(v.Mag_bd) + 6 + wp,
-      });
-      }
       log(Number(v.Mag_sf) + Number(v.Mag_i) + Number(v.Mag_bd) + wp);
     });
   });
@@ -1547,25 +1553,18 @@ on("change:Skl_sf change:Skl_i change:Skl_bd change:Skl_rb change:repeating_weap
     });
   });
 });
-on("change:Spd_sf change:Spd_i change:Spd_bd change:Spd_rb change:repeating_weapons:Spd_wp change:_reporder:weapons change:SBlow change:Spd_Qtotal", function(eventInfo) {
+on("change:Spd_sf change:Spd_i change:Spd_bd change:Spd_rb change:repeating_weapons:Spd_wp change:_reporder:weapons change:SBlow change:Spd_Qtotal change:Spd_multi", function(eventInfo) {
   getSectionIDsOrdered("repeating_weapons", function(idarray) {
     fID = idarray[0];
-    getAttrs(["Spd_sf","Spd_i","Spd_bd","Spd_total","repeating_weapons_"+fID+"_Spd_wp","Spd_rb", "SBlow", "Spd_Qtotal"], function(v) {
+    getAttrs(["Spd_sf","Spd_i","Spd_bd","Spd_total","repeating_weapons_"+fID+"_Spd_wp","Spd_rb", "SBlow", "Spd_Qtotal","Spd_multi"], function(v) {
       log(JSON.stringify(v))
       let nindex = Object.keys(v)[4];
       log(nindex)
       let wp = parseInt(v[nindex])||0;
       log(wp)
-      if (v.SBlow == 0){
       setAttrs({
-        Spd_total: Number(v.Spd_sf) + Number(v.Spd_i) + Number(v.Spd_bd) + Number(v.Spd_rb) + Number(v.Spd_Qtotal) + wp,
+        Spd_total: Math.round((Number(v.Spd_sf) + Number(v.Spd_i) + Number(v.Spd_bd) + Number(v.Spd_rb) + Number(v.Spd_Qtotal) + wp)*(Number(100+Number(v.Spd_multi))/100)),
       });
-      }
-      if (v.SBlow == 1){
-      setAttrs({
-        Spd_total: Number(v.Spd_sf) + Number(v.Spd_i) + Number(v.Spd_bd) + Number(v.Spd_rb) + 6 + wp,
-      });
-      }
       log(Number(v.Spd_sf) + Number(v.Spd_i) + Number(v.Spd_bd) + wp);
     });
   });
@@ -1586,33 +1585,33 @@ on("change:Lck_sf change:Lck_i change:Lck_bd change:Lck_rb change:repeating_weap
     });
   });
 });
-on("change:Def_sf change:Def_i change:Def_bd change:Def_rb change:repeating_weapons:Def_wp change:_reporder:weapons change:Def_Qtotal", function(eventInfo) {
+on("change:Def_sf change:Def_i change:Def_bd change:Def_rb change:repeating_weapons:Def_wp change:_reporder:weapons change:Def_Qtotal change:Def_multi", function(eventInfo) {
   getSectionIDsOrdered("repeating_weapons", function(idarray) {
     fID = idarray[0];
-    getAttrs(["Def_sf", "Def_i","Def_bd","Def_total","repeating_weapons_"+fID+"_Def_wp","Def_rb","Def_Qtotal"], function(v) {
+    getAttrs(["Def_sf", "Def_i","Def_bd","Def_total","repeating_weapons_"+fID+"_Def_wp","Def_rb","Def_Qtotal","Def_multi"], function(v) {
       log(JSON.stringify(v))
       let nindex = Object.keys(v)[4];
       log(nindex)
       let wp = parseInt(v[nindex])||0;
       log(wp)
       setAttrs({
-        Def_total: Number(v.Def_sf) + Number(v.Def_i) + Number(v.Def_rb) + Number(v.Def_bd) + Number(v.Def_Qtotal) + wp,
+        Def_total: Math.round((Number(v.Def_sf) + Number(v.Def_i) + Number(v.Def_rb) + Number(v.Def_bd) + Number(v.Def_Qtotal) + wp)*(Number(100+Number(v.Def_multi))/100)),
       });
       log(Number(v.Def_sf) + Number(v.Def_i) + Number(v.Def_bd) + wp);
     });
   });
 });
-on("change:Res_sf change:Res_i change:Res_bd change:Res_rb change:repeating_weapons:Res_wp change:_reporder:weapons change:Res_Qtotal", function(eventInfo) {
+on("change:Res_sf change:Res_i change:Res_bd change:Res_rb change:repeating_weapons:Res_wp change:_reporder:weapons change:Res_Qtotal change:Res_multi", function(eventInfo) {
   getSectionIDsOrdered("repeating_weapons", function(idarray) {
     fID = idarray[0];
-    getAttrs(["Res_sf", "Res_i","Res_bd","Res_total","repeating_weapons_"+fID+"_Res_wp","Res_rb","Res_Qtotal"], function(v) {
+    getAttrs(["Res_sf", "Res_i","Res_bd","Res_total","repeating_weapons_"+fID+"_Res_wp","Res_rb","Res_Qtotal","Res_multi"], function(v) {
       log(JSON.stringify(v))
       let nindex = Object.keys(v)[4];
       log(nindex)
       let wp = parseInt(v[nindex])||0;
       log(wp)
       setAttrs({
-        Res_total: Number(v.Res_sf) + Number(v.Res_i) + Number(v.Res_bd) + Number(v.Res_rb) + Number(v.Res_Qtotal) + wp,
+        Res_total: Math.round((Number(v.Res_sf) + Number(v.Res_i) + Number(v.Res_bd) + Number(v.Res_rb) + Number(v.Res_Qtotal) + wp)*(Number(100+Number(v.Res_multi))/100)),
       });
       log(Number(v.Res_sf) + Number(v.Res_i) + Number(v.Res_bd) + wp);
     });

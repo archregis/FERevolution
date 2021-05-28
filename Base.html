@@ -1467,25 +1467,19 @@ on("change:HP_sf change:HP_i change:HP_rb change:HP_bd change:repeating_weapons:
     });
   });
 });
-on("change:Str_sf change:Str_i change:Str_bd change:Str_rb change:repeating_weapons:Str_wp change:_reporder:weapons change:DBlow change:Str_Qtotal", function(eventInfo) {
+on("change:Str_sf change:Str_i change:Str_bd change:Str_rb change:repeating_weapons:Str_wp change:_reporder:weapons change:Str_Qtotal", function(eventInfo) {
   getSectionIDsOrdered("repeating_weapons", function(idarray) {
     fID = idarray[0];
-    getAttrs(["Str_sf", "Str_i","Str_bd","Str_total","repeating_weapons_"+fID+"_Str_wp","Str_rb","DBlow","Str_Qtotal"], function(v) {
+    getAttrs(["Str_sf", "Str_i","Str_bd","Str_total","repeating_weapons_"+fID+"_Str_wp","Str_rb","Str_Qtotal"], function(v) {
       log(JSON.stringify(v))
       let nindex = Object.keys(v)[4];
       log(nindex)
       let wp = parseInt(v[nindex])||0;
       log(wp)
-      if (v.DBlow == 0){
       setAttrs({
         Str_total: Number(v.Str_sf) + Number(v.Str_i) + Number(v.Str_bd) + Number(v.Str_rb) + Number(v.Str_Qtotal) + wp,
       });
-      }
-      if (v.DBlow == 1){
-      setAttrs({
-        Str_total: Number(v.Str_sf) + Number(v.Str_i) + Number(v.Str_bd) + Number(v.Str_rb) + 6 + wp,
-      });
-      }
+
       log(Number(v.Str_sf) + Number(v.Str_i) + Number(v.Str_bd) + Number(v.Str_rb) + wp);
     });
   });
