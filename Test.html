@@ -9,8 +9,7 @@
 		<input type="radio" class="sheet-useBackground" style="display: none;" name="attr_background" value="6" />
 		<input type="radio" class="sheet-useBackground" style="display: none;" name="attr_background" value="7" />
 		<input type="radio" class="sheet-useBackground" style="display: none;" name="attr_background" value="8" />
-		<input type="radio" class="sheet-useBackground" style="display: none;" name="attr_background" value="9" />
-		<input type="radio" class="sheet-useBackground" style="display: none;" name="attr_background" value="10" />
+
 		<!-- Be sure to update the CSS with the file information) -->
 		<div class='sheet-background'>
 			<div class='sheet-cdiv'>
@@ -21,21 +20,18 @@
         <span class = "sheet-toggle-label">Element</span>
         <div class = "sheet-hiddenstats">
         <div class="sheet-config" style='border-style: dotted; border-color: #dbc792; padding: 5px; background-color: white; background-image: none;'>
-					<div class='sheet-row'><h2 class='sheet-sectionHeader'>CONFIGURATION</h2></div>
 					<div class="sheet-row">
 						<div class="sheet-col">
 							<h3>Backgrounds</h3>
 								<span class="sheet-5pxshim">
 									<input type="checkbox" class="sheet-useBackground" style="width: 15px;" name="attr_background" value="1" title="No Background Image" checked /> No Background Image<br />
-									<input type="checkbox" class="sheet-useBackground" style="width: 15px;" name="attr_background" value="7" title="Cyberpunk" /> Cyberpunk<br />
-									<input type="checkbox" class="sheet-useBackground" style="width: 15px;" name="attr_background" value="8" title="Hellfrost" /> Hellfrost<br />
-									<input type="checkbox" class="sheet-useBackground" style="width: 15px;" name="attr_background" value="9" title="Hellfrost: Land of Fire" /> Hellfrost: Land of Fire<br />
-									<input type="checkbox" class="sheet-useBackground" style="width: 15px;" name="attr_background" value="5" title="Last Parsec" /> Last Parsec<br />
-									<input type="checkbox" class="sheet-useBackground" style="width: 15px;" name="attr_background" value="4" title="Noir" /> Noir<br />
-									<input type="checkbox" class="sheet-useBackground" style="width: 15px;" name="attr_background" value="2" title="Old Map (PotSM)" /> Old Map<br />
-									<input type="checkbox" class="sheet-useBackground" style="width: 15px;" name="attr_background" value="10" title="Parchment" /> Parchment<br />
-									<input type="checkbox" class="sheet-useBackground" style="width: 15px;" name="attr_background" value="6" title="Supers" /> Superhero<br />
-									<input type="checkbox" class="sheet-useBackground" style="width: 15px;" name="attr_background" value="3" title="Zombiepocalypse" /> Zombie-esque<br />
+									<input type="checkbox" class="sheet-useBackground" style="width: 15px;" name="attr_background" value="7" title="Earth" /> Earth<br />
+									<input type="checkbox" class="sheet-useBackground" style="width: 15px;" name="attr_background" value="8" title="Water" /> Water<br />
+									<input type="checkbox" class="sheet-useBackground" style="width: 15px;" name="attr_background" value="5" title="Fire" /> Fire<br />
+									<input type="checkbox" class="sheet-useBackground" style="width: 15px;" name="attr_background" value="4" title="Wind" /> Wind<br />
+									<input type="checkbox" class="sheet-useBackground" style="width: 15px;" name="attr_background" value="2" title="Mirage" /> Mirage<br />
+									<input type="checkbox" class="sheet-useBackground" style="width: 15px;" name="attr_background" value="6" title="Space" /> Space<br />
+									<input type="checkbox" class="sheet-useBackground" style="width: 15px;" name="attr_background" value="3" title="Time" /> Time<br />
 								</span>
 						</div>
           </div>
@@ -145,7 +141,7 @@
       <tr>
         <th>Spell Name</th>
         <th>Type</th>
-        <th>Uses</th>
+        <th>MP Cost</th>
       </tr>
       <tr class = "sheet-thicc">
         <td><input name = "attr_SName" type = "text"></td>
@@ -457,11 +453,11 @@
 
     <tr class="Mov">
       <td class="sheet-statlabel">Mov</td>
-      <td><span name = "attr_Mov_sf" value = "0">0</span></td>
-      <td><input name="attr_Mov_i" type="number" value = "0"></td>
-      <td><input name="attr_Mov_bd" type="number" value = "0"></td>
-			<td><input name="attr_Mov_multi" type="number" value = "0"></td>
-      <td><span name = "attr_Mov_total">0</span></td>
+      <td><span name = "attr_Cha_sf" value = "0">0</span></td>
+      <td><input name="attr_Cha_i" type="number" value = "0"></td>
+      <td><input name="attr_Cha_bd" type="number" value = "0"></td>
+			<td><input name="attr_Cha_multi" type="number" value = "0"></td>
+      <td><span name = "attr_Cha_total">0</span></td>
       <td class="sheet-div"> </td>
       <td>--</td>
       <td>--</td>
@@ -1033,7 +1029,7 @@
 	<input name="attr_Spd_multi" value = "0" hidden>
 	<input name="attr_Def_multi" value = "0" hidden>
 	<input name="attr_Res_multi" value = "0" hidden>
-	<input name="attr_Mov_multi" value = "0" hidden>
+	<input name="attr_Cha_multi" value = "0" hidden>
   <input name="attr_Athletics_total" value = "0" hidden>
   <input name="attr_Arcana_total" value = "0" hidden>
   <input name="attr_History_total" value = "0" hidden>
@@ -1356,8 +1352,8 @@ on("change:class", function(eventInfo) {
     attrs.Res_sf = unPr_classList[classIndex].Res_b;
     attrs.Res_gf = unPr_classList[classIndex].Res_g;
     attrs.Res_total_max = unPr_classList[classIndex].Res_c;
-    attrs.Mov_sf = unPr_classList[classIndex].Mov_b;
-    attrs.Mov_total_max = unPr_classList[classIndex].Mov_c;
+    attrs.Cha_sf = unPr_classList[classIndex].Mov_b;
+    attrs.Cha_total_max = unPr_classList[classIndex].Mov_c;
     attrs.isPromo = 0;
     console.log(attrs);
     setAttrs(attrs);
@@ -1389,8 +1385,8 @@ on("change:class", function(eventInfo) {
     attrs.Res_sf = Pr_classList[classIndex].Res_b;
     attrs.Res_gf = Pr_classList[classIndex].Res_g;
     attrs.Res_total_max = Pr_classList[classIndex].Res_c;
-    attrs.Mov_sf = Pr_classList[classIndex].Mov_b;
-    attrs.Mov_total_max = Pr_classList[classIndex].Mov_c;
+    attrs.Cha_sf = Pr_classList[classIndex].Mov_b;
+    attrs.Cha_total_max = Pr_classList[classIndex].Mov_c;
     attrs.isPromo = 1;
     console.log(attrs);
     setAttrs(attrs);
@@ -1617,17 +1613,17 @@ on("change:Res_sf change:Res_i change:Res_bd change:Res_rb change:repeating_weap
     });
   });
 });
-on("change:Cha_sf change:Cha_i change:Cha_bd change:Cha_rb change:repeating_weapons:Cha_wp change:_reporder:weapons change:Chab", function(eventInfo) {
+on("change:Cha_sf change:Cha_i change:Cha_bd change:Cha_rb change:repeating_weapons:Cha_wp change:_reporder:weapons change:Mov_Qtotal change:Cha_multi", function(eventInfo) {
   getSectionIDsOrdered("repeating_weapons", function(idarray) {
     fID = idarray[0];
-    getAttrs(["Cha_sf", "Cha_i","Cha_bd","Cha_total","repeating_weapons_"+fID+"_Cha_wp","Chab","Cha_rb"], function(v) {
+    getAttrs(["Cha_sf", "Cha_i","Cha_bd","Cha_total","repeating_weapons_"+fID+"_Cha_wp","Cha_rb","Mov_Qtotal","Cha_multi"], function(v) {
       log(JSON.stringify(v))
       let nindex = Object.keys(v)[4];
       log(nindex)
       let wp = parseInt(v[nindex])||0;
       log(wp)
       setAttrs({
-        Cha_total: Number(v.Cha_sf) + Number(v.Cha_i) + Number(v.Cha_rb) + Number(v.Cha_bd) + Number(v.Chab),
+        Cha_total: Math.round((Number(v.Cha_sf) + Number(v.Cha_i) + Number(v.Cha_rb) + Number(v.Cha_bd) + Number(v.Mov_Qtotal))*(Number(100+Number(v.Cha_multi))/100)),
       });
       log(Number(v.Cha_sf) + Number(v.Cha_i) + Number(v.Cha_bd) + Number(v.Chab));
     });
