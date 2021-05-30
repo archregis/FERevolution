@@ -464,3 +464,89 @@ background-color: #f3f3f3;
     font-size: 13px;
     font-weight: bold;
 }
+
+.sheet-useBackground input[value="1"]:checked ~ *.sheet-background {
+	background-image: none;
+	background-color: white;
+	/*background-image: url("https://cdn.discordapp.com/attachments/180130042930528256/847735741634445322/unknown.png");
+	background-size: 845px 900px;*/
+    background-repeat: no-repeat;
+    /*background-attachment: fixed;*/
+    background-position: center; 
+    background-origin: content-box;
+}
+
+
+.sheet-useBackground input[value="2"]:checked ~ *.sheet-background {
+	background-image: url("https://cdn.discordapp.com/attachments/180130042930528256/847735498054434866/unknown.png");
+	background-size: 900px 840px;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+   /* background-position: center; */
+    background-origin: content-box;
+}
+
+
+.sheet-useBackground input[value="3"]:checked ~ *.sheet-background {
+	background-image: url("https://cdn.discordapp.com/attachments/180130042930528256/847735976162885632/unknown.png");
+	background-size: 900px 840px;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+   /* background-position: center; */
+    background-origin: content-box;
+}
+
+
+.sheet-useBackground input[value="4"]:checked ~ *.sheet-background {
+	/*background-image: url("http://www.geeksville.us/roll20/NYC-Night_2.jpg");*/
+	/*background-image: url("http://www.geeksville.us/roll20/noir3.jpg");*/
+	background-image: url("https://cdn.discordapp.com/attachments/180130042930528256/847734590784667658/unknown.png");
+	background-size: 900px 840px;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+   /* background-position: center; */
+    background-origin: content-box;
+}
+
+
+.sheet-useBackground input[value="5"]:checked ~ *.sheet-background {
+	background-image: url("https://cdn.discordapp.com/attachments/180130042930528256/847733914452754462/unknown.png");
+	background-size: 900px 850px;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    /*background-position: center; */
+    background-origin: content-box;
+}
+
+
+.sheet-useBackground input[value="6"]:checked ~ *.sheet-background {
+	background-image: url("https://cdn.discordapp.com/attachments/180130042930528256/847735741634445322/unknown.png");
+	background-size: 900px 850px;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    /*background-position: center; */
+    background-origin: content-box;
+}
+
+
+.sheet-useBackground input[value="7"]:checked ~ *.sheet-background {
+	/*background-image: url("http://www.geeksville.us/roll20/cyberpunk2.jpg");*/
+	background-image: url("https://cdn.discordapp.com/attachments/180130042930528256/847733452639698954/unknown.png");
+	background-size: 900px 840px;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+   /* background-position: center; */
+    background-origin: content-box;
+}
+
+
+.sheet-useBackground  input[value="8"]:checked ~ *.sheet-background { /*Hellfrost*/
+	/*background-image: url("http://www.geeksville.us/roll20/cyberpunk2.jpg");*/
+	background-image: url("https://cdn.discordapp.com/attachments/180130042930528256/847733872287547402/unknown.png");
+	background-size: 900px 840px;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+   /* background-position: center; */
+    background-origin: content-box;
+}
+
