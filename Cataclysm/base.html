@@ -48,7 +48,7 @@
 
 				<!-- First Sheet -->
 				<div class='sheet-character'>
-				    <div id="test">
+				    <div id="left-column">
 					    <div class="sheet-charinfo">
     						<div class = "sheet-header"> INFO </div>
     						<div class="sheet-row">
@@ -298,7 +298,7 @@
 						</div>
 					</div>
 
-					<div id=test3>
+					<div id=notes-sheet>
     					<!-- Notes -->
     					<div>
         					<div class = "sheet-header"> Notes </div>
@@ -306,7 +306,7 @@
     					</div>
 
     					<!-- Derived Attributes -->
-    					<div id="test2" class="sheet-mainstats">
+    					<div class="sheet-mainstats">
 						    <div class = "sheet-header"> DERIVED STATS </div>
 							<table>
 								<tr>
@@ -574,7 +574,7 @@
 								<th>MOV</th>
 								<th>Hit</th>
 								<th>Avo</th>
-								<th>Crit</th>
+								<th>Weight</th>
 							</tr>
 							<tr>
 								<th>1</th>
@@ -590,7 +590,7 @@
 								<td><input type = "number" value = "0" name = "attr_Mov_M" min = "0" max = "100"></td>
 								<td><input type = "number" value = "0" name = "attr_Hit_M" min = "0" max = "100"></td>
 								<td><input type = "number" value = "0" name = "attr_Avo_M" min = "0" max = "100"></td>
-								<td><input type = "number" value = "0" name = "attr_Crit_M" min = "0" max = "100"></td>
+								<td><input type = "number" value = "0" name = "attr_Weight_M" min = "0" max = "100"></td>
 							</tr>
 							<tr>
 								<th>2</th>
@@ -606,7 +606,7 @@
 								<td><input type = "number" value = "0" name = "attr_Mov_S" min = "0" max = "100"></td>
 								<td><input type = "number" value = "0" name = "attr_Hit_S" min = "0" max = "100"></td>
 								<td><input type = "number" value = "0" name = "attr_Avo_S" min = "0" max = "100"></td>
-								<td><input type = "number" value = "0" name = "attr_Crit_S" min = "0" max = "100"></td>
+								<td><input type = "number" value = "0" name = "attr_Weight_S" min = "0" max = "100"></td>
 							</tr>
 							<tr>
 								<th>3</th>
@@ -622,7 +622,7 @@
 								<td><input type = "number" value = "0" name = "attr_Mov_1" min = "0" max = "100"></td>
 								<td><input type = "number" value = "0" name = "attr_Hit_1" min = "0" max = "100"></td>
 								<td><input type = "number" value = "0" name = "attr_Avo_1" min = "0" max = "100"></td>
-								<td><input type = "number" value = "0" name = "attr_Crit_1" min = "0" max = "100"></td>
+								<td><input type = "number" value = "0" name = "attr_Weight_1" min = "0" max = "100"></td>
 							</tr>
 							<tr>
 								<th>4</th>
@@ -638,7 +638,7 @@
 								<td><input type = "number" value = "0" name = "attr_Mov_2" min = "0" max = "100"></td>
 								<td><input type = "number" value = "0" name = "attr_Hit_2" min = "0" max = "100"></td>
 								<td><input type = "number" value = "0" name = "attr_Avo_2" min = "0" max = "100"></td>
-								<td><input type = "number" value = "0" name = "attr_Crit_2" min = "0" max = "100"></td>
+								<td><input type = "number" value = "0" name = "attr_Weight_2" min = "0" max = "100"></td>
 							</tr>
 							<tr>
 								<th>5</th>
@@ -654,7 +654,7 @@
 								<td><input type = "number" value = "0" name = "attr_Mov_3" min = "0" max = "100"></td>
 								<td><input type = "number" value = "0" name = "attr_Hit_3" min = "0" max = "100"></td>
 								<td><input type = "number" value = "0" name = "attr_Avo_3" min = "0" max = "100"></td>
-								<td><input type = "number" value = "0" name = "attr_Crit_3" min = "0" max = "100"></td>
+								<td><input type = "number" value = "0" name = "attr_Weight_3" min = "0" max = "100"></td>
 							</tr>
 							<tr>
 								<th>6</th>
@@ -670,7 +670,7 @@
 								<td><input type = "number" value = "0" name = "attr_Mov_4" min = "0" max = "100"></td>
 								<td><input type = "number" value = "0" name = "attr_Hit_4" min = "0" max = "100"></td>
 								<td><input type = "number" value = "0" name = "attr_Avo_4" min = "0" max = "100"></td>
-								<td><input type = "number" value = "0" name = "attr_Crit_4" min = "0" max = "100"></td>
+								<td><input type = "number" value = "0" name = "attr_Weight_4" min = "0" max = "100"></td>
 							</tr>
 							<tr>
 								<th>7</th>
@@ -686,7 +686,7 @@
 								<td><input type = "number" value = "0" name = "attr_Mov_5" min = "0" max = "100"></td>
 								<td><input type = "number" value = "0" name = "attr_Hit_5" min = "0" max = "100"></td>
 								<td><input type = "number" value = "0" name = "attr_Avo_5" min = "0" max = "100"></td>
-								<td><input type = "number" value = "0" name = "attr_Crit_5" min = "0" max = "100"></td>
+								<td><input type = "number" value = "0" name = "attr_Weight_5" min = "0" max = "100"></td>
 							</tr>
 							<tr>
 								<th>8</th>
@@ -702,7 +702,7 @@
 								<td><input type = "number" value = "0" name = "attr_Mov_6" min = "0" max = "100"></td>
 								<td><input type = "number" value = "0" name = "attr_Hit_6" min = "0" max = "100"></td>
 								<td><input type = "number" value = "0" name = "attr_Avo_6" min = "0" max = "100"></td>
-								<td><input type = "number" value = "0" name = "attr_Crit_6" min = "0" max = "100"></td>
+								<td><input type = "number" value = "0" name = "attr_Weight_6" min = "0" max = "100"></td>
 							</tr>
 							<tr>
 								<th>9</th>
@@ -718,7 +718,7 @@
 								<td><input type = "number" value = "0" name = "attr_Mov_7" min = "0" max = "100"></td>
 								<td><input type = "number" value = "0" name = "attr_Hit_7" min = "0" max = "100"></td>
 								<td><input type = "number" value = "0" name = "attr_Avo_7" min = "0" max = "100"></td>
-								<td><input type = "number" value = "0" name = "attr_Crit_7" min = "0" max = "100"></td>
+								<td><input type = "number" value = "0" name = "attr_Weight_7" min = "0" max = "100"></td>
 							</tr>
 							<tr>
 								<th>10</th>
@@ -734,7 +734,7 @@
 								<td><input type = "number" value = "0" name = "attr_Mov_8" min = "0" max = "100"></td>
 								<td><input type = "number" value = "0" name = "attr_Hit_8" min = "0" max = "100"></td>
 								<td><input type = "number" value = "0" name = "attr_Avo_8" min = "0" max = "100"></td>
-								<td><input type = "number" value = "0" name = "attr_Crit_8" min = "0" max = "100"></td>
+								<td><input type = "number" value = "0" name = "attr_Weight_8" min = "0" max = "100"></td>
 							</tr>
 							<tr>
 								<th>11</th>
@@ -750,7 +750,7 @@
 								<td><input type = "number" value = "0" name = "attr_Mov_9" min = "0" max = "100"></td>
 								<td><input type = "number" value = "0" name = "attr_Hit_9" min = "0" max = "100"></td>
 								<td><input type = "number" value = "0" name = "attr_Avo_9" min = "0" max = "100"></td>
-								<td><input type = "number" value = "0" name = "attr_Crit_9" min = "0" max = "100"></td>
+								<td><input type = "number" value = "0" name = "attr_Weight_9" min = "0" max = "100"></td>
 							</tr>
 							<tr>
 								<th>12</th>
@@ -766,7 +766,7 @@
 								<td><input type = "number" value = "0" name = "attr_Mov_10" min = "0" max = "100"></td>
 								<td><input type = "number" value = "0" name = "attr_Hit_10" min = "0" max = "100"></td>
 								<td><input type = "number" value = "0" name = "attr_Avo_10" min = "0" max = "100"></td>
-								<td><input type = "number" value = "0" name = "attr_Crit_10" min = "0" max = "100"></td>
+								<td><input type = "number" value = "0" name = "attr_Weight_10" min = "0" max = "100"></td>
 							</tr>
 							<tr>
 								<th>Sum</th>
@@ -782,7 +782,7 @@
 								<td><span name = "attr_Mov_Qtotal">0</span></td>
 								<td><span name = "attr_Hit_Qtotal">0</span></td>
 								<td><span name = "attr_Avo_Qtotal">0</span></td>
-								<td><span name = "attr_Crit_Qtotal">0</span></td>
+								<td><span name = "attr_Weight_Qtotal">0</span></td>
 							</tr>
 						</table>
 					</div>
@@ -848,7 +848,7 @@
 		<input name="attr_Mov_Qtotal" value = "0" hidden>
 		<input name="attr_Hit_Qtotal" value = "0" hidden>
 		<input name="attr_Avo_Qtotal" value = "0" hidden>
-		<input name="attr_Crit_Qtotal" value = "0" hidden>
+		<input name="attr_Weight_Qtotal" value = "0" hidden>
 		<input name="attr_HP_total_max" value = "0" hidden>
 		<input name="attr_HP_current" value = "0" hidden>
 		<input name="attr_HP_current_max" value = "0" hidden>
@@ -1082,18 +1082,18 @@
 		<input name="attr_Avo_8" value = "0" hidden>
 		<input name="attr_Avo_9" value = "0" hidden>
 		<input name="attr_Avo_10" value = "0" hidden>
-		<input name="attr_Crit_M" value = "0" hidden>
-		<input name="attr_Crit_S" value = "0" hidden>
-		<input name="attr_Crit_1" value = "0" hidden>
-		<input name="attr_Crit_2" value = "0" hidden>
-		<input name="attr_Crit_3" value = "0" hidden>
-		<input name="attr_Crit_4" value = "0" hidden>
-		<input name="attr_Crit_5" value = "0" hidden>
-		<input name="attr_Crit_6" value = "0" hidden>
-		<input name="attr_Crit_7" value = "0" hidden>
-		<input name="attr_Crit_8" value = "0" hidden>
-		<input name="attr_Crit_9" value = "0" hidden>
-		<input name="attr_Crit_10" value = "0" hidden>
+		<input name="attr_Weight_M" value = "0" hidden>
+		<input name="attr_Weight_S" value = "0" hidden>
+		<input name="attr_Weight_1" value = "0" hidden>
+		<input name="attr_Weight_2" value = "0" hidden>
+		<input name="attr_Weight_3" value = "0" hidden>
+		<input name="attr_Weight_4" value = "0" hidden>
+		<input name="attr_Weight_5" value = "0" hidden>
+		<input name="attr_Weight_6" value = "0" hidden>
+		<input name="attr_Weight_7" value = "0" hidden>
+		<input name="attr_Weight_8" value = "0" hidden>
+		<input name="attr_Weight_9" value = "0" hidden>
+		<input name="attr_Weight_10" value = "0" hidden>
 		<!--Firstmost weapon values, excludes hit/crit because that's already calculated-->
 		<input name= "attr_Weaknesses" value = "" hidden>
 		<input type = "checkbox" value="0" name = "attr_isPromo"/>
@@ -1670,10 +1670,10 @@
 		  });
 		});
 
-		on("change:Crit_M change:Crit_S change:Crit_1 change:Crit_2 change:Crit_3 change:Crit_4 change:Crit_5 change:Crit_6 change:Crit_7 change:Crit_8 change:Crit_9 change:Crit_10", function(eventInfo) {
-		  getAttrs(["Crit_M", "Crit_S", "Crit_1","Crit_2", "Crit_3", "Crit_4", "Crit_5", "Crit_6", "Crit_7", "Crit_8", "Crit_9", "Crit_10"], function(values) {
+		on("change:Weight_M change:Weight_S change:Weight_1 change:Weight_2 change:Weight_3 change:Weight_4 change:Weight_5 change:Weight_6 change:Weight_7 change:Weight_8 change:Weight_9 change:Weight_10", function(eventInfo) {
+		  getAttrs(["Weight_M", "Weight_S", "Weight_1","Weight_2", "Weight_3", "Weight_4", "Weight_5", "Weight_6", "Weight_7", "Weight_8", "Weight_9", "Weight_10"], function(values) {
 		    setAttrs({
-		      Crit_Qtotal: Number(values.Crit_M) + Number(values.Crit_S) + Number(values.Crit_1) + Number(values.Crit_2) + Number(values.Crit_3) + Number(values.Crit_4) + Number(values.Crit_5) + Number(values.Crit_6) + Number(values.Crit_7) + Number(values.Crit_8) + Number(values.Crit_9) + Number(values.Crit_10)
+		      Weight_Qtotal: Number(values.Weight_M) + Number(values.Weight_S) + Number(values.Weight_1) + Number(values.Weight_2) + Number(values.Weight_3) + Number(values.Weight_4) + Number(values.Weight_5) + Number(values.Weight_6) + Number(values.Weight_7) + Number(values.Weight_8) + Number(values.Weight_9) + Number(values.Weight_10)
 		    });
 		  });
 		});
@@ -2252,7 +2252,7 @@
 		    LckA = v.Lck_total;
 		    BonA = v.Avob;
 		    setAttrs({
-		      avo: Number(Spd)*2 + Number(v.Avo_bd) + Number(v.Avo_Qtotal)
+		      avo: Number(Spd) + Number(v.Avo_bd) + Number(v.Avo_Qtotal)
 		    });
 		  });
 		});
@@ -2385,87 +2385,14 @@
 		  });
 		});
 
-		//Crit
-		on("change:Skl_total change:Lck_total change:Critmod change:repeating_weapons:Crit change:repeating_spells:Crit change:_reporder:weapons change:_reporder:spells remove:repeating_weapons remove:repeating_spells change:Critb change:WSlot change:SSlot change:atktype change:Crit_Qtotal", function() {
-		  getAttrs(["WSlot","SSlot","CSlot","atktype"], function(v) {
-		    if (v.atktype == "Physical"){
-		      getSectionIDsOrdered("repeating_weapons", function(idarray) {
-		        slotnum = v.WSlot
-		        fID = idarray[Number(slotnum)-1];
-		      getAttrs(["Skl_total","Lck_total","Critmod","repeating_weapons_"+fID+"_crit","Critb","Crit_Qtotal"], function(v) {
-		        log(JSON.stringify(v))
-		        let nindex = Object.keys(v)[3];
-		        log(nindex)
-		        let wCrit = parseInt(v[nindex])||0;
-		        log("wCrit is" + wCrit)
-		        let SklC = v.Skl_total;
-		        let LckC = v.Lck_total;
-		        let ModC = v.Critmod;
-		        let BonC = v.Critb;
-		        setAttrs({
-		          Crit: Math.round(wCrit) +Number(BonC) + Number(ModC) + Number(v.Crit_Qtotal),
-		          currCrit : wCrit
-		        });
-		        console.log(Math.round((SklC / 2) + (LckC / 2) + wCrit));
-		        console.log("Critmod is" + ModC)
-		      });
-		    });
-		  }
-		  if (v.atktype == "Combat Art"){
-		    getSectionIDsOrdered("repeating_combat", function(idarray) {
-		      slotnum = v.CSlot
-		      fID = idarray[Number(slotnum)-1];
-		    getAttrs(["Skl_total","Lck_total","Critmod","repeating_combat_"+fID+"_crit","Critb","currCrit"], function(v) {
-		      log(JSON.stringify(v))
-		      let nindex = Object.keys(v)[3];
-		      log(nindex)
-		      let wCrit = parseInt(v[nindex])||0;
-		      log("wCrit is" + wCrit)
-		      let SklC = v.Skl_total;
-		      let LckC = v.Lck_total;
-		      let ModC = v.Critmod;
-		      let BonC = v.Critb;
-		      setAttrs({
-		        Crit: Math.round((SklC / 2) + (LckC / 2)  + wCrit) +Number(BonC) + Number(ModC) + Number(v.currCrit)
-		      });
-		      console.log(Math.round((SklC / 2) + (LckC / 2) + wCrit));
-		      console.log("Critmod is" + ModC)
-		    });
-		  });
-		}
-		  if (v.atktype == "Magical"){
-		    getSectionIDsOrdered("repeating_spells", function(idarray) {
-		      slotnum = v.SSlot
-		      fID = idarray[Number(slotnum)-1];
-		    getAttrs(["Skl_total","Lck_total","Critmod","repeating_spells_"+fID+"_crit","Critb","Crit_Qtotal"], function(v) {
-		      log(JSON.stringify(v))
-		      let nindex = Object.keys(v)[3];
-		      log(nindex)
-		      let wCrit = parseInt(v[nindex])||0;
-		      log("wCrit is" + wCrit)
-		      let SklC = v.Skl_total;
-		      let LckC = v.Lck_total;
-		      let ModC = v.Critmod;
-		      let BonC = v.Critb;
-		      setAttrs({
-		        Crit: Math.round(wCrit) +Number(BonC) + Number(ModC) + Number(v.Crit_Qtotal)
-		      });
-		      console.log(Math.round((SklC / 2) + (LckC / 2) + wCrit));
-		      console.log("Critmod is" + ModC)
-		    });
-		  });
-		}
-		});
-		});
-
 		//AtkSpd
-		on("change:Spd_total change:All change:Str_total change:repeating_weapons:Wt change:repeating_spells:Wt change:_reporder:weapons change:_reporder:spells remove:repeating_weapons remove:repeating_spells change:WSlot change:SSlot change:atktype", function() {
+		on("change:Spd_total change:All change:Str_total change:repeating_weapons:Wt change:repeating_spells:Wt change:_reporder:weapons change:_reporder:spells remove:repeating_weapons remove:repeating_spells change:WSlot change:SSlot change:atktype change:Weight_Qtotal", function() {
 		  getAttrs(["WSlot","SSlot","atktype"], function(v) {
 		    if (v.atktype == "Physical"){
 		      getSectionIDsOrdered("repeating_weapons", function(idarray) {
 		        slotnum = v.WSlot
 		        fID = idarray[Number(slotnum)-1];
-		        getAttrs(["Spd_total","repeating_weapons_"+fID+"_Wt", "Str_total","All"], function(v) {
+		        getAttrs(["Spd_total","repeating_weapons_"+fID+"_Wt", "Str_total","All","Weight_Qtotal"], function(v) {
 		          log(JSON.stringify(v))
 		          let nindex = Object.keys(v)[1];
 		          log(nindex)
@@ -2473,11 +2400,12 @@
 		          log("wWt is" + wWt)
 		          let SpdS = v.Spd_total;
 		          let StrS = v.Str_total;
+							let weight_Q = v.Weight_Qtotal;
 		          if (v.All == "Player") {
-		            aspd = Math.floor(Number(SpdS) - wWt + Number(StrS)/5);
+		            aspd = Math.floor(Number(SpdS) - wWt - weight_Q + Number(StrS)/5);
 		          }
 		          else {
-		            aspd = Math.floor(Number(SpdS) - wWt + Number(StrS)/5);
+		            aspd = Math.floor(Number(SpdS) - wWt - weight_Q + Number(StrS)/5);
 		          }
 		          if (aspd>SpdS) {
 		            setAttrs({
@@ -2503,7 +2431,7 @@
 		      getSectionIDsOrdered("repeating_spells", function(idarray) {
 		        slotnum = v.SSlot
 		        fID = idarray[Number(slotnum)-1];
-		        getAttrs(["Spd_total","repeating_spells_"+fID+"_Wt", "Str_total", "All"], function(v) {
+		        getAttrs(["Spd_total","repeating_spells_"+fID+"_Wt", "Str_total", "All","Weight_Qtotal"], function(v) {
 		          log(JSON.stringify(v))
 		          let nindex = Object.keys(v)[1];
 		          log(nindex)
@@ -2511,12 +2439,13 @@
 		          log("wWt is" + wWt)
 		          let SpdS = v.Spd_total;
 		          let StrS = v.Str_total;
+							let weight_Q = v.Weight_Qtotal;
 		          let aspd
 		          if (v.All == "Player") {
-		            aspd = Math.floor(Number(SpdS) - wWt + Number(StrS)/5);
+		            aspd = Math.floor(Number(SpdS) - wWt - weight_Q + Number(StrS)/5);
 		          }
 		          else {
-		            aspd = Math.floor(Number(SpdS) - wWt + Number(StrS)/5);
+		            aspd = Math.floor(Number(SpdS) - wWt - weight_Q + Number(StrS)/5);
 		          }
 		          if (aspd>SpdS) {
 		            setAttrs({
