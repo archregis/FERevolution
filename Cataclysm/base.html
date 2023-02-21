@@ -302,7 +302,7 @@
     					<!-- Notes -->
     					<div>
         					<div class = "sheet-header"> Notes </div>
-        					<textarea name="attr_notelist" type="text" style="height: 380px; width: 215px;"></textarea>
+        					<textarea name="attr_notelist" type="text" style="height: 340px; width: 215px;"></textarea>
     					</div>
 
     					<!-- Derived Attributes -->
@@ -323,6 +323,11 @@
 									<td class="sheet-statlabel">Avoid</td>
 									<td><input type = "number" name = "attr_avo_bd" value = "0"/></td>
 									<td><span name = "attr_avo">0</span></td>
+								</tr>
+								<tr class="Hit">
+									<td class="sheet-statlabel">Hit</td>
+									<td><input type = "number" name = "attr_hit_bd" value = "0"/></td>
+									<td><span name = "attr_hit">0</span></td>
 								</tr>
 								<tr class="Phys">
 									<td class="sheet-statlabel">Phys</td>
@@ -2312,14 +2317,14 @@
 		});
 
 		//Hit
-		on("change:Skl_total change:Lck_total change:Hitmod change:repeating_combat change:repeating_combat:Hit change:repeating_weapons:Hit change:repeating_spells:Hit change:_reporder:weapons change:_reporder:spells remove:repeating_weapons remove:repeating_spells change:Hitb change:WSlot change:SSlot change:atktype change:ProwHit change:Hit_Qtotal", function(eventInfo) {
+		on("change:Skl_total change:Lck_total change:Hitmod change:repeating_combat change:repeating_combat:Hit change:repeating_weapons:Hit change:repeating_spells:Hit change:_reporder:weapons change:_reporder:spells remove:repeating_weapons remove:repeating_spells change:Hitb change:WSlot change:SSlot change:atktype change:ProwHit change:Hit_Qtotal change:hit_bd", function(eventInfo) {
 		  getAttrs(["WSlot","SSlot","CSlot","atktype"], function(v) {
 		    if (v.atktype == "Physical"){
 		      getSectionIDsOrdered("repeating_weapons", function(idarray) {
 		        slotnum = v.WSlot
 		        fID = idarray[Number(slotnum)-1];
 		        log("fID is" + fID)
-		        getAttrs(["Skl_total","Lck_total","Hitmod","repeating_weapons_"+fID+"_hit", "Hitb", "ProwHit","Hit_Qtotal"], function(v) {
+		        getAttrs(["Skl_total","Lck_total","Hitmod","repeating_weapons_"+fID+"_hit", "Hitb", "ProwHit","Hit_Qtotal", "Hit_bd"], function(v) {
 		          log(JSON.stringify(v))
 		          let nindex = Object.keys(v)[3];
 		          log(nindex)
@@ -2329,8 +2334,9 @@
 		          let Lck = v.Lck_total;
 		          let Mod = v.Hitmod;
 		          let Bonus = v.Hitb;
+							let temphit = v.Hit_bd;
 		          setAttrs({
-		            Hit: Math.round(wHit) + Number(Bonus)+ Number(Mod) + Number(Skl) + Number(v.ProwHit) + Number(v.Hit_Qtotal),
+		            Hit: Math.round(wHit) + Number(temphit) + Number(Bonus)+ Number(Mod) + Number(Skl) + Number(v.ProwHit) + Number(v.Hit_Qtotal),
 		            currHit: wHit
 		          });
 		        });
@@ -2363,7 +2369,7 @@
 		        slotnum = v.SSlot
 		        fID = idarray[Number(slotnum)-1];
 		        log("fID is" + fID)
-		        getAttrs(["Skl_total","Lck_total","Hitmod","repeating_spells_"+fID+"_hit", "Hitb", "ProwHit", "Hit_Qtotal"], function(v) {
+		        getAttrs(["Skl_total","Lck_total","Hitmod","repeating_spells_"+fID+"_hit", "Hitb", "ProwHit", "Hit_Qtotal", "Hit_bd"], function(v) {
 		          log(JSON.stringify(v))
 		          let nindex = Object.keys(v)[3];
 		          log(nindex)
@@ -2373,8 +2379,9 @@
 		          let Lck = v.Lck_total;
 		          let Mod = v.Hitmod;
 		          let Bonus = v.Hitb;
+							let temphit = v.Hit_bd;
 		          setAttrs({
-		            Hit: Math.round(wHit) + Number(Bonus)+ Number(Mod) + Number(Skl) + Number(v.ProwHit) + Number(v.Hit_Qtotal)
+		            Hit: Math.round(wHit) + Number(temphit) + Number(Bonus)+ Number(Mod) + Number(Skl) + Number(v.ProwHit) + Number(v.Hit_Qtotal)
 		          });
 		          console.log(Math.round((Skl) + wHit));
 		          console.log("Hitmod is" + Mod)
