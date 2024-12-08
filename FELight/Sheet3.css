@@ -1,0 +1,268 @@
+@font-face {
+    font-family: 'Merriweather';
+    font-style: normal;
+    font-weight: 300;
+    src: url('https://fonts.gstatic.com/s/merriweather/v17/ZvcMqxEwPfh2qDWBPxn6nk4GofcKVZz6wtzX_QUIqsI.woff2') format('woff2');
+  }
+  
+  /* Tab display */
+  .sheet-character,
+  .sheet-equip,
+  .sheet-misc {
+      display: none;
+  }
+  
+  .sheet-tabstoggle[value="character"] ~ div.sheet-character,
+  .sheet-tabstoggle[value="equip"] ~ div.sheet-equip,
+  .sheet-tabstoggle[value="misc"] ~ div.sheet-misc {
+      display: block;
+  }
+  
+  .charsheet {
+      background-color: #353535;
+      font-family: "Merriweather";
+      font-size: 11px;
+      min-height: 100%;
+      min-width: 100%;
+      clear: both;
+      overflow: auto;
+  }
+  
+  .charsheet .sheet-mainstats,
+  .charsheet .sheet-checks,
+  .charsheet .sheet-wepprof,
+  .charsheet .sheet-inventory,
+  .charsheet .sheet-prowess {
+      overflow: hidden;
+  }
+  
+  .charsheet .sheet-charinfo,
+  .charsheet .sheet-mainstats,
+  .charsheet .sheet-currentvals {
+      background-color: #f3f3f3;
+      width: 100%;
+      display: inline-block;
+      margin-bottom: 10px;
+  }
+  
+  .charsheet .sheet-abilityinfo,
+  .charsheet .sheet-supportinfo {
+      background-color: #f3f3f3;
+      padding-left: 5px;
+      display: inline-block;
+      margin-bottom: 10px;
+      margin-right: 5px;
+      margin-left: 5px;
+      border-right: #f3f3f3 4px solid;
+      border-left: #f3f3f3 4px solid;
+  }
+  
+  .charsheet .sheet-checks {
+      background-color: #f3f3f3;
+      width: 27%;
+      padding: 0 5px;
+      float: right;
+      display: inline-block;
+      clear: both;
+      margin-bottom: 10px;
+  }
+  
+  .charsheet .sheet-prowess {
+      background-color: #f3f3f3;
+      width: 90%;
+      padding-right: 5px;
+      display: inline-block;
+      clear: both;
+      margin-bottom: 10px;
+      margin-right: 10px;
+  }
+  
+  #left-column {
+      float: left;
+      width: 72%;
+  }
+  
+  #notes-sheet {
+      float: right;
+      width: 27%;
+  }
+  
+  .charsheet table {
+      font-size: 13px;
+      width: 100%;
+      border-right: #f3f3f3 4px solid;
+      border-bottom: #f3f3f3 4px solid;
+  }
+  
+  .charsheet td {
+      padding-top: 10px;
+      text-align: center;
+  }
+  
+  .charsheet .sheet-div {
+      background-color: #353535;
+  }
+  
+  .charsheet th {
+      text-align: center;
+  }
+  
+  .charsheet .sheet-mainstats,
+  .charsheet .sheet-prowess th {
+      border-spacing: 5px;
+  }
+  
+  .charsheet .sheet-statlabel,
+  .charsheet .sheet-labelrow {
+      font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+      font-weight: bold;
+      background-color: #353535;
+      color: #f3f3f3;
+      text-transform: uppercase;
+  }
+  
+  .charsheet th.sheet-statlabel {
+      padding-left: 5px;
+  }
+  
+  .charsheet .sheet-labelrow {
+      font-size: 15px;
+  }
+  
+  .charsheet select {
+      background-color: #F9F9F9;
+      color: #555;
+      box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.075) inset;
+      display: inline;
+      margin: 5px 0;
+  }
+  
+  .charsheet .sheet-row {
+      display: inline;
+      padding-left: 5px;
+  }
+  
+  .charsheet .sheet-header {
+      text-align: center;
+      font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+      font-size: 15px;
+      padding: 3px;
+      background-color: #353535;
+      color: #f3f3f3;
+      border: #f3f3f3 4px solid;
+      border-bottom-width: 2px;
+      font-weight: bold;
+  }
+  
+  .charsheet .sheet-weapons,
+  .charsheet .sheet-spells {
+      vertical-align: top;
+      background-color: #f3f3f3;
+      display: inline-block;
+      width: 45%;
+  }
+  
+  .charsheet .sheet-weapons select,
+  .charsheet .sheet-weapons input[type="text"],
+  .charsheet .sheet-spells input[type="text"] {
+      width: 100%;
+  }
+  
+  .charsheet .sheet-thicc td input[type="text"] {
+      width: 100%;
+  }
+  
+  .charsheet input.sheet-toggle-stats {
+      border: none;
+      margin-bottom: 2vh;
+      margin-left: 1vw;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      appearance: none;
+      width: 16px;
+      height: 16px;
+  }
+  
+  .charsheet input.sheet-toggle-stats::after {
+      content: "⏷";
+  }
+  
+  .charsheet input.sheet-toggle-stats:checked::after {
+      content: "⏶";
+  }
+  
+  .charsheet .sheet-hiddenstats {
+      display: none;
+  }
+  
+  .charsheet .sheet-hiddenskill {
+      display: none;
+      margin-left: 8px;
+      margin-top: 10px;
+  }
+  
+  .charsheet input.sheet-toggle-stats:checked ~ .sheet-hiddenstats {
+      display: table;
+  }
+  
+  .charsheet input.sheet-toggle-stats:checked ~ .sheet-hiddenskill {
+      display: inline-block;
+  }
+  
+  /* Background images based on checked input */
+  .sheet-useBackground input[value="2"]:checked ~ *.sheet-background {
+      background-image: url("https://cdn.discordapp.com/attachments/180130042930528256/847735498054434866/unknown.png");
+      background-size: 900px 840px;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      background-origin: content-box;
+  }
+  
+  .sheet-useBackground input[value="3"]:checked ~ *.sheet-background {
+      background-image: url("https://cdn.discordapp.com/attachments/180130042930528256/847735976162885632/unknown.png");
+      background-size: 900px 840px;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      background-origin: content-box;
+  }
+  
+  .sheet-useBackground input[value="4"]:checked ~ *.sheet-background {
+      background-image: url("https://cdn.discordapp.com/attachments/180130042930528256/847734590784667658/unknown.png");
+      background-size: 900px 840px;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      background-origin: content-box;
+  }
+  
+  .sheet-useBackground input[value="5"]:checked ~ *.sheet-background {
+      background-image: url("https://cdn.discordapp.com/attachments/180130042930528256/847733914452754462/unknown.png");
+      background-size: 900px 850px;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      background-origin: content-box;
+  }
+  
+  .sheet-useBackground input[value="6"]:checked ~ *.sheet-background {
+      background-image: url("https://cdn.discordapp.com/attachments/180130042930528256/847735741634445322/unknown.png");
+      background-size: 900px 850px;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      background-origin: content-box;
+  }
+  
+  .sheet-useBackground input[value="7"]:checked ~ *.sheet-background {
+      background-image: url("https://cdn.discordapp.com/attachments/180130042930528256/847733452639698954/unknown.png");
+      background-size: 900px 840px;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      background-origin: content-box;
+  }
+  
+  .sheet-useBackground input[value="8"]:checked ~ *.sheet-background {
+      background-image: url("https://cdn.discordapp.com/attachments/180130042930528256/847733872287547402/unknown.png");
+      background-size: 900px 840px;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      background-origin: content-box;
+  }
+  

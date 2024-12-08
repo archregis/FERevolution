@@ -1,0 +1,1034 @@
+<html>
+<div class="sheet-maindiv" style="width: 840px;">
+    <div class="sheet-useBackground">
+        <!-- Background selection radios -->
+        <input type="radio" class="sheet-useBackground" style="display: none;" name="attr_background" value="1" checked />
+        <input type="radio" class="sheet-useBackground" style="display: none;" name="attr_background" value="2" />
+        <input type="radio" class="sheet-useBackground" style="display: none;" name="attr_background" value="3" />
+        <input type="radio" class="sheet-useBackground" style="display: none;" name="attr_background" value="4" />
+        <input type="radio" class="sheet-useBackground" style="display: none;" name="attr_background" value="5" />
+        <input type="radio" class="sheet-useBackground" style="display: none;" name="attr_background" value="6" />
+        <input type="radio" class="sheet-useBackground" style="display: none;" name="attr_background" value="7" />
+        <input type="radio" class="sheet-useBackground" style="display: none;" name="attr_background" value="8" />
+
+        <div class="sheet-background">
+            <div class="sheet-cdiv">
+                <input type="checkbox" class="sheet-toggle-stats">
+                <span class="sheet-toggle-label">Element</span>
+                <div class="sheet-hiddenstats">
+                    <div class="sheet-config" style="border-style: dotted; border-color: #dbc792; padding: 5px; background-color: white;">
+                        <div class="sheet-row">
+                            <div class="sheet-col">
+                                <h3>Backgrounds</h3>
+                                <span class="sheet-5pxshim">
+                                    <input type="checkbox" class="sheet-useBackground" style="width: 15px;" name="attr_background" value="1" title="No Background Image" checked /> No Background Image<br/>
+                                    <input type="checkbox" class="sheet-useBackground" style="width: 15px;" name="attr_background" value="2" title="Mirage" /> Mirage<br />
+                                    <input type="checkbox" class="sheet-useBackground" style="width: 15px;" name="attr_background" value="3" title="Time" /> Time<br />
+                                    <input type="checkbox" class="sheet-useBackground" style="width: 15px;" name="attr_background" value="4" title="Wind" /> Wind<br />
+                                    <input type="checkbox" class="sheet-useBackground" style="width: 15px;" name="attr_background" value="5" title="Fire" /> Fire<br />
+                                    <input type="checkbox" class="sheet-useBackground" style="width: 15px;" name="attr_background" value="6" title="Space" /> Space<br />
+                                    <input type="checkbox" class="sheet-useBackground" style="width: 15px;" name="attr_background" value="7" title="Earth" /> Earth<br />
+                                    <input type="checkbox" class="sheet-useBackground" style="width: 15px;" name="attr_background" value="8" title="Water" /> Water<br />
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <button type="action" name="act_character">Character</button>
+                <button type="action" name="act_misc">Misc</button>
+                <button type="action" name="act_equip">Bonuses</button>
+            </div>
+            <input type="hidden" class="sheet-tabstoggle" name="attr_sheetTab" value="character"/>
+
+            <!-- Character Page -->
+            <div class="sheet-character">
+                <div id="left-column">
+                    <!-- INFO section -->
+                    <div class="sheet-charinfo" style="display:inline-block; padding:0; margin:0; color:#000;">
+                        <div class="sheet-header" style="margin-bottom:5px; color:#fff;">INFO</div>
+                        <table style="border-collapse:collapse; width:auto; color:#000;">
+                            <tr style="line-height:1; margin:0; padding:0; color:#000;">
+                                <td style="padding:0 5px 0 0;">
+                                    <label style="white-space:nowrap; color:#000;">
+                                        Name:
+                                        <input type="text" name="attr_name" style="width:70px;"/>
+                                    </label>
+                                </td>
+                                <td style="padding:0 5px;">
+                                    <label style="white-space:nowrap; color:#000;">
+                                        Gender:
+                                        <input type="text" name="attr_gender" style="width:50px;"/>
+                                    </label>
+                                </td>
+                                <td style="padding:0 5px;">
+                                    <label style="white-space:nowrap; color:#000;">
+                                        <select name="attr_all" style="width:80px;">
+                                            <option>Player</option>
+                                            <option>Ally</option>
+                                            <option>Enemy</option>
+                                        </select>
+                                    </label>
+                                </td>
+                                <td style="padding:0 5px;">
+                                    <label style="white-space:nowrap; color:#000;">
+                                        Atk Type:
+                                        <select name="attr_atktype" style="width:60px;">
+                                            <option>Phys</option>
+                                            <option>Mag</option>
+                                        </select>
+                                    </label>
+                                </td>
+                            </tr>
+                            <tr style="line-height:1; margin:0; padding:0; color:#000;">
+                                <td style="padding:0 5px 0 0;">
+                                    <label style="white-space:nowrap; color:#000;">
+                                        Level:
+                                        <input type="number" name="attr_Level" min="1" max="40" value="1" style="width:35px;"/>
+                                    </label>
+                                </td>
+                                <td style="padding:0 5px;">
+                                    <label style="white-space:nowrap; color:#000;">
+                                        EXP:
+                                        <input type="number" name="attr_EXP" min="0" max="999" value="0" style="width:35px;"/>
+                                    </label>
+                                </td>
+                                <td style="padding:0 5px;">
+                                    <label style="white-space:nowrap; color:#000;">
+                                        Power:
+                                        <input type="number" name="attr_Power" min="0" max="999" value="0" style="width:35px;"/>
+                                    </label>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <!-- Current Values -->
+                    <div class="sheet-currentvals">
+                        <div class="sheet-row">
+                            <table>
+                                <tr class="sheet-labelrow">
+                                    <th>HP</th>
+                                    <th>Phys</th>
+                                    <th>Myst</th>
+                                    <th>Hit</th>
+                                    <th>Crit</th>
+                                </tr>
+                                <tr>
+                                    <td><input name="attr_HP_current" type="number"> / <span name="attr_HP_current_max"></span></td>
+                                    <td><span name="attr_phys_total">0</span></td>
+                                    <td><span name="attr_myst_total">0</span></td>
+                                    <td><span name="attr_Hit">0</span></td>
+                                    <td><span name="attr_Crit">0</span></td>
+                                </tr>
+                                <tr class="sheet-labelrow">
+                                    <th>AS</th>
+                                    <th>Prot</th>
+                                    <th>Ward</th>
+                                    <th>Avo</th>
+                                    <th>Ddg</th>
+                                </tr>
+                                <tr>
+                                    <td><span name="attr_Atkspd">0</span></td>
+                                    <td><span name="attr_prot_total">0</span></td>
+                                    <td><span name="attr_ward_total">0</span></td>
+                                    <td><span name="attr_Avo">0</span></td>
+                                    <td><span name="attr_Ddg">0</span></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Attributes -->
+                    <div class="sheet-mainstats">
+                        <div class="sheet-header">ATTRIBUTES</div>
+                        <table>
+                            <tr class="sheet-labelrow">
+                                <th colspan="4">Stats</th>
+                                <th class="sheet-div"></th>
+                                <th colspan="2">Growths</th>
+                            </tr>
+                            <tr class="sheet-labelrow">
+                                <th class="sheet-statlabel">Stats</th>
+                                <th>Personal</th>
+                                <th>Buff/Debuff</th>
+                                <th>Total</th>
+                                <th class="sheet-div"></th>
+                                <th>Personal</th>
+                                <th>Total</th>
+                            </tr>
+                            <tr class="HP">
+                                <td class="sheet-statlabel">HP</td>
+                                <td><input type="number" name="attr_HP_i" value="0"/></td>
+                                <td><input type="number" name="attr_HP_bd" value="0"/></td>
+                                <td><span name="attr_HP_total">0</span></td>
+                                <td class="sheet-div"></td>
+                                <td><input type="number" name="attr_HP_gi" value="0"/></td>
+                                <td><span name="attr_HP_gtotal">10</span></td>
+                            </tr>
+                            <tr class="Str">
+                                <td class="sheet-statlabel">Str</td>
+                                <td><input type="number" name="attr_Str_i" value="0"/></td>
+                                <td><input type="number" name="attr_Str_bd" value="0"/></td>
+                                <td><span name="attr_Str_total">0</span></td>
+                                <td class="sheet-div"></td>
+                                <td><input type="number" name="attr_Str_gi" value="0"/></td>
+                                <td><span name="attr_Str_gtotal">0</span></td>
+                            </tr>
+                            <tr class="Mag">
+                                <td class="sheet-statlabel">Mag</td>
+                                <td><input type="number" name="attr_Mag_i" value="0"/></td>
+                                <td><input type="number" name="attr_Mag_bd" value="0"/></td>
+                                <td><span name="attr_Mag_total">0</span></td>
+                                <td class="sheet-div"></td>
+                                <td><input type="number" name="attr_Mag_gi" value="0"/></td>
+                                <td><span name="attr_Mag_gtotal">0</span></td>
+                            </tr>
+                            <tr class="Skl">
+                                <td class="sheet-statlabel">Skl</td>
+                                <td><input type="number" name="attr_Skl_i" value="0"/></td>
+                                <td><input type="number" name="attr_Skl_bd" value="0"/></td>
+                                <td><span name="attr_Skl_total">0</span></td>
+                                <td class="sheet-div"></td>
+                                <td><input type="number" name="attr_Skl_gi" value="0"/></td>
+                                <td><span name="attr_Skl_gtotal">0</span></td>
+                            </tr>
+                            <tr class="Lck">
+                                <td class="sheet-statlabel">Lck</td>
+                                <td><input type="number" name="attr_Lck_i" value="0"/></td>
+                                <td><input type="number" name="attr_Lck_bd" value="0"/></td>
+                                <td><span name="attr_Lck_total">0</span></td>
+                                <td class="sheet-div"></td>
+                                <td><input type="number" name="attr_Lck_gi" value="0"/></td>
+                                <td><span name="attr_Lck_gtotal">0</span></td>
+                            </tr>
+                            <tr class="Spd">
+                                <td class="sheet-statlabel">Spd</td>
+                                <td><input type="number" name="attr_Spd_i" value="0"/></td>
+                                <td><input type="number" name="attr_Spd_bd" value="0"/></td>
+                                <td><span name="attr_Spd_total">0</span></td>
+                                <td class="sheet-div"></td>
+                                <td><input type="number" name="attr_Spd_gi" value="0"/></td>
+                                <td><span name="attr_Spd_gtotal">0</span></td>
+                            </tr>
+                            <tr class="Def">
+                                <td class="sheet-statlabel">Def</td>
+                                <td><input type="number" name="attr_Def_i" value="0"/></td>
+                                <td><input type="number" name="attr_Def_bd" value="0"/></td>
+                                <td><span name="attr_Def_total">0</span></td>
+                                <td class="sheet-div"></td>
+                                <td><input type="number" name="attr_Def_gi" value="0"/></td>
+                                <td><span name="attr_Def_gtotal">0</span></td>
+                            </tr>
+                            <tr class="Res">
+                                <td class="sheet-statlabel">Res</td>
+                                <td><input type="number" name="attr_Res_i" value="0"/></td>
+                                <td><input type="number" name="attr_Res_bd" value="0"/></td>
+                                <td><span name="attr_Res_total">0</span></td>
+                                <td class="sheet-div"></td>
+                                <td><input type="number" name="attr_Res_gi" value="0"/></td>
+                                <td><span name="attr_Res_gtotal">0</span></td>
+                            </tr>
+                            <tr class="Con">
+                                <td class="sheet-statlabel">Con</td>
+                                <td><input type="number" name="attr_Con_i" value="0"/></td>
+                                <td><input type="number" name="attr_Con_bd" value="0"/></td>
+                                <td><span name="attr_Con_total">0</span></td>
+                                <td class="sheet-div"></td>
+                                <td><input type="number" name="attr_Con_gi" value="0"/></td>
+                                <td><span name="attr_Con_gtotal">0</span></td>
+                            </tr>
+                            <tr class="Mov">
+                                <td class="sheet-statlabel">Mov</td>
+                                <td><input type="number" name="attr_Cha_i" value="0"/></td>
+                                <td><input type="number" name="attr_Cha_bd" value="0"/></td>
+                                <td><span name="attr_Cha_total">0</span></td>
+                                <td class="sheet-div"></td>
+                                <td><input type="number" name="attr_Cha_gi" value="0"/></td>
+                                <td><span name="attr_Cha_gtotal">0</span></td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+
+                <div id="notes-sheet">
+                    <!-- Notes field height reduced to 300px -->
+                    <div>
+                        <div class="sheet-header" style="color:#fff;">Notes</div>
+                        <textarea name="attr_notelist" type="text" style="height:300px; width:215px;"></textarea>
+                    </div>
+
+                    <div class="sheet-mainstats">
+                        <div class="sheet-header">DERIVED STATS</div>
+                        <table>
+                            <tr>
+                                <th class="sheet-statlabel">Stats</th>
+                                <th>Buff/Debuff</th>
+                                <th>Total</th>
+                            </tr>
+                            <tr class="Eva">
+                                <td class="sheet-statlabel">Avoid</td>
+                                <td><input type="number" name="attr_avo_bd" value="0"/></td>
+                                <td><span name="attr_avo">0</span></td>
+                            </tr>
+                            <tr class="Hit">
+                                <td class="sheet-statlabel">Hit</td>
+                                <td><input type="number" name="attr_hit_bd" value="0"/></td>
+                                <td><span name="attr_hit">0</span></td>
+                            </tr>
+                            <tr class="Phys">
+                                <td class="sheet-statlabel">Phys</td>
+                                <td><input type="number" name="attr_phys_bd" value="0"></td>
+                                <td><span name="attr_phys_total">0</span></td>
+                            </tr>
+                            <tr class="Myst">
+                                <td class="sheet-statlabel">Myst</td>
+                                <td><input type="number" name="attr_myst_bd" value="0"></td>
+                                <td><span name="attr_myst_total">0</span></td>
+                            </tr>
+                            <tr class="Prot">
+                                <td class="sheet-statlabel">Prot</td>
+                                <td><input type="number" name="attr_prot_bd" value="0"></td>
+                                <td><span name="attr_prot_total">0</span></td>
+                            </tr>
+                            <tr class="Ward">
+                                <td class="sheet-statlabel">Ward</td>
+                                <td><input type="number" name="attr_ward_bd" value="0"></td>
+                                <td><span name="attr_ward_total">0</span></td>
+                            </tr>
+                            <tr class="Crit">
+                                <td class="sheet-statlabel">Crit</td>
+                                <td><input type="number" name="attr_Crit_bd" value="0"/></td>
+                                <td><span name="attr_Crit">0</span></td>
+                            </tr>
+                            <tr class="Dodge">
+                                <td class="sheet-statlabel">Dodge</td>
+                                <td><input type="number" name="attr_Ddg_bd" value="0"/></td>
+                                <td><span name="attr_Ddg">0</span></td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Weapons and Spells side by side -->
+                <div style="display:inline-block; width:100%; margin-top:10px;">
+                    <div class="sheet-weapons" style="display:inline-block; vertical-align:top; width:49%; margin-right:1%;">
+                        <div class="sheet-header">WEAPONS</div>
+                        <tr>
+                            <th>Weapon Slot</th>
+                        </tr>
+                        <tr>
+                            <td><input type="number" name="attr_WSlot" value="1" min="1"/></td>
+                        </tr>
+                        <fieldset class="repeating_weapons">
+                            <table>
+                                <tr>
+                                    <th>Weapon Name</th>
+                                    <th>Type</th>
+                                    <th>Uses</th>
+                                </tr>
+                                <tr class="sheet-thicc">
+                                    <td><input name="attr_WName" type="text"></td>
+                                    <td><select name="attr_WType">
+                                        <option>Sword</option>
+                                        <option>Axe</option>
+                                        <option>Lance</option>
+                                        <option>Bow</option>
+                                    </select></td>
+                                    <td><input type="number" name="attr_Uses" value="1" min="0"/></td>
+                                </tr>
+                            </table>
+                            <input type="checkbox" class="sheet-toggle-stats">
+                            <span class="sheet-toggle-label">Attributes</span>
+                            <table class="sheet-hiddenstats">
+                                <tr>
+                                    <th>Weight</th>
+                                    <th>Might</th>
+                                    <th>Hit</th>
+                                    <th>Crit</th>
+                                    <th>Ddg</th>
+                                </tr>
+                                <tr>
+                                    <td><input type="number" name="attr_Wt" value="0"/></td>
+                                    <td><input type="number" name="attr_Mt" value="0"/></td>
+                                    <td><input type="number" name="attr_Hit" value="0"/></td>
+                                    <td><input type="number" name="attr_Crit" value="0"/></td>
+                                    <td><input type="number" name="attr_Ddg" value="0"/></td>
+                                </tr>
+                                <tr>
+                                    <th>HP</th>
+                                    <th>Str</th>
+                                    <th>Mag</th>
+                                    <th>Skl</th>
+                                    <th>EXP</th>
+                                </tr>
+                                <tr>
+                                    <td><input name="attr_HP_wp" type="number" value="0"></td>
+                                    <td><input name="attr_Str_wp" type="number" value="0"></td>
+                                    <td><input name="attr_Mag_wp" type="number" value="0"></td>
+                                    <td><input name="attr_Skl_wp" type="number" value="0"></td>
+                                    <td><input name="attr_wEXP" type="number" value="0"></td>
+                                </tr>
+                                <tr>
+                                    <th>Spd</th>
+                                    <th>Lck</th>
+                                    <th>Def</th>
+                                    <th>Res</th>
+                                    <th>Con</th>
+                                </tr>
+                                <tr>
+                                    <td><input name="attr_Spd_wp" type="number" value="0"></td>
+                                    <td><input name="attr_Lck_wp" type="number" value="0"></td>
+                                    <td><input name="attr_Def_wp" type="number" value="0"></td>
+                                    <td><input name="attr_Res_wp" type="number" value="0"></td>
+                                    <td><input name="attr_Con_wp" type="number" value="0"></td>
+                                </tr>
+                            </table>
+                            <div class="sheet-hiddenskill">
+                                <label style="font-size: 13px; font-weight: bold"> Weapon Description
+                                    <input name="attr_Skill_wp" type="text"></input>
+                                </label>
+                                <label style="font-size: 13px; font-weight: bold"> Effective Damage
+                                    <input name="attr_Eff_wp" type="text"></input>
+                                </label>
+                                <label style="font-size: 13px; font-weight: bold"> 1st Effect
+                                    <input name="attr_WepEff1" type="text"></input>
+                                </label>
+                                <label style="font-size: 13px; font-weight: bold"> 2nd Effect
+                                    <input name="attr_WepEff2" type="text"></input>
+                                </label>
+                            </div>
+                        </fieldset>
+                    </div>
+
+                    <div class="sheet-spells" style="display:inline-block; vertical-align:top; width:49%;">
+                        <div class="sheet-header">SPELLS</div>
+                        <tr><th>Spell Slot</th></tr>
+                        <tr><td><input type="number" name="attr_SSlot" value="1" min="1"/></td></tr>
+                        <fieldset class="repeating_spells">
+                            <table>
+                                <tr>
+                                    <th>Spell Name</th>
+                                    <th>Type</th>
+                                    <th>Uses</th>
+                                </tr>
+                                <tr class="sheet-thicc">
+                                    <td><input name="attr_SName" type="text"></td>
+                                    <td><select name="attr_SType">
+                                        <option>Anima</option>
+                                        <option>Light</option>
+                                        <option>Dark</option>
+                                        <option>Staff</option>
+                                    </select></td>
+                                    <td><input type="number" name="attr_Uses" value="1" min="0"/></td>
+                                </tr>
+                            </table>
+                            <input type="checkbox" class="sheet-toggle-stats">
+                            <span class="sheet-toggle-label">Attributes</span>
+                            <table class="sheet-hiddenstats">
+                                <tr>
+                                    <th>Weight</th>
+                                    <th>Might</th>
+                                    <th>Hit</th>
+                                    <th>Crit</th>
+                                    <th>Ddg</th>
+                                </tr>
+                                <tr>
+                                    <td><input type="number" name="attr_Wt" value="0"/></td>
+                                    <td><input type="number" name="attr_Mt" value="0"/></td>
+                                    <td><input type="number" name="attr_Hit" value="0"/></td>
+                                    <td><input type="number" name="attr_Crit" value="0"/></td>
+                                    <td><input type="number" name="attr_Ddg" value="0"/></td>
+                                </tr>
+                                <tr>
+                                    <th>HP</th>
+                                    <th>Str</th>
+                                    <th>Mag</th>
+                                    <th>Skl</th>
+                                    <th>EXP</th>
+                                </tr>
+                                <tr>
+                                    <td><input name="attr_HP_wp" type="number" value="0"></td>
+                                    <td><input name="attr_Str_wp" type="number" value="0"></td>
+                                    <td><input name="attr_Mag_wp" type="number" value="0"></td>
+                                    <td><input name="attr_Skl_wp" type="number" value="0"></td>
+                                    <td><input name="attr_wEXP" type="number" value="0"></td>
+                                </tr>
+                                <tr>
+                                    <th>Spd</th>
+                                    <th>Lck</th>
+                                    <th>Def</th>
+                                    <th>Res</th>
+                                    <th>Con</th>
+                                </tr>
+                                <tr>
+                                    <td><input name="attr_Spd_wp" type="number" value="0"></td>
+                                    <td><input name="attr_Lck_wp" type="number" value="0"></td>
+                                    <td><input name="attr_Def_wp" type="number" value="0"></td>
+                                    <td><input name="attr_Res_wp" type="number" value="0"></td>
+                                    <td><input name="attr_Con_wp" type="number" value="0"></td>
+                                </tr>
+                            </table>
+                            <div class="sheet-hiddenskill">
+                                <label style="font-size: 13px; font-weight: bold"> Weapon Description
+                                    <input name="attr_Skill_wp" type="text"></input>
+                                </label>
+                                <label style="font-size: 13px; font-weight: bold"> Effect
+                                    <input name="attr_Eff_wp" type="text"></input>
+                                </label>
+                                <label style="font-size: 13px; font-weight: bold"> 1st Effect
+                                    <input name="attr_WepEff1" type="text"></input>
+                                </label>
+                                <label style="font-size: 13px; font-weight: bold"> 2nd Effect
+                                    <input name="attr_WepEff2" type="text"></input>
+                                </label>
+                            </div>
+                        </fieldset>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Misc Page -->
+            <div class="sheet-misc">
+                <div class="sheet-supportinfo">
+                    <div class="sheet-header">Supports</div>
+                    <textarea name="attr_supportlist" type="text" style="width:350px; height:500px"></textarea>
+                </div>
+                <div class="sheet-weapons">
+                    <div class="sheet-header">WEAPON RANKS</div>
+                    <table>
+                        <tr>
+                            <th>Weap. Type</th>
+                            <th>EXP</th>
+                            <th>Rank</th>
+                        </tr>
+                        <tr>
+                            <td>Swords</td>
+                            <td><input type="number" value="0" name="attr_SwordEXP" min="0" max="1000"></td>
+                            <td><span name="attr_Swordrank"></span></td>
+                        </tr>
+                        <tr>
+                            <td>Lances</td>
+                            <td><input type="number" value="0" name="attr_LanceEXP" min="0" max="1000"></td>
+                            <td><span name="attr_Lancerank"></span></td>
+                        </tr>
+                        <tr>
+                            <td>Axes</td>
+                            <td><input type="number" value="0" name="attr_AxeEXP" min="0" max="1000"></td>
+                            <td><span name="attr_Axerank"></span></td>
+                        </tr>
+                        <tr>
+                            <td>Bows</td>
+                            <td><input type="number" value="0" name="attr_BowEXP" min="0" max="1000"></td>
+                            <td><span name="attr_Bowrank"></span></td>
+                        </tr>
+                        <tr>
+                            <td>Staves</td>
+                            <td><input type="number" value="0" name="attr_StavesEXP" min="0" max="1000"></td>
+                            <td><span name="attr_Stavesrank"></span></td>
+                        </tr>
+                        <tr>
+                            <td>Anima</td>
+                            <td><input type="number" value="0" name="attr_AnimaEXP" min="0" max="1000"></td>
+                            <td><span name="attr_Animarank"></span></td>
+                        </tr>
+                        <tr>
+                            <td>Light</td>
+                            <td><input type="number" value="0" name="attr_LightEXP" min="0" max="1000"></td>
+                            <td><span name="attr_Lightrank"></span></td>
+                        </tr>
+                        <tr>
+                            <td>Dark</td>
+                            <td><input type="number" value="0" name="attr_DarkEXP" min="0" max="1000"></td>
+                            <td><span name="attr_Darkrank"></span></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Equip Page -->
+            <div class="sheet-equip">
+                <div class="sheet-prowess">
+                    <div class="sheet-header">Bonuses</div>
+                    <table>
+                        <tr>
+                            <th>#</th>
+                            <th>Name</th>
+                            <th>HP</th>
+                            <th>STR</th>
+                            <th>MAG</th>
+                            <th>SPD</th>
+                            <th>DEF</th>
+                            <th>RES</th>
+                            <th>CON</th>
+                            <th>MOV</th>
+                            <th>Hit</th>
+                            <th>Avo</th>
+                            <th>Crit</th>
+                            <th>Ddg</th>
+                            <th>Weight</th>
+                        </tr>
+						<tr>
+							<th>1</th>
+							<td><input type="checkbox" name="attr_bonus_1_check" value="1"></td>
+							<td><input type = "text"  name = "attr_Ele_M" style = "width: 100%;"></td>
+							<td><input type = "number" value = "0" name = "attr_HP_M" min = "0" max = "100"></td>
+							<td><input type = "number" value = "0" name = "attr_Str_M" min = "0" max = "100"></td>
+							<td><input type = "number" value = "0" name = "attr_Mag_M" min = "0" max = "100"></td>
+							<td><input type = "number" value = "0" name = "attr_Spd_M" min = "0" max = "100"></td>
+							<td><input type = "number" value = "0" name = "attr_Def_M" min = "0" max = "100"></td>
+							<td><input type = "number" value = "0" name = "attr_Res_M" min = "0" max = "100"></td>
+							<td><input type = "number" value = "0" name = "attr_Con_M" min = "0" max = "100"></td>
+							<td><input type = "number" value = "0" name = "attr_Mov_M" min = "0" max = "100"></td>
+							<td><input type = "number" value = "0" name = "attr_Hit_M" min = "0" max = "100"></td>
+							<td><input type = "number" value = "0" name = "attr_Avo_M" min = "0" max = "100"></td>
+							<td><input type = "number" value = "0" name = "attr_Crit_M" min = "0" max = "100"></td>
+							<td><input type = "number" value = "0" name = "attr_Ddg_M" min = "0" max = "100"></td>
+							<td><input type = "number" value = "0" name = "attr_Weight_M" min = "0" max = "100"></td>
+							<td><input type = "number" value = "0" name = "attr_Mit_M" min = "0" max = "100"></td>
+						</tr>
+                        <tr>
+							<th>2</th>
+							<td><input type="checkbox" name="attr_bonus_2_check" value="1"></td>
+							<td><input type = "text"  name = "attr_Ele_S" style = "width: 100%;"></td>
+							<td><input type = "number" value = "0" name = "attr_HP_S" min = "0" max = "100"></td>
+							<td><input type = "number" value = "0" name = "attr_Str_S" min = "0" max = "100"></td>
+							<td><input type = "number" value = "0" name = "attr_Mag_S" min = "0" max = "100"></td>
+							<td><input type = "number" value = "0" name = "attr_Spd_S" min = "0" max = "100"></td>
+							<td><input type = "number" value = "0" name = "attr_Def_S" min = "0" max = "100"></td>
+							<td><input type = "number" value = "0" name = "attr_Res_S" min = "0" max = "100"></td>
+							<td><input type = "number" value = "0" name = "attr_Con_S" min = "0" max = "100"></td>
+							<td><input type = "number" value = "0" name = "attr_Mov_S" min = "0" max = "100"></td>
+							<td><input type = "number" value = "0" name = "attr_Hit_S" min = "0" max = "100"></td>
+							<td><input type = "number" value = "0" name = "attr_Avo_S" min = "0" max = "100"></td>
+							<td><input type = "number" value = "0" name = "attr_Crit_S" min = "0" max = "100"></td>
+							<td><input type = "number" value = "0" name = "attr_Ddg_S" min = "0" max = "100"></td>
+							<td><input type = "number" value = "0" name = "attr_Weight_S" min = "0" max = "100"></td>
+							<td><input type = "number" value = "0" name = "attr_Mit_S" min = "0" max = "100"></td>
+						</tr>
+						<tr>
+							<th>3</th>
+							<td><input type="checkbox" name="attr_bonus_3_check" value="1"></td>
+							<td><input type = "text"  name = "attr_Ele_1" style = "width: 100%;"></td>
+							<td><input type = "number" value = "0" name = "attr_HP_1" min = "0" max = "100"></td>
+							<td><input type = "number" value = "0" name = "attr_Str_1" min = "0" max = "100"></td>
+							<td><input type = "number" value = "0" name = "attr_Mag_1" min = "0" max = "100"></td>
+							<td><input type = "number" value = "0" name = "attr_Spd_1" min = "0" max = "100"></td>
+							<td><input type = "number" value = "0" name = "attr_Def_1" min = "0" max = "100"></td>
+							<td><input type = "number" value = "0" name = "attr_Res_1" min = "0" max = "100"></td>
+							<td><input type = "number" value = "0" name = "attr_Con_1" min = "0" max = "100"></td>
+							<td><input type = "number" value = "0" name = "attr_Mov_1" min = "0" max = "100"></td>
+							<td><input type = "number" value = "0" name = "attr_Hit_1" min = "0" max = "100"></td>
+							<td><input type = "number" value = "0" name = "attr_Avo_1" min = "0" max = "100"></td>
+							<td><input type = "number" value = "0" name = "attr_Crit_1" min = "0" max = "100"></td>
+							<td><input type = "number" value = "0" name = "attr_Ddg_1" min = "0" max = "100"></td>
+							<td><input type = "number" value = "0" name = "attr_Weight_1" min = "0" max = "100"></td>
+							<td><input type = "number" value = "0" name = "attr_Mit_1" min = "0" max = "100"></td>
+						</tr>
+						<tr>
+							<th>4</th>
+							<td><input type="checkbox" name="attr_bonus_4_check" value="1"></td>
+							<td><input type = "text"  name = "attr_Ele_2" style = "width: 100%;"></td>
+							<td><input type = "number" value = "0" name = "attr_HP_2" min = "0" max = "100"></td>
+							<td><input type = "number" value = "0" name = "attr_Str_2" min = "0" max = "100"></td>
+							<td><input type = "number" value = "0" name = "attr_Mag_2" min = "0" max = "100"></td>
+							<td><input type = "number" value = "0" name = "attr_Spd_2" min = "0" max = "100"></td>
+							<td><input type = "number" value = "0" name = "attr_Def_2" min = "0" max = "100"></td>
+							<td><input type = "number" value = "0" name = "attr_Res_2" min = "0" max = "100"></td>
+							<td><input type = "number" value = "0" name = "attr_Con_2" min = "0" max = "100"></td>
+							<td><input type = "number" value = "0" name = "attr_Mov_2" min = "0" max = "100"></td>
+							<td><input type = "number" value = "0" name = "attr_Hit_2" min = "0" max = "100"></td>
+							<td><input type = "number" value = "0" name = "attr_Avo_2" min = "0" max = "100"></td>
+							<td><input type = "number" value = "0" name = "attr_Crit_2" min = "0" max = "100"></td>
+							<td><input type = "number" value = "0" name = "attr_Ddg_2" min = "0" max = "100"></td>
+							<td><input type = "number" value = "0" name = "attr_Weight_2" min = "0" max = "100"></td>
+							<td><input type = "number" value = "0" name = "attr_Mit_2" min = "0" max = "100"></td>
+						</tr>
+						<tr>
+							<th>5</th>
+							<td><input type="checkbox" name="attr_bonus_5_check" value="1"></td>
+							<td><input type = "text"  name = "attr_Ele_3" style = "width: 100%;"></td>
+							<td><input type = "number" value = "0" name = "attr_HP_3" min = "0" max = "100"></td>
+							<td><input type = "number" value = "0" name = "attr_Str_3" min = "0" max = "100"></td>
+							<td><input type = "number" value = "0" name = "attr_Mag_3" min = "0" max = "100"></td>
+							<td><input type = "number" value = "0" name = "attr_Spd_3" min = "0" max = "100"></td>
+							<td><input type = "number" value = "0" name = "attr_Def_3" min = "0" max = "100"></td>
+							<td><input type = "number" value = "0" name = "attr_Res_3" min = "0" max = "100"></td>
+							<td><input type = "number" value = "0" name = "attr_Con_3" min = "0" max = "100"></td>
+							<td><input type = "number" value = "0" name = "attr_Mov_3" min = "0" max = "100"></td>
+							<td><input type = "number" value = "0" name = "attr_Hit_3" min = "0" max = "100"></td>
+							<td><input type = "number" value = "0" name = "attr_Avo_3" min = "0" max = "100"></td>
+							<td><input type = "number" value = "0" name = "attr_Crit_3" min = "0" max = "100"></td>
+							<td><input type = "number" value = "0" name = "attr_Ddg_3" min = "0" max = "100"></td>
+							<td><input type = "number" value = "0" name = "attr_Weight_3" min = "0" max = "100"></td>
+							<td><input type = "number" value = "0" name = "attr_Mit_3" min = "0" max = "100"></td>
+						</tr>
+						<tr>
+							<th>6</th>
+							<td><input type="checkbox" name="attr_bonus_6_check" value="1"></td>
+							<td><input type = "text"  name = "attr_Ele_4" style = "width: 100%;"></td>
+							<td><input type = "number" value = "0" name = "attr_HP_4" min = "0" max = "100"></td>
+							<td><input type = "number" value = "0" name = "attr_Str_4" min = "0" max = "100"></td>
+							<td><input type = "number" value = "0" name = "attr_Mag_4" min = "0" max = "100"></td>
+							<td><input type = "number" value = "0" name = "attr_Spd_4" min = "0" max = "100"></td>
+							<td><input type = "number" value = "0" name = "attr_Def_4" min = "0" max = "100"></td>
+							<td><input type = "number" value = "0" name = "attr_Res_4" min = "0" max = "100"></td>
+							<td><input type = "number" value = "0" name = "attr_Con_4" min = "0" max = "100"></td>
+							<td><input type = "number" value = "0" name = "attr_Mov_4" min = "0" max = "100"></td>
+							<td><input type = "number" value = "0" name = "attr_Hit_4" min = "0" max = "100"></td>
+							<td><input type = "number" value = "0" name = "attr_Avo_4" min = "0" max = "100"></td>
+							<td><input type = "number" value = "0" name = "attr_Crit_4" min = "0" max = "100"></td>
+							<td><input type = "number" value = "0" name = "attr_Ddg_4" min = "0" max = "100"></td>
+							<td><input type = "number" value = "0" name = "attr_Weight_4" min = "0" max = "100"></td>
+							<td><input type = "number" value = "0" name = "attr_Mit_4" min = "0" max = "100"></td>
+						</tr>
+						<tr>
+							<th>7</th>
+							<td><input type="checkbox" name="attr_bonus_7_check" value="1"></td>
+							<td><input type = "text"  name = "attr_Ele_5" style = "width: 100%;"></td>
+							<td><input type = "number" value = "0" name = "attr_HP_5" min = "0" max = "100"></td>
+							<td><input type = "number" value = "0" name = "attr_Str_5" min = "0" max = "100"></td>
+							<td><input type = "number" value = "0" name = "attr_Mag_5" min = "0" max = "100"></td>
+							<td><input type = "number" value = "0" name = "attr_Spd_5" min = "0" max = "100"></td>
+							<td><input type = "number" value = "0" name = "attr_Def_5" min = "0" max = "100"></td>
+							<td><input type = "number" value = "0" name = "attr_Res_5" min = "0" max = "100"></td>
+							<td><input type = "number" value = "0" name = "attr_Con_5" min = "0" max = "100"></td>
+							<td><input type = "number" value = "0" name = "attr_Mov_5" min = "0" max = "100"></td>
+							<td><input type = "number" value = "0" name = "attr_Hit_5" min = "0" max = "100"></td>
+							<td><input type = "number" value = "0" name = "attr_Avo_5" min = "0" max = "100"></td>
+							<td><input type = "number" value = "0" name = "attr_Crit_5" min = "0" max = "100"></td>
+							<td><input type = "number" value = "0" name = "attr_Ddg_5" min = "0" max = "100"></td>
+							<td><input type = "number" value = "0" name = "attr_Weight_5" min = "0" max = "100"></td>
+							<td><input type = "number" value = "0" name = "attr_Mit_5" min = "0" max = "100"></td>
+						</tr>
+						<tr>
+							<th>8</th>
+							<td><input type="checkbox" name="attr_bonus_8_check" value="1"></td>
+							<td><input type = "text"  name = "attr_Ele_6" style = "width: 100%;"></td>
+							<td><input type = "number" value = "0" name = "attr_HP_6" min = "0" max = "100"></td>
+							<td><input type = "number" value = "0" name = "attr_Str_6" min = "0" max = "100"></td>
+							<td><input type = "number" value = "0" name = "attr_Mag_6" min = "0" max = "100"></td>
+							<td><input type = "number" value = "0" name = "attr_Spd_6" min = "0" max = "100"></td>
+							<td><input type = "number" value = "0" name = "attr_Def_6" min = "0" max = "100"></td>
+							<td><input type = "number" value = "0" name = "attr_Res_6" min = "0" max = "100"></td>
+							<td><input type = "number" value = "0" name = "attr_Con_6" min = "0" max = "100"></td>
+							<td><input type = "number" value = "0" name = "attr_Mov_6" min = "0" max = "100"></td>
+							<td><input type = "number" value = "0" name = "attr_Hit_6" min = "0" max = "100"></td>
+							<td><input type = "number" value = "0" name = "attr_Avo_6" min = "0" max = "100"></td>
+							<td><input type = "number" value = "0" name = "attr_Crit_6" min = "0" max = "100"></td>
+							<td><input type = "number" value = "0" name = "attr_Ddg_6" min = "0" max = "100"></td>
+							<td><input type = "number" value = "0" name = "attr_Weight_6" min = "0" max = "100"></td>
+							<td><input type = "number" value = "0" name = "attr_Mit_6" min = "0" max = "100"></td>
+						</tr>
+						<tr>
+							<th>9</th>
+							<td><input type="checkbox" name="attr_bonus_9_check" value="1"></td>
+							<td><input type = "text"  name = "attr_Ele_7" style = "width: 100%;"></td>
+							<td><input type = "number" value = "0" name = "attr_HP_7" min = "0" max = "100"></td>
+							<td><input type = "number" value = "0" name = "attr_Str_7" min = "0" max = "100"></td>
+							<td><input type = "number" value = "0" name = "attr_Mag_7" min = "0" max = "100"></td>
+							<td><input type = "number" value = "0" name = "attr_Spd_7" min = "0" max = "100"></td>
+							<td><input type = "number" value = "0" name = "attr_Def_7" min = "0" max = "100"></td>
+							<td><input type = "number" value = "0" name = "attr_Res_7" min = "0" max = "100"></td>
+							<td><input type = "number" value = "0" name = "attr_Con_7" min = "0" max = "100"></td>
+							<td><input type = "number" value = "0" name = "attr_Mov_7" min = "0" max = "100"></td>
+							<td><input type = "number" value = "0" name = "attr_Hit_7" min = "0" max = "100"></td>
+							<td><input type = "number" value = "0" name = "attr_Avo_7" min = "0" max = "100"></td>
+							<td><input type = "number" value = "0" name = "attr_Crit_7" min = "0" max = "100"></td>
+							<td><input type = "number" value = "0" name = "attr_Ddg_7" min = "0" max = "100"></td>
+							<td><input type = "number" value = "0" name = "attr_Weight_7" min = "0" max = "100"></td>
+							<td><input type = "number" value = "0" name = "attr_Mit_7" min = "0" max = "100"></td>
+						</tr>
+						<tr>
+							<th>10</th>
+							<td><input type="checkbox" name="attr_bonus_10_check" value="1"></td>
+							<td><input type = "text"  name = "attr_Ele_8" style = "width: 100%;"></td>
+							<td><input type = "number" value = "0" name = "attr_HP_8" min = "0" max = "100"></td>
+							<td><input type = "number" value = "0" name = "attr_Str_8" min = "0" max = "100"></td>
+							<td><input type = "number" value = "0" name = "attr_Mag_8" min = "0" max = "100"></td>
+							<td><input type = "number" value = "0" name = "attr_Spd_8" min = "0" max = "100"></td>
+							<td><input type = "number" value = "0" name = "attr_Def_8" min = "0" max = "100"></td>
+							<td><input type = "number" value = "0" name = "attr_Res_8" min = "0" max = "100"></td>
+							<td><input type = "number" value = "0" name = "attr_Con_8" min = "0" max = "100"></td>
+							<td><input type = "number" value = "0" name = "attr_Mov_8" min = "0" max = "100"></td>
+							<td><input type = "number" value = "0" name = "attr_Hit_8" min = "0" max = "100"></td>
+							<td><input type = "number" value = "0" name = "attr_Avo_8" min = "0" max = "100"></td>
+							<td><input type = "number" value = "0" name = "attr_Crit_8" min = "0" max = "100"></td>
+							<td><input type = "number" value = "0" name = "attr_Ddg_8" min = "0" max = "100"></td>
+							<td><input type = "number" value = "0" name = "attr_Weight_8" min = "0" max = "100"></td>
+							<td><input type = "number" value = "0" name = "attr_Mit_8" min = "0" max = "100"></td>
+						</tr>
+						<tr>
+							<th>11</th>
+							<td><input type="checkbox" name="attr_bonus_11_check" value="1"></td>
+							<td><input type = "text"  name = "attr_Ele_9" style = "width: 100%;"></td>
+							<td><input type = "number" value = "0" name = "attr_HP_9" min = "0" max = "100"></td>
+							<td><input type = "number" value = "0" name = "attr_Str_9" min = "0" max = "100"></td>
+							<td><input type = "number" value = "0" name = "attr_Mag_9" min = "0" max = "100"></td>
+							<td><input type = "number" value = "0" name = "attr_Spd_9" min = "0" max = "100"></td>
+							<td><input type = "number" value = "0" name = "attr_Def_9" min = "0" max = "100"></td>
+							<td><input type = "number" value = "0" name = "attr_Res_9" min = "0" max = "100"></td>
+							<td><input type = "number" value = "0" name = "attr_Con_9" min = "0" max = "100"></td>
+							<td><input type = "number" value = "0" name = "attr_Mov_9" min = "0" max = "100"></td>
+							<td><input type = "number" value = "0" name = "attr_Hit_9" min = "0" max = "100"></td>
+							<td><input type = "number" value = "0" name = "attr_Avo_9" min = "0" max = "100"></td>
+							<td><input type = "number" value = "0" name = "attr_Crit_9" min = "0" max = "100"></td>
+							<td><input type = "number" value = "0" name = "attr_Ddg_9" min = "0" max = "100"></td>
+							<td><input type = "number" value = "0" name = "attr_Weight_9" min = "0" max = "100"></td>
+							<td><input type = "number" value = "0" name = "attr_Mit_9" min = "0" max = "100"></td>
+						</tr>
+						<tr>
+							<th>12</th>
+							<td><input type="checkbox" name="attr_bonus_12_check" value="1"></td>
+							<td><input type = "text"  name = "attr_Ele_10" style = "width: 100%;"></td>
+							<td><input type = "number" value = "0" name = "attr_HP_10" min = "0" max = "100"></td>
+							<td><input type = "number" value = "0" name = "attr_Str_10" min = "0" max = "100"></td>
+							<td><input type = "number" value = "0" name = "attr_Mag_10" min = "0" max = "100"></td>
+							<td><input type = "number" value = "0" name = "attr_Spd_10" min = "0" max = "100"></td>
+							<td><input type = "number" value = "0" name = "attr_Def_10" min = "0" max = "100"></td>
+							<td><input type = "number" value = "0" name = "attr_Res_10" min = "0" max = "100"></td>
+							<td><input type = "number" value = "0" name = "attr_Con_10" min = "0" max = "100"></td>
+							<td><input type = "number" value = "0" name = "attr_Mov_10" min = "0" max = "100"></td>
+							<td><input type = "number" value = "0" name = "attr_Hit_10" min = "0" max = "100"></td>
+							<td><input type = "number" value = "0" name = "attr_Avo_10" min = "0" max = "100"></td>
+							<td><input type = "number" value = "0" name = "attr_Crit_10" min = "0" max = "100"></td>
+							<td><input type = "number" value = "0" name = "attr_Ddg_10" min = "0" max = "100"></td>
+							<td><input type = "number" value = "0" name = "attr_Weight_10" min = "0" max = "100"></td>
+							<td><input type = "number" value = "0" name = "attr_Mit_10" min = "0" max = "100"></td>
+						</tr>
+						<tr>
+							<th>Sum</th>
+							<td>---</td>
+							<td>---</td>
+							<td><span name = "attr_HP_Qtotal">0</span></td>
+							<td><span name = "attr_Str_Qtotal">0</span></td>
+							<td><span name = "attr_Mag_Qtotal">0</span></td>
+							<td><span name = "attr_Spd_Qtotal">0</span></td>
+							<td><span name = "attr_Def_Qtotal">0</span></td>
+							<td><span name = "attr_Res_Qtotal">0</span></td>
+							<td><span name = "attr_Con_Qtotal">0</span></td>
+							<td><span name = "attr_Mov_Qtotal">0</span></td>
+							<td><span name = "attr_Hit_Qtotal">0</span></td>
+							<td><span name = "attr_Avo_Qtotal">0</span></td>
+							<td><span name = "attr_Crit_Qtotal">0</span></td>
+							<td><span name = "attr_Ddg_Qtotal">0</span></td>
+							<td><span name = "attr_Weight_Qtotal">0</span></td>
+							<td><span name = "attr_Mit_Qtotal">0</span></td>
+						</tr>
+                    </table>
+                </div>
+                <div class="sheet-abilityinfo">
+                    <div class="sheet-header">Bonuses</div>
+                    <textarea name="attr_Quartzlist" type="text" style="width:350px; height:400px"></textarea>
+                </div>
+                <div class="sheet-supportinfo">
+                    <div class="sheet-header">Equipment</div>
+                    <textarea name="attr_equiplist" type="text" style="width:350px; height:400px"></textarea>
+                </div>
+            </div>
+
+            <script type="text/worker">
+                const buttonlist = ["character", "misc", "equip"];
+                buttonlist.forEach(button => {
+                    on(`clicked:${button}`, function() {
+                        setAttrs({
+                            sheetTab: button
+                        });
+                    });
+                });
+            </script>
+        </div>
+    </div>
+</div>
+
+<!-- Hidden Fields -->
+<div class="hidden">
+    <input name="attr_MR_base" value="2" hidden>
+    <input name="attr_wepnum" value="0" hidden>
+    <input name="attr_spellnum" value="0" hidden>
+    <input name="attr_currEff" value=" " hidden>
+    <input name="attr_WepEff_1" value=" " hidden>
+    <input name="attr_WepEff_2" value=" " hidden>
+    <input name="attr_currName" value=" " hidden>
+    <input name="attr_currMt" value="0" hidden>
+    <input name="attr_currHit" value="0" hidden>
+    <input name="attr_currCrit" value="0" hidden>
+    <input name="attr_currDdg" value="0" hidden>
+    <input name="attr_effdmg" value="0" hidden>
+    <input name="attr_currWep" value="Sword" hidden>
+    <input name="attr_currDesc" value="Attacking @{target|token_name}!" hidden>
+    <input name="attr_class_exp0" value="0" hidden>
+    <input name="attr_class_exp1" value="0" hidden>
+    <input name="attr_class_exp2" value="0" hidden>
+    <input name="attr_class_gain0" value="0" hidden>
+    <input name="attr_ProwHit" value="0" hidden>
+    <input name="attr_atktype" value="Physical" hidden>
+    <input name="attr_SwordHit" value="0" hidden>
+    <input name="attr_ProwAvo" value="0" hidden>
+    <input name="attr_ProwCAvo" value="0" hidden>
+    <input name="attr_WSlot" value="1" hidden>
+    <input name="attr_HP_sf" value="0" hidden>
+    <input name="attr_HP_total" value="0" hidden>
+    <input name="attr_HP_rg" value="0" hidden>
+    <input name="attr_HP_rb" value="0" hidden>
+    <input name="attr_HP_gf" value="0" hidden>
+    <input name="attr_HP_gtotal" value="0" hidden>
+    <input name="attr_Con_Qtotal" value="0" hidden>
+    <input name="attr_Str_Qtotal" value="0" hidden>
+    <input name="attr_Mag_Qtotal" value="0" hidden>
+    <input name="attr_Skl_Qtotal" value="0" hidden>
+    <input name="attr_Spd_Qtotal" value="0" hidden>
+    <input name="attr_Lck_Qtotal" value="0" hidden>
+    <input name="attr_Def_Qtotal" value="0" hidden>
+    <input name="attr_Res_Qtotal" value="0" hidden>
+    <input name="attr_Mov_Qtotal" value="0" hidden>
+    <input name="attr_Hit_Qtotal" value="0" hidden>
+    <input name="attr_Avo_Qtotal" value="0" hidden>
+    <input name="attr_Weight_Qtotal" value="0" hidden>
+    <input name="attr_HP_total_max" value="0" hidden>
+    <input name="attr_HP_current" value="0" hidden>
+    <input name="attr_HP_current_max" value="0" hidden>
+    <input name="attr_Con_current" value="0" hidden>
+    <input name="attr_Con_current_max" value="0" hidden>
+    <input name="attr_Str_sf" value="0" hidden>
+    <input name="attr_Str_total" value="0" hidden>
+    <input name="attr_Str_rg" value="0" hidden>
+    <input name="attr_Str_rb" value="0" hidden>
+    <input name="attr_Str_gf" value="0" hidden>
+    <input name="attr_Str_gtotal" value="0" hidden>
+    <input name="attr_Str_total_max" value="0" hidden>
+    <input name="attr_Mag_sf" value="0" hidden>
+    <input name="attr_Mag_total" value="0" hidden>
+    <input name="attr_Mag_rg" value="0" hidden>
+    <input name="attr_Mag_rb" value="0" hidden>
+    <input name="attr_Mag_gf" value="0" hidden>
+    <input name="attr_Mag_gtotal" value="0" hidden>
+    <input name="attr_Mag_total_max" value="0" hidden>
+    <input name="attr_Skl_sf" value="0" hidden>
+    <input name="attr_Skl_total" value="0" hidden>
+    <input name="attr_Skl_rg" value="0" hidden>
+    <input name="attr_Skl_rb" value="0" hidden>
+    <input name="attr_Skl_gf" value="0" hidden>
+    <input name="attr_Skl_gtotal" value="0" hidden>
+    <input name="attr_Skl_total_max" value="0" hidden>
+    <input name="attr_Spd_sf" value="0" hidden>
+    <input name="attr_Spd_total" value="0" hidden>
+    <input name="attr_Spd_rg" value="0" hidden>
+    <input name="attr_Spd_rb" value="0" hidden>
+    <input name="attr_Spd_gf" value="0" hidden>
+    <input name="attr_Spd_gtotal" value="0" hidden>
+    <input name="attr_Spd_total_max" value="0" hidden>
+    <input name="attr_Lck_sf" value="0" hidden>
+    <input name="attr_Lck_total" value="0" hidden>
+    <input name="attr_Lck_rg" value="0" hidden>
+    <input name="attr_Lck_rb" value="0" hidden>
+    <input name="attr_Lck_gf" value="0" hidden>
+    <input name="attr_Lck_gtotal" value="0" hidden>
+    <input name="attr_Lck_total_max" value="0" hidden>
+    <input name="attr_Def_sf" value="0" hidden>
+    <input name="attr_Def_total" value="0" hidden>
+    <input name="attr_Def_rg" value="0" hidden>
+    <input name="attr_Def_rb" value="0" hidden>
+    <input name="attr_Def_gf" value="0" hidden>
+    <input name="attr_Def_gtotal" value="0" hidden>
+    <input name="attr_Def_total_max" value="0" hidden>
+    <input name="attr_Res_sf" value="0" hidden>
+    <input name="attr_Res_total" value="0" hidden>
+    <input name="attr_Res_rg" value="0" hidden>
+    <input name="attr_Res_rb" value="0" hidden>
+    <input name="attr_Res_gf" value="0" hidden>
+    <input name="attr_Res_gtotal" value="0" hidden>
+    <input name="attr_Res_total_max" value="0" hidden>
+    <input name="attr_Cha_sf" value="0" hidden>
+    <input name="attr_Cha_total" value="0" hidden>
+    <input name="attr_Cha_rg" value="0" hidden>
+    <input name="attr_Cha_rb" value="0" hidden>
+    <input name="attr_Cha_gf" value="0" hidden>
+    <input name="attr_Cha_gtotal" value="0" hidden>
+    <input name="attr_Cha_total_max" value="0" hidden>
+    <input name="attr_Mov_sf" value="0" hidden>
+    <input name="attr_Mov_rb" value="0" hidden>
+    <input name="attr_Mov_total" value="0" hidden>
+    <input name="attr_Mov_total_max" value="0" hidden>
+    <input name="attr_Str_multi" value="0" hidden>
+    <input name="attr_Mag_multi" value="0" hidden>
+    <input name="attr_Spd_multi" value="0" hidden>
+    <input name="attr_Skl_multi" value="0" hidden>
+    <input name="attr_Def_multi" value="0" hidden>
+    <input name="attr_Res_multi" value="0" hidden>
+    <input name="attr_Cha_multi" value="0" hidden>
+    <input name="attr_DR_multi" value="0" hidden>
+    <input name="attr_Athletics_total" value="0" hidden>
+    <input name="attr_Arcana_total" value="0" hidden>
+    <input name="attr_History_total" value="0" hidden>
+    <input name="attr_Investigation_total" value="0" hidden>
+    <input name="attr_Nature_total" value="0" hidden>
+    <input name="attr_Religion_total" value="0" hidden>
+    <input name="attr_Deception_total" value="0" hidden>
+    <input name="attr_Intimidation_total" value="0" hidden>
+    <input name="attr_Performance_total" value="0" hidden>
+    <input name="attr_Persuasion_total" value="0" hidden>
+    <input name="attr_Acrobatics_total" value="0" hidden>
+    <input name="attr_SleightofHand_total" value="0" hidden>
+    <input name="attr_Stealth_total" value="0" hidden>
+    <input name="attr_AnimalHandling_total" value="0" hidden>
+    <input name="attr_Insight_total" value="0" hidden>
+    <input name="attr_Medicine_total" value="0" hidden>
+    <input name="attr_Perception_total" value="0" hidden>
+    <input name="attr_Survival_total" value="0" hidden>
+    <input name="attr_EXP" value="0" min="0" max="200" hidden>
+    <input name="attr_Swordrank" value="E" type="text" hidden>
+    <input name="attr_Lancerank" value="E" type="text" hidden>
+    <input name="attr_Axerank" value="E" type="text" hidden>
+    <input name="attr_Bowrank" value="E" type="text" hidden>
+    <input name="attr_Stavesrank" value="E" type="text" hidden>
+    <input name="attr_Darkrank" value="E" type="text" hidden>
+    <input name="attr_Authorityrank" value="E" type="text" hidden>
+    <input name="attr_Lightrank" value="E" type="text" hidden>
+    <input name="attr_Animarank" value="E" type="text" hidden>
+    <input name="attr_Armorrank" value="E" type="text" hidden>
+    <input name="attr_Ridingrank" value="E" type="text" hidden>
+    <input name="attr_Flyingrank" value="E" type="text" hidden>
+    <input name="attr_Swordrank_max" value="E" type="text" hidden>
+    <input name="attr_Lancerank_max" value="E" type="text" hidden>
+    <input name="attr_Axerank_max" value="E" type="text" hidden>
+    <input name="attr_Bowrank_max" value="E" type="text" hidden>
+    <input name="attr_Stavesrank_max" value="E" type="text" hidden>
+    <input name="attr_Darkrank_max" value="E" type="text" hidden>
+    <input name="attr_Authorityrank_max" value="E" type="text" hidden>
+    <input name="attr_Lightrank_max" value="E" type="text" hidden>
+    <input name="attr_Animarank_max" value="E" type="text" hidden>
+    <input name="attr_Armorrank_max" value="E" type="text" hidden>
+    <input name="attr_Ridingrank_max" value="E" type="text" hidden>
+    <input name="attr_Flyingrank_max" value="E" type="text" hidden>
+    <input name="attr_Hit" value="0" hidden>
+    <input name="attr_Crit" value="0" hidden>
+    <input name="attr_avo" value="0" hidden>
+    <input name="attr_phys_total" value="0" hidden>
+    <input name="attr_myst_total" value="0" hidden>
+    <input name="attr_prot_total" value="0" hidden>
+    <input name="attr_ward_total" value="0" hidden>
+    <input name="attr_Ghit" value="0" hidden>
+    <input name="attr_Atkspd" value="0" min="0" hidden>
+    <input name="attr_isPromo" value="0" type="checkbox" hidden>
+    <input name="attr_fid" value="" hidden>
+    <input name="attr_f_WRank" value="" hidden>
+    <input name="attr_Hitmod" value="0" hidden>
+    <input name="attr_Critmod" value="0" hidden>
+    <input name="attr_Avomod" value="0" hidden>
+    <input name="attr_Ddgmod" value="0" hidden>
+    <input name="attr_Dmgmod" value="0" hidden>
+    <input name="attr_UACounter" value="0" type="checkbox" hidden>
+    <input name="attr_Physb" value="0" hidden>
+    <input name="attr_Magb" value="0" hidden>
+    <input name="attr_Hitb" value="0" hidden>
+    <input name="attr_Critb" value="0" hidden>
+    <input name="attr_Critavob" value="0" hidden>
+    <input name="attr_Avob" value="0" hidden>
+    <input name="attr_Protb" value="0" hidden>
+    <input name="attr_Resb" value="0" hidden>
+    <input name="attr_Chab" value="0" hidden>
+    <input name="attr_Ghitb" value="0" hidden>
+</div>
+</html>

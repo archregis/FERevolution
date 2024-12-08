@@ -1,0 +1,387 @@
+@font-face {
+  font-family: 'Merriweather';
+  font-style: normal;
+  font-weight: 300;
+  src: local('Merriweather Light'), local('Merriweather-Light'),
+       url('https://fonts.gstatic.com/s/merriweather/v17/ZvcMqxEwPfh2qDWBPxn6nk4GofcKVZz6wtzX_QUIqsI.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC,
+                 U+2000-206F, U+2074, U+20AC, U+2212, U+2215;
+}
+
+/* Hide all tabs by default */
+.sheet-character,
+.sheet-equip,
+.sheet-misc {
+  display: none;
+}
+
+/* Show the selected tab */
+.sheet-tabstoggle[value="character"] ~ div.sheet-character,
+.sheet-tabstoggle[value="equip"] ~ div.sheet-equip,
+.sheet-tabstoggle[value="misc"] ~ div.sheet-misc {
+  display: block;
+}
+
+.charsheet { /* Background function */
+  background-color: #353535;
+  font-family: "Merriweather", serif;
+  font-size: 11px;
+  min-height: 100%;
+  min-width: 100%;
+  clear: both;
+  overflow: auto;
+}
+
+.charsheet .sheet-mainstats,
+.charsheet .sheet-checks,
+.charsheet .sheet-inventory,
+.charsheet .sheet-prowess {
+  overflow: hidden;
+}
+
+.charsheet .sheet-charinfo label {
+  display: inline;
+  font-weight: normal;
+}
+
+.charsheet .sheet-charinfo,
+.charsheet .sheet-mainstats,
+.charsheet .sheet-currentvals {
+  background-color: #f3f3f3;
+  width: 100%;
+  display: inline-block;
+  margin-bottom: 10px;
+}
+
+.charsheet .sheet-abilityinfo,
+.charsheet .sheet-supportinfo {
+  background-color: #f3f3f3;
+  padding-left: 5px;
+  display: inline-block;
+  margin: 0 5px 10px 5px;
+  border-right: 4px solid #f3f3f3;
+  border-left: 4px solid #f3f3f3;
+}
+
+.charsheet .sheet-checks {
+  background-color: #f3f3f3;
+  width: 27%;
+  padding: 0 5px;
+  float: right;
+  display: inline-block;
+  clear: both;
+  margin-bottom: 10px;
+}
+
+.charsheet .sheet-prowess {
+  background-color: #f3f3f3;
+  width: 90%;
+  padding-right: 5px;
+  display: inline-block;
+  clear: both;
+  margin: 0 10px 10px 0;
+}
+
+#left-column {
+  float: left;
+  width: 72%;
+}
+
+#notes-sheet {
+  float: right;
+  width: 27%;
+}
+
+.charsheet .sheet-spells td select,
+.charsheet .sheet-spells input[type="text"],
+.charsheet .sheet-weapons input[type="text"],
+.charsheet .sheet-weapons td select,
+.charsheet .sheet-combat input[type="text"],
+.charsheet .sheet-combat td select {
+  width: 100%;
+}
+
+.charsheet .sheet-hidden {
+  display: none;
+}
+
+.charsheet .sheet-currentvals th {
+  font-size: 14px;
+}
+
+.charsheet .sheet-currentvals table {
+  border-top: 4px solid #f3f3f3;
+}
+
+.charsheet .sheet-gender input {
+  width: 5%;
+}
+
+.charsheet .sheet-gender {
+  width: 30%;
+  display: inline;
+}
+
+.charsheet #test {
+  width: 70%;
+  display: inline-block;
+  margin-left: 5px;
+  overflow: hidden;
+}
+
+.charsheet #test3 {
+  vertical-align: top;
+  display: inline-block;
+  width: 25%;
+  margin-left: 15px;
+}
+
+.charsheet table {
+  font-size: 13px;
+  width: 100%;
+  display: table;
+  margin-right: 4px;
+  border-right: 4px solid #f3f3f3;
+  border-bottom: 4px solid #f3f3f3;
+}
+
+.charsheet td {
+  padding-top: 10px;
+  text-align: center;
+}
+
+.charsheet .sheet-div {
+  background-color: #353535;
+}
+
+.charsheet th {
+  text-align: center;
+}
+
+.charsheet .sheet-mainstats,
+.charsheet .sheet-prowess th {
+  border-collapse: separate;
+  border-spacing: 5px;
+}
+
+.charsheet .sheet-statlabel,
+.charsheet .sheet-labelrow {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-weight: bold;
+  background-color: #353535;
+  color: #f3f3f3;
+  text-transform: uppercase;
+}
+
+.charsheet th.sheet-statlabel {
+  padding-left: 5px;
+}
+
+.charsheet .sheet-labelrow {
+  font-size: 15px;
+  text-transform: uppercase;
+}
+
+.charsheet label input,
+.charsheet select {
+  margin-right: 2px;
+  width: 20%;
+  margin: 5px 0;
+}
+
+.charsheet select {
+  display: inline;
+  background-color: #F9F9F9;
+  color: rgb(85, 85, 85);
+  box-shadow: inset 0px 1px 1px rgba(0, 0, 0, 0.075);
+}
+
+.charsheet .sheet-row {
+  display: inline;
+  padding-left: 5px;
+}
+
+.charsheet .sheet-charinfo input[type="checkbox"] {
+  width: 10px;
+}
+
+.charsheet .sheet-charinfo input[type="number"] {
+  text-align: center;
+}
+
+.charsheet .sheet-header {
+  text-align: center;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 15px;
+  padding: 3px;
+  background-color: #353535;
+  color: #f3f3f3;
+  border: 4px solid #f3f3f3;
+  border-bottom-width: 2px;
+  font-weight: bold;
+}
+
+.charsheet .sheet-weapons,
+.charsheet .sheet-spells,
+.charsheet .sheet-inventory {
+  width: 45%;
+  background-color: #f3f3f3;
+  display: inline-block;
+}
+
+.charsheet .sheet-weapons select {
+  width: 40%;
+}
+
+.charsheet .sheet-tinylabel select {
+  width: 13%;
+}
+
+.charsheet .sheet-weapons input[type="text"] {
+  width: 100%;
+}
+
+.charsheet .sheet-weapons td select {
+  width: 100%;
+}
+
+.charsheet .sheet-combat input[type="text"] {
+  width: 100%;
+}
+
+.charsheet .sheet-combat td select {
+  width: 100%;
+}
+
+.charsheet .repitem:not(:first-child) {
+  margin-top: 2vh;
+  border-top: 2px #353535 solid;
+  padding-top: 5px;
+}
+
+.charsheet .sheet-wepprof tr:not(:first-child) {
+  background-color: #dadada;
+  color: #666666;
+  pointer-events: none;
+}
+
+.charsheet .sheet-wepprof tr:not(:first-child) input {
+  background-color: #e5e5e5;
+  color: #666666;
+}
+
+/* Toggle Button Styles */
+.charsheet input.sheet-toggle-stats {
+  border: none;
+  margin: 2vh 1vw 0 0;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+}
+
+.charsheet input.sheet-toggle-stats::after {
+  content: "⏷";
+}
+
+.charsheet input.sheet-toggle-stats:checked::after {
+  content: "⏶";
+}
+
+.charsheet .sheet-hiddenstats {
+  display: none;
+}
+
+.charsheet .sheet-hiddenskill {
+  display: none;
+  margin-left: 8px;
+  margin-top: 10px;
+}
+
+.charsheet .sheet-hiddenskill textarea {
+  width: 90%;
+}
+
+.charsheet input.sheet-toggle-stats:checked ~ .sheet-hiddenstats {
+  display: table;
+}
+
+.charsheet input.sheet-toggle-stats:checked ~ .sheet-hiddenskill {
+  display: inline-block;
+}
+
+.charsheet .sheet-toggle-label {
+  display: inline;
+  font-size: 13px;
+  font-weight: bold;
+}
+
+/* Background Image Handling */
+.sheet-useBackground input[value="2"]:checked ~ .sheet-background {
+  background-image: url("https://cdn.discordapp.com/attachments/180130042930528256/847735498054434866/unknown.png");
+  background-size: 900px 840px;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  /* background-position: center; */
+  background-origin: content-box;
+}
+
+.sheet-useBackground input[value="3"]:checked ~ .sheet-background {
+  background-image: url("https://cdn.discordapp.com/attachments/180130042930528256/847735976162885632/unknown.png");
+  background-size: 900px 840px;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  /* background-position: center; */
+  background-origin: content-box;
+}
+
+.sheet-useBackground input[value="4"]:checked ~ .sheet-background {
+  /* background-image: url("http://www.geeksville.us/roll20/NYC-Night_2.jpg"); */
+  /* background-image: url("http://www.geeksville.us/roll20/noir3.jpg"); */
+  background-image: url("https://cdn.discordapp.com/attachments/180130042930528256/847734590784667658/unknown.png");
+  background-size: 900px 840px;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  /* background-position: center; */
+  background-origin: content-box;
+}
+
+.sheet-useBackground input[value="5"]:checked ~ .sheet-background {
+  background-image: url("https://cdn.discordapp.com/attachments/180130042930528256/847733914452754462/unknown.png");
+  background-size: 900px 850px;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  /* background-position: center; */
+  background-origin: content-box;
+}
+
+.sheet-useBackground input[value="6"]:checked ~ .sheet-background {
+  background-image: url("https://cdn.discordapp.com/attachments/180130042930528256/847735741634445322/unknown.png");
+  background-size: 900px 850px;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  /* background-position: center; */
+  background-origin: content-box;
+}
+
+.sheet-useBackground input[value="7"]:checked ~ .sheet-background {
+  /* background-image: url("http://www.geeksville.us/roll20/cyberpunk2.jpg"); */
+  background-image: url("https://cdn.discordapp.com/attachments/180130042930528256/847733452639698954/unknown.png");
+  background-size: 900px 840px;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  /* background-position: center; */
+  background-origin: content-box;
+}
+
+.sheet-useBackground input[value="8"]:checked ~ .sheet-background { /* Hellfrost */
+  /* background-image: url("http://www.geeksville.us/roll20/cyberpunk2.jpg"); */
+  background-image: url("https://cdn.discordapp.com/attachments/180130042930528256/847733872287547402/unknown.png");
+  background-size: 900px 840px;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  /* background-position: center; */
+  background-origin: content-box;
+}
