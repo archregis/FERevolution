@@ -633,20 +633,6 @@
                 const growthStats = ["HP","Str","Mag","Skl","Spd","Lck","Def","Res","Con","Mov"];
                 const statsForQTotals = ['HP','Str','Mag','Spd','Def','Res','Con','Mov','Hit','Avo','Crit','Ddg','Weight','Mit'];
 
-                function setWeaknesses(values){   //Weaknesses set
-                  let updates = {};
-                  let sumWeak = '';
-                  weaknessTypes.forEach(weak => {
-                    let check = values[`${weak}_check`];
-                    if (Number(check)===1) {
-                      sumWeak+=weak+',';
-                    }
-                  });
-                  updates["Weak_total"] = sumWeak;
-                  return updates;
-
-                }
-
                 // Base needed attributes
                 const neededAttributes = [
                     "atktype","WSlot","SSlot","HP_i","HP_bd","HP_Qtotal","Mov_i","Mov_bd","Mov_Qtotal","Mov_multi",
@@ -673,6 +659,20 @@
                         r = 255;
                     }
                     return [Rank, r];
+                }
+
+                function setWeaknesses(values){   //Weaknesses set
+                  let updates = {};
+                  let sumWeak = '';
+                  weaknessTypes.forEach(weak => {
+                    let check = values[`${weak}_check`];
+                    if (Number(check)===1) {
+                      sumWeak+=weak+',';
+                    }
+                  });
+                  updates["Weak_total"] = sumWeak;
+                  return updates;
+
                 }
 
                 // Calculation Functions

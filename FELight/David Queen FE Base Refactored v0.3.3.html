@@ -68,9 +68,35 @@
                                         <input type="number" name="attr_Power" min="0" max="999" value="0" style="width:40px;"/>
                                     </label>
                                 </td>
+
                             </tr>
+
                         </table>
-                    </div>                    
+                        <div class="sheet-charinfo" style="display:inline-block; padding:0; margin:0; color:#000;">
+                          <label>
+                          <input type="checkbox" class="sheet-toggle-stats">
+                          <span class = "sheet-toggle-label">Weaknesses</span>
+                          <table class = "sheet-hiddenstats">
+                            <tr>
+                              <th>Flying</th>
+                              <th>Armor</th>
+                              <th>Cavalry</th>
+                              <th>Dragon</th>
+                              <th>Terror</th>
+                              <th>Flammable</th>
+                            </tr>
+                            <tr>
+                              <th><input type="checkbox" name="attr_Flying_check" value="1"></th>
+                              <th><input type="checkbox" name="attr_Armor_check" value="1"></th>
+                              <th><input type="checkbox" name="attr_Cavalry_check" value="1"></th>
+                              <th><input type="checkbox" name="attr_Dragon_check" value="1"></th>
+                              <th><input type="checkbox" name="attr_Terror_check" value="1"></th>
+                              <th><input type="checkbox" name="attr_Flammable_check" value="1"></th>
+                            </tr>
+                          </table>
+                        </label>
+                        </div>
+                    </div>
 
                     <!-- Current Values -->
                     <div class="sheet-currentvals">
@@ -602,7 +628,7 @@
                         setAttrs({sheetTab: button});
                     });
                 });
-
+                const weaknessTypes = ["Flying", "Armor", "Cavalry", "Dragon", "Terror", "Flammable"];
                 const weaponTypes = ["Sword","Lance","Axe","Bow","Staves","Dark","Anima","Light"];
                 const growthStats = ["HP","Str","Mag","Skl","Spd","Lck","Def","Res","Con","Mov"];
                 const statsForQTotals = ['HP','Str','Mag','Spd','Def','Res','Con','Mov','Hit','Avo','Crit','Ddg','Weight','Mit'];
@@ -616,7 +642,8 @@
                     "Critb","Critmod","Crit_Qtotal","Crit_bd","Ddg_bd","Ddg_Qtotal","Avo_bd","Avo_Qtotal","Atkspd",
                     ...growthStats.flatMap(stat=>[`${stat}_gf`,`${stat}_gi`]),
                     "SwordEXP","LanceEXP","AxeEXP","BowEXP","StavesEXP","AnimaEXP","LightEXP","DarkEXP",
-                    "_reporder_weapons","_reporder_spells","_reporder_bonuses"
+                    "_reporder_weapons","_reporder_spells","_reporder_bonuses",
+                    "Flying_check", "Armor_check", "Cavalry_check", "Dragon_check", "Terror_check", "Flammable_check","Weak_total"
                 ];
 
                 function setRank(currEXP) {
@@ -632,6 +659,20 @@
                         r = 255;
                     }
                     return [Rank, r];
+                }
+
+                function setWeaknesses(values){   //Weaknesses set
+                  let updates = {};
+                  let sumWeak = '';
+                  weaknessTypes.forEach(weak => {
+                    let check = values[`${weak}_check`];
+                    if (Number(check)===1) {
+                      sumWeak+=weak+',';
+                    }
+                  });
+                  updates["Weak_total"] = sumWeak;
+                  return updates;
+
                 }
 
                 // Calculation Functions
@@ -949,7 +990,7 @@
                                         Object.assign(finalUpdates, calculateWeaponRanks(values));
                                         Object.assign(finalUpdates, calculateWeapSpellLists(values, weaponIDs, spellIDs));
                                         Object.assign(finalUpdates, calculateCurrentItemDesc(values, weaponIDs, spellIDs));
-
+                                        Object.assign(finalUpdates, setWeaknesses(values));
                                         setAttrs(finalUpdates);
                                     });
                                 });
@@ -968,6 +1009,7 @@
                 on("change:Str_i change:Str_bd change:Str_Qtotal change:Mag_i change:Mag_bd change:Mag_Qtotal change:Skl_i change:Skl_bd change:Skl_Qtotal change:Spd_i change:Spd_bd change:Spd_Qtotal change:Lck_i change:Lck_bd change:Lck_Qtotal change:Def_i change:Def_bd change:Def_Qtotal change:Res_i change:Res_bd change:Res_Qtotal change:Con_i change:Con_bd change:Con_Qtotal", updateAll);
                 on("change:Physb change:phys_bd change:Magb change:myst_bd change:Protb change:prot_bd change:Resb change:ward_bd change:Hitb change:Hitmod change:Hit_Qtotal change:hit_bd change:Critb change:Critmod change:Crit_Qtotal change:Crit_bd change:Ddg_bd change:Ddg_Qtotal change:Avo_bd change:Avo_Qtotal change:Atkspd", updateAll);
                 on("change:SwordEXP change:LanceEXP change:AxeEXP change:BowEXP change:StavesEXP change:AnimaEXP change:LightEXP change:DarkEXP", updateAll);
+                on("change:Flying_check change:Armor_check change:Cavalry_check change:Flammable_check change:Terror_check change:Dragon_check", updateAll);
 
                 growthStats.forEach(stat => {
                     on(`change:${stat}_gf change:${stat}_gi`, updateAll);
@@ -1072,5 +1114,6 @@
     <input name="attr_Avob" value="0" hidden>
     <input name="attr_Protb" value="0" hidden>
     <input name="attr_Resb" value="0" hidden>
+    <input name="attr_Weak_total" value="0" hidden>
 </div>
 </html>
