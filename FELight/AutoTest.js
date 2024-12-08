@@ -47,6 +47,15 @@ function FortressOfWill(BattleArray,awtype,who){
   }
   return BattleArray;
 }
+
+function Bloodlust(BattleArray,awtype,who){
+  sendChat(who, 'Bloodlust is active');
+  let LustBonus = Math.floor((Number(BattleArray["AMaxHP"])-Number(BattleArray["ACurrHP"]))/4);
+  log('lust = '+LustBonus);
+  BattleArray["AddDmg"] = Number(BattleArray["AddDmg"])+Number(LustBonus);
+  return BattleArray;
+}
+
 const skillHandlers = {
   // "SureShot": SureShot,
   // "Adept": Adept,
@@ -91,7 +100,8 @@ const skillHandlers = {
   // "Resilience": Resilience,
   // "Dragonblood": Dragonblood,
   // "Nihil": Nihil,
-  // "Nullify": Nullify
+  // "Nullify": Nullify,
+  "Bloodlust": Bloodlust
 };
 
 on('chat:message', function(msg) {
@@ -107,18 +117,17 @@ on('chat:message', function(msg) {
       sendChat('SYSTEM', 'You must provide a dmg value');
       return;
     }
-    //Initialize Attacker and Defender
 
+    //Initialize Attacker and Defender
     var selectedId = parts[0];
     var targetId = parts[1];
-    var DMGmod = parseInt(parts[2]) || 0;
+    var BattlePhase = parts[2];
+    log('battlephase is '+BattlePhase);
     var selectedToken = getObj('graphic', selectedId);
     var attacker = getObj('character', selectedToken.get('represents'));
-    //
+
     var targetToken = getObj('graphic', targetId);
     var defender = getObj('character', targetToken.get('represents'));
-    //
-
     var who = getObj('character', targetToken.get('represents'));
     if (!who) {
       who = targetToken.get('name');
@@ -150,6 +159,7 @@ on('chat:message', function(msg) {
     var ACurrHP = selectObj.get("bar3_value"); //attacker HP
     var AMaxHP = selectObj.get("bar3_max");
     var DMaxHP = targetObj.get("bar3_max");
+
     var dmgtype = getAttr(attacker.id,'atktype').get('current');
     var DmgTaken = 0;
     var AttkDmg = 0;
@@ -177,6 +187,7 @@ on('chat:message', function(msg) {
       "DMaxHP": DMaxHP,
       "ACurrHP": ACurrHP,
       "DCurrHP": DCurrHP,
+      "BattlePhase": BattlePhase,
     };
 
     if ((awtype < 4 && dwtype < 4) || (awtype >= 4 && dwtype >= 4)) {
@@ -210,7 +221,7 @@ on('chat:message', function(msg) {
     let AllSkills = ["SureShot","Adept","Luna","Sol","Glacias","Flare","Impale","Colossus","Ignis","Armsthrift","QuickDraw","DartingBlow",
     "GoodBet","DuelistBlow","DeathBlow","Prescience","StrongRiposte","Sturdy","Brawler","Patience","Swordbreaker","Lancebreaker","Axebreaker",
     "Bowbreaker","Tomebreaker","Swordfaire","Lancefaire","Axefaire","Bowfaire","Tomefaire","Reaver","Brave","Wrath","Chivalry","FortressOfWill","DeadlyStrikes","PrideOfSteel","Thunderstorm","Resolve",
-    "Trample","Resilience","Dragonblood","Nihil","Nullify"];
+    "Trample","Resilience","Dragonblood","Nihil","Nullify","Bloodlust"];
 
 
     var ASkills = getAttr(attacker.id,'Ele_Qtotal').get('current').split(',');

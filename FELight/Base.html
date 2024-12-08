@@ -1909,8 +1909,7 @@ on("change:HP_current change:HP_current_max change:Mag_total change:Str_total ch
     getAttrs([
         "HP_current","HP_current_max",
         "Mag_total","Str_total","Skl_total","Spd_total",
-        "Ele_Qtotal","resolve_applied",
-        "resolve_orig_HP_current_max","resolve_orig_Mag_total","resolve_orig_Str_total","resolve_orig_Skl_total","resolve_orig_Spd_total"
+        "Ele_Qtotal","resolve_applied","resolve_orig_Mag_total","resolve_orig_Str_total","resolve_orig_Skl_total","resolve_orig_Spd_total"
     ], function(v) {
         var currSkills = v.Ele_Qtotal || "";
         var ActiveSkills = currSkills.split(",");
@@ -1937,7 +1936,6 @@ on("change:HP_current change:HP_current_max change:Mag_total change:Str_total ch
         // If HP < 0.5, Resolve present, and not yet applied, apply the buff
         if (hasResolve === 1 && percentHP < 0.5 && !alreadyApplied) {
             setAttrs({
-                "HP_current_max": Math.floor(HP_current_max * 1.3),
                 "Mag_total": Math.floor(Mag_total * 1.3),
                 "Str_total": Math.floor(Str_total * 1.3),
                 "Skl_total": Math.floor(Skl_total * 1.3),
@@ -1945,7 +1943,6 @@ on("change:HP_current change:HP_current_max change:Mag_total change:Str_total ch
                 "resolve_applied": 1,
 
                 // Store original values to revert back later
-                "resolve_orig_HP_current_max": HP_current_max,
                 "resolve_orig_Mag_total": Mag_total,
                 "resolve_orig_Str_total": Str_total,
                 "resolve_orig_Skl_total": Skl_total,
@@ -1955,14 +1952,12 @@ on("change:HP_current change:HP_current_max change:Mag_total change:Str_total ch
 
         // If HP >= 0.5 and Resolve buff is currently applied, revert to original values
         if (hasResolve === 1 && percentHP >= 0.5 && alreadyApplied) {
-            var orig_HP_current_max = parseInt(v.resolve_orig_HP_current_max,10) || HP_current_max;
             var orig_Mag_total = parseInt(v.resolve_orig_Mag_total,10) || Mag_total;
             var orig_Str_total = parseInt(v.resolve_orig_Str_total,10) || Str_total;
             var orig_Skl_total = parseInt(v.resolve_orig_Skl_total,10) || Skl_total;
             var orig_Spd_total = parseInt(v.resolve_orig_Spd_total,10) || Spd_total;
 
             setAttrs({
-                "HP_current_max": orig_HP_current_max,
                 "Mag_total": orig_Mag_total,
                 "Str_total": orig_Str_total,
                 "Skl_total": orig_Skl_total,
@@ -1970,7 +1965,6 @@ on("change:HP_current change:HP_current_max change:Mag_total change:Str_total ch
                 "resolve_applied": 0,
 
                 // Clear original values now that we've reverted
-                "resolve_orig_HP_current_max": "",
                 "resolve_orig_Mag_total": "",
                 "resolve_orig_Str_total": "",
                 "resolve_orig_Skl_total": "",
