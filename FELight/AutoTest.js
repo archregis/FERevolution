@@ -23,25 +23,25 @@ function processInlinerolls(msg) {
   return newContent;
 }
 
-function Swordfaire(BattleArray,awtype,target,selected){
+function Swordfaire(BattleArray,awtype,who){
   if(Number(awtype) == 1){
     log('Swordfaire');
-    sendChat(target,'Swordfaire is active');
+    sendChat(who,'Swordfaire is active');
     BattleArray["AddDmg"] = Number(BattleArray["AddDmg"])+5
   }
   return BattleArray;
 }
-function Lancefaire(BattleArray,awtype,target,selected) {
+function Lancefaire(BattleArray,awtype,who) {
   if (Number(awtype) === 3) {
-    sendChat(target,' Lancefaire is active');
+    sendChat(who,' Lancefaire is active');
     BattleArray["AddDmg"] = Number(BattleArray["AddDmg"])+5;
   }
   return BattleArray;
 }
 
-function FortressOfWill(BattleArray,awtype,target,selected){
+function FortressOfWill(BattleArray,awtype,who){
   if(BattleArray["ACurrHP"]>=BattleArray["AMaxHP"]){
-    sendChat(target, 'Fortress of Will is active');
+    sendChat(who, 'Fortress of Will is active');
     BattleArray["AddDmg"] = Number(BattleArray["AddDmg"])+4;
     BattleArray["AddMit"] = Number(BattleArray["AddMit"])+4;
   }
@@ -119,20 +119,12 @@ on('chat:message', function(msg) {
     var defender = getObj('character', targetToken.get('represents'));
     //
 
-    var target = getObj('character', targetToken.get('represents'));
-    if (!target) {
-      target = targetToken.get('name');
+    var who = getObj('character', targetToken.get('represents'));
+    if (!who) {
+      who = targetToken.get('name');
     }
     else {
-      target = 'character|' + target.id;
-    }
-
-    var selected = getObj('character', selectedToken.get('represents'));
-    if (!selected) {
-      selected = selectedToken.get('name');
-    }
-    else {
-      selected = 'character|' + selected.id;
+      who = 'character|' + who.id;
     }
 
 
@@ -165,7 +157,9 @@ on('chat:message', function(msg) {
     var triangle = 'Neutral';
     let weaponTriangle = { 'Sword': 1, 'Axe':2, 'Lance':3, 'Anima':4, 'Light':5, 'Dark':6 };
     let awtype = weaponTriangle[getAttr(attacker.id, "currWep").get('current')];
+    awtype = Number(awtype);
     let dwtype = weaponTriangle[getAttr(defender.id, "currWep").get('current')];
+    dwtype = Number(dwtype);
     log("awtype: " + awtype + "dwtype: " + dwtype);
     let ahit = Number(getAttrValue(attacker.id, "Hit"))+randomInteger(100);
     let dhit = Number(getAttrValue(defender.id, "Hit"));
@@ -185,7 +179,7 @@ on('chat:message', function(msg) {
       "DCurrHP": DCurrHP,
     };
 
-    if ((awtype < 3 && dwtype < 3) || (awtype >= 3 && dwtype >= 3)) {
+    if ((awtype < 4 && dwtype < 4) || (awtype >= 4 && dwtype >= 4)) {
       if ((awtype+1)%3 == dwtype%3) {
         triangle = 'Adv';
       }
@@ -231,7 +225,7 @@ on('chat:message', function(msg) {
           let skillName = AllSkills[j];
           // Check if we have a function for this skill.
           if (skillHandlers[skillName]) {
-            BattleArray = skillHandlers[skillName](BattleArray,awtype,target,selected);
+            BattleArray = skillHandlers[skillName](BattleArray,awtype,who);
 
           }
         }
@@ -245,13 +239,13 @@ on('chat:message', function(msg) {
       log('adddmg is really:'+AddedDmg);
       AttkDmg = getAttrValue(attacker.id, "phys_total")+AddedDmg;
       DefMit = getAttrValue(defender.id, "prot_total")+getAttrValue(defender.id, "Mit_Qtotal");
-      sendChat(target,'<p style = "margin-bottom: 0px;">' + AttkDmg + ' physical damage vs ' + DefMit + ' protection!</p>');
+      sendChat(who,'<p style = "margin-bottom: 0px;">' + AttkDmg + ' physical damage vs ' + DefMit + ' protection!</p>');
       DmgTaken = AttkDmg-DefMit;
     }
     if (dmgtype == 'Magical'){
       AttkDmg = getAttrValue(attacker.id, "ward_total")+BattleArray["AddDmg"];
       DefMit = getAttrValue(defender.id, "ward_total")+getAttrValue(defender.id, "Mit_Qtotal");
-      sendChat(target,'<p style = "margin-bottom: 0px;">' + AttkDmg + ' mystical damage vs ' + DefMit + ' resistance!</p>');
+      sendChat(who,'<p style = "margin-bottom: 0px;">' + AttkDmg + ' mystical damage vs ' + DefMit + ' resistance!</p>');
       DmgTaken = AttkDmg-DefMit;
     }
 
@@ -262,7 +256,7 @@ on('chat:message', function(msg) {
     if (triangle == 'Adv'){
       ahit+=15;
       DmgTaken +=1;
-      sendChat(target, '<div ' + divstyle + '>' + //--
+      sendChat(who, '<div ' + divstyle + '>' + //--
       '<div ' + headstyle + '>Attacking with advantage!</div>' + //--
       '<div style = "margin: 0 auto; width: 80%; margin-top: 4px;">' + //--
       '<p style = "margin-bottom: 0px;">' + ahit + ' hit vs ' + davo + ' avoid!</p>' +//--
@@ -273,15 +267,15 @@ on('chat:message', function(msg) {
     if(ahit>=davo){
       if(acrit>ddodge){
         DmgTaken = DmgTaken*3;
-        sendChat(target, 'You crit and deal '+ DmgTaken + ' damage!');
+        sendChat(who, 'You crit and deal '+ DmgTaken + ' damage!');
         CurrHP = targetObj.set("bar3_value", parseInt(targetObj.get("bar3_value")) - DmgTaken);
       } else{
         CurrHP = targetObj.set("bar3_value", parseInt(targetObj.get("bar3_value")) - DmgTaken);
-        sendChat(target, 'You hit and deal '+ DmgTaken + ' damage!');
+        sendChat(who, 'You hit and deal '+ DmgTaken + ' damage!');
       }
     }
     if(ahit<davo){
-      sendChat(target, 'You missed!');
+      sendChat(who, 'You missed!');
     }
 
   }
@@ -289,7 +283,7 @@ on('chat:message', function(msg) {
   if (triangle == 'Disadv'){
     ahit+=-15;
     DmgTaken +=-1;
-    sendChat(target, '<div ' + divstyle + '>' + //--
+    sendChat(who, '<div ' + divstyle + '>' + //--
     '<div ' + headstyle + '>Attacking with disadvantage!</div>' + //--
     '<div style = "margin: 0 auto; width: 80%; margin-top: 4px;">' + //--
     '<p style = "margin-bottom: 0px;">' + ahit + ' hit vs ' + davo + ' avoid!</p>' +//--
@@ -300,21 +294,21 @@ on('chat:message', function(msg) {
   if(ahit>=davo){
     if(acrit>ddodge){
       DmgTaken = DmgTaken*3;
-      sendChat(target, 'You crit and deal '+ DmgTaken + ' damage!');
+      sendChat(who, 'You crit and deal '+ DmgTaken + ' damage!');
       CurrHP = targetObj.set("bar3_value", parseInt(targetObj.get("bar3_value")) - DmgTaken);
     } else{
       CurrHP = targetObj.set("bar3_value", parseInt(targetObj.get("bar3_value")) - DmgTaken);
-      sendChat(target, 'You hit and deal '+ DmgTaken + ' damage!');
+      sendChat(who, 'You hit and deal '+ DmgTaken + ' damage!');
     }
   }
   if(ahit<davo){
-    sendChat(target, 'You missed!');
+    sendChat(who, 'You missed!');
   }
 }
 
 if (triangle == 'Neutral'){
 
-  sendChat(target, '<div ' + divstyle + '>' + //--
+  sendChat(who, '<div ' + divstyle + '>' + //--
   '<div style = "margin: 0 auto; width: 80%; margin-top: 4px;">' + //--
   '<p style = "margin-bottom: 0px;">' + ahit + ' hit vs ' + davo + ' avoid!</p>' +//--
   '<p style = "margin-bottom: 0px;">' + acrit + ' crit vs ' + ddodge + ' dodge!</p>' +//--
@@ -324,15 +318,15 @@ if (triangle == 'Neutral'){
 if(ahit>=davo){
   if(acrit>ddodge){
     DmgTaken = DmgTaken*3;
-    sendChat(target, 'You crit and deal '+ DmgTaken + ' damage!');
+    sendChat(who, 'You crit and deal '+ DmgTaken + ' damage!');
     CurrHP = targetObj.set("bar3_value", parseInt(targetObj.get("bar3_value")) - DmgTaken);
   } else{
     CurrHP = targetObj.set("bar3_value", parseInt(targetObj.get("bar3_value")) - DmgTaken);
-    sendChat(target, 'You hit and deal '+ DmgTaken + ' damage!');
+    sendChat(who, 'You hit and deal '+ DmgTaken + ' damage!');
   }
 }
 if(ahit<davo){
-  sendChat(target, 'You missed!');
+  sendChat(who, 'You missed!');
 }
 }
 

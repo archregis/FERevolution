@@ -1491,7 +1491,7 @@ on("change:Species", function(eventinfo) {
 });
 
 //Base total scripts! Unfortunately, this isn't the end of the scripting, and the load times are just gonna get longer and longer. :(
-on("change:HP_current change:HP_sf change:HP_i change:HP_bd change:HP_rb change:repeating_weapons:HP_wp change:repeating_spells:HP_wp change:_reporder:weapons change:HP_Qtotal change:repeating_combat change:_reporder:weapons change:_reporder:spells remove:repeating_weapons remove:repeating_spells change:WSlot change:SSlot change:atktype", function(eventInfo) {
+on("change:HP_sf change:HP_i change:HP_bd change:HP_rb change:repeating_weapons:HP_wp change:repeating_spells:HP_wp change:_reporder:weapons change:HP_Qtotal change:repeating_combat change:_reporder:weapons change:_reporder:spells remove:repeating_weapons remove:repeating_spells change:WSlot change:SSlot change:atktype", function(eventInfo) {
 	getAttrs(["WSlot","SSlot","CSlot","atktype"], function(v) {
 		if (v.atktype == "Physical"){
 			getSectionIDsOrdered("repeating_weapons", function(idarray) {
@@ -1860,12 +1860,6 @@ on("change:MR_bd", function(eventInfo) {
 	});
 });
 
-//Resolve
-on("change:HP_current HP_current_max change:Mag_total change:Str_total change:Skl_total change:Spd_total change:Ele_Qtotal", function(eventInfo) {
-	getAttrs(["HP_current", "HP_current_max", "Mag_total", "Str_total", "Skl_total", "Spd_total", "Ele_Qtotal"], function(v) {
-
-	});
-});
 //bonus checks
 const stats = ['HP', 'Con', 'Str', 'Mag', 'Spd', 'Def', 'Res', 'Mov', 'Hit', 'Avo', 'Crit', 'Ddg', 'Weight', 'Mit']
 stats.forEach(function (stat) {
@@ -1908,6 +1902,84 @@ on(checkchange+"change:Ele_M change:Ele_S change:Ele_1 change:Ele_2 change:Ele_3
 		Ele_Qtotal: sumElebonus
 		});
 	});
+});
+//Resolve
+
+on("change:HP_current change:HP_current_max change:Mag_total change:Str_total change:Skl_total change:Spd_total change:Ele_Qtotal", function(eventInfo) {
+    getAttrs([
+        "HP_current","HP_current_max",
+        "Mag_total","Str_total","Skl_total","Spd_total",
+        "Ele_Qtotal","resolve_applied",
+        "resolve_orig_HP_current_max","resolve_orig_Mag_total","resolve_orig_Str_total","resolve_orig_Skl_total","resolve_orig_Spd_total"
+    ], function(v) {
+        var currSkills = v.Ele_Qtotal || "";
+        var ActiveSkills = currSkills.split(",");
+
+        // Check if "Resolve" is present
+        var hasResolve = 0;
+        for (var i = 0; i < ActiveSkills.length; i++){
+            if (ActiveSkills[i].trim() === "Resolve") {
+                hasResolve = 1;
+                break;
+            }
+        }
+
+        var HP_current = parseInt(v.HP_current,10) || 0;
+        var HP_current_max = parseInt(v.HP_current_max,10) || 1;
+        var Mag_total = parseInt(v.Mag_total,10) || 0;
+        var Str_total = parseInt(v.Str_total,10) || 0;
+        var Skl_total = parseInt(v.Skl_total,10) || 0;
+        var Spd_total = parseInt(v.Spd_total,10) || 0;
+        var alreadyApplied = (parseInt(v.resolve_applied,10) === 1);
+
+        var percentHP = 1 - ((HP_current_max - HP_current) / HP_current_max);
+
+        // If HP < 0.5, Resolve present, and not yet applied, apply the buff
+        if (hasResolve === 1 && percentHP < 0.5 && !alreadyApplied) {
+            setAttrs({
+                "HP_current_max": Math.floor(HP_current_max * 1.3),
+                "Mag_total": Math.floor(Mag_total * 1.3),
+                "Str_total": Math.floor(Str_total * 1.3),
+                "Skl_total": Math.floor(Skl_total * 1.3),
+                "Spd_total": Math.floor(Spd_total * 1.3),
+                "resolve_applied": 1,
+
+                // Store original values to revert back later
+                "resolve_orig_HP_current_max": HP_current_max,
+                "resolve_orig_Mag_total": Mag_total,
+                "resolve_orig_Str_total": Str_total,
+                "resolve_orig_Skl_total": Skl_total,
+                "resolve_orig_Spd_total": Spd_total
+            }, {silent:true});
+        }
+
+        // If HP >= 0.5 and Resolve buff is currently applied, revert to original values
+        if (hasResolve === 1 && percentHP >= 0.5 && alreadyApplied) {
+            var orig_HP_current_max = parseInt(v.resolve_orig_HP_current_max,10) || HP_current_max;
+            var orig_Mag_total = parseInt(v.resolve_orig_Mag_total,10) || Mag_total;
+            var orig_Str_total = parseInt(v.resolve_orig_Str_total,10) || Str_total;
+            var orig_Skl_total = parseInt(v.resolve_orig_Skl_total,10) || Skl_total;
+            var orig_Spd_total = parseInt(v.resolve_orig_Spd_total,10) || Spd_total;
+
+            setAttrs({
+                "HP_current_max": orig_HP_current_max,
+                "Mag_total": orig_Mag_total,
+                "Str_total": orig_Str_total,
+                "Skl_total": orig_Skl_total,
+                "Spd_total": orig_Spd_total,
+                "resolve_applied": 0,
+
+                // Clear original values now that we've reverted
+                "resolve_orig_HP_current_max": "",
+                "resolve_orig_Mag_total": "",
+                "resolve_orig_Str_total": "",
+                "resolve_orig_Skl_total": "",
+                "resolve_orig_Spd_total": ""
+            }, {silent:true});
+        }
+
+        // If none of the above conditions are met, do nothing, leaving stats as they are.
+    });
 });
 
 //Weaknesses
@@ -3134,7 +3206,7 @@ on("change:Species change:Class", function(eventInfo) {
 
 //Initialize values for API, because ded
 on("sheet:opened", function(){
-	getAttrs(["weplist","splist","colist","effdmg","currEff","currName","currMt","class_exp0","class_gain0","currDesc","currWexp","currWep","atktype","EXP","SwordEXP","LanceEXP","AxeEXP","BowEXP","StavesEXP","DarkEXP","AnimaEXP","LightEXP","AuthorityEXP","RidingEXP","ArmorEXP","FlyingEXP","Flyingrank","Level","HP_i","Str_i","Mag_i","Skl_i","Spd_i","Lck_i","Def_i","Res_i","Mov_i","HP_bd","Str_bd","Mag_bd","Skl_bd","Spd_bd","Lck_bd","Def_bd","Res_bd","Mov_bd","HP_rb","Str_rb","Mag_rb","Skl_rb","Spd_rb","Lck_rb","Def_rb","Res_rb","Mov_rb","item_uses0","item_uses1","item_uses2","Swordrank","Lancerank","Axerank","Bowrank","Stavesrank","Hiddenrank","Darkrank","Lightrank","Authorityrank","Ridingrank","Armorrank","Hitmod","Critmod","Avomod","Ddgmod","Dmgmod","Hitmod_class","Hitb","Physb","Magb","Critb","Avob","Protb","Resb","Chab","Critavob","Ghitb","Critmod_class","Avomod_class","Ddgmod_class","fid","SwordGain","LanceGain","AxeGain","BowGain","StavesGain","HiddenGain","AnimaGain","LightGain","AuthorityGain","RidingGain","ArmorGain","FlyingGain","phys_bd","myst_bd","ward_bd","prot_bd"], function(v){
+	getAttrs(["weplist","splist","colist","effdmg","currEff","currName","currMt","class_exp0","class_gain0","currDesc","currWexp","currWep","atktype","EXP","SwordEXP","LanceEXP","AxeEXP","BowEXP","StavesEXP","DarkEXP","AnimaEXP","LightEXP","AuthorityEXP","RidingEXP","ArmorEXP","FlyingEXP","Flyingrank","Level","HP_i","Str_i","Mag_i","Skl_i","Spd_i","Lck_i","Def_i","Res_i","Mov_i","HP_bd","Str_bd","Mag_bd","Skl_bd","Spd_bd","Lck_bd","Def_bd","Res_bd","Mov_bd","HP_rb","Str_rb","Mag_rb","Skl_rb","Spd_rb","Lck_rb","Def_rb","Res_rb","Mov_rb","item_uses0","item_uses1","item_uses2","Swordrank","Lancerank","Axerank","Bowrank","Stavesrank","Hiddenrank","Darkrank","Lightrank","Authorityrank","Ridingrank","Armorrank","Hitmod","Critmod","Avomod","Ddgmod","Dmgmod","Hitmod_class","Hitb","Physb","Magb","Critb","Avob","Protb","Resb","Chab","Critavob","Ghitb","Critmod_class","Avomod_class","Ddgmod_class","fid","SwordGain","LanceGain","AxeGain","BowGain","StavesGain","HiddenGain","AnimaGain","LightGain","AuthorityGain","RidingGain","ArmorGain","FlyingGain","phys_bd","myst_bd","ward_bd","prot_bd","Weak_total","Ele_Qtotal","Hit","Crit","Ddg","avo"], function(v){
 		setAttrs({
 			EXP: v.EXP,
 			splist: v.splist,
@@ -3235,7 +3307,13 @@ on("sheet:opened", function(){
 			phys_bd: v.phys_bd,
 			myst_bd: v.myst_bd,
 			ward_bd: v.ward_bd,
-			prot_bd: v.prot_bd
+			prot_bd: v.prot_bd,
+			Weak_total: v.Weak_total,
+			Ele_Qtotal: v.Ele_Qtotal,
+			Hit: v.Hit,
+			Crit: v.Crit,
+			avo: v.avo,
+			Ddg: v.Ddg,
 		});
 		console.log("Initializing values...")
 	});
