@@ -250,8 +250,8 @@ on('chat:message', function(msg) {
     }
 
     //
-
-
+    var DefenderHP = getAttr(defender.id, "HP_current");
+    var DefenderHPval = Number(DefenderHP.get("current"));
 
     if (triangle == 'Adv'){
       ahit+=15;
@@ -268,8 +268,10 @@ on('chat:message', function(msg) {
       if(acrit>ddodge){
         DmgTaken = DmgTaken*3;
         sendChat(who, 'You crit and deal '+ DmgTaken + ' damage!');
+        DefenderHP.setWithWorker("current", DefenderHPval-DmgTaken)
         CurrHP = targetObj.set("bar3_value", parseInt(targetObj.get("bar3_value")) - DmgTaken);
       } else{
+        DefenderHP.setWithWorker("current", DefenderHPval-DmgTaken)
         CurrHP = targetObj.set("bar3_value", parseInt(targetObj.get("bar3_value")) - DmgTaken);
         sendChat(who, 'You hit and deal '+ DmgTaken + ' damage!');
       }
@@ -296,8 +298,10 @@ on('chat:message', function(msg) {
       DmgTaken = DmgTaken*3;
       sendChat(who, 'You crit and deal '+ DmgTaken + ' damage!');
       CurrHP = targetObj.set("bar3_value", parseInt(targetObj.get("bar3_value")) - DmgTaken);
+      DefenderHP.setWithWorker("current", DefenderHPval-DmgTaken)
     } else{
       CurrHP = targetObj.set("bar3_value", parseInt(targetObj.get("bar3_value")) - DmgTaken);
+      DefenderHP.setWithWorker("current", DefenderHPval-DmgTaken)
       sendChat(who, 'You hit and deal '+ DmgTaken + ' damage!');
     }
   }
@@ -320,8 +324,10 @@ if(ahit>=davo){
     DmgTaken = DmgTaken*3;
     sendChat(who, 'You crit and deal '+ DmgTaken + ' damage!');
     CurrHP = targetObj.set("bar3_value", parseInt(targetObj.get("bar3_value")) - DmgTaken);
+    DefenderHP.setWithWorker("current", DefenderHPval-DmgTaken)
   } else{
     CurrHP = targetObj.set("bar3_value", parseInt(targetObj.get("bar3_value")) - DmgTaken);
+    DefenderHP.setWithWorker("current", DefenderHPval-DmgTaken)
     sendChat(who, 'You hit and deal '+ DmgTaken + ' damage!');
   }
 }
