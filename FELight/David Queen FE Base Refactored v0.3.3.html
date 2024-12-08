@@ -2,9 +2,7 @@
 <div class="sheet-maindiv" style="width: 840px;">
     <div class="sheet-useBackground">
         <div class="sheet-background">
-            <div class="sheet-cdiv">
-                <!-- Background configuration removed previously -->
-            </div>
+            <div class="sheet-cdiv"></div>
             <div>
                 <button type="action" name="act_character">Character</button>
                 <button type="action" name="act_misc">Misc</button>
@@ -72,7 +70,7 @@
                                 </td>
                             </tr>
                         </table>
-                    </div>
+                    </div>                    
 
                     <!-- Current Values -->
                     <div class="sheet-currentvals">
@@ -103,7 +101,7 @@
                                     <td><span name="attr_Atkspd">0</span></td>
                                     <td><span name="attr_prot_total">0</span></td>
                                     <td><span name="attr_ward_total">0</span></td>
-                                    <td><span name="attr_Avo">0</span></td>
+                                    <td><span name="attr_avo">0</span></td>
                                     <td><span name="attr_Ddg">0</span></td>
                                 </tr>
                             </table>
@@ -134,7 +132,6 @@
                                 <td><input type="number" name="attr_HP_bd" value="0"/></td>
                                 <td><span name="attr_HP_total">0</span></td>
                                 <td class="sheet-div"></td>
-                                <!-- HP growth fields -->
                                 <input type="number" name="attr_HP_gf" value="0" hidden>
                                 <td><input type="number" name="attr_HP_gi" value="0"/></td>
                                 <td><span name="attr_HP_gtotal">10</span></td>
@@ -477,42 +474,42 @@
                         <tr>
                             <td>Swords</td>
                             <td><input type="number" value="0" name="attr_SwordEXP" min="0" max="1000"></td>
-                            <td><span name="attr_Swordrank"></span></td>
+                            <td><span name="attr_swordrank"></span></td>
                         </tr>
                         <tr>
                             <td>Lances</td>
                             <td><input type="number" value="0" name="attr_LanceEXP" min="0" max="1000"></td>
-                            <td><span name="attr_Lancerank"></span></td>
+                            <td><span name="attr_lancerank"></span></td>
                         </tr>
                         <tr>
                             <td>Axes</td>
                             <td><input type="number" value="0" name="attr_AxeEXP" min="0" max="1000"></td>
-                            <td><span name="attr_Axerank"></span></td>
+                            <td><span name="attr_axerank"></span></td>
                         </tr>
                         <tr>
                             <td>Bows</td>
                             <td><input type="number" value="0" name="attr_BowEXP" min="0" max="1000"></td>
-                            <td><span name="attr_Bowrank"></span></td>
+                            <td><span name="attr_bowrank"></span></td>
                         </tr>
                         <tr>
                             <td>Staves</td>
                             <td><input type="number" value="0" name="attr_StavesEXP" min="0" max="1000"></td>
-                            <td><span name="attr_Stavesrank"></span></td>
+                            <td><span name="attr_stavesrank"></span></td>
                         </tr>
                         <tr>
                             <td>Anima</td>
                             <td><input type="number" value="0" name="attr_AnimaEXP" min="0" max="1000"></td>
-                            <td><span name="attr_Animarank"></span></td>
+                            <td><span name="attr_animarank"></span></td>
                         </tr>
                         <tr>
                             <td>Light</td>
                             <td><input type="number" value="0" name="attr_LightEXP" min="0" max="1000"></td>
-                            <td><span name="attr_Lightrank"></span></td>
+                            <td><span name="attr_lightrank"></span></td>
                         </tr>
                         <tr>
                             <td>Dark</td>
                             <td><input type="number" value="0" name="attr_DarkEXP" min="0" max="1000"></td>
-                            <td><span name="attr_Darkrank"></span></td>
+                            <td><span name="attr_darkrank"></span></td>
                         </tr>
                     </table>
                 </div>
@@ -540,236 +537,33 @@
                             <th>Crit</th>
                             <th>Ddg</th>
                             <th>Weight</th>
-                            <th>Mitigation</th>
+                            <th>Mit</th>
                         </tr>
-                        <tr>
-                            <th>1</th>
-                            <td><input type="checkbox" name="attr_bonus_1_check" value="1"></td>
-                            <td><input type="text" name="attr_Ele_M" style="width: 100%;"></td>
-                            <td><input type="number" value="0" name="attr_HP_M" min="0" max="100"></td>
-                            <td><input type="number" value="0" name="attr_Str_M" min="0" max="100"></td>
-                            <td><input type="number" value="0" name="attr_Mag_M" min="0" max="100"></td>
-                            <td><input type="number" value="0" name="attr_Spd_M" min="0" max="100"></td>
-                            <td><input type="number" value="0" name="attr_Def_M" min="0" max="100"></td>
-                            <td><input type="number" value="0" name="attr_Res_M" min="0" max="100"></td>
-                            <td><input type="number" value="0" name="attr_Con_M" min="0" max="100"></td>
-                            <td><input type="number" value="0" name="attr_Mov_M" min="0" max="100"></td>
-                            <td><input type="number" value="0" name="attr_Hit_M" min="0" max="100"></td>
-                            <td><input type="number" value="0" name="attr_Avo_M" min="0" max="100"></td>
-                            <td><input type="number" value="0" name="attr_Crit_M" min="0" max="100"></td>
-                            <td><input type="number" value="0" name="attr_Ddg_M" min="0" max="100"></td>
-                            <td><input type="number" value="0" name="attr_Weight_M" min="0" max="100"></td>
-                            <td><input type="number" value="0" name="attr_Mit_M" min="0" max="100"></td>
-                        </tr>
-                        <tr>
-                            <th>2</th>
-                            <td><input type="checkbox" name="attr_bonus_2_check" value="1"></td>
-                            <td><input type="text" name="attr_Ele_S" style="width: 100%;"></td>
-                            <td><input type="number" value="0" name="attr_HP_S" min="0" max="100"></td>
-                            <td><input type="number" value="0" name="attr_Str_S" min="0" max="100"></td>
-                            <td><input type="number" value="0" name="attr_Mag_S" min="0" max="100"></td>
-                            <td><input type="number" value="0" name="attr_Spd_S" min="0" max="100"></td>
-                            <td><input type="number" value="0" name="attr_Def_S" min="0" max="100"></td>
-                            <td><input type="number" value="0" name="attr_Res_S" min="0" max="100"></td>
-                            <td><input type="number" value="0" name="attr_Con_S" min="0" max="100"></td>
-                            <td><input type="number" value="0" name="attr_Mov_S" min="0" max="100"></td>
-                            <td><input type="number" value="0" name="attr_Hit_S" min="0" max="100"></td>
-                            <td><input type="number" value="0" name="attr_Avo_S" min="0" max="100"></td>
-                            <td><input type="number" value="0" name="attr_Crit_S" min="0" max="100"></td>
-                            <td><input type="number" value="0" name="attr_Ddg_S" min="0" max="100"></td>
-                            <td><input type="number" value="0" name="attr_Weight_S" min="0" max="100"></td>
-                            <td><input type="number" value="0" name="attr_Mit_S" min="0" max="100"></td>
-                        </tr>
-                        <tr>
-                            <th>3</th>
-                            <td><input type="checkbox" name="attr_bonus_3_check" value="1"></td>
-                            <td><input type="text" name="attr_Ele_1" style="width: 100%;"></td>
-                            <td><input type="number" value="0" name="attr_HP_1" min="0" max="100"></td>
-                            <td><input type="number" value="0" name="attr_Str_1" min="0" max="100"></td>
-                            <td><input type="number" value="0" name="attr_Mag_1" min="0" max="100"></td>
-                            <td><input type="number" value="0" name="attr_Spd_1" min="0" max="100"></td>
-                            <td><input type="number" value="0" name="attr_Def_1" min="0" max="100"></td>
-                            <td><input type="number" value="0" name="attr_Res_1" min="0" max="100"></td>
-                            <td><input type="number" value="0" name="attr_Con_1" min="0" max="100"></td>
-                            <td><input type="number" value="0" name="attr_Mov_1" min="0" max="100"></td>
-                            <td><input type="number" value="0" name="attr_Hit_1" min="0" max="100"></td>
-                            <td><input type="number" value="0" name="attr_Avo_1" min="0" max="100"></td>
-                            <td><input type="number" value="0" name="attr_Crit_1" min="0" max="100"></td>
-                            <td><input type="number" value="0" name="attr_Ddg_1" min="0" max="100"></td>
-                            <td><input type="number" value="0" name="attr_Weight_1" min="0" max="100"></td>
-                            <td><input type="number" value="0" name="attr_Mit_1" min="0" max="100"></td>
-                        </tr>
-                        <tr>
-                            <th>4</th>
-                            <td><input type="checkbox" name="attr_bonus_4_check" value="1"></td>
-                            <td><input type="text" name="attr_Ele_2" style="width: 100%;"></td>
-                            <td><input type="number" value="0" name="attr_HP_2" min="0" max="100"></td>
-                            <td><input type="number" value="0" name="attr_Str_2" min="0" max="100"></td>
-                            <td><input type="number" value="0" name="attr_Mag_2" min="0" max="100"></td>
-                            <td><input type="number" value="0" name="attr_Spd_2" min="0" max="100"></td>
-                            <td><input type="number" value="0" name="attr_Def_2" min="0" max="100"></td>
-                            <td><input type="number" value="0" name="attr_Res_2" min="0" max="100"></td>
-                            <td><input type="number" value="0" name="attr_Con_2" min="0" max="100"></td>
-                            <td><input type="number" value="0" name="attr_Mov_2" min="0" max="100"></td>
-                            <td><input type="number" value="0" name="attr_Hit_2" min="0" max="100"></td>
-                            <td><input type="number" value="0" name="attr_Avo_2" min="0" max="100"></td>
-                            <td><input type="number" value="0" name="attr_Crit_2" min="0" max="100"></td>
-                            <td><input type="number" value="0" name="attr_Ddg_2" min="0" max="100"></td>
-                            <td><input type="number" value="0" name="attr_Weight_2" min="0" max="100"></td>
-                            <td><input type="number" value="0" name="attr_Mit_2" min="0" max="100"></td>
-                        </tr>
-                        <tr>
-                            <th>5</th>
-                            <td><input type="checkbox" name="attr_bonus_5_check" value="1"></td>
-                            <td><input type="text" name="attr_Ele_3" style="width: 100%;"></td>
-                            <td><input type="number" value="0" name="attr_HP_3" min="0" max="100"></td>
-                            <td><input type="number" value="0" name="attr_Str_3" min="0" max="100"></td>
-                            <td><input type="number" value="0" name="attr_Mag_3" min="0" max="100"></td>
-                            <td><input type="number" value="0" name="attr_Spd_3" min="0" max="100"></td>
-                            <td><input type="number" value="0" name="attr_Def_3" min="0" max="100"></td>
-                            <td><input type="number" value="0" name="attr_Res_3" min="0" max="100"></td>
-                            <td><input type="number" value="0" name="attr_Con_3" min="0" max="100"></td>
-                            <td><input type="number" value="0" name="attr_Mov_3" min="0" max="100"></td>
-                            <td><input type="number" value="0" name="attr_Hit_3" min="0" max="100"></td>
-                            <td><input type="number" value="0" name="attr_Avo_3" min="0" max="100"></td>
-                            <td><input type="number" value="0" name="attr_Crit_3" min="0" max="100"></td>
-                            <td><input type="number" value="0" name="attr_Ddg_3" min="0" max="100"></td>
-                            <td><input type="number" value="0" name="attr_Weight_3" min="0" max="100"></td>
-                            <td><input type="number" value="0" name="attr_Mit_3" min="0" max="100"></td>
-                        </tr>
-                        <tr>
-                            <th>6</th>
-                            <td><input type="checkbox" name="attr_bonus_6_check" value="1"></td>
-                            <td><input type="text" name="attr_Ele_4" style="width: 100%;"></td>
-                            <td><input type="number" value="0" name="attr_HP_4" min="0" max="100"></td>
-                            <td><input type="number" value="0" name="attr_Str_4" min="0" max="100"></td>
-                            <td><input type="number" value="0" name="attr_Mag_4" min="0" max="100"></td>
-                            <td><input type="number" value="0" name="attr_Spd_4" min="0" max="100"></td>
-                            <td><input type="number" value="0" name="attr_Def_4" min="0" max="100"></td>
-                            <td><input type="number" value="0" name="attr_Res_4" min="0" max="100"></td>
-                            <td><input type="number" value="0" name="attr_Con_4" min="0" max="100"></td>
-                            <td><input type="number" value="0" name="attr_Mov_4" min="0" max="100"></td>
-                            <td><input type="number" value="0" name="attr_Hit_4" min="0" max="100"></td>
-                            <td><input type="number" value="0" name="attr_Avo_4" min="0" max="100"></td>
-                            <td><input type="number" value="0" name="attr_Crit_4" min="0" max="100"></td>
-                            <td><input type="number" value="0" name="attr_Ddg_4" min="0" max="100"></td>
-                            <td><input type="number" value="0" name="attr_Weight_4" min="0" max="100"></td>
-                            <td><input type="number" value="0" name="attr_Mit_4" min="0" max="100"></td>
-                        </tr>
-                        <tr>
-                            <th>7</th>
-                            <td><input type="checkbox" name="attr_bonus_7_check" value="1"></td>
-                            <td><input type="text" name="attr_Ele_5" style="width: 100%;"></td>
-                            <td><input type="number" value="0" name="attr_HP_5" min="0" max="100"></td>
-                            <td><input type="number" value="0" name="attr_Str_5" min="0" max="100"></td>
-                            <td><input type="number" value="0" name="attr_Mag_5" min="0" max="100"></td>
-                            <td><input type="number" value="0" name="attr_Spd_5" min="0" max="100"></td>
-                            <td><input type="number" value="0" name="attr_Def_5" min="0" max="100"></td>
-                            <td><input type="number" value="0" name="attr_Res_5" min="0" max="100"></td>
-                            <td><input type="number" value="0" name="attr_Con_5" min="0" max="100"></td>
-                            <td><input type="number" value="0" name="attr_Mov_5" min="0" max="100"></td>
-                            <td><input type="number" value="0" name="attr_Hit_5" min="0" max="100"></td>
-                            <td><input type="number" value="0" name="attr_Avo_5" min="0" max="100"></td>
-                            <td><input type="number" value="0" name="attr_Crit_5" min="0" max="100"></td>
-                            <td><input type="number" value="0" name="attr_Ddg_5" min="0" max="100"></td>
-                            <td><input type="number" value="0" name="attr_Weight_5" min="0" max="100"></td>
-                            <td><input type="number" value="0" name="attr_Mit_5" min="0" max="100"></td>
-                        </tr>
-                        <tr>
-                            <th>8</th>
-                            <td><input type="checkbox" name="attr_bonus_8_check" value="1"></td>
-                            <td><input type="text" name="attr_Ele_6" style="width: 100%;"></td>
-                            <td><input type="number" value="0" name="attr_HP_6" min="0" max="100"></td>
-                            <td><input type="number" value="0" name="attr_Str_6" min="0" max="100"></td>
-                            <td><input type="number" value="0" name="attr_Mag_6" min="0" max="100"></td>
-                            <td><input type="number" value="0" name="attr_Spd_6" min="0" max="100"></td>
-                            <td><input type="number" value="0" name="attr_Def_6" min="0" max="100"></td>
-                            <td><input type="number" value="0" name="attr_Res_6" min="0" max="100"></td>
-                            <td><input type="number" value="0" name="attr_Con_6" min="0" max="100"></td>
-                            <td><input type="number" value="0" name="attr_Mov_6" min="0" max="100"></td>
-                            <td><input type="number" value="0" name="attr_Hit_6" min="0" max="100"></td>
-                            <td><input type="number" value="0" name="attr_Avo_6" min="0" max="100"></td>
-                            <td><input type="number" value="0" name="attr_Crit_6" min="0" max="100"></td>
-                            <td><input type="number" value="0" name="attr_Ddg_6" min="0" max="100"></td>
-                            <td><input type="number" value="0" name="attr_Weight_6" min="0" max="100"></td>
-                            <td><input type="number" value="0" name="attr_Mit_6" min="0" max="100"></td>
-                        </tr>
-                        <tr>
-                            <th>9</th>
-                            <td><input type="checkbox" name="attr_bonus_9_check" value="1"></td>
-                            <td><input type="text" name="attr_Ele_7" style="width: 100%;"></td>
-                            <td><input type="number" value="0" name="attr_HP_7" min="0" max="100"></td>
-                            <td><input type="number" value="0" name="attr_Str_7" min="0" max="100"></td>
-                            <td><input type="number" value="0" name="attr_Mag_7" min="0" max="100"></td>
-                            <td><input type="number" value="0" name="attr_Spd_7" min="0" max="100"></td>
-                            <td><input type="number" value="0" name="attr_Def_7" min="0" max="100"></td>
-                            <td><input type="number" value="0" name="attr_Res_7" min="0" max="100"></td>
-                            <td><input type="number" value="0" name="attr_Con_7" min="0" max="100"></td>
-                            <td><input type="number" value="0" name="attr_Mov_7" min="0" max="100"></td>
-                            <td><input type="number" value="0" name="attr_Hit_7" min="0" max="100"></td>
-                            <td><input type="number" value="0" name="attr_Avo_7" min="0" max="100"></td>
-                            <td><input type="number" value="0" name="attr_Crit_7" min="0" max="100"></td>
-                            <td><input type="number" value="0" name="attr_Ddg_7" min="0" max="100"></td>
-                            <td><input type="number" value="0" name="attr_Weight_7" min="0" max="100"></td>
-                            <td><input type="number" value="0" name="attr_Mit_7" min="0" max="100"></td>
-                        </tr>
-                        <tr>
-                            <th>10</th>
-                            <td><input type="checkbox" name="attr_bonus_10_check" value="1"></td>
-                            <td><input type="text" name="attr_Ele_8" style="width: 100%;"></td>
-                            <td><input type="number" value="0" name="attr_HP_8" min="0" max="100"></td>
-                            <td><input type="number" value="0" name="attr_Str_8" min="0" max="100"></td>
-                            <td><input type="number" value="0" name="attr_Mag_8" min="0" max="100"></td>
-                            <td><input type="number" value="0" name="attr_Spd_8" min="0" max="100"></td>
-                            <td><input type="number" value="0" name="attr_Def_8" min="0" max="100"></td>
-                            <td><input type="number" value="0" name="attr_Res_8" min="0" max="100"></td>
-                            <td><input type="number" value="0" name="attr_Con_8" min="0" max="100"></td>
-                            <td><input type="number" value="0" name="attr_Mov_8" min="0" max="100"></td>
-                            <td><input type="number" value="0" name="attr_Hit_8" min="0" max="100"></td>
-                            <td><input type="number" value="0" name="attr_Avo_8" min="0" max="100"></td>
-                            <td><input type="number" value="0" name="attr_Crit_8" min="0" max="100"></td>
-                            <td><input type="number" value="0" name="attr_Ddg_8" min="0" max="100"></td>
-                            <td><input type="number" value="0" name="attr_Weight_8" min="0" max="100"></td>
-                            <td><input type="number" value="0" name="attr_Mit_8" min="0" max="100"></td>
-                        </tr>
-                        <tr>
-                            <th>11</th>
-                            <td><input type="checkbox" name="attr_bonus_11_check" value="1"></td>
-                            <td><input type="text" name="attr_Ele_9" style="width: 100%;"></td>
-                            <td><input type="number" value="0" name="attr_HP_9" min="0" max="100"></td>
-                            <td><input type="number" value="0" name="attr_Str_9" min="0" max="100"></td>
-                            <td><input type="number" value="0" name="attr_Mag_9" min="0" max="100"></td>
-                            <td><input type="number" value="0" name="attr_Spd_9" min="0" max="100"></td>
-                            <td><input type="number" value="0" name="attr_Def_9" min="0" max="100"></td>
-                            <td><input type="number" value="0" name="attr_Res_9" min="0" max="100"></td>
-                            <td><input type="number" value="0" name="attr_Con_9" min="0" max="100"></td>
-                            <td><input type="number" value="0" name="attr_Mov_9" min="0" max="100"></td>
-                            <td><input type="number" value="0" name="attr_Hit_9" min="0" max="100"></td>
-                            <td><input type="number" value="0" name="attr_Avo_9" min="0" max="100"></td>
-                            <td><input type="number" value="0" name="attr_Crit_9" min="0" max="100"></td>
-                            <td><input type="number" value="0" name="attr_Ddg_9" min="0" max="100"></td>
-                            <td><input type="number" value="0" name="attr_Weight_9" min="0" max="100"></td>
-                            <td><input type="number" value="0" name="attr_Mit_9" min="0" max="100"></td>
-                        </tr>
-                        <tr>
-                            <th>12</th>
-                            <td><input type="checkbox" name="attr_bonus_12_check" value="1"></td>
-                            <td><input type="text" name="attr_Ele_10" style="width: 100%;"></td>
-                            <td><input type="number" value="0" name="attr_HP_10" min="0" max="100"></td>
-                            <td><input type="number" value="0" name="attr_Str_10" min="0" max="100"></td>
-                            <td><input type="number" value="0" name="attr_Mag_10" min="0" max="100"></td>
-                            <td><input type="number" value="0" name="attr_Spd_10" min="0" max="100"></td>
-                            <td><input type="number" value="0" name="attr_Def_10" min="0" max="100"></td>
-                            <td><input type="number" value="0" name="attr_Res_10" min="0" max="100"></td>
-                            <td><input type="number" value="0" name="attr_Con_10" min="0" max="100"></td>
-                            <td><input type="number" value="0" name="attr_Mov_10" min="0" max="100"></td>
-                            <td><input type="number" value="0" name="attr_Hit_10" min="0" max="100"></td>
-                            <td><input type="number" value="0" name="attr_Avo_10" min="0" max="100"></td>
-                            <td><input type="number" value="0" name="attr_Crit_10" min="0" max="100"></td>
-                            <td><input type="number" value="0" name="attr_Ddg_10" min="0" max="100"></td>
-                            <td><input type="number" value="0" name="attr_Weight_10" min="0" max="100"></td>
-                            <td><input type="number" value="0" name="attr_Mit_10" min="0" max="100"></td>
-                        </tr>
+                    </table>
+                    <fieldset class="repeating_bonuses">
+                        <table>
+                            <tr>
+                                <td><!-- Row number is implicit, leave blank or add a label --></td>
+                                <td><input type="checkbox" name="attr_bonus_check" value="1"></td>
+                                <td><input type="text" name="attr_Ele" style="width: 100%;"></td>
+                                <td><input type="number" value="0" name="attr_HP" min="0" max="100"></td>
+                                <td><input type="number" value="0" name="attr_Str" min="0" max="100"></td>
+                                <td><input type="number" value="0" name="attr_Mag" min="0" max="100"></td>
+                                <td><input type="number" value="0" name="attr_Spd" min="0" max="100"></td>
+                                <td><input type="number" value="0" name="attr_Def" min="0" max="100"></td>
+                                <td><input type="number" value="0" name="attr_Res" min="0" max="100"></td>
+                                <td><input type="number" value="0" name="attr_Con" min="0" max="100"></td>
+                                <td><input type="number" value="0" name="attr_Mov" min="0" max="100"></td>
+                                <td><input type="number" value="0" name="attr_Hit" min="0" max="100"></td>
+                                <td><input type="number" value="0" name="attr_Avo" min="0" max="100"></td>
+                                <td><input type="number" value="0" name="attr_Crit" min="0" max="100"></td>
+                                <td><input type="number" value="0" name="attr_Ddg" min="0" max="100"></td>
+                                <td><input type="number" value="0" name="attr_Weight" min="0" max="100"></td>
+                                <td><input type="number" value="0" name="attr_Mit" min="0" max="100"></td>
+                            </tr>
+                        </table>
+                    </fieldset>
+                    <table>
                         <tr>
                             <th>Sum</th>
                             <td>---</td>
@@ -809,399 +603,21 @@
                     });
                 });
 
-                var getSectionIDsOrdered = function (sectionName, callback) {
-                    'use strict';
-                    getAttrs([`_reporder_${sectionName}`], function (v) {
-                        getSectionIDs(sectionName, function (idArray) {
-                            let reporderArray = v[`_reporder_${sectionName}`]? v[`_reporder_${sectionName}`].toLowerCase().split(','): [],
-                            ids = [...new Set(reporderArray.filter(x => idArray.includes(x)).concat(idArray))];
-                            callback(ids);
-                        });
-                    });
-                };
-
-                // Update HP total depending on atktype and equipped weapon/spell
-                function updateHPTotal() {
-                    getAttrs(["WSlot","SSlot","atktype","HP_i","HP_bd","HP_Qtotal"], function(vals) {
-                        let baseHP = Number(vals.HP_i) + Number(vals.HP_bd) + Number(vals.HP_Qtotal);
-                        let atktype = vals.atktype;
-
-                        function setHPFinal(totalHP) {
-                            setAttrs({HP_total: totalHP, HP_current_max: totalHP});
-                        }
-
-                        if (atktype==="Phys") {
-                            getSectionIDsOrdered("repeating_weapons", function(idarray) {
-                                let slotnum = vals.WSlot;
-                                let fID = idarray[Number(slotnum)-1];
-                                if(!fID) {
-                                    setHPFinal(baseHP);
-                                    return;
-                                }
-                                getAttrs(["repeating_weapons_"+fID+"_HP_wp"], function(v) {
-                                    let wp = parseInt(v["repeating_weapons_"+fID+"_HP_wp"])||0;
-                                    setHPFinal(baseHP + wp);
-                                });
-                            });
-                        } else if (atktype==="Mag") {
-                            getSectionIDsOrdered("repeating_spells", function(idarray) {
-                                let slotnum = vals.SSlot;
-                                let fID = idarray[Number(slotnum)-1];
-                                if(!fID) {
-                                    setHPFinal(baseHP);
-                                    return;
-                                }
-                                getAttrs(["repeating_spells_"+fID+"_HP_wp"], function(v) {
-                                    let wp = parseInt(v["repeating_spells_"+fID+"_HP_wp"])||0;
-                                    setHPFinal(baseHP + wp);
-                                });
-                            });
-                        } else {
-                            setHPFinal(baseHP);
-                        }
-                    });
-                }
-
-                // Update Movement total
-                function updateMovTotal() {
-                    getAttrs(["Mov_i","Mov_bd","Mov_Qtotal","Mov_multi"], function(v) {
-                        let base = Number(v.Mov_i)||0;
-                        let bd = Number(v.Mov_bd)||0;
-                        let qtotal = Number(v.Mov_Qtotal)||0;
-                        let multi = Number(v.Mov_multi)||0;
-                        let total = Math.round((base + bd + qtotal)*((100+multi)/100));
-                        setAttrs({Mov_total: total});
-                    });
-                }
-
-                // Helper to get active item modifier for a given stat
-                function getActiveItemModifier(stat, callback) {
-                    getAttrs(["WSlot","SSlot","atktype"], function(vals) {
-                        const type = vals.atktype;
-                        let section = null;
-                        let slot = null;
-
-                        if (type === "Phys") {
-                            section = "weapons";
-                            slot = vals.WSlot;
-                        } else if (type === "Mag") {
-                            section = "spells";
-                            slot = vals.SSlot;
-                        }
-
-                        if (!section) {
-                            callback(0);
-                            return;
-                        }
-
-                        getSectionIDsOrdered(`repeating_${section}`, function(idarray) {
-                            let fID = idarray[Number(slot)-1];
-                            if(!fID) {
-                                callback(0);
-                                return;
-                            }
-
-                            let wpAttr = stat+"_wp";
-                            getAttrs([`repeating_${section}_${fID}_${wpAttr}`], function(v) {
-                                let wp = parseInt(v[`repeating_${section}_${fID}_${wpAttr}`])||0;
-                                callback(wp);
-                            });
-                        });
-                    });
-                }
-
-                // Helper to get item base stats (Mt, Hit, Crit, Ddg)
-                function getActiveItemBaseStats(callback) {
-                    getAttrs(["WSlot","SSlot","atktype"], function(vals) {
-                        let atktype = vals.atktype;
-                        let section = (atktype==="Phys")?"weapons":(atktype==="Mag")?"spells":null;
-                        let slot = (atktype==="Phys")?vals.WSlot:(atktype==="Mag")?vals.SSlot:null;
-                        if(!section || !slot) {
-                            return callback({Mt:0,Hit:0,Crit:0,Ddg:0});
-                        }
-                        getSectionIDsOrdered(`repeating_${section}`, function(idarray) {
-                            let fID = idarray[Number(slot)-1];
-                            if(!fID) return callback({Mt:0,Hit:0,Crit:0,Ddg:0});
-                            let keys = ["Mt","Hit","Crit","Ddg"].map(k=>`repeating_${section}_${fID}_${k}`);
-                            getAttrs(keys, function(v) {
-                                let result = {
-                                    Mt: parseInt(v[keys[0]])||0,
-                                    Hit: parseInt(v[keys[1]])||0,
-                                    Crit: parseInt(v[keys[2]])||0,
-                                    Ddg: parseInt(v[keys[3]])||0
-                                };
-                                callback(result);
-                            });
-                        });
-                    });
-                }
-
-                // Update total stats after base + buffs + item modifiers
-                function updateStatTotal(stat) {
-                    let baseAttrs = [stat+"_i", stat+"_bd", stat+"_Qtotal","atktype"];
-                    getAttrs(baseAttrs, function(v) {
-                        let baseVal = (Number(v[stat+"_i"])||0) + (Number(v[stat+"_bd"])||0) + (Number(v[stat+"_Qtotal"])||0);
-                        let atktype = v.atktype;
-
-                        if (atktype !== "Phys" && atktype !== "Mag") {
-                            // No item modifiers for neutral atktype
-                            let updateObj = {};
-                            updateObj[stat+"_total"] = baseVal;
-                            setAttrs(updateObj);
-                            return;
-                        }
-
-                        getActiveItemModifier(stat, function(wp) {
-                            let total = baseVal + wp;
-                            let updateObj = {};
-                            updateObj[stat+"_total"] = total;
-                            setAttrs(updateObj);
-                        });
-                    });
-                }
-
-                // Consolidate triggers for all stats into one set of handlers
-                const baseStats = ["Str","Mag","Skl","Spd","Lck","Def","Res","Con","Mov"];
-                const statChangeTriggers = baseStats.map(s => [
-                    `change:${s}_i`,
-                    `change:${s}_bd`,
-                    `change:${s}_Qtotal`,
-                    `change:repeating_weapons:${s}_wp`,
-                    `change:repeating_spells:${s}_wp`,
-                    `remove:repeating_weapons`,
-                    `remove:repeating_spells`
-                ]).flat();
-
-                const itemRelatedAttrs = ["WSlot","SSlot","atktype","_reporder:weapons","_reporder:spells"];
-                const allStatTriggers = [...statChangeTriggers, ...itemRelatedAttrs.map(i => `change:${i}`)].join(" ");
-
-                on(allStatTriggers, () => {
-                    baseStats.forEach(stat => updateStatTotal(stat));
-                });
-
-                // C: Unified Growth Calculation
-                const growthStats = ["HP","Str","Mag","Skl","Spd","Lck","Def","Res","Con","Mov"];
-                growthStats.forEach(stat => {
-                    on(`change:${stat}_gf change:${stat}_gi`, () => updateGrowthTotal(stat));
-                });
-
-                function updateGrowthTotal(stat) {
-                    getAttrs([`${stat}_gf`,`${stat}_gi`], function(v) {
-                        const gf = Number(v[`${stat}_gf`])||0;
-                        const gi = Number(v[`${stat}_gi`])||0;
-                        // Con growth total = gi only, others = gf+gi
-                        const total = (stat === "Con") ? gi : gf + gi;
-                        let update = {};
-                        update[`${stat}_gtotal`] = total;
-                        setAttrs(update);
-                    });
-                }
-
-                // QTotals calculation remains similar, but consolidated trigger is already handled.
-
-                const statsForQTotals = ['HP', 'Str','Mag','Spd','Def','Res','Con','Mov','Hit','Avo','Crit','Ddg','Weight','Mit'];
-                const checks = Array.from({length:12}, (_,i)=>`bonus_${i+1}_check`);
-                let allStatAttrs = [];
-                statsForQTotals.forEach(stat => {
-                    allStatAttrs.push(`${stat}_M`, `${stat}_S`);
-                    for (let i=1; i<=10; i++){
-                        allStatAttrs.push(`${stat}_${i}`);
-                    }
-                });
-
-                const allTriggersQtotal = checks.map(c=>"change:"+c).concat(allStatAttrs.map(a=>"change:"+a)).join(" ");
-                on(allTriggersQtotal, updateAllQTotals);
-
-                function updateAllQTotals() {
-                    const allNeededAttrs = checks.concat(allStatAttrs);
-                    getAttrs(allNeededAttrs, function(values) {
-                        let update = {};
-                        statsForQTotals.forEach(stat => {
-                            let statModifiers = [
-                                values[`${stat}_M`],
-                                values[`${stat}_S`]
-                            ];
-                            for (let i=1; i<=10; i++){
-                                statModifiers.push(values[`${stat}_${i}`]);
-                            }
-
-                            let sumBonus = 0;
-                            statModifiers.forEach((modValue, i) => {
-                                let checkValue = values[checks[i]];
-                                if(Number(checkValue) === 1) {
-                                    sumBonus += Number(modValue)||0;
-                                }
-                            });
-
-                            update[`${stat}_Qtotal`] = sumBonus;
-                        });
-
-                        setAttrs(update);
-                    });
-                }
-
-                // Centralized Derived Stats Calculation
-                // We define a single handler after all relevant changes
-                // We'll gather a large set of attributes and compute all derived stats at once.
-                const derivedTriggers = [
-                    "change:Str_total","change:repeating_weapons:WType","change:Mov_total","change:repeating_weapons:Mt","change:_reporder:weapons","remove:repeating_weapons",
-                    "change:Physb","change:WSlot","change:atktype","change:phys_bd",
-                    "change:Mag_total","change:repeating_spells:Mt","change:repeating_weapons:SType","change:_reporder:spells","remove:repeating_spells","change:Magb","change:SSlot","change:myst_bd",
-                    "change:Def_total","change:Protb","change:prot_bd",
-                    "change:Res_total","change:Resb","change:ward_bd",
-                    "change:Atkspd","change:Avo_bd","change:Lck_total","change:Avo_Qtotal",
-                    "change:Skl_total","change:Hitmod","change:repeating_weapons:Hit","change:repeating_spells:Hit",
-                    "change:Hitb","change:Hit_Qtotal","change:hit_bd",
-                    "change:Critmod","change:repeating_weapons:Crit","change:repeating_spells:Crit","change:Critb","change:Crit_Qtotal","change:Crit_bd",
-                    "change:Ddg_bd","change:Ddg_Qtotal","change:repeating_weapons:Ddg","change:repeating_spells:Ddg"
-                ].join(" ");
-
-                on(derivedTriggers, updateDerivedStats);
-
-                function updateDerivedStats() {
-                    const needed = [
-                        "atktype","WSlot","SSlot","Str_total","Mag_total","Def_total","Res_total","Skl_total","Lck_total","Atkspd",
-                        "Protb","prot_bd","Resb","ward_bd","Avo_bd","Avo_Qtotal","Hitb","Hitmod","Hit_Qtotal","hit_bd",
-                        "Critb","Critmod","Crit_Qtotal","Crit_bd","Ddg_bd","Ddg_Qtotal","phys_bd","Physb","myst_bd","Magb"
-                    ];
-                    getAttrs(needed, function(v) {
-                        getActiveItemBaseStats(function(itemStats) {
-                            const update = calculateAllDerivedStats(v, itemStats);
-                            setAttrs(update);
-                        });
-                    });
-                }
-
-                function calculateAllDerivedStats(v, itemStats) {
-                    let atktype = v.atktype;
-                    let Str = Number(v.Str_total)||0;
-                    let Mag = Number(v.Mag_total)||0;
-                    let Def = Number(v.Def_total)||0;
-                    let Res = Number(v.Res_total)||0;
-                    let Skl = Number(v.Skl_total)||0;
-                    let Lck = Number(v.Lck_total)||0;
-                    let spd = Number(v.Atkspd)||0;
-
-                    let Protb = Number(v.Protb)||0;
-                    let prot_bd = Number(v.prot_bd)||0;
-                    let Resb = Number(v.Resb)||0;
-                    let ward_bd = Number(v.ward_bd)||0;
-                    let Avo_bd = Number(v.Avo_bd)||0;
-                    let AvoQ = Number(v.Avo_Qtotal)||0;
-                    let Hitb = Number(v.Hitb)||0;
-                    let Hitmod = Number(v.Hitmod)||0;
-                    let HitQ = Number(v.Hit_Qtotal)||0;
-                    let hit_bd = Number(v.hit_bd)||0;
-                    let Critb = Number(v.Critb)||0;
-                    let Critmod = Number(v.Critmod)||0;
-                    let CritQ = Number(v.Crit_Qtotal)||0;
-                    let Crit_bd = Number(v.Crit_bd)||0;
-                    let Ddg_bd = Number(v.Ddg_bd)||0;
-                    let DdgQ = Number(v.Ddg_Qtotal)||0;
-                    let phys_bd = Number(v.phys_bd)||0;
-                    let Physb = Number(v.Physb)||0;
-                    let myst_bd = Number(v.myst_bd)||0;
-                    let Magb = Number(v.Magb)||0;
-
-                    let prot_total = Def + Protb + prot_bd;
-                    let ward_total = Res + Resb + ward_bd;
-                    let avo = spd*2 + Math.floor(Lck/2) + Avo_bd + AvoQ;
-
-                    let wMt = itemStats.Mt;
-                    let wHit = itemStats.Hit;
-                    let wCrit = itemStats.Crit;
-                    let wDdg = itemStats.Ddg;
-
-                    let phys_total = 0, myst_total = 0, Hit = 0, Crit = 0, Ddg = 0, effdmg = 0;
-
-                    if(atktype==="Phys"){
-                        phys_total = Str + wMt + Physb + phys_bd;
-                        effdmg = Str + 3*wMt + Physb + phys_bd;
-                        Hit = wHit + hit_bd + Hitb + Hitmod + Skl*2 + Math.floor(Lck/2) + HitQ;
-                        Crit = Math.round((Skl/2)+(Lck/2)+CritQ + wCrit + Crit_bd);
-                        Ddg = 100 + Lck + DdgQ + wDdg + Ddg_bd;
-                    } else if(atktype==="Mag"){
-                        myst_total = Mag + wMt + Magb + myst_bd;
-                        effdmg = Mag + 3*wMt + Magb + myst_bd;
-                        Hit = wHit + hit_bd + Hitb + Hitmod + Skl*2 + Math.floor(Lck/2) + HitQ;
-                        Crit = Math.round((Skl/2)+(Lck/2)+wCrit+Critb+Critmod+CritQ+Crit_bd);
-                        Ddg = 100 + Lck + DdgQ + wDdg + Ddg_bd;
-                    } else {
-                        // Neutral atktype
-                    }
-
-                    return {
-                        phys_total,
-                        myst_total,
-                        prot_total,
-                        ward_total,
-                        avo,
-                        Hit,
-                        Crit,
-                        Ddg,
-                        effdmg
-                    };
-                }
-
-                // Update weapon and spell lists
-                on('change:repeating_weapons remove:repeating_weapons change:atktype change:WSlot', () => {
-                    getSectionIDsOrdered('repeating_weapons', (idarray) => {
-                        let keys = idarray.map((id)=>"repeating_weapons_"+id+"_WName");
-                        getAttrs(keys, (values) => {
-                            let list = idarray.map((id) => values["repeating_weapons_"+id+"_WName"]);
-                            setAttrs({weplist: list});
-                        });
-                    });
-                });
-
-                on('change:repeating_spells remove:repeating_spells change:atktype change:SSlot', () => {
-                    getSectionIDsOrdered('repeating_spells', (idarray) => {
-                        let keys = idarray.map((id)=>"repeating_spells_"+id+"_SName");
-                        getAttrs(keys, (values) => {
-                            let list = idarray.map((id) => values["repeating_spells_"+id+"_SName"]);
-                            setAttrs({splist: list});
-                        });
-                    });
-                });
-
-                on("change:repeating_weapons:WName change:repeating_spells:SName change:repeating_weapons:Eff_wp change:repeating_spells:Eff_wp change:repeating_weapons:WepEff1 change:repeating_weapons:WepEff2 change:repeating_spells:WepEff1 change:repeating_spells:WepEff2 change:repeating_weapons:Skill_wp change:repeating_spells:Skill_wp change:atktype change:_reporder:weapons change:_reporder:spells remove:repeating_spells remove:repeating_weapons change:WSlot change:SSlot", function() {
-                    getAttrs(["WSlot","SSlot","atktype"], function(vals) {
-                        let atktype = vals.atktype;
-                        let section = atktype==="Phys"?"weapons":atktype==="Mag"?"spells":null;
-                        let slot = atktype==="Phys"?vals.WSlot:(atktype==="Mag"?vals.SSlot:null);
-                        if(!section || !slot)return;
-                        getSectionIDsOrdered(`repeating_${section}`, function(idarray) {
-                            let fID = idarray[Number(slot)-1];
-                            if(!fID)return;
-                            let prefix = `repeating_${section}_${fID}_`;
-                            let keys = [prefix+"Skill_wp",prefix+"Eff_wp",prefix+(section==="weapons"?"WName":"SName"),prefix+"WepEff1",prefix+"WepEff2"];
-                            getAttrs(keys, function(v) {
-                                let wepdesc = v[prefix+"Skill_wp"];
-                                let effdesc = v[prefix+"Eff_wp"];
-                                let namedesc = v[prefix+(section==="weapons"?"WName":"SName")];
-                                setAttrs({currDesc: wepdesc, currEff: effdesc, currName: namedesc});
-                            });
-                        });
-                    });
-                });
-
-                // Single Weapon Rank Handler
                 const weaponTypes = ["Sword","Lance","Axe","Bow","Staves","Dark","Anima","Light"];
-                weaponTypes.forEach(type => {
-                    on(`change:${type}EXP`, () => updateWeaponRank(type));
-                });
+                const growthStats = ["HP","Str","Mag","Skl","Spd","Lck","Def","Res","Con","Mov"];
+                const statsForQTotals = ['HP','Str','Mag','Spd','Def','Res','Con','Mov','Hit','Avo','Crit','Ddg','Weight','Mit'];
 
-                function updateWeaponRank(type) {
-                    getAttrs([`${type}EXP`], v => {
-                        let currEXP = Number(v[`${type}EXP`])||0;
-                        let [rank, exp] = setRank(currEXP);
-                        let update = {};
-                        update[`${type}EXP`] = exp;
-                        // For displayed rank attribute, using lowercase for the attribute name as per original code:
-                        update[`${type.toLowerCase()}rank`] = rank;
-                        setAttrs(update);
-                    });
-                }
+                // Base needed attributes (without repeating sections)
+                const neededAttributes = [
+                    "atktype","WSlot","SSlot","HP_i","HP_bd","HP_Qtotal","Mov_i","Mov_bd","Mov_Qtotal","Mov_multi",
+                    "Str_i","Str_bd","Str_Qtotal","Mag_i","Mag_bd","Mag_Qtotal","Skl_i","Skl_bd","Skl_Qtotal","Spd_i","Spd_bd","Spd_Qtotal",
+                    "Lck_i","Lck_bd","Lck_Qtotal","Def_i","Def_bd","Def_Qtotal","Res_i","Res_bd","Res_Qtotal","Con_i","Con_bd","Con_Qtotal",
+                    "Physb","phys_bd","Magb","myst_bd","Protb","prot_bd","Resb","ward_bd","Hitb","Hitmod","Hit_Qtotal","hit_bd",
+                    "Critb","Critmod","Crit_Qtotal","Crit_bd","Ddg_bd","Ddg_Qtotal","Avo_bd","Avo_Qtotal","Atkspd",
+                    ...growthStats.flatMap(stat=>[`${stat}_gf`,`${stat}_gi`]),
+                    "SwordEXP","LanceEXP","AxeEXP","BowEXP","StavesEXP","AnimaEXP","LightEXP","DarkEXP",
+                    "_reporder_weapons","_reporder_spells","_reporder_bonuses"
+                ];
 
                 function setRank(currEXP) {
                     let Rank = "E";
@@ -1218,45 +634,349 @@
                     return [Rank, r];
                 }
 
-                // Handle uses going to zero for weapons/spells
-                on("change:repeating_weapons:uses", function() {
-                    getAttrs(["repeating_weapons_WName","repeating_weapons_uses"], function(v){
-                        let usev = parseInt(v["repeating_weapons_uses"])||0;
-                        if(usev===0){
-                            setAttrs({"repeating_weapons_WName":"Broken "+v["repeating_weapons_WName"]});
+                // Calculation Functions (unchanged logic, just shown for completeness)
+                function calculateHP(values, weaponIDs, spellIDs) {
+                    let updates = {};
+                    const atktype = values.atktype;
+                    const baseHP = (Number(values.HP_i)||0)+(Number(values.HP_bd)||0)+(Number(values.HP_Qtotal)||0);
+                    let equippedHPbonus = 0;
+
+                    if (atktype === "Phys" && weaponIDs.length>0) {
+                        let WSlot = Number(values.WSlot)||1;
+                        let wID = weaponIDs[WSlot-1];
+                        if (wID) {
+                            equippedHPbonus = Number(values[`repeating_weapons_${wID}_HP_wp`]||0);
+                        }
+                    } else if (atktype === "Mag" && spellIDs.length>0) {
+                        let SSlot = Number(values.SSlot)||1;
+                        let sID = spellIDs[SSlot-1];
+                        if (sID) {
+                            equippedHPbonus = Number(values[`repeating_spells_${sID}_HP_wp`]||0);
+                        }
+                    }
+
+                    let totalHP = baseHP + equippedHPbonus;
+                    updates["HP_total"] = totalHP;
+                    updates["HP_current_max"] = totalHP;
+                    return updates;
+                }
+
+                function calculateMov(values) {
+                    let updates = {};
+                    let base = Number(values.Mov_i)||0;
+                    let bd = Number(values.Mov_bd)||0;
+                    let qtotal = Number(values.Mov_Qtotal)||0;
+                    let multi = Number(values.Mov_multi)||0;
+                    let total = Math.round((base + bd + qtotal)*((100+multi)/100));
+                    updates["Mov_total"] = total;
+                    return updates;
+                }
+
+                function calculateStatTotals(values, weaponIDs, spellIDs) {
+                    let updates = {};
+                    const baseStats = ["Str","Mag","Skl","Spd","Lck","Def","Res","Con","Mov"];
+                    const atktype = values.atktype;
+
+                    for (let stat of baseStats) {
+                        let baseVal = (Number(values[stat+"_i"])||0)+(Number(values[stat+"_bd"])||0)+(Number(values[stat+"_Qtotal"])||0);
+                        let itemBonus = 0;
+                        if (atktype==="Phys" && weaponIDs.length>0) {
+                            let WSlot = Number(values.WSlot)||1;
+                            let wID = weaponIDs[WSlot-1];
+                            if(wID) {
+                                itemBonus += Number(values[`repeating_weapons_${wID}_${stat}_wp`]||0);
+                            }
+                        } else if (atktype==="Mag" && spellIDs.length>0) {
+                            let SSlot = Number(values.SSlot)||1;
+                            let sID = spellIDs[SSlot-1];
+                            if(sID) {
+                                itemBonus += Number(values[`repeating_spells_${sID}_${stat}_wp`]||0);
+                            }
+                        }
+                        updates[stat+"_total"] = baseVal + itemBonus;
+                    }
+                    return updates;
+                }
+
+                function calculateDerivedStats(values, weaponIDs, spellIDs) {
+                    let updates = {};
+
+                    const atktype = values.atktype;
+
+                    let Str_total = (Number(values.Str_i)||0)+(Number(values.Str_bd)||0)+(Number(values.Str_Qtotal)||0);
+                    let Mag_total = (Number(values.Mag_i)||0)+(Number(values.Mag_bd)||0)+(Number(values.Mag_Qtotal)||0);
+                    let Def_total = (Number(values.Def_i)||0)+(Number(values.Def_bd)||0)+(Number(values.Def_Qtotal)||0);
+                    let Res_total = (Number(values.Res_i)||0)+(Number(values.Res_bd)||0)+(Number(values.Res_Qtotal)||0);
+                    let Skl_total = (Number(values.Skl_i)||0)+(Number(values.Skl_bd)||0)+(Number(values.Skl_Qtotal)||0);
+                    let Lck_total = (Number(values.Lck_i)||0)+(Number(values.Lck_bd)||0)+(Number(values.Lck_Qtotal)||0);
+                    let spd = (Number(values.Spd_i)||0)+(Number(values.Spd_bd)||0)+(Number(values.Spd_Qtotal)||0);
+
+                    let Protb = Number(values.Protb)||0;
+                    let prot_bd = Number(values.prot_bd)||0;
+                    let Resb = Number(values.Resb)||0;
+                    let ward_bd = Number(values.ward_bd)||0;
+                    let Avo_bd = Number(values.Avo_bd)||0;
+                    let AvoQ = Number(values.Avo_Qtotal)||0;
+                    let Hitb = Number(values.Hitb)||0;
+                    let Hitmod = Number(values.Hitmod)||0;
+                    let HitQ = Number(values.Hit_Qtotal)||0;
+                    let hit_bd = Number(values.hit_bd)||0;
+                    let Critb = Number(values.Critb)||0;
+                    let Critmod = Number(values.Critmod)||0;
+                    let CritQ = Number(values.Crit_Qtotal)||0;
+                    let Crit_bd = Number(values.Crit_bd)||0;
+                    let Ddg_bd = Number(values.Ddg_bd)||0;
+                    let DdgQ = Number(values.Ddg_Qtotal)||0;
+                    let phys_bd = Number(values.phys_bd)||0;
+                    let Physb = Number(values.Physb)||0;
+                    let myst_bd = Number(values.myst_bd)||0;
+                    let Magb = Number(values.Magb)||0;
+
+                    let wMt=0, wHit=0, wCrit=0, wDdg=0;
+
+                    if (atktype==="Phys" && weaponIDs.length>0) {
+                        let WSlot = Number(values.WSlot)||1;
+                        let wID = weaponIDs[WSlot-1];
+                        if (wID) {
+                            wMt = Number(values[`repeating_weapons_${wID}_Mt`]||0);
+                            wHit = Number(values[`repeating_weapons_${wID}_Hit`]||0);
+                            wCrit= Number(values[`repeating_weapons_${wID}_Crit`]||0);
+                            wDdg = Number(values[`repeating_weapons_${wID}_Ddg`]||0);
+                        }
+                    } else if(atktype==="Mag" && spellIDs.length>0) {
+                        let SSlot = Number(values.SSlot)||1;
+                        let sID = spellIDs[SSlot-1];
+                        if (sID) {
+                            wMt = Number(values[`repeating_spells_${sID}_Mt`]||0);
+                            wHit = Number(values[`repeating_spells_${sID}_Hit`]||0);
+                            wCrit= Number(values[`repeating_spells_${sID}_Crit`]||0);
+                            wDdg = Number(values[`repeating_spells_${sID}_Ddg`]||0);
+                        }
+                    }
+
+                    let prot_total = Def_total + Protb + prot_bd;
+                    let ward_total = Res_total + Resb + ward_bd;
+                    let avo = spd*2 + Math.floor(Lck_total/2) + Avo_bd + AvoQ;
+
+                    let phys_total = 0, myst_total = 0, Hit = 0, Crit = 0, Ddg = 0, effdmg = 0;
+
+                    if(atktype==="Phys"){
+                        phys_total = Str_total + wMt + Physb + phys_bd;
+                        effdmg = Str_total + 3*wMt + Physb + phys_bd;
+                        Hit = wHit + hit_bd + Hitb + Hitmod + Skl_total*2 + Math.floor(Lck_total/2) + HitQ;
+                        Crit = Math.round((Skl_total/2)+(Lck_total/2)+CritQ + wCrit + Crit_bd);
+                        Ddg = 100 + Lck_total + DdgQ + wDdg + Ddg_bd;
+                    } else if(atktype==="Mag"){
+                        myst_total = Mag_total + wMt + Magb + myst_bd;
+                        effdmg = Mag_total + 3*wMt + Magb + myst_bd;
+                        Hit = wHit + hit_bd + Hitb + Hitmod + Skl_total*2 + Math.floor(Lck_total/2) + HitQ;
+                        Crit = Math.round((Skl_total/2)+(Lck_total/2)+wCrit+Critb+Critmod+CritQ+Crit_bd);
+                        Ddg = 100 + Lck_total + DdgQ + wDdg + Ddg_bd;
+                    }
+
+                    updates["phys_total"] = phys_total;
+                    updates["myst_total"] = myst_total;
+                    updates["prot_total"] = prot_total;
+                    updates["ward_total"] = ward_total;
+                    updates["avo"] = avo;
+                    updates["Hit"] = Hit;
+                    updates["Crit"] = Crit;
+                    updates["Ddg"] = Ddg;
+                    updates["effdmg"] = effdmg;
+
+                    return updates;
+                }
+
+                function calculateQTotals(values, bonusIDs) {
+                    let updates = {};
+                    const bonusStats = ['HP','Str','Mag','Spd','Def','Res','Con','Mov','Hit','Avo','Crit','Ddg','Weight','Mit'];
+                    let totals = {};
+                    bonusStats.forEach(stat => totals[stat]=0);
+
+                    bonusIDs.forEach(id => {
+                        let check = values[`repeating_bonuses_${id}_bonus_check`];
+                        if(Number(check)===1) {
+                            bonusStats.forEach(stat => {
+                                let val = Number(values[`repeating_bonuses_${id}_${stat}`])||0;
+                                totals[stat]+=val;
+                            });
                         }
                     });
-                });
-                on("change:repeating_spells:uses", function() {
-                    getAttrs(["repeating_spells_SName","repeating_spells_uses"], function(v){
-                        let usev = parseInt(v["repeating_spells_uses"])||0;
-                        if(usev===0){
-                            setAttrs({"repeating_spells_SName":"Broken "+v["repeating_spells_SName"]});
+
+                    bonusStats.forEach(stat => {
+                        updates[`${stat}_Qtotal`] = totals[stat];
+                    });
+                    return updates;
+                }
+
+                function calculateGrowth(values) {
+                    let updates = {};
+                    for (let stat of growthStats) {
+                        let gf = Number(values[`${stat}_gf`])||0;
+                        let gi = Number(values[`${stat}_gi`])||0;
+                        let total = (stat==="Con") ? gi : (gf+gi);
+                        updates[`${stat}_gtotal`] = total;
+                    }
+                    return updates;
+                }
+
+                function calculateWeaponRanks(values) {
+                    let updates = {};
+                    for (let type of weaponTypes) {
+                        let currEXP = Number(values[`${type}EXP`])||0;
+                        let [rank, exp] = setRank(currEXP);
+                        updates[`${type}EXP`] = exp;
+                        updates[`${type.toLowerCase()}rank`] = rank;
+                    }
+                    return updates;
+                }
+
+                function calculateWeapSpellLists(values, weaponIDs, spellIDs) {
+                    let updates = {};
+                    let weplist = weaponIDs.map(id => values[`repeating_weapons_${id}_WName`]);
+                    updates["weplist"] = weplist;
+
+                    let splist = spellIDs.map(id => values[`repeating_spells_${id}_SName`]);
+                    updates["splist"] = splist;
+
+                    // Check for broken weapons/spells
+                    weaponIDs.forEach(id => {
+                        let uses = Number(values[`repeating_weapons_${id}_Uses`])||0;
+                        let wName = values[`repeating_weapons_${id}_WName`]||"";
+                        if (uses===0 && !wName.startsWith("Broken ")) {
+                            updates[`repeating_weapons_${id}_WName`] = "Broken "+wName;
                         }
                     });
+
+                    spellIDs.forEach(id => {
+                        let uses = Number(values[`repeating_spells_${id}_Uses`])||0;
+                        let sName = values[`repeating_spells_${id}_SName`]||"";
+                        if(uses===0 && !sName.startsWith("Broken ")) {
+                            updates[`repeating_spells_${id}_SName`] = "Broken "+sName;
+                        }
+                    });
+
+                    return updates;
+                }
+
+                function calculateCurrentItemDesc(values, weaponIDs, spellIDs) {
+                    let updates = {};
+                    const atktype = values.atktype;
+                    let section = atktype==="Phys"?"weapons":atktype==="Mag"?"spells":null;
+                    let slot = atktype==="Phys"?Number(values.WSlot)||1:(atktype==="Mag"?Number(values.SSlot)||1:null);
+                    if(!section) {
+                        updates["currDesc"] = "";
+                        updates["currEff"] = "";
+                        updates["currName"] = "";
+                        return updates;
+                    }
+                    let IDs = (section==="weapons")?weaponIDs:spellIDs;
+                    let fID = IDs[slot-1];
+                    if(!fID) {
+                        updates["currDesc"] = "";
+                        updates["currEff"] = "";
+                        updates["currName"] = "";
+                        return updates;
+                    }
+                    let prefix = `repeating_${section}_${fID}_`;
+                    let wepdesc = values[prefix+"Skill_wp"]||"";
+                    let effdesc = values[prefix+"Eff_wp"]||"";
+                    let namedesc = values[prefix+(section==="weapons"?"WName":"SName")]||"";
+                    updates["currDesc"] = wepdesc;
+                    updates["currEff"] = effdesc;
+                    updates["currName"] = namedesc;
+                    return updates;
+                }
+
+                function updateAll() {
+                    // First get base attributes
+                    getAttrs(neededAttributes, (baseValues) => {
+                        // Now get repeating IDs
+                        getSectionIDs("repeating_weapons",(weaponIDs)=>{
+                            getSectionIDs("repeating_spells",(spellIDs)=>{
+                                getSectionIDs("repeating_bonuses",(bonusIDs)=>{
+
+                                    // Build dynamic arrays
+                                    const bonusStats = ['HP','Str','Mag','Spd','Def','Res','Con','Mov','Hit','Avo','Crit','Ddg','Weight','Mit'];
+                                    let bonusAttrNames = [];
+                                    bonusIDs.forEach(id => {
+                                        bonusAttrNames.push(`repeating_bonuses_${id}_bonus_check`, `repeating_bonuses_${id}_Ele`);
+                                        bonusStats.forEach(stat => bonusAttrNames.push(`repeating_bonuses_${id}_${stat}`));
+                                    });
+
+                                    // Add needed weapon/spell attributes (example set; adjust as needed):
+                                    let weaponAttrNames = [];
+                                    weaponIDs.forEach(id => {
+                                        weaponAttrNames.push(
+                                            `repeating_weapons_${id}_Mt`,`repeating_weapons_${id}_Hit`,
+                                            `repeating_weapons_${id}_Crit`,`repeating_weapons_${id}_Ddg`,
+                                            `repeating_weapons_${id}_HP_wp`,`repeating_weapons_${id}_Str_wp`,
+                                            `repeating_weapons_${id}_Mag_wp`,`repeating_weapons_${id}_Skl_wp`,
+                                            `repeating_weapons_${id}_Spd_wp`,`repeating_weapons_${id}_Lck_wp`,
+                                            `repeating_weapons_${id}_Def_wp`,`repeating_weapons_${id}_Res_wp`,
+                                            `repeating_weapons_${id}_Con_wp`,`repeating_weapons_${id}_Uses`,
+                                            `repeating_weapons_${id}_WName`,`repeating_weapons_${id}_Skill_wp`,
+                                            `repeating_weapons_${id}_Eff_wp`,`repeating_weapons_${id}_WepEff1`,`repeating_weapons_${id}_WepEff2`
+                                        );
+                                    });
+
+                                    let spellAttrNames = [];
+                                    spellIDs.forEach(id => {
+                                        spellAttrNames.push(
+                                            `repeating_spells_${id}_Mt`,`repeating_spells_${id}_Hit`,
+                                            `repeating_spells_${id}_Crit`,`repeating_spells_${id}_Ddg`,
+                                            `repeating_spells_${id}_HP_wp`,`repeating_spells_${id}_Str_wp`,
+                                            `repeating_spells_${id}_Mag_wp`,`repeating_spells_${id}_Skl_wp`,
+                                            `repeating_spells_${id}_Spd_wp`,`repeating_spells_${id}_Lck_wp`,
+                                            `repeating_spells_${id}_Def_wp`,`repeating_spells_${id}_Res_wp`,
+                                            `repeating_spells_${id}_Con_wp`,`repeating_spells_${id}_Uses`,
+                                            `repeating_spells_${id}_SName`,`repeating_spells_${id}_Skill_wp`,
+                                            `repeating_spells_${id}_Eff_wp`,`repeating_spells_${id}_WepEff1`,`repeating_spells_${id}_WepEff2`
+                                        );
+                                    });
+
+                                    const finalNeeded = neededAttributes.concat(bonusAttrNames, weaponAttrNames, spellAttrNames);
+
+                                    // Now fetch all attributes (base + dynamic)
+                                    getAttrs(finalNeeded, (values) => {
+                                        let finalUpdates = {};
+                                        Object.assign(finalUpdates, calculateHP(values, weaponIDs, spellIDs));
+                                        Object.assign(finalUpdates, calculateMov(values));
+                                        Object.assign(finalUpdates, calculateStatTotals(values, weaponIDs, spellIDs));
+                                        Object.assign(finalUpdates, calculateDerivedStats(values, weaponIDs, spellIDs));
+                                        Object.assign(finalUpdates, calculateQTotals(values, bonusIDs));
+                                        Object.assign(finalUpdates, calculateGrowth(values));
+                                        Object.assign(finalUpdates, calculateWeaponRanks(values));
+                                        Object.assign(finalUpdates, calculateWeapSpellLists(values, weaponIDs, spellIDs));
+                                        Object.assign(finalUpdates, calculateCurrentItemDesc(values, weaponIDs, spellIDs));
+
+                                        setAttrs(finalUpdates);
+                                    });
+                                });
+                            });
+                        });
+                    });
+                }
+
+                on("sheet:opened", updateAll);
+                on("change:repeating_bonuses remove:repeating_bonuses", updateAll);
+                on("change:repeating_weapons remove:repeating_weapons", updateAll);
+                on("change:repeating_spells remove:repeating_spells", updateAll);
+
+                on("change:HP_i change:HP_bd change:HP_Qtotal change:WSlot change:SSlot change:atktype change:repeating_weapons:HP_wp change:repeating_spells:HP_wp change:_reporder:weapons change:_reporder:spells", updateAll);
+                on("change:Mov_i change:Mov_bd change:Mov_Qtotal change:Mov_multi", updateAll);
+                on("change:Str_i change:Str_bd change:Str_Qtotal change:Mag_i change:Mag_bd change:Mag_Qtotal change:Skl_i change:Skl_bd change:Skl_Qtotal change:Spd_i change:Spd_bd change:Spd_Qtotal change:Lck_i change:Lck_bd change:Lck_Qtotal change:Def_i change:Def_bd change:Def_Qtotal change:Res_i change:Res_bd change:Res_Qtotal change:Con_i change:Con_bd change:Con_Qtotal", updateAll);
+                on("change:Physb change:phys_bd change:Magb change:myst_bd change:Protb change:prot_bd change:Resb change:ward_bd change:Hitb change:Hitmod change:Hit_Qtotal change:hit_bd change:Critb change:Critmod change:Crit_Qtotal change:Crit_bd change:Ddg_bd change:Ddg_Qtotal change:Avo_bd change:Avo_Qtotal change:Atkspd", updateAll);
+                on("change:SwordEXP change:LanceEXP change:AxeEXP change:BowEXP change:StavesEXP change:AnimaEXP change:LightEXP change:DarkEXP", updateAll);
+
+                growthStats.forEach(stat => {
+                    on(`change:${stat}_gf change:${stat}_gi`, updateAll);
                 });
-
-                // Initial triggers on sheet open
-                on("sheet:opened", function() {
-                    updateHPTotal();
-                    updateMovTotal();
-                    baseStats.forEach(stat => updateStatTotal(stat));
-                    updateDerivedStats();
-                    updateAllQTotals();
-                    growthStats.forEach(updateGrowthTotal);
-                    weaponTypes.forEach(updateWeaponRank);
-                });
-
-                // Additional triggers for HP/Mov changes
-                on("change:HP_i change:HP_bd change:HP_Qtotal change:WSlot change:SSlot change:atktype remove:repeating_weapons remove:repeating_spells change:repeating_weapons:HP_wp change:repeating_spells:HP_wp change:_reporder:weapons change:_reporder:spells", updateHPTotal);
-                on("change:Mov_i change:Mov_bd change:Mov_Qtotal change:Mov_multi", updateMovTotal);
-
             </script>
         </div>
     </div>
 </div>
-
-<!-- Hidden Fields (unchanged) -->
+<!-- Hidden Fields  -->
 <div class="hidden">
     <input name="attr_wepnum" value="0" hidden>
     <input name="attr_spellnum" value="0" hidden>
