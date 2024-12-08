@@ -1235,6 +1235,8 @@
 	<input name="attr_Resb" value = "0" hidden>
 	<input name="attr_Chab" value = "0" hidden>
 	<input name="attr_Ghitb" value = "0" hidden>
+	<input name="attr_AttackCounter" value = "0" hidden>
+	<input name="attr_HPHolder" value = "0" hidden>
 </div>
 <script type="text/worker">
 //AAAAA
@@ -3200,8 +3202,10 @@ on("change:Species change:Class", function(eventInfo) {
 
 //Initialize values for API, because ded
 on("sheet:opened", function(){
-	getAttrs(["weplist","splist","colist","effdmg","currEff","currName","currMt","class_exp0","class_gain0","currDesc","currWexp","currWep","atktype","EXP","SwordEXP","LanceEXP","AxeEXP","BowEXP","StavesEXP","DarkEXP","AnimaEXP","LightEXP","AuthorityEXP","RidingEXP","ArmorEXP","FlyingEXP","Flyingrank","Level","HP_i","Str_i","Mag_i","Skl_i","Spd_i","Lck_i","Def_i","Res_i","Mov_i","HP_bd","Str_bd","Mag_bd","Skl_bd","Spd_bd","Lck_bd","Def_bd","Res_bd","Mov_bd","HP_rb","Str_rb","Mag_rb","Skl_rb","Spd_rb","Lck_rb","Def_rb","Res_rb","Mov_rb","item_uses0","item_uses1","item_uses2","Swordrank","Lancerank","Axerank","Bowrank","Stavesrank","Hiddenrank","Darkrank","Lightrank","Authorityrank","Ridingrank","Armorrank","Hitmod","Critmod","Avomod","Ddgmod","Dmgmod","Hitmod_class","Hitb","Physb","Magb","Critb","Avob","Protb","Resb","Chab","Critavob","Ghitb","Critmod_class","Avomod_class","Ddgmod_class","fid","SwordGain","LanceGain","AxeGain","BowGain","StavesGain","HiddenGain","AnimaGain","LightGain","AuthorityGain","RidingGain","ArmorGain","FlyingGain","phys_bd","myst_bd","ward_bd","prot_bd","Weak_total","Ele_Qtotal","Hit","Crit","Ddg","avo"], function(v){
+	getAttrs(["AttackCounter","HPHolder","weplist","splist","colist","effdmg","currEff","currName","currMt","class_exp0","class_gain0","currDesc","currWexp","currWep","atktype","EXP","SwordEXP","LanceEXP","AxeEXP","BowEXP","StavesEXP","DarkEXP","AnimaEXP","LightEXP","AuthorityEXP","RidingEXP","ArmorEXP","FlyingEXP","Flyingrank","Level","HP_i","Str_i","Mag_i","Skl_i","Spd_i","Lck_i","Def_i","Res_i","Mov_i","HP_bd","Str_bd","Mag_bd","Skl_bd","Spd_bd","Lck_bd","Def_bd","Res_bd","Mov_bd","HP_rb","Str_rb","Mag_rb","Skl_rb","Spd_rb","Lck_rb","Def_rb","Res_rb","Mov_rb","item_uses0","item_uses1","item_uses2","Swordrank","Lancerank","Axerank","Bowrank","Stavesrank","Hiddenrank","Darkrank","Lightrank","Authorityrank","Ridingrank","Armorrank","Hitmod","Critmod","Avomod","Ddgmod","Dmgmod","Hitmod_class","Hitb","Physb","Magb","Critb","Avob","Protb","Resb","Chab","Critavob","Ghitb","Critmod_class","Avomod_class","Ddgmod_class","fid","SwordGain","LanceGain","AxeGain","BowGain","StavesGain","HiddenGain","AnimaGain","LightGain","AuthorityGain","RidingGain","ArmorGain","FlyingGain","phys_bd","myst_bd","ward_bd","prot_bd","Weak_total","Ele_Qtotal","Hit","Crit","Ddg","avo"], function(v){
 		setAttrs({
+			AttackCounter: v.AttackCounter,
+			HPHolder: v.HPHolder,
 			EXP: v.EXP,
 			splist: v.splist,
 			colist: v.colist,

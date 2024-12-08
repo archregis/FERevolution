@@ -23,35 +23,52 @@ function processInlinerolls(msg) {
   return newContent;
 }
 
-function Swordfaire(BattleArray,awtype,who){
-  if(Number(awtype) == 1){
-    log('Swordfaire');
-    sendChat(who,'Swordfaire is active');
+function SaySkill(BattleArray,SkillName){
+  AttackerName = BattleArray["AttackerName"];
+  sendChat(AttackerName, SkillName+' is active');
+}
+
+const AllSkills = ["SureShot","Adept","Luna","Sol","Glacias","Flare","Impale","Colossus","Ignis","Armsthrift","QuickDraw","DartingBlow",
+"GoodBet","DuelistBlow","DeathBlow","Prescience","StrongRiposte","Sturdy","Brawler","Patience","Swordbreaker","Lancebreaker","Axebreaker",
+"Bowbreaker","Tomebreaker","Swordfaire","Lancefaire","Axefaire","Bowfaire","Tomefaire","Reaver","Brave","Wrath","Chivalry","FortressOfWill","DeadlyStrikes","PrideOfSteel","Thunderstorm","Resolve",
+"Trample","Resilience","Dragonblood","Nihil","Nullify","Bloodlust","Petalstorm"];
+
+function Petalstorm(BattleArray){
+
+  SaySkill(BattleArray,"Petalstorm");
+  BattleArray["AddDmg"] = Number(BattleArray["AddDmg"])+3*Number(BattleArray["AttackCounter"]);
+  log('number of attacks is '+BattleArray["AttackCounter"]);
+  BattleArray["AttackCounter"] = Number(BattleArray["AttackCounter"])+1;
+  return BattleArray;
+}
+
+function Swordfaire(BattleArray){
+  if(Number(BattleArray['AWepType']) == 1){
+    SaySkill(BattleArray,"Swordfaire");
     BattleArray["AddDmg"] = Number(BattleArray["AddDmg"])+5
   }
   return BattleArray;
 }
-function Lancefaire(BattleArray,awtype,who) {
-  if (Number(awtype) === 3) {
-    sendChat(who,' Lancefaire is active');
+function Lancefaire(BattleArray) {
+  if (Number(BattleArray['AWepType']) === 3) {
+    SaySkill(BattleArray,"Lancefaire");
     BattleArray["AddDmg"] = Number(BattleArray["AddDmg"])+5;
   }
   return BattleArray;
 }
 
-function FortressOfWill(BattleArray,awtype,who){
+function FortressOfWill(BattleArray,awtype,AttackerName,DefenderName){
   if(BattleArray["ACurrHP"]>=BattleArray["AMaxHP"]){
-    sendChat(who, 'Fortress of Will is active');
+    SaySkill(BattleArray,"Fortress of Will");
     BattleArray["AddDmg"] = Number(BattleArray["AddDmg"])+4;
     BattleArray["AddMit"] = Number(BattleArray["AddMit"])+4;
   }
   return BattleArray;
 }
 
-function Bloodlust(BattleArray,awtype,who){
-  sendChat(who, 'Bloodlust is active');
+function Bloodlust(BattleArray,awtype,AttackerName,DefenderName){
+  SaySkill(BattleArray,"Bloodlust");
   let LustBonus = Math.floor((Number(BattleArray["AMaxHP"])-Number(BattleArray["ACurrHP"]))/4);
-  log('lust = '+LustBonus);
   BattleArray["AddDmg"] = Number(BattleArray["AddDmg"])+Number(LustBonus);
   return BattleArray;
 }
@@ -101,7 +118,8 @@ const skillHandlers = {
   // "Dragonblood": Dragonblood,
   // "Nihil": Nihil,
   // "Nullify": Nullify,
-  "Bloodlust": Bloodlust
+  "Bloodlust": Bloodlust,
+  "Petalstorm": Petalstorm
 };
 
 on('chat:message', function(msg) {
@@ -128,12 +146,21 @@ on('chat:message', function(msg) {
 
     var targetToken = getObj('graphic', targetId);
     var defender = getObj('character', targetToken.get('represents'));
-    var who = getObj('character', targetToken.get('represents'));
-    if (!who) {
-      who = targetToken.get('name');
+
+    var AttackerName = getObj('character', selectedToken.get('represents'));
+    if (!AttackerName) {
+      AttackerName = selectedToken.get('name');
     }
     else {
-      who = 'character|' + who.id;
+      AttackerName = 'character|' + AttackerName.id;
+    }
+
+    var DefenderName = getObj('character', targetToken.get('represents'));
+    if (!DefenderName) {
+      DefenderName = targetToken.get('name');
+    }
+    else {
+      DefenderName = 'character|' + DefenderName.id;
     }
 
 
@@ -188,6 +215,11 @@ on('chat:message', function(msg) {
       "ACurrHP": ACurrHP,
       "DCurrHP": DCurrHP,
       "BattlePhase": BattlePhase,
+      "AttackCounter": Number(getAttrValue(attacker.id,"AttackCounter")),
+      "AttackerName": AttackerName,
+      "DefenderName": DefenderName,
+      "AWepType": awtype,
+      "DWepType": dwtype
     };
 
     if ((awtype < 4 && dwtype < 4) || (awtype >= 4 && dwtype >= 4)) {
@@ -218,12 +250,6 @@ on('chat:message', function(msg) {
     }
 
 
-    let AllSkills = ["SureShot","Adept","Luna","Sol","Glacias","Flare","Impale","Colossus","Ignis","Armsthrift","QuickDraw","DartingBlow",
-    "GoodBet","DuelistBlow","DeathBlow","Prescience","StrongRiposte","Sturdy","Brawler","Patience","Swordbreaker","Lancebreaker","Axebreaker",
-    "Bowbreaker","Tomebreaker","Swordfaire","Lancefaire","Axefaire","Bowfaire","Tomefaire","Reaver","Brave","Wrath","Chivalry","FortressOfWill","DeadlyStrikes","PrideOfSteel","Thunderstorm","Resolve",
-    "Trample","Resilience","Dragonblood","Nihil","Nullify","Bloodlust"];
-
-
     var ASkills = getAttr(attacker.id,'Ele_Qtotal').get('current').split(',');
     var DSkills = getAttr(defender.id,'Ele_Qtotal').get('current').split(',');
     log(ASkills);
@@ -236,7 +262,7 @@ on('chat:message', function(msg) {
           let skillName = AllSkills[j];
           // Check if we have a function for this skill.
           if (skillHandlers[skillName]) {
-            BattleArray = skillHandlers[skillName](BattleArray,awtype,who);
+            BattleArray = skillHandlers[skillName](BattleArray,awtype,AttackerName,DefenderName);
 
           }
         }
@@ -250,13 +276,13 @@ on('chat:message', function(msg) {
       log('adddmg is really:'+AddedDmg);
       AttkDmg = getAttrValue(attacker.id, "phys_total")+AddedDmg;
       DefMit = getAttrValue(defender.id, "prot_total")+getAttrValue(defender.id, "Mit_Qtotal");
-      sendChat(who,'<p style = "margin-bottom: 0px;">' + AttkDmg + ' physical damage vs ' + DefMit + ' protection!</p>');
+      sendChat(AttackerName,'<p style = "margin-bottom: 0px;">' + AttkDmg + ' physical damage vs ' + DefMit + ' protection!</p>');
       DmgTaken = AttkDmg-DefMit;
     }
     if (dmgtype == 'Magical'){
       AttkDmg = getAttrValue(attacker.id, "ward_total")+BattleArray["AddDmg"];
       DefMit = getAttrValue(defender.id, "ward_total")+getAttrValue(defender.id, "Mit_Qtotal");
-      sendChat(who,'<p style = "margin-bottom: 0px;">' + AttkDmg + ' mystical damage vs ' + DefMit + ' resistance!</p>');
+      sendChat(AttackerName,'<p style = "margin-bottom: 0px;">' + AttkDmg + ' mystical damage vs ' + DefMit + ' resistance!</p>');
       DmgTaken = AttkDmg-DefMit;
     }
 
@@ -267,7 +293,7 @@ on('chat:message', function(msg) {
     if (triangle == 'Adv'){
       ahit+=15;
       DmgTaken +=1;
-      sendChat(who, '<div ' + divstyle + '>' + //--
+      sendChat(AttackerName, '<div ' + divstyle + '>' + //--
       '<div ' + headstyle + '>Attacking with advantage!</div>' + //--
       '<div style = "margin: 0 auto; width: 80%; margin-top: 4px;">' + //--
       '<p style = "margin-bottom: 0px;">' + ahit + ' hit vs ' + davo + ' avoid!</p>' +//--
@@ -278,17 +304,17 @@ on('chat:message', function(msg) {
     if(ahit>=davo){
       if(acrit>ddodge){
         DmgTaken = DmgTaken*3;
-        sendChat(who, 'You crit and deal '+ DmgTaken + ' damage!');
+        sendChat(AttackerName, 'You crit and deal '+ DmgTaken + ' damage!');
         DefenderHP.setWithWorker("current", DefenderHPval-DmgTaken)
         CurrHP = targetObj.set("bar3_value", parseInt(targetObj.get("bar3_value")) - DmgTaken);
       } else{
         DefenderHP.setWithWorker("current", DefenderHPval-DmgTaken)
         CurrHP = targetObj.set("bar3_value", parseInt(targetObj.get("bar3_value")) - DmgTaken);
-        sendChat(who, 'You hit and deal '+ DmgTaken + ' damage!');
+        sendChat(AttackerName, 'You hit and deal '+ DmgTaken + ' damage!');
       }
     }
     if(ahit<davo){
-      sendChat(who, 'You missed!');
+      sendChat(AttackerName, 'You missed!');
     }
 
   }
@@ -296,7 +322,7 @@ on('chat:message', function(msg) {
   if (triangle == 'Disadv'){
     ahit+=-15;
     DmgTaken +=-1;
-    sendChat(who, '<div ' + divstyle + '>' + //--
+    sendChat(AttackerName, '<div ' + divstyle + '>' + //--
     '<div ' + headstyle + '>Attacking with disadvantage!</div>' + //--
     '<div style = "margin: 0 auto; width: 80%; margin-top: 4px;">' + //--
     '<p style = "margin-bottom: 0px;">' + ahit + ' hit vs ' + davo + ' avoid!</p>' +//--
@@ -307,23 +333,23 @@ on('chat:message', function(msg) {
   if(ahit>=davo){
     if(acrit>ddodge){
       DmgTaken = DmgTaken*3;
-      sendChat(who, 'You crit and deal '+ DmgTaken + ' damage!');
+      sendChat(AttackerName, 'You crit and deal '+ DmgTaken + ' damage!');
       CurrHP = targetObj.set("bar3_value", parseInt(targetObj.get("bar3_value")) - DmgTaken);
       DefenderHP.setWithWorker("current", DefenderHPval-DmgTaken)
     } else{
       CurrHP = targetObj.set("bar3_value", parseInt(targetObj.get("bar3_value")) - DmgTaken);
       DefenderHP.setWithWorker("current", DefenderHPval-DmgTaken)
-      sendChat(who, 'You hit and deal '+ DmgTaken + ' damage!');
+      sendChat(AttackerName, 'You hit and deal '+ DmgTaken + ' damage!');
     }
   }
   if(ahit<davo){
-    sendChat(who, 'You missed!');
+    sendChat(AttackerName, 'You missed!');
   }
 }
 
 if (triangle == 'Neutral'){
 
-  sendChat(who, '<div ' + divstyle + '>' + //--
+  sendChat(AttackerName, '<div ' + divstyle + '>' + //--
   '<div style = "margin: 0 auto; width: 80%; margin-top: 4px;">' + //--
   '<p style = "margin-bottom: 0px;">' + ahit + ' hit vs ' + davo + ' avoid!</p>' +//--
   '<p style = "margin-bottom: 0px;">' + acrit + ' crit vs ' + ddodge + ' dodge!</p>' +//--
@@ -333,17 +359,17 @@ if (triangle == 'Neutral'){
 if(ahit>=davo){
   if(acrit>ddodge){
     DmgTaken = DmgTaken*3;
-    sendChat(who, 'You crit and deal '+ DmgTaken + ' damage!');
+    sendChat(AttackerName, 'You crit and deal '+ DmgTaken + ' damage!');
     CurrHP = targetObj.set("bar3_value", parseInt(targetObj.get("bar3_value")) - DmgTaken);
     DefenderHP.setWithWorker("current", DefenderHPval-DmgTaken)
   } else{
     CurrHP = targetObj.set("bar3_value", parseInt(targetObj.get("bar3_value")) - DmgTaken);
     DefenderHP.setWithWorker("current", DefenderHPval-DmgTaken)
-    sendChat(who, 'You hit and deal '+ DmgTaken + ' damage!');
+    sendChat(AttackerName, 'You hit and deal '+ DmgTaken + ' damage!');
   }
 }
 if(ahit<davo){
-  sendChat(who, 'You missed!');
+  sendChat(AttackerName, 'You missed!');
 }
 }
 
