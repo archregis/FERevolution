@@ -69,10 +69,6 @@
 
 .charsheet .sheet-prowess {
     background-color: #f3f3f3;
-    display: inline-block;
-    clear: both;
-    margin-bottom: 10px;
-    margin-right: 10px;
 }
 
 #left-column {
@@ -202,55 +198,44 @@
     display: inline-block;
 }
 
-/* Ensure all table cells have the same vertical alignment */
-.sheet-prowess table th,
-.sheet-prowess table td {
-    vertical-align: middle;
+/* For fields within cells:
+   - Remove extra margins/padding
+   - Ensure full width usage
+   - Align text to right for consistency
+*/
+.sheet-prowess table {
+    table-layout: fixed;      /* Keeps columns consistent */
+    border-collapse: collapse;
+    border-spacing: 0;
+    width: 40%;
 }
 
-/* Align the first column (Name) to the left, keeping others centered */
-.sheet-prowess table td:first-child,
-.sheet-prowess table th:first-child {
+.sheet-prowess th,
+.sheet-prowess td {
+    padding: 0;               /* Remove default padding */
+    vertical-align: middle;
+    text-align: right;        /* Align contents to the right if desired */
+    font-size: 11px;            
+    white-space: nowrap;      /* Prevent wrapping of inputs */
+}
+
+.sheet-prowess th:first-child,
+.sheet-prowess td:first-child {
     text-align: left;
+    white-space: nowrap;      /* Left align the first column (e.g., for labels) */
 }
 
-/* Make sure name field and checkbox don't overlap */
-.sheet-prowess td:first-child input[type="checkbox"],
-.sheet-prowess td:first-child input[type="text"] {
-    vertical-align: middle;
-    line-height: 1.2em;
-}
-
-/* Add a small left padding to columns after the first to push them slightly right */
-.sheet-prowess td:not(:first-child) {
-    padding-left: 10px; /* Push numeric fields to the right */
-}
-
-/* Make input fields (other than Name) fit more compactly and align without gaps */
+/* Restore font size for inputs */
 .sheet-prowess input[type="text"],
 .sheet-prowess input[type="number"] {
+    display: inline-block; 
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-size: 11px;          /* Restore readable font size for the inputs */
     vertical-align: middle;
-    line-height: 1.2em;
-    width: 100%;  /* Ensure the inputs take the full width of the cell */
-}
-
-/* For the name cell, maybe a tad smaller as well */
-.sheet-prowess td:first-child input[type="text"] {
-    width: 80%; 
-}
-
-/* Ensure no extra space between the inputs for numeric fields */
-.sheet-prowess td input[type="number"] {
-    width: 100%;  /* Let numeric fields take the full width */
-}
-
-/* Prevent name field from wrapping */
-.sheet-prowess td:first-child {
-    white-space: nowrap;
-}
-
-/* Table layout fixed to avoid stretching */
-.sheet-prowess table {
-    table-layout: fixed;
-    font-size: 11px; /* Reduce font-size to prevent overflow */
+    width: 100%;
+    border-collapse:collapse;
+    /* Adjust width or max-width as needed */
+    /* Example: max-width: 40%; or just let it size naturally */
 }
