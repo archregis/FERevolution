@@ -202,35 +202,55 @@
     display: inline-block;
 }
 
-/* Vertically center all table cells in sheet-prowess tables */
+/* Ensure all table cells have the same vertical alignment */
 .sheet-prowess table th,
 .sheet-prowess table td {
     vertical-align: middle;
 }
 
-/* Align the first column left */
+/* Align the first column (Name) to the left, keeping others centered */
 .sheet-prowess table td:first-child,
 .sheet-prowess table th:first-child {
     text-align: left;
 }
 
-/* Ensure no wrapping in the name cell */
-.sheet-prowess td:first-child {
-    white-space: nowrap;
+/* Make sure name field and checkbox don't overlap */
+.sheet-prowess td:first-child input[type="checkbox"],
+.sheet-prowess td:first-child input[type="text"] {
+    vertical-align: middle;
+    line-height: 1.2em;
 }
 
 /* Add a small left padding to columns after the first to push them slightly right */
-.sheet-prowess table td + td {
+.sheet-prowess td:not(:first-child) {
+    padding-left: 10px; /* Push numeric fields to the right */
+}
 
-/* Make input fields slightly narrower so they don't fill entire cell, preventing overlap */
+/* Make input fields (other than Name) fit more compactly and align without gaps */
 .sheet-prowess input[type="text"],
 .sheet-prowess input[type="number"] {
     vertical-align: middle;
     line-height: 1.2em;
-    width: 60%; /* Slightly reduced width */
+    width: 100%;  /* Ensure the inputs take the full width of the cell */
 }
 
 /* For the name cell, maybe a tad smaller as well */
 .sheet-prowess td:first-child input[type="text"] {
-    width: 120%; 
+    width: 80%; 
+}
+
+/* Ensure no extra space between the inputs for numeric fields */
+.sheet-prowess td input[type="number"] {
+    width: 100%;  /* Let numeric fields take the full width */
+}
+
+/* Prevent name field from wrapping */
+.sheet-prowess td:first-child {
+    white-space: nowrap;
+}
+
+/* Table layout fixed to avoid stretching */
+.sheet-prowess table {
+    table-layout: fixed;
+    font-size: 11px; /* Reduce font-size to prevent overflow */
 }
