@@ -611,7 +611,7 @@
                 const growthStats = ["HP","Str","Mag","Skl","Spd","Lck","Def","Res","Con","Mov"];
                 const statsForQTotals = ['HP','Str','Mag','Spd','Def','Res','Con','Mov','Hit','Avo','Crit','Ddg','Weight','Mit'];
 
-                // Base needed attributes (without repeating sections)
+                // Base needed attributes
                 const neededAttributes = [
                     "atktype","WSlot","SSlot","HP_i","HP_bd","HP_Qtotal","Mov_i","Mov_bd","Mov_Qtotal","Mov_multi",
                     "Str_i","Str_bd","Str_Qtotal","Mag_i","Mag_bd","Mag_Qtotal","Skl_i","Skl_bd","Skl_Qtotal","Spd_i","Spd_bd","Spd_Qtotal",
@@ -638,7 +638,7 @@
                     return [Rank, r];
                 }
 
-                // Calculation Functions (unchanged logic, just shown for completeness)
+                // Calculation Functions
                 function calculateHP(values, weaponIDs, spellIDs) {
                     let updates = {};
                     const atktype = values.atktype;
@@ -908,7 +908,7 @@
                                         bonusStats.forEach(stat => bonusAttrNames.push(`repeating_bonuses_${id}_${stat}`));
                                     });
 
-                                    // Add needed weapon/spell attributes (example set; adjust as needed):
+                                    // Add needed weapon/spell attributes:
                                     let weaponAttrNames = [];
                                     weaponIDs.forEach(id => {
                                         weaponAttrNames.push(
