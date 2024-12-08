@@ -1,39 +1,8 @@
 <html>
 <div class="sheet-maindiv" style="width: 840px;">
     <div class="sheet-useBackground">
-        <!-- Background selection radios -->
-        <input type="radio" class="sheet-useBackground" style="display: none;" name="attr_background" value="1" checked />
-        <input type="radio" class="sheet-useBackground" style="display: none;" name="attr_background" value="2" />
-        <input type="radio" class="sheet-useBackground" style="display: none;" name="attr_background" value="3" />
-        <input type="radio" class="sheet-useBackground" style="display: none;" name="attr_background" value="4" />
-        <input type="radio" class="sheet-useBackground" style="display: none;" name="attr_background" value="5" />
-        <input type="radio" class="sheet-useBackground" style="display: none;" name="attr_background" value="6" />
-        <input type="radio" class="sheet-useBackground" style="display: none;" name="attr_background" value="7" />
-        <input type="radio" class="sheet-useBackground" style="display: none;" name="attr_background" value="8" />
-
         <div class="sheet-background">
             <div class="sheet-cdiv">
-                <input type="checkbox" class="sheet-toggle-stats">
-                <span class="sheet-toggle-label">Element</span>
-                <div class="sheet-hiddenstats">
-                    <div class="sheet-config" style="border-style: dotted; border-color: #dbc792; padding: 5px; background-color: white;">
-                        <div class="sheet-row">
-                            <div class="sheet-col">
-                                <h3>Backgrounds</h3>
-                                <span class="sheet-5pxshim">
-                                    <input type="checkbox" class="sheet-useBackground" style="width: 15px;" name="attr_background" value="1" title="No Background Image" checked /> No Background Image<br/>
-                                    <input type="checkbox" class="sheet-useBackground" style="width: 15px;" name="attr_background" value="2" title="Mirage" /> Mirage<br />
-                                    <input type="checkbox" class="sheet-useBackground" style="width: 15px;" name="attr_background" value="3" title="Time" /> Time<br />
-                                    <input type="checkbox" class="sheet-useBackground" style="width: 15px;" name="attr_background" value="4" title="Wind" /> Wind<br />
-                                    <input type="checkbox" class="sheet-useBackground" style="width: 15px;" name="attr_background" value="5" title="Fire" /> Fire<br />
-                                    <input type="checkbox" class="sheet-useBackground" style="width: 15px;" name="attr_background" value="6" title="Space" /> Space<br />
-                                    <input type="checkbox" class="sheet-useBackground" style="width: 15px;" name="attr_background" value="7" title="Earth" /> Earth<br />
-                                    <input type="checkbox" class="sheet-useBackground" style="width: 15px;" name="attr_background" value="8" title="Water" /> Water<br />
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
             </div>
             <div>
                 <button type="action" name="act_character">Character</button>
@@ -53,13 +22,13 @@
                                 <td style="padding:0 5px 0 0;">
                                     <label style="white-space:nowrap; color:#000;">
                                         Name:
-                                        <input type="text" name="attr_name" style="width:70px;"/>
+                                        <input type="text" name="attr_name" style="width:75px;"/>
                                     </label>
                                 </td>
                                 <td style="padding:0 5px;">
                                     <label style="white-space:nowrap; color:#000;">
                                         Gender:
-                                        <input type="text" name="attr_gender" style="width:50px;"/>
+                                        <input type="text" name="attr_gender" style="width:55px;"/>
                                     </label>
                                 </td>
                                 <td style="padding:0 5px;">
@@ -74,7 +43,7 @@
                                 <td style="padding:0 5px;">
                                     <label style="white-space:nowrap; color:#000;">
                                         Atk Type:
-                                        <select name="attr_atktype" style="width:60px;">
+                                        <select name="attr_atktype" style="width:65px;">
                                             <option>Phys</option>
                                             <option>Mag</option>
                                         </select>
@@ -85,24 +54,24 @@
                                 <td style="padding:0 5px 0 0;">
                                     <label style="white-space:nowrap; color:#000;">
                                         Level:
-                                        <input type="number" name="attr_Level" min="1" max="40" value="1" style="width:35px;"/>
+                                        <input type="number" name="attr_Level" min="1" max="40" value="1" style="width:40px;"/>
                                     </label>
                                 </td>
                                 <td style="padding:0 5px;">
                                     <label style="white-space:nowrap; color:#000;">
                                         EXP:
-                                        <input type="number" name="attr_EXP" min="0" max="999" value="0" style="width:35px;"/>
+                                        <input type="number" name="attr_EXP" min="0" max="999" value="0" style="width:40px;"/>
                                     </label>
                                 </td>
                                 <td style="padding:0 5px;">
                                     <label style="white-space:nowrap; color:#000;">
                                         Power:
-                                        <input type="number" name="attr_Power" min="0" max="999" value="0" style="width:35px;"/>
+                                        <input type="number" name="attr_Power" min="0" max="999" value="0" style="width:40px;"/>
                                     </label>
                                 </td>
                             </tr>
                         </table>
-                    </div>
+                    </div>                    
 
                     <!-- Current Values -->
                     <div class="sheet-currentvals">
@@ -164,6 +133,7 @@
                                 <td><input type="number" name="attr_HP_bd" value="0"/></td>
                                 <td><span name="attr_HP_total">0</span></td>
                                 <td class="sheet-div"></td>
+                                <input type="number" name="attr_HP_gf" value="0" hidden>
                                 <td><input type="number" name="attr_HP_gi" value="0"/></td>
                                 <td><span name="attr_HP_gtotal">10</span></td>
                             </tr>
@@ -241,19 +211,18 @@
                             </tr>
                             <tr class="Mov">
                                 <td class="sheet-statlabel">Mov</td>
-                                <td><input type="number" name="attr_Cha_i" value="0"/></td>
-                                <td><input type="number" name="attr_Cha_bd" value="0"/></td>
-                                <td><span name="attr_Cha_total">0</span></td>
+                                <td><input type="number" name="attr_Mov_i" value="0"/></td>
+                                <td><input type="number" name="attr_Mov_bd" value="0"/></td>
+                                <td><span name="attr_Mov_total">0</span></td>
                                 <td class="sheet-div"></td>
-                                <td><input type="number" name="attr_Cha_gi" value="0"/></td>
-                                <td><span name="attr_Cha_gtotal">0</span></td>
+                                <td><input type="number" name="attr_Mov_gi" value="0"/></td>
+                                <td><span name="attr_Mov_gtotal">0</span></td>
                             </tr>
                         </table>
                     </div>
                 </div>
 
                 <div id="notes-sheet">
-                    <!-- Notes field height reduced to 300px -->
                     <div>
                         <div class="sheet-header" style="color:#fff;">Notes</div>
                         <textarea name="attr_notelist" type="text" style="height:300px; width:215px;"></textarea>
@@ -310,7 +279,6 @@
                         </table>
                     </div>
                 </div>
-
                 <!-- Weapons and Spells side by side -->
                 <div style="display:inline-block; width:100%; margin-top:10px;">
                     <div class="sheet-weapons" style="display:inline-block; vertical-align:top; width:49%; margin-right:1%;">
@@ -554,6 +522,7 @@
                     <table>
                         <tr>
                             <th>#</th>
+                            <th>Check</th>
                             <th>Name</th>
                             <th>HP</th>
                             <th>STR</th>
@@ -568,254 +537,255 @@
                             <th>Crit</th>
                             <th>Ddg</th>
                             <th>Weight</th>
+                            <th>Mitigation</th>
                         </tr>
-						<tr>
-							<th>1</th>
-							<td><input type="checkbox" name="attr_bonus_1_check" value="1"></td>
-							<td><input type = "text"  name = "attr_Ele_M" style = "width: 100%;"></td>
-							<td><input type = "number" value = "0" name = "attr_HP_M" min = "0" max = "100"></td>
-							<td><input type = "number" value = "0" name = "attr_Str_M" min = "0" max = "100"></td>
-							<td><input type = "number" value = "0" name = "attr_Mag_M" min = "0" max = "100"></td>
-							<td><input type = "number" value = "0" name = "attr_Spd_M" min = "0" max = "100"></td>
-							<td><input type = "number" value = "0" name = "attr_Def_M" min = "0" max = "100"></td>
-							<td><input type = "number" value = "0" name = "attr_Res_M" min = "0" max = "100"></td>
-							<td><input type = "number" value = "0" name = "attr_Con_M" min = "0" max = "100"></td>
-							<td><input type = "number" value = "0" name = "attr_Mov_M" min = "0" max = "100"></td>
-							<td><input type = "number" value = "0" name = "attr_Hit_M" min = "0" max = "100"></td>
-							<td><input type = "number" value = "0" name = "attr_Avo_M" min = "0" max = "100"></td>
-							<td><input type = "number" value = "0" name = "attr_Crit_M" min = "0" max = "100"></td>
-							<td><input type = "number" value = "0" name = "attr_Ddg_M" min = "0" max = "100"></td>
-							<td><input type = "number" value = "0" name = "attr_Weight_M" min = "0" max = "100"></td>
-							<td><input type = "number" value = "0" name = "attr_Mit_M" min = "0" max = "100"></td>
-						</tr>
                         <tr>
-							<th>2</th>
-							<td><input type="checkbox" name="attr_bonus_2_check" value="1"></td>
-							<td><input type = "text"  name = "attr_Ele_S" style = "width: 100%;"></td>
-							<td><input type = "number" value = "0" name = "attr_HP_S" min = "0" max = "100"></td>
-							<td><input type = "number" value = "0" name = "attr_Str_S" min = "0" max = "100"></td>
-							<td><input type = "number" value = "0" name = "attr_Mag_S" min = "0" max = "100"></td>
-							<td><input type = "number" value = "0" name = "attr_Spd_S" min = "0" max = "100"></td>
-							<td><input type = "number" value = "0" name = "attr_Def_S" min = "0" max = "100"></td>
-							<td><input type = "number" value = "0" name = "attr_Res_S" min = "0" max = "100"></td>
-							<td><input type = "number" value = "0" name = "attr_Con_S" min = "0" max = "100"></td>
-							<td><input type = "number" value = "0" name = "attr_Mov_S" min = "0" max = "100"></td>
-							<td><input type = "number" value = "0" name = "attr_Hit_S" min = "0" max = "100"></td>
-							<td><input type = "number" value = "0" name = "attr_Avo_S" min = "0" max = "100"></td>
-							<td><input type = "number" value = "0" name = "attr_Crit_S" min = "0" max = "100"></td>
-							<td><input type = "number" value = "0" name = "attr_Ddg_S" min = "0" max = "100"></td>
-							<td><input type = "number" value = "0" name = "attr_Weight_S" min = "0" max = "100"></td>
-							<td><input type = "number" value = "0" name = "attr_Mit_S" min = "0" max = "100"></td>
-						</tr>
-						<tr>
-							<th>3</th>
-							<td><input type="checkbox" name="attr_bonus_3_check" value="1"></td>
-							<td><input type = "text"  name = "attr_Ele_1" style = "width: 100%;"></td>
-							<td><input type = "number" value = "0" name = "attr_HP_1" min = "0" max = "100"></td>
-							<td><input type = "number" value = "0" name = "attr_Str_1" min = "0" max = "100"></td>
-							<td><input type = "number" value = "0" name = "attr_Mag_1" min = "0" max = "100"></td>
-							<td><input type = "number" value = "0" name = "attr_Spd_1" min = "0" max = "100"></td>
-							<td><input type = "number" value = "0" name = "attr_Def_1" min = "0" max = "100"></td>
-							<td><input type = "number" value = "0" name = "attr_Res_1" min = "0" max = "100"></td>
-							<td><input type = "number" value = "0" name = "attr_Con_1" min = "0" max = "100"></td>
-							<td><input type = "number" value = "0" name = "attr_Mov_1" min = "0" max = "100"></td>
-							<td><input type = "number" value = "0" name = "attr_Hit_1" min = "0" max = "100"></td>
-							<td><input type = "number" value = "0" name = "attr_Avo_1" min = "0" max = "100"></td>
-							<td><input type = "number" value = "0" name = "attr_Crit_1" min = "0" max = "100"></td>
-							<td><input type = "number" value = "0" name = "attr_Ddg_1" min = "0" max = "100"></td>
-							<td><input type = "number" value = "0" name = "attr_Weight_1" min = "0" max = "100"></td>
-							<td><input type = "number" value = "0" name = "attr_Mit_1" min = "0" max = "100"></td>
-						</tr>
+                            <th>1</th>
+                            <td><input type="checkbox" name="attr_bonus_1_check" value="1"></td>
+                            <td><input type="text" name="attr_Ele_M" style="width: 100%;"></td>
+                            <td><input type="number" value="0" name="attr_HP_M" min="0" max="100"></td>
+                            <td><input type="number" value="0" name="attr_Str_M" min="0" max="100"></td>
+                            <td><input type="number" value="0" name="attr_Mag_M" min="0" max="100"></td>
+                            <td><input type="number" value="0" name="attr_Spd_M" min="0" max="100"></td>
+                            <td><input type="number" value="0" name="attr_Def_M" min="0" max="100"></td>
+                            <td><input type="number" value="0" name="attr_Res_M" min="0" max="100"></td>
+                            <td><input type="number" value="0" name="attr_Con_M" min="0" max="100"></td>
+                            <td><input type="number" value="0" name="attr_Mov_M" min="0" max="100"></td>
+                            <td><input type="number" value="0" name="attr_Hit_M" min="0" max="100"></td>
+                            <td><input type="number" value="0" name="attr_Avo_M" min="0" max="100"></td>
+                            <td><input type="number" value="0" name="attr_Crit_M" min="0" max="100"></td>
+                            <td><input type="number" value="0" name="attr_Ddg_M" min="0" max="100"></td>
+                            <td><input type="number" value="0" name="attr_Weight_M" min="0" max="100"></td>
+                            <td><input type="number" value="0" name="attr_Mit_M" min="0" max="100"></td>
+                        </tr>
+                        <tr>
+                            <th>2</th>
+                            <td><input type="checkbox" name="attr_bonus_2_check" value="1"></td>
+                            <td><input type="text" name="attr_Ele_S" style="width: 100%;"></td>
+                            <td><input type="number" value="0" name="attr_HP_S" min="0" max="100"></td>
+                            <td><input type="number" value="0" name="attr_Str_S" min="0" max="100"></td>
+                            <td><input type="number" value="0" name="attr_Mag_S" min="0" max="100"></td>
+                            <td><input type="number" value="0" name="attr_Spd_S" min="0" max="100"></td>
+                            <td><input type="number" value="0" name="attr_Def_S" min="0" max="100"></td>
+                            <td><input type="number" value="0" name="attr_Res_S" min="0" max="100"></td>
+                            <td><input type="number" value="0" name="attr_Con_S" min="0" max="100"></td>
+                            <td><input type="number" value="0" name="attr_Mov_S" min="0" max="100"></td>
+                            <td><input type="number" value="0" name="attr_Hit_S" min="0" max="100"></td>
+                            <td><input type="number" value="0" name="attr_Avo_S" min="0" max="100"></td>
+                            <td><input type="number" value="0" name="attr_Crit_S" min="0" max="100"></td>
+                            <td><input type="number" value="0" name="attr_Ddg_S" min="0" max="100"></td>
+                            <td><input type="number" value="0" name="attr_Weight_S" min="0" max="100"></td>
+                            <td><input type="number" value="0" name="attr_Mit_S" min="0" max="100"></td>
+                        </tr>
+                        <tr>
+                            <th>3</th>
+                            <td><input type="checkbox" name="attr_bonus_3_check" value="1"></td>
+                            <td><input type="text" name="attr_Ele_1" style="width: 100%;"></td>
+                            <td><input type="number" value="0" name="attr_HP_1" min="0" max="100"></td>
+                            <td><input type="number" value="0" name="attr_Str_1" min="0" max="100"></td>
+                            <td><input type="number" value="0" name="attr_Mag_1" min="0" max="100"></td>
+                            <td><input type="number" value="0" name="attr_Spd_1" min="0" max="100"></td>
+                            <td><input type="number" value="0" name="attr_Def_1" min="0" max="100"></td>
+                            <td><input type="number" value="0" name="attr_Res_1" min="0" max="100"></td>
+                            <td><input type="number" value="0" name="attr_Con_1" min="0" max="100"></td>
+                            <td><input type="number" value="0" name="attr_Mov_1" min="0" max="100"></td>
+                            <td><input type="number" value="0" name="attr_Hit_1" min="0" max="100"></td>
+                            <td><input type="number" value="0" name="attr_Avo_1" min="0" max="100"></td>
+                            <td><input type="number" value="0" name="attr_Crit_1" min="0" max="100"></td>
+                            <td><input type="number" value="0" name="attr_Ddg_1" min="0" max="100"></td>
+                            <td><input type="number" value="0" name="attr_Weight_1" min="0" max="100"></td>
+                            <td><input type="number" value="0" name="attr_Mit_1" min="0" max="100"></td>
+                        </tr>
 						<tr>
 							<th>4</th>
 							<td><input type="checkbox" name="attr_bonus_4_check" value="1"></td>
-							<td><input type = "text"  name = "attr_Ele_2" style = "width: 100%;"></td>
-							<td><input type = "number" value = "0" name = "attr_HP_2" min = "0" max = "100"></td>
-							<td><input type = "number" value = "0" name = "attr_Str_2" min = "0" max = "100"></td>
-							<td><input type = "number" value = "0" name = "attr_Mag_2" min = "0" max = "100"></td>
-							<td><input type = "number" value = "0" name = "attr_Spd_2" min = "0" max = "100"></td>
-							<td><input type = "number" value = "0" name = "attr_Def_2" min = "0" max = "100"></td>
-							<td><input type = "number" value = "0" name = "attr_Res_2" min = "0" max = "100"></td>
-							<td><input type = "number" value = "0" name = "attr_Con_2" min = "0" max = "100"></td>
-							<td><input type = "number" value = "0" name = "attr_Mov_2" min = "0" max = "100"></td>
-							<td><input type = "number" value = "0" name = "attr_Hit_2" min = "0" max = "100"></td>
-							<td><input type = "number" value = "0" name = "attr_Avo_2" min = "0" max = "100"></td>
-							<td><input type = "number" value = "0" name = "attr_Crit_2" min = "0" max = "100"></td>
-							<td><input type = "number" value = "0" name = "attr_Ddg_2" min = "0" max = "100"></td>
-							<td><input type = "number" value = "0" name = "attr_Weight_2" min = "0" max = "100"></td>
-							<td><input type = "number" value = "0" name = "attr_Mit_2" min = "0" max = "100"></td>
+							<td><input type="text" name="attr_Ele_2" style="width: 100%;"></td>
+							<td><input type="number" value="0" name="attr_HP_2" min="0" max="100"></td>
+							<td><input type="number" value="0" name="attr_Str_2" min="0" max="100"></td>
+							<td><input type="number" value="0" name="attr_Mag_2" min="0" max="100"></td>
+							<td><input type="number" value="0" name="attr_Spd_2" min="0" max="100"></td>
+							<td><input type="number" value="0" name="attr_Def_2" min="0" max="100"></td>
+							<td><input type="number" value="0" name="attr_Res_2" min="0" max="100"></td>
+							<td><input type="number" value="0" name="attr_Con_2" min="0" max="100"></td>
+							<td><input type="number" value="0" name="attr_Mov_2" min="0" max="100"></td>
+							<td><input type="number" value="0" name="attr_Hit_2" min="0" max="100"></td>
+							<td><input type="number" value="0" name="attr_Avo_2" min="0" max="100"></td>
+							<td><input type="number" value="0" name="attr_Crit_2" min="0" max="100"></td>
+							<td><input type="number" value="0" name="attr_Ddg_2" min="0" max="100"></td>
+							<td><input type="number" value="0" name="attr_Weight_2" min="0" max="100"></td>
+							<td><input type="number" value="0" name="attr_Mit_2" min="0" max="100"></td>
 						</tr>
 						<tr>
 							<th>5</th>
 							<td><input type="checkbox" name="attr_bonus_5_check" value="1"></td>
-							<td><input type = "text"  name = "attr_Ele_3" style = "width: 100%;"></td>
-							<td><input type = "number" value = "0" name = "attr_HP_3" min = "0" max = "100"></td>
-							<td><input type = "number" value = "0" name = "attr_Str_3" min = "0" max = "100"></td>
-							<td><input type = "number" value = "0" name = "attr_Mag_3" min = "0" max = "100"></td>
-							<td><input type = "number" value = "0" name = "attr_Spd_3" min = "0" max = "100"></td>
-							<td><input type = "number" value = "0" name = "attr_Def_3" min = "0" max = "100"></td>
-							<td><input type = "number" value = "0" name = "attr_Res_3" min = "0" max = "100"></td>
-							<td><input type = "number" value = "0" name = "attr_Con_3" min = "0" max = "100"></td>
-							<td><input type = "number" value = "0" name = "attr_Mov_3" min = "0" max = "100"></td>
-							<td><input type = "number" value = "0" name = "attr_Hit_3" min = "0" max = "100"></td>
-							<td><input type = "number" value = "0" name = "attr_Avo_3" min = "0" max = "100"></td>
-							<td><input type = "number" value = "0" name = "attr_Crit_3" min = "0" max = "100"></td>
-							<td><input type = "number" value = "0" name = "attr_Ddg_3" min = "0" max = "100"></td>
-							<td><input type = "number" value = "0" name = "attr_Weight_3" min = "0" max = "100"></td>
-							<td><input type = "number" value = "0" name = "attr_Mit_3" min = "0" max = "100"></td>
+							<td><input type="text" name="attr_Ele_3" style="width: 100%;"></td>
+							<td><input type="number" value="0" name="attr_HP_3" min="0" max="100"></td>
+							<td><input type="number" value="0" name="attr_Str_3" min="0" max="100"></td>
+							<td><input type="number" value="0" name="attr_Mag_3" min="0" max="100"></td>
+							<td><input type="number" value="0" name="attr_Spd_3" min="0" max="100"></td>
+							<td><input type="number" value="0" name="attr_Def_3" min="0" max="100"></td>
+							<td><input type="number" value="0" name="attr_Res_3" min="0" max="100"></td>
+							<td><input type="number" value="0" name="attr_Con_3" min="0" max="100"></td>
+							<td><input type="number" value="0" name="attr_Mov_3" min="0" max="100"></td>
+							<td><input type="number" value="0" name="attr_Hit_3" min="0" max="100"></td>
+							<td><input type="number" value="0" name="attr_Avo_3" min="0" max="100"></td>
+							<td><input type="number" value="0" name="attr_Crit_3" min="0" max="100"></td>
+							<td><input type="number" value="0" name="attr_Ddg_3" min="0" max="100"></td>
+							<td><input type="number" value="0" name="attr_Weight_3" min="0" max="100"></td>
+							<td><input type="number" value="0" name="attr_Mit_3" min="0" max="100"></td>
 						</tr>
 						<tr>
 							<th>6</th>
 							<td><input type="checkbox" name="attr_bonus_6_check" value="1"></td>
-							<td><input type = "text"  name = "attr_Ele_4" style = "width: 100%;"></td>
-							<td><input type = "number" value = "0" name = "attr_HP_4" min = "0" max = "100"></td>
-							<td><input type = "number" value = "0" name = "attr_Str_4" min = "0" max = "100"></td>
-							<td><input type = "number" value = "0" name = "attr_Mag_4" min = "0" max = "100"></td>
-							<td><input type = "number" value = "0" name = "attr_Spd_4" min = "0" max = "100"></td>
-							<td><input type = "number" value = "0" name = "attr_Def_4" min = "0" max = "100"></td>
-							<td><input type = "number" value = "0" name = "attr_Res_4" min = "0" max = "100"></td>
-							<td><input type = "number" value = "0" name = "attr_Con_4" min = "0" max = "100"></td>
-							<td><input type = "number" value = "0" name = "attr_Mov_4" min = "0" max = "100"></td>
-							<td><input type = "number" value = "0" name = "attr_Hit_4" min = "0" max = "100"></td>
-							<td><input type = "number" value = "0" name = "attr_Avo_4" min = "0" max = "100"></td>
-							<td><input type = "number" value = "0" name = "attr_Crit_4" min = "0" max = "100"></td>
-							<td><input type = "number" value = "0" name = "attr_Ddg_4" min = "0" max = "100"></td>
-							<td><input type = "number" value = "0" name = "attr_Weight_4" min = "0" max = "100"></td>
-							<td><input type = "number" value = "0" name = "attr_Mit_4" min = "0" max = "100"></td>
+							<td><input type="text" name="attr_Ele_4" style="width: 100%;"></td>
+							<td><input type="number" value="0" name="attr_HP_4" min="0" max="100"></td>
+							<td><input type="number" value="0" name="attr_Str_4" min="0" max="100"></td>
+							<td><input type="number" value="0" name="attr_Mag_4" min="0" max="100"></td>
+							<td><input type="number" value="0" name="attr_Spd_4" min="0" max="100"></td>
+							<td><input type="number" value="0" name="attr_Def_4" min="0" max="100"></td>
+							<td><input type="number" value="0" name="attr_Res_4" min="0" max="100"></td>
+							<td><input type="number" value="0" name="attr_Con_4" min="0" max="100"></td>
+							<td><input type="number" value="0" name="attr_Mov_4" min="0" max="100"></td>
+							<td><input type="number" value="0" name="attr_Hit_4" min="0" max="100"></td>
+							<td><input type="number" value="0" name="attr_Avo_4" min="0" max="100"></td>
+							<td><input type="number" value="0" name="attr_Crit_4" min="0" max="100"></td>
+							<td><input type="number" value="0" name="attr_Ddg_4" min="0" max="100"></td>
+							<td><input type="number" value="0" name="attr_Weight_4" min="0" max="100"></td>
+							<td><input type="number" value="0" name="attr_Mit_4" min="0" max="100"></td>
 						</tr>
 						<tr>
 							<th>7</th>
 							<td><input type="checkbox" name="attr_bonus_7_check" value="1"></td>
-							<td><input type = "text"  name = "attr_Ele_5" style = "width: 100%;"></td>
-							<td><input type = "number" value = "0" name = "attr_HP_5" min = "0" max = "100"></td>
-							<td><input type = "number" value = "0" name = "attr_Str_5" min = "0" max = "100"></td>
-							<td><input type = "number" value = "0" name = "attr_Mag_5" min = "0" max = "100"></td>
-							<td><input type = "number" value = "0" name = "attr_Spd_5" min = "0" max = "100"></td>
-							<td><input type = "number" value = "0" name = "attr_Def_5" min = "0" max = "100"></td>
-							<td><input type = "number" value = "0" name = "attr_Res_5" min = "0" max = "100"></td>
-							<td><input type = "number" value = "0" name = "attr_Con_5" min = "0" max = "100"></td>
-							<td><input type = "number" value = "0" name = "attr_Mov_5" min = "0" max = "100"></td>
-							<td><input type = "number" value = "0" name = "attr_Hit_5" min = "0" max = "100"></td>
-							<td><input type = "number" value = "0" name = "attr_Avo_5" min = "0" max = "100"></td>
-							<td><input type = "number" value = "0" name = "attr_Crit_5" min = "0" max = "100"></td>
-							<td><input type = "number" value = "0" name = "attr_Ddg_5" min = "0" max = "100"></td>
-							<td><input type = "number" value = "0" name = "attr_Weight_5" min = "0" max = "100"></td>
-							<td><input type = "number" value = "0" name = "attr_Mit_5" min = "0" max = "100"></td>
+							<td><input type="text" name="attr_Ele_5" style="width: 100%;"></td>
+							<td><input type="number" value="0" name="attr_HP_5" min="0" max="100"></td>
+							<td><input type="number" value="0" name="attr_Str_5" min="0" max="100"></td>
+							<td><input type="number" value="0" name="attr_Mag_5" min="0" max="100"></td>
+							<td><input type="number" value="0" name="attr_Spd_5" min="0" max="100"></td>
+							<td><input type="number" value="0" name="attr_Def_5" min="0" max="100"></td>
+							<td><input type="number" value="0" name="attr_Res_5" min="0" max="100"></td>
+							<td><input type="number" value="0" name="attr_Con_5" min="0" max="100"></td>
+							<td><input type="number" value="0" name="attr_Mov_5" min="0" max="100"></td>
+							<td><input type="number" value="0" name="attr_Hit_5" min="0" max="100"></td>
+							<td><input type="number" value="0" name="attr_Avo_5" min="0" max="100"></td>
+							<td><input type="number" value="0" name="attr_Crit_5" min="0" max="100"></td>
+							<td><input type="number" value="0" name="attr_Ddg_5" min="0" max="100"></td>
+							<td><input type="number" value="0" name="attr_Weight_5" min="0" max="100"></td>
+							<td><input type="number" value="0" name="attr_Mit_5" min="0" max="100"></td>
 						</tr>
 						<tr>
 							<th>8</th>
 							<td><input type="checkbox" name="attr_bonus_8_check" value="1"></td>
-							<td><input type = "text"  name = "attr_Ele_6" style = "width: 100%;"></td>
-							<td><input type = "number" value = "0" name = "attr_HP_6" min = "0" max = "100"></td>
-							<td><input type = "number" value = "0" name = "attr_Str_6" min = "0" max = "100"></td>
-							<td><input type = "number" value = "0" name = "attr_Mag_6" min = "0" max = "100"></td>
-							<td><input type = "number" value = "0" name = "attr_Spd_6" min = "0" max = "100"></td>
-							<td><input type = "number" value = "0" name = "attr_Def_6" min = "0" max = "100"></td>
-							<td><input type = "number" value = "0" name = "attr_Res_6" min = "0" max = "100"></td>
-							<td><input type = "number" value = "0" name = "attr_Con_6" min = "0" max = "100"></td>
-							<td><input type = "number" value = "0" name = "attr_Mov_6" min = "0" max = "100"></td>
-							<td><input type = "number" value = "0" name = "attr_Hit_6" min = "0" max = "100"></td>
-							<td><input type = "number" value = "0" name = "attr_Avo_6" min = "0" max = "100"></td>
-							<td><input type = "number" value = "0" name = "attr_Crit_6" min = "0" max = "100"></td>
-							<td><input type = "number" value = "0" name = "attr_Ddg_6" min = "0" max = "100"></td>
-							<td><input type = "number" value = "0" name = "attr_Weight_6" min = "0" max = "100"></td>
-							<td><input type = "number" value = "0" name = "attr_Mit_6" min = "0" max = "100"></td>
+							<td><input type="text" name="attr_Ele_6" style="width: 100%;"></td>
+							<td><input type="number" value="0" name="attr_HP_6" min="0" max="100"></td>
+							<td><input type="number" value="0" name="attr_Str_6" min="0" max="100"></td>
+							<td><input type="number" value="0" name="attr_Mag_6" min="0" max="100"></td>
+							<td><input type="number" value="0" name="attr_Spd_6" min="0" max="100"></td>
+							<td><input type="number" value="0" name="attr_Def_6" min="0" max="100"></td>
+							<td><input type="number" value="0" name="attr_Res_6" min="0" max="100"></td>
+							<td><input type="number" value="0" name="attr_Con_6" min="0" max="100"></td>
+							<td><input type="number" value="0" name="attr_Mov_6" min="0" max="100"></td>
+							<td><input type="number" value="0" name="attr_Hit_6" min="0" max="100"></td>
+							<td><input type="number" value="0" name="attr_Avo_6" min="0" max="100"></td>
+							<td><input type="number" value="0" name="attr_Crit_6" min="0" max="100"></td>
+							<td><input type="number" value="0" name="attr_Ddg_6" min="0" max="100"></td>
+							<td><input type="number" value="0" name="attr_Weight_6" min="0" max="100"></td>
+							<td><input type="number" value="0" name="attr_Mit_6" min="0" max="100"></td>
 						</tr>
 						<tr>
 							<th>9</th>
 							<td><input type="checkbox" name="attr_bonus_9_check" value="1"></td>
-							<td><input type = "text"  name = "attr_Ele_7" style = "width: 100%;"></td>
-							<td><input type = "number" value = "0" name = "attr_HP_7" min = "0" max = "100"></td>
-							<td><input type = "number" value = "0" name = "attr_Str_7" min = "0" max = "100"></td>
-							<td><input type = "number" value = "0" name = "attr_Mag_7" min = "0" max = "100"></td>
-							<td><input type = "number" value = "0" name = "attr_Spd_7" min = "0" max = "100"></td>
-							<td><input type = "number" value = "0" name = "attr_Def_7" min = "0" max = "100"></td>
-							<td><input type = "number" value = "0" name = "attr_Res_7" min = "0" max = "100"></td>
-							<td><input type = "number" value = "0" name = "attr_Con_7" min = "0" max = "100"></td>
-							<td><input type = "number" value = "0" name = "attr_Mov_7" min = "0" max = "100"></td>
-							<td><input type = "number" value = "0" name = "attr_Hit_7" min = "0" max = "100"></td>
-							<td><input type = "number" value = "0" name = "attr_Avo_7" min = "0" max = "100"></td>
-							<td><input type = "number" value = "0" name = "attr_Crit_7" min = "0" max = "100"></td>
-							<td><input type = "number" value = "0" name = "attr_Ddg_7" min = "0" max = "100"></td>
-							<td><input type = "number" value = "0" name = "attr_Weight_7" min = "0" max = "100"></td>
-							<td><input type = "number" value = "0" name = "attr_Mit_7" min = "0" max = "100"></td>
+							<td><input type="text" name="attr_Ele_7" style="width: 100%;"></td>
+							<td><input type="number" value="0" name="attr_HP_7" min="0" max="100"></td>
+							<td><input type="number" value="0" name="attr_Str_7" min="0" max="100"></td>
+							<td><input type="number" value="0" name="attr_Mag_7" min="0" max="100"></td>
+							<td><input type="number" value="0" name="attr_Spd_7" min="0" max="100"></td>
+							<td><input type="number" value="0" name="attr_Def_7" min="0" max="100"></td>
+							<td><input type="number" value="0" name="attr_Res_7" min="0" max="100"></td>
+							<td><input type="number" value="0" name="attr_Con_7" min="0" max="100"></td>
+							<td><input type="number" value="0" name="attr_Mov_7" min="0" max="100"></td>
+							<td><input type="number" value="0" name="attr_Hit_7" min="0" max="100"></td>
+							<td><input type="number" value="0" name="attr_Avo_7" min="0" max="100"></td>
+							<td><input type="number" value="0" name="attr_Crit_7" min="0" max="100"></td>
+							<td><input type="number" value="0" name="attr_Ddg_7" min="0" max="100"></td>
+							<td><input type="number" value="0" name="attr_Weight_7" min="0" max="100"></td>
+							<td><input type="number" value="0" name="attr_Mit_7" min="0" max="100"></td>
 						</tr>
 						<tr>
 							<th>10</th>
 							<td><input type="checkbox" name="attr_bonus_10_check" value="1"></td>
-							<td><input type = "text"  name = "attr_Ele_8" style = "width: 100%;"></td>
-							<td><input type = "number" value = "0" name = "attr_HP_8" min = "0" max = "100"></td>
-							<td><input type = "number" value = "0" name = "attr_Str_8" min = "0" max = "100"></td>
-							<td><input type = "number" value = "0" name = "attr_Mag_8" min = "0" max = "100"></td>
-							<td><input type = "number" value = "0" name = "attr_Spd_8" min = "0" max = "100"></td>
-							<td><input type = "number" value = "0" name = "attr_Def_8" min = "0" max = "100"></td>
-							<td><input type = "number" value = "0" name = "attr_Res_8" min = "0" max = "100"></td>
-							<td><input type = "number" value = "0" name = "attr_Con_8" min = "0" max = "100"></td>
-							<td><input type = "number" value = "0" name = "attr_Mov_8" min = "0" max = "100"></td>
-							<td><input type = "number" value = "0" name = "attr_Hit_8" min = "0" max = "100"></td>
-							<td><input type = "number" value = "0" name = "attr_Avo_8" min = "0" max = "100"></td>
-							<td><input type = "number" value = "0" name = "attr_Crit_8" min = "0" max = "100"></td>
-							<td><input type = "number" value = "0" name = "attr_Ddg_8" min = "0" max = "100"></td>
-							<td><input type = "number" value = "0" name = "attr_Weight_8" min = "0" max = "100"></td>
-							<td><input type = "number" value = "0" name = "attr_Mit_8" min = "0" max = "100"></td>
+							<td><input type="text" name="attr_Ele_8" style="width: 100%;"></td>
+							<td><input type="number" value="0" name="attr_HP_8" min="0" max="100"></td>
+							<td><input type="number" value="0" name="attr_Str_8" min="0" max="100"></td>
+							<td><input type="number" value="0" name="attr_Mag_8" min="0" max="100"></td>
+							<td><input type="number" value="0" name="attr_Spd_8" min="0" max="100"></td>
+							<td><input type="number" value="0" name="attr_Def_8" min="0" max="100"></td>
+							<td><input type="number" value="0" name="attr_Res_8" min="0" max="100"></td>
+							<td><input type="number" value="0" name="attr_Con_8" min="0" max="100"></td>
+							<td><input type="number" value="0" name="attr_Mov_8" min="0" max="100"></td>
+							<td><input type="number" value="0" name="attr_Hit_8" min="0" max="100"></td>
+							<td><input type="number" value="0" name="attr_Avo_8" min="0" max="100"></td>
+							<td><input type="number" value="0" name="attr_Crit_8" min="0" max="100"></td>
+							<td><input type="number" value="0" name="attr_Ddg_8" min="0" max="100"></td>
+							<td><input type="number" value="0" name="attr_Weight_8" min="0" max="100"></td>
+							<td><input type="number" value="0" name="attr_Mit_8" min="0" max="100"></td>
 						</tr>
 						<tr>
 							<th>11</th>
 							<td><input type="checkbox" name="attr_bonus_11_check" value="1"></td>
-							<td><input type = "text"  name = "attr_Ele_9" style = "width: 100%;"></td>
-							<td><input type = "number" value = "0" name = "attr_HP_9" min = "0" max = "100"></td>
-							<td><input type = "number" value = "0" name = "attr_Str_9" min = "0" max = "100"></td>
-							<td><input type = "number" value = "0" name = "attr_Mag_9" min = "0" max = "100"></td>
-							<td><input type = "number" value = "0" name = "attr_Spd_9" min = "0" max = "100"></td>
-							<td><input type = "number" value = "0" name = "attr_Def_9" min = "0" max = "100"></td>
-							<td><input type = "number" value = "0" name = "attr_Res_9" min = "0" max = "100"></td>
-							<td><input type = "number" value = "0" name = "attr_Con_9" min = "0" max = "100"></td>
-							<td><input type = "number" value = "0" name = "attr_Mov_9" min = "0" max = "100"></td>
-							<td><input type = "number" value = "0" name = "attr_Hit_9" min = "0" max = "100"></td>
-							<td><input type = "number" value = "0" name = "attr_Avo_9" min = "0" max = "100"></td>
-							<td><input type = "number" value = "0" name = "attr_Crit_9" min = "0" max = "100"></td>
-							<td><input type = "number" value = "0" name = "attr_Ddg_9" min = "0" max = "100"></td>
-							<td><input type = "number" value = "0" name = "attr_Weight_9" min = "0" max = "100"></td>
-							<td><input type = "number" value = "0" name = "attr_Mit_9" min = "0" max = "100"></td>
+							<td><input type="text" name="attr_Ele_9" style="width: 100%;"></td>
+							<td><input type="number" value="0" name="attr_HP_9" min="0" max="100"></td>
+							<td><input type="number" value="0" name="attr_Str_9" min="0" max="100"></td>
+							<td><input type="number" value="0" name="attr_Mag_9" min="0" max="100"></td>
+							<td><input type="number" value="0" name="attr_Spd_9" min="0" max="100"></td>
+							<td><input type="number" value="0" name="attr_Def_9" min="0" max="100"></td>
+							<td><input type="number" value="0" name="attr_Res_9" min="0" max="100"></td>
+							<td><input type="number" value="0" name="attr_Con_9" min="0" max="100"></td>
+							<td><input type="number" value="0" name="attr_Mov_9" min="0" max="100"></td>
+							<td><input type="number" value="0" name="attr_Hit_9" min="0" max="100"></td>
+							<td><input type="number" value="0" name="attr_Avo_9" min="0" max="100"></td>
+							<td><input type="number" value="0" name="attr_Crit_9" min="0" max="100"></td>
+							<td><input type="number" value="0" name="attr_Ddg_9" min="0" max="100"></td>
+							<td><input type="number" value="0" name="attr_Weight_9" min="0" max="100"></td>
+							<td><input type="number" value="0" name="attr_Mit_9" min="0" max="100"></td>
 						</tr>
 						<tr>
 							<th>12</th>
 							<td><input type="checkbox" name="attr_bonus_12_check" value="1"></td>
-							<td><input type = "text"  name = "attr_Ele_10" style = "width: 100%;"></td>
-							<td><input type = "number" value = "0" name = "attr_HP_10" min = "0" max = "100"></td>
-							<td><input type = "number" value = "0" name = "attr_Str_10" min = "0" max = "100"></td>
-							<td><input type = "number" value = "0" name = "attr_Mag_10" min = "0" max = "100"></td>
-							<td><input type = "number" value = "0" name = "attr_Spd_10" min = "0" max = "100"></td>
-							<td><input type = "number" value = "0" name = "attr_Def_10" min = "0" max = "100"></td>
-							<td><input type = "number" value = "0" name = "attr_Res_10" min = "0" max = "100"></td>
-							<td><input type = "number" value = "0" name = "attr_Con_10" min = "0" max = "100"></td>
-							<td><input type = "number" value = "0" name = "attr_Mov_10" min = "0" max = "100"></td>
-							<td><input type = "number" value = "0" name = "attr_Hit_10" min = "0" max = "100"></td>
-							<td><input type = "number" value = "0" name = "attr_Avo_10" min = "0" max = "100"></td>
-							<td><input type = "number" value = "0" name = "attr_Crit_10" min = "0" max = "100"></td>
-							<td><input type = "number" value = "0" name = "attr_Ddg_10" min = "0" max = "100"></td>
-							<td><input type = "number" value = "0" name = "attr_Weight_10" min = "0" max = "100"></td>
-							<td><input type = "number" value = "0" name = "attr_Mit_10" min = "0" max = "100"></td>
+							<td><input type="text" name="attr_Ele_10" style="width: 100%;"></td>
+							<td><input type="number" value="0" name="attr_HP_10" min="0" max="100"></td>
+							<td><input type="number" value="0" name="attr_Str_10" min="0" max="100"></td>
+							<td><input type="number" value="0" name="attr_Mag_10" min="0" max="100"></td>
+							<td><input type="number" value="0" name="attr_Spd_10" min="0" max="100"></td>
+							<td><input type="number" value="0" name="attr_Def_10" min="0" max="100"></td>
+							<td><input type="number" value="0" name="attr_Res_10" min="0" max="100"></td>
+							<td><input type="number" value="0" name="attr_Con_10" min="0" max="100"></td>
+							<td><input type="number" value="0" name="attr_Mov_10" min="0" max="100"></td>
+							<td><input type="number" value="0" name="attr_Hit_10" min="0" max="100"></td>
+							<td><input type="number" value="0" name="attr_Avo_10" min="0" max="100"></td>
+							<td><input type="number" value="0" name="attr_Crit_10" min="0" max="100"></td>
+							<td><input type="number" value="0" name="attr_Ddg_10" min="0" max="100"></td>
+							<td><input type="number" value="0" name="attr_Weight_10" min="0" max="100"></td>
+							<td><input type="number" value="0" name="attr_Mit_10" min="0" max="100"></td>
 						</tr>
-						<tr>
-							<th>Sum</th>
-							<td>---</td>
-							<td>---</td>
-							<td><span name = "attr_HP_Qtotal">0</span></td>
-							<td><span name = "attr_Str_Qtotal">0</span></td>
-							<td><span name = "attr_Mag_Qtotal">0</span></td>
-							<td><span name = "attr_Spd_Qtotal">0</span></td>
-							<td><span name = "attr_Def_Qtotal">0</span></td>
-							<td><span name = "attr_Res_Qtotal">0</span></td>
-							<td><span name = "attr_Con_Qtotal">0</span></td>
-							<td><span name = "attr_Mov_Qtotal">0</span></td>
-							<td><span name = "attr_Hit_Qtotal">0</span></td>
-							<td><span name = "attr_Avo_Qtotal">0</span></td>
-							<td><span name = "attr_Crit_Qtotal">0</span></td>
-							<td><span name = "attr_Ddg_Qtotal">0</span></td>
-							<td><span name = "attr_Weight_Qtotal">0</span></td>
-							<td><span name = "attr_Mit_Qtotal">0</span></td>
-						</tr>
+                        <tr>
+                            <th>Sum</th>
+                            <td>---</td>
+                            <td>---</td>
+                            <td><span name="attr_HP_Qtotal">0</span></td>
+                            <td><span name="attr_Str_Qtotal">0</span></td>
+                            <td><span name="attr_Mag_Qtotal">0</span></td>
+                            <td><span name="attr_Spd_Qtotal">0</span></td>
+                            <td><span name="attr_Def_Qtotal">0</span></td>
+                            <td><span name="attr_Res_Qtotal">0</span></td>
+                            <td><span name="attr_Con_Qtotal">0</span></td>
+                            <td><span name="attr_Mov_Qtotal">0</span></td>
+                            <td><span name="attr_Hit_Qtotal">0</span></td>
+                            <td><span name="attr_Avo_Qtotal">0</span></td>
+                            <td><span name="attr_Crit_Qtotal">0</span></td>
+                            <td><span name="attr_Ddg_Qtotal">0</span></td>
+                            <td><span name="attr_Weight_Qtotal">0</span></td>
+                            <td><span name="attr_Mit_Qtotal">0</span></td>
+                        </tr>
                     </table>
                 </div>
                 <div class="sheet-abilityinfo">
@@ -828,13 +798,554 @@
                 </div>
             </div>
 
-            <script type="text/worker">
+            <script type="text/worker">                
                 const buttonlist = ["character", "misc", "equip"];
                 buttonlist.forEach(button => {
                     on(`clicked:${button}`, function() {
-                        setAttrs({
-                            sheetTab: button
+                        setAttrs({sheetTab: button});
+                    });
+                });
+
+                var getSectionIDsOrdered = function (sectionName, callback) {
+                    'use strict';
+                    getAttrs([`_reporder_${sectionName}`], function (v) {
+                        getSectionIDs(sectionName, function (idArray) {
+                            let reporderArray = v[`_reporder_${sectionName}`]? v[`_reporder_${sectionName}`].toLowerCase().split(','): [],
+                            ids = [...new Set(reporderArray.filter(x => idArray.includes(x)).concat(idArray))];
+                            callback(ids);
                         });
+                    });
+                };
+
+                function updateHPTotal() {
+                    getAttrs(["WSlot","SSlot","atktype","HP_i","HP_bd","HP_Qtotal"], function(vals) {
+                        let baseHP = Number(vals.HP_i) + Number(vals.HP_bd) + Number(vals.HP_Qtotal);
+                        let atktype = vals.atktype;
+
+                        if (atktype==="Phys") {
+                            getSectionIDsOrdered("repeating_weapons", function(idarray) {
+                                let slotnum = vals.WSlot;
+                                let fID = idarray[Number(slotnum)-1];
+                                if(!fID) {
+                                    setAttrs({HP_total: baseHP,HP_current_max: baseHP});
+                                    return;
+                                }
+                                getAttrs(["repeating_weapons_"+fID+"_HP_wp"], function(v) {
+                                    let wp = parseInt(v["repeating_weapons_"+fID+"_HP_wp"])||0;
+                                    let total = baseHP + wp;
+                                    setAttrs({HP_total: total,HP_current_max: total});
+                                });
+                            });
+                        } else if (atktype==="Mag") {
+                            getSectionIDsOrdered("repeating_spells", function(idarray) {
+                                let slotnum = vals.SSlot;
+                                let fID = idarray[Number(slotnum)-1];
+                                if(!fID) {
+                                    setAttrs({HP_total: baseHP,HP_current_max: baseHP});
+                                    return;
+                                }
+                                getAttrs(["repeating_spells_"+fID+"_HP_wp"], function(v) {
+                                    let wp = parseInt(v["repeating_spells_"+fID+"_HP_wp"])||0;
+                                    let total = baseHP + wp;
+                                    setAttrs({HP_total: total,HP_current_max: total});
+                                });
+                            });
+                        } else {
+                            setAttrs({HP_total: baseHP,HP_current_max: baseHP});
+                        }
+                    });
+                }
+
+                function updateMovTotal() {
+                    getAttrs(["Mov_i","Mov_bd","Mov_Qtotal","Mov_multi"], function(v) {
+                        let base = Number(v.Mov_i)||0;
+                        let bd = Number(v.Mov_bd)||0;
+                        let qtotal = Number(v.Mov_Qtotal)||0;
+                        let multi = Number(v.Mov_multi)||0;
+                        let total = Math.round((base + bd + qtotal)*((100+multi)/100));
+                        setAttrs({Mov_total: total});
+                    });
+                }
+
+                on("change:HP_i change:HP_bd change:HP_Qtotal change:WSlot change:SSlot change:atktype remove:repeating_weapons remove:repeating_spells change:repeating_weapons:HP_wp change:repeating_spells:HP_wp change:_reporder:weapons change:_reporder:spells", updateHPTotal);
+                on("change:Mov_i change:Mov_bd change:Mov_Qtotal change:Mov_multi", updateMovTotal);
+
+                on("sheet:opened", function() {
+                    updateHPTotal();
+                    updateMovTotal();
+                });
+
+                function updateStatTotal(stat) {
+                    getAttrs(["WSlot","SSlot","atktype"], function(vals) {
+                        let atktype = vals.atktype;
+                        let wpAttr = stat+"_wp"; 
+                        let statBase = [stat+"_i", stat+"_bd", stat+"_Qtotal"];
+
+                        if (atktype === "Phys") {
+                            getSectionIDsOrdered("repeating_weapons", function(idarray) {
+                                let slotnum = vals.WSlot;
+                                let fID = idarray[Number(slotnum)-1];
+                                if(!fID) {
+                                    getAttrs(statBase, function(v) {
+                                        let total = (Number(v[stat+"_i"])||0)+(Number(v[stat+"_bd"])||0)+(Number(v[stat+"_Qtotal"])||0);
+                                        let updateObj = {};
+                                        updateObj[stat+"_total"] = total;
+                                        setAttrs(updateObj);
+                                    });
+                                    return;
+                                }
+                                let req = statBase.concat(["repeating_weapons_"+fID+"_"+wpAttr]);
+                                getAttrs(req, function(v) {
+                                    let wp = parseInt(v["repeating_weapons_"+fID+"_"+wpAttr])||0;
+                                    let total = (Number(v[stat+"_i"])||0) + (Number(v[stat+"_bd"])||0) + (Number(v[stat+"_Qtotal"])||0) + wp;
+                                    let updateObj = {};
+                                    updateObj[stat+"_total"] = total;
+                                    setAttrs(updateObj);
+                                });
+                            });
+                        } else if (atktype === "Mag") {
+                            getSectionIDsOrdered("repeating_spells", function(idarray) {
+                                let slotnum = vals.SSlot;
+                                let fID = idarray[Number(slotnum)-1];
+                                if(!fID) {
+                                    getAttrs(statBase, function(v) {
+                                        let total = (Number(v[stat+"_i"])||0)+(Number(v[stat+"_bd"])||0)+(Number(v[stat+"_Qtotal"])||0);
+                                        let updateObj = {};
+                                        updateObj[stat+"_total"] = total;
+                                        setAttrs(updateObj);
+                                    });
+                                    return;
+                                }
+                                let req = statBase.concat(["repeating_spells_"+fID+"_"+wpAttr]);
+                                getAttrs(req, function(v) {
+                                    let wp = parseInt(v["repeating_spells_"+fID+"_"+wpAttr])||0;
+                                    let total = (Number(v[stat+"_i"])||0) + (Number(v[stat+"_bd"])||0) + (Number(v[stat+"_Qtotal"])||0) + wp;
+                                    let updateObj = {};
+                                    updateObj[stat+"_total"] = total;
+                                    setAttrs(updateObj);
+                                });
+                            });
+                        } else {
+                            getAttrs(statBase, function(v) {
+                                let total = (Number(v[stat+"_i"])||0)+(Number(v[stat+"_bd"])||0)+(Number(v[stat+"_Qtotal"])||0);
+                                let updateObj = {};
+                                updateObj[stat+"_total"] = total;
+                                setAttrs(updateObj);
+                            });
+                        }
+                    });
+                }     
+
+                on("change:Str_i change:Str_bd change:repeating_weapons:Str_wp change:repeating_spells:Str_wp change:_reporder:weapons change:Str_Qtotal change:_reporder:spells remove:repeating_weapons remove:repeating_spells change:WSlot change:SSlot change:atktype", function(){updateStatTotal("Str")});
+                on("change:Mag_i change:Mag_bd change:repeating_weapons:Mag_wp change:repeating_spells:Mag_wp change:_reporder:weapons change:Mag_Qtotal change:_reporder:spells remove:repeating_weapons remove:repeating_spells change:WSlot change:SSlot change:atktype", function(){updateStatTotal("Mag")});
+                on("change:Con_i change:Con_bd change:repeating_weapons:Con_wp change:repeating_spells:Con_wp change:_reporder:weapons change:Con_Qtotal change:_reporder:spells remove:repeating_weapons remove:repeating_spells change:WSlot change:SSlot change:atktype", function(){updateStatTotal("Con")});
+                on("change:Skl_i change:Skl_bd change:repeating_weapons:Skl_wp change:repeating_spells:Skl_wp change:_reporder:weapons change:Skl_Qtotal change:_reporder:spells remove:repeating_weapons remove:repeating_spells change:WSlot change:SSlot change:atktype", function(){updateStatTotal("Skl")});
+                on("change:Spd_i change:Spd_bd change:repeating_weapons:Spd_wp change:repeating_spells:Spd_wp change:_reporder:weapons change:Spd_Qtotal change:_reporder:spells remove:repeating_weapons remove:repeating_spells change:WSlot change:SSlot change:atktype", function(){updateStatTotal("Spd")});
+                on("change:Lck_i change:Lck_bd change:repeating_weapons:Lck_wp change:repeating_spells:Lck_wp change:_reporder:weapons change:Lck_Qtotal change:_reporder:spells remove:repeating_weapons remove:repeating_spells change:WSlot change:SSlot change:atktype", function(){updateStatTotal("Lck")});
+                on("change:Def_i change:Def_bd change:repeating_weapons:Def_wp change:repeating_spells:Def_wp change:_reporder:weapons change:Def_Qtotal change:_reporder:spells remove:repeating_weapons remove:repeating_spells change:WSlot change:SSlot change:atktype", function(){updateStatTotal("Def")});
+                on("change:Res_i change:Res_bd change:repeating_weapons:Res_wp change:repeating_spells:Res_wp change:_reporder:weapons change:Res_Qtotal change:_reporder:spells remove:repeating_weapons remove:repeating_spells change:WSlot change:SSlot change:atktype", function(){updateStatTotal("Res")});
+
+                on("change:HP_gf change:HP_gi", function() {
+                    getAttrs(["HP_gf","HP_gi"], function(v) {
+                        setAttrs({HP_gtotal: Number(v.HP_gf)+Number(v.HP_gi)});
+                    });
+                });
+                on("change:Str_gf change:Str_gi", function() {
+                    getAttrs(["Str_gf","Str_gi"], function(v) {
+                        setAttrs({Str_gtotal: Number(v.Str_gf)+Number(v.Str_gi)});
+                    });
+                });
+                on("change:Mag_gf change:Mag_gi", function() {
+                    getAttrs(["Mag_gf","Mag_gi"], function(v) {
+                        setAttrs({Mag_gtotal: Number(v.Mag_gf)+Number(v.Mag_gi)});
+                    });
+                });
+                on("change:Skl_gf change:Skl_gi", function() {
+                    getAttrs(["Skl_gf","Skl_gi"], function(v) {
+                        setAttrs({Skl_gtotal: Number(v.Skl_gf)+Number(v.Skl_gi)});
+                    });
+                });
+                on("change:Spd_gf change:Spd_gi", function() {
+                    getAttrs(["Spd_gf","Spd_gi"], function(v) {
+                        setAttrs({Spd_gtotal: Number(v.Spd_gf)+Number(v.Spd_gi)});
+                    });
+                });
+                on("change:Lck_gf change:Lck_gi", function() {
+                    getAttrs(["Lck_gf","Lck_gi"], function(v) {
+                        setAttrs({Lck_gtotal: Number(v.Lck_gf)+Number(v.Lck_gi)});
+                    });
+                });
+                on("change:Def_gf change:Def_gi", function() {
+                    getAttrs(["Def_gf","Def_gi"], function(v) {
+                        setAttrs({Def_gtotal:Number(v.Def_gf)+Number(v.Def_gi)});
+                    });
+                });
+                on("change:Res_gf change:Res_gi", function() {
+                    getAttrs(["Res_gf","Res_gi"], function(v) {
+                        setAttrs({Res_gtotal:Number(v.Res_gf)+Number(v.Res_gi)});
+                    });
+                });
+                on("change:Con_gf change:Con_gi", function() {
+                    getAttrs(["Con_gf","Con_gi"], function(v) {
+                        setAttrs({Con_gtotal:Number(v.Con_gi)});
+                    });
+                });
+                on("change:Mov_gf change:Mov_gi", function() {
+                    getAttrs(["Mov_gf","Mov_gi"], function(v) {
+                        setAttrs({Mov_gtotal:Number(v.Mov_gf)+Number(v.Mov_gi)});
+                    });
+                });
+
+                const stats = ['HP', 'Str','Mag','Spd','Def','Res','Con','Mov','Hit','Avo','Crit','Ddg','Weight','Mit'];
+                const checks = Array.from({length:12}, (_,i)=>`bonus_${i+1}_check`);
+
+                let allStatAttrs = [];
+                stats.forEach(stat => {
+                    allStatAttrs.push(`${stat}_M`, `${stat}_S`);
+                    for (let i=1; i<=10; i++){
+                        allStatAttrs.push(`${stat}_${i}`);
+                    }
+                });
+
+                const allTriggers = checks.map(c=>"change:"+c).concat(allStatAttrs.map(a=>"change:"+a)).join(" ");
+
+                function updateAllQTotals() {
+                    const allNeededAttrs = checks.concat(allStatAttrs);
+                    getAttrs(allNeededAttrs, function(values) {
+                        let update = {};
+
+                        stats.forEach(stat => {
+                            let statModifiers = [
+                                values[`${stat}_M`],
+                                values[`${stat}_S`]
+                            ];
+                            for (let i=1; i<=10; i++){
+                                statModifiers.push(values[`${stat}_${i}`]);
+                            }
+
+                            let sumBonus = 0;
+                            statModifiers.forEach((modValue, i) => {
+                                let checkValue = values[checks[i]];
+                                if(Number(checkValue) === 1) {
+                                    sumBonus += Number(modValue) || 0;
+                                }
+                            });
+
+                            update[`${stat}_Qtotal`] = sumBonus;
+                        });
+
+                        setAttrs(update);
+                    });
+                }
+
+                on(allTriggers, updateAllQTotals);
+
+                on("change:Str_total change:repeating_weapons:WType change:Mov_total change:repeating_weapons:Mt change:_reporder:weapons remove:repeating_weapons change:Physb change:WSlot change:atktype change:phys_bd", function() {
+                    getAttrs(["WSlot","atktype","Str_total","Physb","phys_bd"], function(vals) {
+                        let atktype = vals.atktype;
+                        if(atktype==="Phys"){
+                            getSectionIDsOrdered("repeating_weapons", function(idarray) {
+                                let slotnum = vals.WSlot;
+                                let fID = idarray[Number(slotnum)-1];
+                                if(!fID)return;
+                                getAttrs(["repeating_weapons_"+fID+"_Mt","Str_total","Physb","phys_bd"], function(v) {
+                                    let wMt = Number(v["repeating_weapons_"+fID+"_Mt"])||0;
+                                    let Str = Number(v.Str_total)||0;
+                                    let Bonus = Number(v.Physb)||0;
+                                    let pbd = Number(v.phys_bd)||0;
+                                    setAttrs({
+                                        currMt: wMt,
+                                        phys_total: Str + wMt + Bonus + pbd,
+                                        effdmg: Str + 3*wMt + Bonus + pbd
+                                    });
+                                });
+                            });
+                        }
+                    });
+                });
+
+                on("change:Mag_total change:repeating_spells:Mt change:repeating_weapons:SType change:_reporder:spells remove:repeating_spells change:Magb change:SSlot change:atktype change:myst_bd", function() {
+                    getAttrs(["SSlot","atktype","Mag_total","Magb","myst_bd"], function(vals) {
+                        let atktype = vals.atktype;
+                        if(atktype==="Mag"){
+                            getSectionIDsOrdered("repeating_spells", function(idarray) {
+                                let slotnum = vals.SSlot;
+                                let fID = idarray[Number(slotnum)-1];
+                                if(!fID)return;
+                                getAttrs(["repeating_spells_"+fID+"_Mt","Mag_total","Magb","myst_bd"], function(v) {
+                                    let wMt = Number(v["repeating_spells_"+fID+"_Mt"])||0;
+                                    let Mag = Number(v.Mag_total)||0;
+                                    let Bonus = Number(v.Magb)||0;
+                                    let mbd = Number(v.myst_bd)||0;
+                                    setAttrs({
+                                        currMt: wMt,
+                                        effdmg: Mag + 3*wMt + Bonus + mbd,
+                                        myst_total: Mag + wMt + Bonus + mbd
+                                    });
+                                });
+                            });
+                        }
+                    });
+                });
+
+                on("change:Def_total change:Protb change:prot_bd", function() {
+                    getAttrs(["Def_total","Protb","prot_bd"], function(v) {
+                        setAttrs({prot_total: Number(v.Def_total) + Number(v.Protb) + Number(v.prot_bd)});
+                    });
+                });
+
+                on("change:Res_total change:Resb change:ward_bd", function() {
+                    getAttrs(["Res_total","Resb","ward_bd"], function(v) {
+                        setAttrs({ward_total: Number(v.Res_total) + Number(v.Resb) + Number(v.ward_bd)});
+                    });
+                });
+
+                on("change:Atkspd change:Avo_bd change:Lck_total change:Avomod change:Avob change:Avo_Qtotal", function() {
+                    getAttrs(["Atkspd","Avo_bd","Lck_total","Avomod","Avob","Avo_Qtotal"], function(v) {
+                        let spd = Number(v.Atkspd)||0;
+                        let lckA = Number(v.Lck_total)||0;
+                        let avo = spd*2 + Math.floor(lckA/2) + Number(v.Avo_bd)||0 + Number(v.Avo_Qtotal)||0;
+                        setAttrs({avo: avo});
+                    });
+                });
+
+                on("change:Skl_total change:Lck_total change:Hitmod change:repeating_weapons:Hit change:repeating_spells:Hit change:_reporder:weapons change:_reporder:spells remove:repeating_weapons remove:repeating_spells change:Hitb change:WSlot change:SSlot change:atktype change:Hit_Qtotal change:hit_bd", function() {
+                    getAttrs(["WSlot","SSlot","atktype","Skl_total","Lck_total","Hitmod","Hitb","Hit_Qtotal","hit_bd"], function(vals) {
+                        let atktype = vals.atktype;
+                        let Skl = Number(vals.Skl_total)||0;
+                        let Lck = Number(vals.Lck_total)||0;
+                        let Mod = Number(vals.Hitmod)||0;
+                        let Bonus = Number(vals.Hitb)||0;
+                        let bd = Number(vals.hit_bd)||0;
+                        let HQ = Number(vals.Hit_Qtotal)||0;
+                        if(atktype==="Phys"){
+                            getSectionIDsOrdered("repeating_weapons", function(idarray) {
+                                let slotnum = vals.WSlot;
+                                let fID = idarray[Number(slotnum)-1];
+                                if(!fID)return;
+                                getAttrs(["repeating_weapons_"+fID+"_Hit"], function(v) {
+                                    let wHit = Number(v["repeating_weapons_"+fID+"_Hit"])||0;
+                                    let totalHit = wHit + bd + Bonus + Mod + Skl*2 + Math.floor(Lck/2) + HQ;
+                                    setAttrs({Hit: totalHit,currHit: wHit});
+                                });
+                            });
+                        } else if (atktype==="Mag"){
+                            getSectionIDsOrdered("repeating_spells", function(idarray) {
+                                let slotnum = vals.SSlot;
+                                let fID = idarray[Number(slotnum)-1];
+                                if(!fID)return;
+                                getAttrs(["repeating_spells_"+fID+"_Hit"], function(v) {
+                                    let wHit = Number(v["repeating_spells_"+fID+"_Hit"])||0;
+                                    let totalHit = wHit + bd + Bonus + Mod + Skl*2 + Math.floor(Lck/2) + HQ;
+                                    setAttrs({Hit: totalHit});
+                                });
+                            });
+                        }
+                    });
+                });
+
+                on("change:Skl_total change:Lck_total change:Critmod change:repeating_weapons:Crit change:repeating_spells:Crit change:_reporder:weapons change:_reporder:spells remove:repeating_weapons remove:repeating_spells change:Critb change:WSlot change:SSlot change:atktype change:Crit_Qtotal change:Crit_bd", function() {
+                    getAttrs(["WSlot","SSlot","atktype","Skl_total","Lck_total","Critmod","Critb","Crit_Qtotal","Crit_bd"], function(vals) {
+                        let atktype = vals.atktype;
+                        let SklC = Number(vals.Skl_total)||0;
+                        let LckC = Number(vals.Lck_total)||0;
+                        let CQ = Number(vals.Crit_Qtotal)||0;
+                        let cbd = Number(vals.Crit_bd)||0;
+                        if(atktype==="Phys"){
+                            getSectionIDsOrdered("repeating_weapons", function(idarray) {
+                                let slotnum = vals.WSlot;
+                                let fID = idarray[Number(slotnum)-1];
+                                if(!fID)return;
+                                getAttrs(["repeating_weapons_"+fID+"_Crit"], function(v) {
+                                    let wCrit = Number(v["repeating_weapons_"+fID+"_Crit"])||0;
+                                    let totalCrit = Math.round((SklC/2)+(LckC/2)+CQ + wCrit + cbd);
+                                    setAttrs({Crit: totalCrit, currCrit: wCrit});
+                                });
+                            });
+                        } else if(atktype==="Mag"){
+                            getSectionIDsOrdered("repeating_spells", function(idarray) {
+                                let slotnum = vals.SSlot;
+                                let fID = idarray[Number(slotnum)-1];
+                                if(!fID)return;
+                                getAttrs(["repeating_spells_"+fID+"_Crit"], function(v) {
+                                    let wCrit = Number(v["repeating_spells_"+fID+"_Crit"])||0;
+                                    let ModC = Number(vals.Critmod)||0;
+                                    let BonC = Number(vals.Critb)||0;
+                                    let totalCrit = Math.round((SklC/2)+(LckC/2)+wCrit+BonC+ModC+CQ+cbd);
+                                    setAttrs({Crit: totalCrit});
+                                });
+                            });
+                        }
+                    });
+                });
+
+                on("change:Skl_total change:Lck_total change:Critmod change:repeating_weapons:Ddg change:repeating_spells:Ddg change:_reporder:weapons change:_reporder:spells remove:repeating_weapons remove:repeating_spells change:WSlot change:SSlot change:atktype change:Atkspd change:Critavob change:Ddg_bd change:Ddg_Qtotal", function() {
+                    getAttrs(["WSlot","SSlot","atktype","Skl_total","Lck_total","Ddg_Qtotal","Ddg_bd"], function(vals) {
+                        let atktype = vals.atktype;
+                        let LckC = Number(vals.Lck_total)||0;
+                        let DQ = Number(vals.Ddg_Qtotal)||0;
+                        let Dbd = Number(vals.Ddg_bd)||0;
+                        if(atktype==="Phys"){
+                            getSectionIDsOrdered("repeating_weapons", function(idarray) {
+                                let slotnum = vals.WSlot;
+                                let fID = idarray[Number(slotnum)-1];
+                                if(!fID)return;
+                                getAttrs(["repeating_weapons_"+fID+"_Ddg"], function(v) {
+                                    let wDdg = Number(v["repeating_weapons_"+fID+"_Ddg"])||0;
+                                    let totalDdg = 100 + LckC + DQ + wDdg + Dbd;
+                                    setAttrs({Ddg: totalDdg,currDdg: wDdg});
+                                });
+                            });
+                        } else if(atktype==="Mag"){
+                            getSectionIDsOrdered("repeating_spells", function(idarray) {
+                                let slotnum = vals.SSlot;
+                                let fID = idarray[Number(slotnum)-1];
+                                if(!fID)return;
+                                getAttrs(["repeating_spells_"+fID+"_Ddg"], function(v) {
+                                    let wDdg = Number(v["repeating_spells_"+fID+"_Ddg"])||0;
+                                    let totalDdg = 100 + LckC + DQ + wDdg + Dbd;
+                                    setAttrs({Ddg: totalDdg,currDdg: wDdg});
+                                });
+                            });
+                        }
+                    });
+                });
+
+                on('change:repeating_weapons remove:repeating_weapons change:atktype change:WSlot', () => {
+                    getSectionIDsOrdered('repeating_weapons', (idarray) => {
+                        let keys = idarray.map((id)=>"repeating_weapons_"+id+"_WName");
+                        getAttrs(keys, (values) => {
+                            let list = idarray.map((id) => values["repeating_weapons_"+id+"_WName"]);
+                            setAttrs({weplist: list});
+                        });
+                    });
+                });
+
+                on('change:repeating_spells remove:repeating_spells change:atktype change:SSlot', () => {
+                    getSectionIDsOrdered('repeating_spells', (idarray) => {
+                        let keys = idarray.map((id)=>"repeating_spells_"+id+"_SName");
+                        getAttrs(keys, (values) => {
+                            let list = idarray.map((id) => values["repeating_spells_"+id+"_SName"]);
+                            setAttrs({splist: list});
+                        });
+                    });
+                });
+
+                on("change:repeating_weapons:WName change:repeating_spells:SName change:repeating_weapons:Eff_wp change:repeating_spells:Eff_wp change:repeating_weapons:WepEff1 change:repeating_weapons:WepEff2 change:repeating_spells:WepEff1 change:repeating_spells:WepEff2 change:repeating_weapons:Skill_wp change:repeating_spells:Skill_wp change:atktype change:_reporder:weapons change:_reporder:spells remove:repeating_spells remove:repeating_weapons change:WSlot change:SSlot", function() {
+                    getAttrs(["WSlot","SSlot","atktype"], function(vals) {
+                        let atktype = vals.atktype;
+                        if(atktype==="Phys"){
+                            getSectionIDsOrdered("repeating_weapons", function(idarray) {
+                                let slotnum = vals.WSlot;
+                                let fID = idarray[Number(slotnum)-1];
+                                if(!fID)return;
+                                getAttrs(["repeating_weapons_"+fID+"_Skill_wp","repeating_weapons_"+fID+"_Eff_wp","repeating_weapons_"+fID+"_WName","repeating_weapons_"+fID+"_WepEff1","repeating_weapons_"+fID+"_WepEff2"], function(v) {
+                                    let wepdesc = v["repeating_weapons_"+fID+"_Skill_wp"];
+                                    let effdesc = v["repeating_weapons_"+fID+"_Eff_wp"];
+                                    let namedesc = v["repeating_weapons_"+fID+"_WName"];
+                                    setAttrs({currDesc: wepdesc,currEff: effdesc,currName: namedesc});
+                                });
+                            });
+                        } else if(atktype==="Mag"){
+                            getSectionIDsOrdered("repeating_spells", function(idarray) {
+                                let slotnum = vals.SSlot;
+                                let fID = idarray[Number(slotnum)-1];
+                                if(!fID)return;
+                                getAttrs(["repeating_spells_"+fID+"_Skill_wp","repeating_spells_"+fID+"_Eff_wp","repeating_spells_"+fID+"_SName","repeating_spells_"+fID+"_WepEff1","repeating_spells_"+fID+"_WepEff2"], function(v) {
+                                    let wepdesc = v["repeating_spells_"+fID+"_Skill_wp"];
+                                    let effdesc = v["repeating_spells_"+fID+"_Eff_wp"];
+                                    let namedesc = v["repeating_spells_"+fID+"_SName"];
+                                    setAttrs({currDesc: wepdesc,currEff: effdesc,currName: namedesc});
+                                });
+                            });
+                        }
+                    });
+                });
+
+                function setRank(currEXP){
+                    let Rank = "E";
+                    let r = currEXP;
+                    if (currEXP <= 30){Rank = "E";}
+                    else if (currEXP <= 70){Rank = "D";}
+                    else if (currEXP <=120){Rank = "C";}
+                    else if (currEXP <=180){Rank = "B";}
+                    else if (currEXP <=254){Rank = "A";}
+                    else {Rank = "S";}
+                    if (currEXP>255) {Rank = "S"; r = 255;}
+                    return [Rank, r];
+                }
+
+                on("change:SwordEXP", function() {
+                    getAttrs(["Swordrank_max", "SwordEXP"], function(v) {
+                        let currEXP = Number(v.SwordEXP)||0;
+                        let tRanks = setRank(currEXP);
+                        setAttrs({SwordEXP: tRanks[1],Swordrank: tRanks[0]});
+                    });
+                });
+                on("change:LanceEXP", function() {
+                    getAttrs(["Lancerank_max", "LanceEXP"], function(v) {
+                        let currEXP = Number(v.LanceEXP)||0;
+                        let tRanks = setRank(currEXP);
+                        setAttrs({LanceEXP: tRanks[1],Lancerank: tRanks[0]});
+                    });
+                });
+                on("change:AxeEXP", function() {
+                    getAttrs(["Axerank_max", "AxeEXP"], function(v) {
+                        let currEXP = Number(v.AxeEXP)||0;
+                        let tRanks = setRank(currEXP);
+                        setAttrs({AxeEXP: tRanks[1],Axerank: tRanks[0]});
+                    });
+                });
+                on("change:BowEXP", function() {
+                    getAttrs(["Bowrank_max", "BowEXP"], function(v) {
+                        let currEXP = Number(v.BowEXP)||0;
+                        let tRanks = setRank(currEXP);
+                        setAttrs({BowEXP: tRanks[1],Bowrank: tRanks[0]});
+                    });
+                });
+                on("change:StavesEXP", function() {
+                    getAttrs(["Stavesrank_max", "StavesEXP"], function(v) {
+                        let currEXP = Number(v.StavesEXP)||0;
+                        let tRanks = setRank(currEXP);
+                        setAttrs({StavesEXP: tRanks[1],Stavesrank: tRanks[0]});
+                    });
+                });
+                on("change:DarkEXP", function() {
+                    getAttrs(["Darkrank_max", "DarkEXP"], function(v) {
+                        let currEXP = Number(v.DarkEXP)||0;
+                        let tRanks = setRank(currEXP);
+                        setAttrs({DarkEXP: tRanks[1],Darkrank: tRanks[0]});
+                    });
+                });
+                on("change:AnimaEXP", function() {
+                    getAttrs(["Animarank_max", "AnimaEXP"], function(v) {
+                        let currEXP = Number(v.AnimaEXP)||0;
+                        let tRanks = setRank(currEXP);
+                        setAttrs({AnimaEXP: tRanks[1],Animarank: tRanks[0]});
+                    });
+                });
+                on("change:LightEXP", function() {
+                    getAttrs(["Lightrank_max", "LightEXP"], function(v) {
+                        let currEXP = Number(v.LightEXP)||0;
+                        let tRanks = setRank(currEXP);
+                        setAttrs({LightEXP: tRanks[1],Lightrank: tRanks[0]});
+                    });
+                });
+
+                on("change:repeating_weapons:uses", function() {
+                    getAttrs(["repeating_weapons_WName","repeating_weapons_uses"], function(v){
+                        let usev = parseInt(v["repeating_weapons_uses"])||0;
+                        if(usev===0){
+                            setAttrs({"repeating_weapons_WName":"Broken "+v["repeating_weapons_WName"]});
+                        }
+                    });
+                });
+                on("change:repeating_spells:uses", function() {
+                    getAttrs(["repeating_spells_SName","repeating_spells_uses"], function(v){
+                        let usev = parseInt(v["repeating_spells_uses"])||0;
+                        if(usev===0){
+                            setAttrs({"repeating_spells_SName":"Broken "+v["repeating_spells_SName"]});
+                        }
                     });
                 });
             </script>
@@ -844,39 +1355,18 @@
 
 <!-- Hidden Fields -->
 <div class="hidden">
-    <input name="attr_MR_base" value="2" hidden>
     <input name="attr_wepnum" value="0" hidden>
     <input name="attr_spellnum" value="0" hidden>
     <input name="attr_currEff" value=" " hidden>
-    <input name="attr_WepEff_1" value=" " hidden>
-    <input name="attr_WepEff_2" value=" " hidden>
     <input name="attr_currName" value=" " hidden>
     <input name="attr_currMt" value="0" hidden>
     <input name="attr_currHit" value="0" hidden>
     <input name="attr_currCrit" value="0" hidden>
     <input name="attr_currDdg" value="0" hidden>
     <input name="attr_effdmg" value="0" hidden>
-    <input name="attr_currWep" value="Sword" hidden>
     <input name="attr_currDesc" value="Attacking @{target|token_name}!" hidden>
-    <input name="attr_class_exp0" value="0" hidden>
-    <input name="attr_class_exp1" value="0" hidden>
-    <input name="attr_class_exp2" value="0" hidden>
-    <input name="attr_class_gain0" value="0" hidden>
-    <input name="attr_ProwHit" value="0" hidden>
-    <input name="attr_atktype" value="Physical" hidden>
+    <input name="attr_atktype" value="Phys" hidden>
     <input name="attr_SwordHit" value="0" hidden>
-    <input name="attr_ProwAvo" value="0" hidden>
-    <input name="attr_ProwCAvo" value="0" hidden>
-    <input name="attr_WSlot" value="1" hidden>
-    <input name="attr_HP_sf" value="0" hidden>
-    <input name="attr_HP_total" value="0" hidden>
-    <input name="attr_HP_rg" value="0" hidden>
-    <input name="attr_HP_rb" value="0" hidden>
-    <input name="attr_HP_gf" value="0" hidden>
-    <input name="attr_HP_gtotal" value="0" hidden>
-    <input name="attr_Con_Qtotal" value="0" hidden>
-    <input name="attr_Str_Qtotal" value="0" hidden>
-    <input name="attr_Mag_Qtotal" value="0" hidden>
     <input name="attr_Skl_Qtotal" value="0" hidden>
     <input name="attr_Spd_Qtotal" value="0" hidden>
     <input name="attr_Lck_Qtotal" value="0" hidden>
@@ -889,94 +1379,48 @@
     <input name="attr_HP_total_max" value="0" hidden>
     <input name="attr_HP_current" value="0" hidden>
     <input name="attr_HP_current_max" value="0" hidden>
+    <input type="number" name="attr_HP_Qtotal" value="0" hidden>
     <input name="attr_Con_current" value="0" hidden>
     <input name="attr_Con_current_max" value="0" hidden>
-    <input name="attr_Str_sf" value="0" hidden>
     <input name="attr_Str_total" value="0" hidden>
-    <input name="attr_Str_rg" value="0" hidden>
-    <input name="attr_Str_rb" value="0" hidden>
     <input name="attr_Str_gf" value="0" hidden>
     <input name="attr_Str_gtotal" value="0" hidden>
     <input name="attr_Str_total_max" value="0" hidden>
-    <input name="attr_Mag_sf" value="0" hidden>
     <input name="attr_Mag_total" value="0" hidden>
-    <input name="attr_Mag_rg" value="0" hidden>
-    <input name="attr_Mag_rb" value="0" hidden>
     <input name="attr_Mag_gf" value="0" hidden>
     <input name="attr_Mag_gtotal" value="0" hidden>
     <input name="attr_Mag_total_max" value="0" hidden>
-    <input name="attr_Skl_sf" value="0" hidden>
     <input name="attr_Skl_total" value="0" hidden>
-    <input name="attr_Skl_rg" value="0" hidden>
-    <input name="attr_Skl_rb" value="0" hidden>
     <input name="attr_Skl_gf" value="0" hidden>
     <input name="attr_Skl_gtotal" value="0" hidden>
     <input name="attr_Skl_total_max" value="0" hidden>
-    <input name="attr_Spd_sf" value="0" hidden>
     <input name="attr_Spd_total" value="0" hidden>
-    <input name="attr_Spd_rg" value="0" hidden>
-    <input name="attr_Spd_rb" value="0" hidden>
     <input name="attr_Spd_gf" value="0" hidden>
     <input name="attr_Spd_gtotal" value="0" hidden>
     <input name="attr_Spd_total_max" value="0" hidden>
-    <input name="attr_Lck_sf" value="0" hidden>
     <input name="attr_Lck_total" value="0" hidden>
-    <input name="attr_Lck_rg" value="0" hidden>
-    <input name="attr_Lck_rb" value="0" hidden>
     <input name="attr_Lck_gf" value="0" hidden>
     <input name="attr_Lck_gtotal" value="0" hidden>
     <input name="attr_Lck_total_max" value="0" hidden>
-    <input name="attr_Def_sf" value="0" hidden>
     <input name="attr_Def_total" value="0" hidden>
-    <input name="attr_Def_rg" value="0" hidden>
-    <input name="attr_Def_rb" value="0" hidden>
     <input name="attr_Def_gf" value="0" hidden>
     <input name="attr_Def_gtotal" value="0" hidden>
     <input name="attr_Def_total_max" value="0" hidden>
-    <input name="attr_Res_sf" value="0" hidden>
     <input name="attr_Res_total" value="0" hidden>
-    <input name="attr_Res_rg" value="0" hidden>
-    <input name="attr_Res_rb" value="0" hidden>
     <input name="attr_Res_gf" value="0" hidden>
     <input name="attr_Res_gtotal" value="0" hidden>
     <input name="attr_Res_total_max" value="0" hidden>
-    <input name="attr_Cha_sf" value="0" hidden>
-    <input name="attr_Cha_total" value="0" hidden>
-    <input name="attr_Cha_rg" value="0" hidden>
-    <input name="attr_Cha_rb" value="0" hidden>
-    <input name="attr_Cha_gf" value="0" hidden>
-    <input name="attr_Cha_gtotal" value="0" hidden>
-    <input name="attr_Cha_total_max" value="0" hidden>
-    <input name="attr_Mov_sf" value="0" hidden>
-    <input name="attr_Mov_rb" value="0" hidden>
-    <input name="attr_Mov_total" value="0" hidden>
+    <input name="attr_Mov_gf" value="0" hidden>
+    <input name="attr_Mov_gtotal" value="0" hidden>
     <input name="attr_Mov_total_max" value="0" hidden>
+    <input name="attr_Mov_total" value="0" hidden>
     <input name="attr_Str_multi" value="0" hidden>
     <input name="attr_Mag_multi" value="0" hidden>
     <input name="attr_Spd_multi" value="0" hidden>
     <input name="attr_Skl_multi" value="0" hidden>
     <input name="attr_Def_multi" value="0" hidden>
     <input name="attr_Res_multi" value="0" hidden>
-    <input name="attr_Cha_multi" value="0" hidden>
-    <input name="attr_DR_multi" value="0" hidden>
-    <input name="attr_Athletics_total" value="0" hidden>
-    <input name="attr_Arcana_total" value="0" hidden>
-    <input name="attr_History_total" value="0" hidden>
-    <input name="attr_Investigation_total" value="0" hidden>
-    <input name="attr_Nature_total" value="0" hidden>
-    <input name="attr_Religion_total" value="0" hidden>
-    <input name="attr_Deception_total" value="0" hidden>
-    <input name="attr_Intimidation_total" value="0" hidden>
-    <input name="attr_Performance_total" value="0" hidden>
-    <input name="attr_Persuasion_total" value="0" hidden>
-    <input name="attr_Acrobatics_total" value="0" hidden>
-    <input name="attr_SleightofHand_total" value="0" hidden>
-    <input name="attr_Stealth_total" value="0" hidden>
-    <input name="attr_AnimalHandling_total" value="0" hidden>
-    <input name="attr_Insight_total" value="0" hidden>
-    <input name="attr_Medicine_total" value="0" hidden>
-    <input name="attr_Perception_total" value="0" hidden>
-    <input name="attr_Survival_total" value="0" hidden>
+    <input name="attr_Mov_multi" value="0" hidden>
     <input name="attr_EXP" value="0" min="0" max="200" hidden>
     <input name="attr_Swordrank" value="E" type="text" hidden>
     <input name="attr_Lancerank" value="E" type="text" hidden>
@@ -984,24 +1428,8 @@
     <input name="attr_Bowrank" value="E" type="text" hidden>
     <input name="attr_Stavesrank" value="E" type="text" hidden>
     <input name="attr_Darkrank" value="E" type="text" hidden>
-    <input name="attr_Authorityrank" value="E" type="text" hidden>
     <input name="attr_Lightrank" value="E" type="text" hidden>
     <input name="attr_Animarank" value="E" type="text" hidden>
-    <input name="attr_Armorrank" value="E" type="text" hidden>
-    <input name="attr_Ridingrank" value="E" type="text" hidden>
-    <input name="attr_Flyingrank" value="E" type="text" hidden>
-    <input name="attr_Swordrank_max" value="E" type="text" hidden>
-    <input name="attr_Lancerank_max" value="E" type="text" hidden>
-    <input name="attr_Axerank_max" value="E" type="text" hidden>
-    <input name="attr_Bowrank_max" value="E" type="text" hidden>
-    <input name="attr_Stavesrank_max" value="E" type="text" hidden>
-    <input name="attr_Darkrank_max" value="E" type="text" hidden>
-    <input name="attr_Authorityrank_max" value="E" type="text" hidden>
-    <input name="attr_Lightrank_max" value="E" type="text" hidden>
-    <input name="attr_Animarank_max" value="E" type="text" hidden>
-    <input name="attr_Armorrank_max" value="E" type="text" hidden>
-    <input name="attr_Ridingrank_max" value="E" type="text" hidden>
-    <input name="attr_Flyingrank_max" value="E" type="text" hidden>
     <input name="attr_Hit" value="0" hidden>
     <input name="attr_Crit" value="0" hidden>
     <input name="attr_avo" value="0" hidden>
@@ -1009,15 +1437,7 @@
     <input name="attr_myst_total" value="0" hidden>
     <input name="attr_prot_total" value="0" hidden>
     <input name="attr_ward_total" value="0" hidden>
-    <input name="attr_Ghit" value="0" hidden>
     <input name="attr_Atkspd" value="0" min="0" hidden>
-    <input name="attr_isPromo" value="0" type="checkbox" hidden>
-    <input name="attr_fid" value="" hidden>
-    <input name="attr_f_WRank" value="" hidden>
-    <input name="attr_Hitmod" value="0" hidden>
-    <input name="attr_Critmod" value="0" hidden>
-    <input name="attr_Avomod" value="0" hidden>
-    <input name="attr_Ddgmod" value="0" hidden>
     <input name="attr_Dmgmod" value="0" hidden>
     <input name="attr_UACounter" value="0" type="checkbox" hidden>
     <input name="attr_Physb" value="0" hidden>
@@ -1028,7 +1448,5 @@
     <input name="attr_Avob" value="0" hidden>
     <input name="attr_Protb" value="0" hidden>
     <input name="attr_Resb" value="0" hidden>
-    <input name="attr_Chab" value="0" hidden>
-    <input name="attr_Ghitb" value="0" hidden>
 </div>
 </html>
