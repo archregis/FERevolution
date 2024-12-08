@@ -3,6 +3,7 @@
     <div class="sheet-useBackground">
         <div class="sheet-background">
             <div class="sheet-cdiv">
+                <!-- Background configuration removed previously -->
             </div>
             <div>
                 <button type="action" name="act_character">Character</button>
@@ -807,7 +808,7 @@
                         setAttrs({sheetTab: button});
                     });
                 });
-
+            
                 var getSectionIDsOrdered = function (sectionName, callback) {
                     'use strict';
                     getAttrs([`_reporder_${sectionName}`], function (v) {
@@ -818,24 +819,28 @@
                         });
                     });
                 };
-
+            
+                // Update HP total depending on atktype and equipped weapon/spell 
                 function updateHPTotal() {
                     getAttrs(["WSlot","SSlot","atktype","HP_i","HP_bd","HP_Qtotal"], function(vals) {
                         let baseHP = Number(vals.HP_i) + Number(vals.HP_bd) + Number(vals.HP_Qtotal);
                         let atktype = vals.atktype;
-
+            
+                        function setHPFinal(totalHP) {
+                            setAttrs({HP_total: totalHP, HP_current_max: totalHP});
+                        }
+            
                         if (atktype==="Phys") {
                             getSectionIDsOrdered("repeating_weapons", function(idarray) {
                                 let slotnum = vals.WSlot;
                                 let fID = idarray[Number(slotnum)-1];
                                 if(!fID) {
-                                    setAttrs({HP_total: baseHP,HP_current_max: baseHP});
+                                    setHPFinal(baseHP);
                                     return;
                                 }
                                 getAttrs(["repeating_weapons_"+fID+"_HP_wp"], function(v) {
                                     let wp = parseInt(v["repeating_weapons_"+fID+"_HP_wp"])||0;
-                                    let total = baseHP + wp;
-                                    setAttrs({HP_total: total,HP_current_max: total});
+                                    setHPFinal(baseHP + wp);
                                 });
                             });
                         } else if (atktype==="Mag") {
@@ -843,21 +848,21 @@
                                 let slotnum = vals.SSlot;
                                 let fID = idarray[Number(slotnum)-1];
                                 if(!fID) {
-                                    setAttrs({HP_total: baseHP,HP_current_max: baseHP});
+                                    setHPFinal(baseHP);
                                     return;
                                 }
                                 getAttrs(["repeating_spells_"+fID+"_HP_wp"], function(v) {
                                     let wp = parseInt(v["repeating_spells_"+fID+"_HP_wp"])||0;
-                                    let total = baseHP + wp;
-                                    setAttrs({HP_total: total,HP_current_max: total});
+                                    setHPFinal(baseHP + wp);
                                 });
                             });
                         } else {
-                            setAttrs({HP_total: baseHP,HP_current_max: baseHP});
+                            setHPFinal(baseHP);
                         }
                     });
                 }
-
+            
+                // Update Movement total
                 function updateMovTotal() {
                     getAttrs(["Mov_i","Mov_bd","Mov_Qtotal","Mov_multi"], function(v) {
                         let base = Number(v.Mov_i)||0;
@@ -868,21 +873,14 @@
                         setAttrs({Mov_total: total});
                     });
                 }
-
-                on("change:HP_i change:HP_bd change:HP_Qtotal change:WSlot change:SSlot change:atktype remove:repeating_weapons remove:repeating_spells change:repeating_weapons:HP_wp change:repeating_spells:HP_wp change:_reporder:weapons change:_reporder:spells", updateHPTotal);
-                on("change:Mov_i change:Mov_bd change:Mov_Qtotal change:Mov_multi", updateMovTotal);
-
-                on("sheet:opened", function() {
-                    updateHPTotal();
-                    updateMovTotal();
-                });
-
+            
+                // Helper to get active item modifier for a given stat
                 function getActiveItemModifier(stat, callback) {
                     getAttrs(["WSlot","SSlot","atktype"], function(vals) {
                         const type = vals.atktype;
                         let section = null;
                         let slot = null;
-
+            
                         if (type === "Phys") {
                             section = "weapons";
                             slot = vals.WSlot;
@@ -890,19 +888,19 @@
                             section = "spells";
                             slot = vals.SSlot;
                         }
-
+            
                         if (!section) {
                             callback(0);
                             return;
                         }
-
+            
                         getSectionIDsOrdered(`repeating_${section}`, function(idarray) {
                             let fID = idarray[Number(slot)-1];
                             if(!fID) {
                                 callback(0);
                                 return;
                             }
-
+            
                             let wpAttr = stat+"_wp";
                             getAttrs([`repeating_${section}_${fID}_${wpAttr}`], function(v) {
                                 let wp = parseInt(v[`repeating_${section}_${fID}_${wpAttr}`])||0;
@@ -911,15 +909,14 @@
                         });
                     });
                 }
-
-                // Helper to get Mt, Hit, Crit, Ddg from the equipped item
+            
+                // Helper to get item base stats (Mt, Hit, Crit, Ddg)
                 function getActiveItemBaseStats(callback) {
                     getAttrs(["WSlot","SSlot","atktype"], function(vals) {
                         let atktype = vals.atktype;
                         let section = (atktype==="Phys")?"weapons":(atktype==="Mag")?"spells":null;
                         let slot = (atktype==="Phys")?vals.WSlot:(atktype==="Mag")?vals.SSlot:null;
                         if(!section || !slot) {
-                            // No item or neutral atktype
                             return callback({Mt:0,Hit:0,Crit:0,Ddg:0});
                         }
                         getSectionIDsOrdered(`repeating_${section}`, function(idarray) {
@@ -938,21 +935,22 @@
                         });
                     });
                 }
-
-                // Refactored updateStatTotal using getActiveItemModifier (unchanged from step 2)
+            
+                // Update total stats after base + buffs + item modifiers
                 function updateStatTotal(stat) {
                     let baseAttrs = [stat+"_i", stat+"_bd", stat+"_Qtotal","atktype"];
                     getAttrs(baseAttrs, function(v) {
                         let baseVal = (Number(v[stat+"_i"])||0) + (Number(v[stat+"_bd"])||0) + (Number(v[stat+"_Qtotal"])||0);
                         let atktype = v.atktype;
-
+            
                         if (atktype !== "Phys" && atktype !== "Mag") {
+                            // No item modifiers for neutral atktype
                             let updateObj = {};
                             updateObj[stat+"_total"] = baseVal;
                             setAttrs(updateObj);
                             return;
                         }
-
+            
                         getActiveItemModifier(stat, function(wp) {
                             let total = baseVal + wp;
                             let updateObj = {};
@@ -961,70 +959,48 @@
                         });
                     });
                 }
-
-                const stats = ["Str","Mag","Skl","Spd","Lck","Def","Res","Con","Mov"];
-                stats.forEach(stat => {
-                    on(`change:${stat}_i change:${stat}_bd change:repeating_weapons:${stat}_wp change:repeating_spells:${stat}_wp change:_reporder:weapons change:${stat}_Qtotal change:_reporder:spells remove:repeating_weapons remove:repeating_spells change:WSlot change:SSlot change:atktype`,
-                        () => updateStatTotal(stat)
-                    );
+            
+                // Consolidate triggers for all stats into one set of handlers
+                const baseStats = ["Str","Mag","Skl","Spd","Lck","Def","Res","Con","Mov"];
+                const statChangeTriggers = baseStats.map(s => [
+                    `change:${s}_i`,
+                    `change:${s}_bd`,
+                    `change:${s}_Qtotal`,
+                    `change:repeating_weapons:${s}_wp`,
+                    `change:repeating_spells:${s}_wp`,
+                    `remove:repeating_weapons`,
+                    `remove:repeating_spells`
+                ]).flat();
+            
+                const itemRelatedAttrs = ["WSlot","SSlot","atktype","_reporder:weapons","_reporder:spells"];
+                const allStatTriggers = [...statChangeTriggers, ...itemRelatedAttrs.map(i => `change:${i}`)].join(" ");
+            
+                on(allStatTriggers, () => {
+                    baseStats.forEach(stat => updateStatTotal(stat));
                 });
-
-                // Growth totals (unchanged)
-                on("change:HP_gf change:HP_gi", function() {
-                    getAttrs(["HP_gf","HP_gi"], function(v) {
-                        setAttrs({HP_gtotal: Number(v.HP_gf)+Number(v.HP_gi)});
+            
+                // C: Unified Growth Calculation
+                const growthStats = ["HP","Str","Mag","Skl","Spd","Lck","Def","Res","Con","Mov"];
+                growthStats.forEach(stat => {
+                    on(`change:${stat}_gf change:${stat}_gi`, () => updateGrowthTotal(stat));
+                });
+            
+                function updateGrowthTotal(stat) {
+                    getAttrs([`${stat}_gf`,`${stat}_gi`], function(v) {
+                        const gf = Number(v[`${stat}_gf`])||0;
+                        const gi = Number(v[`${stat}_gi`])||0;
+                        // Con growth total = gi only, others = gf+gi
+                        const total = (stat === "Con") ? gi : gf + gi;
+                        let update = {};
+                        update[`${stat}_gtotal`] = total;
+                        setAttrs(update);
                     });
-                });
-                on("change:Str_gf change:Str_gi", function() {
-                    getAttrs(["Str_gf","Str_gi"], function(v) {
-                        setAttrs({Str_gtotal: Number(v.Str_gf)+Number(v.Str_gi)});
-                    });
-                });
-                on("change:Mag_gf change:Mag_gi", function() {
-                    getAttrs(["Mag_gf","Mag_gi"], function(v) {
-                        setAttrs({Mag_gtotal: Number(v.Mag_gf)+Number(v.Mag_gi)});
-                    });
-                });
-                on("change:Skl_gf change:Skl_gi", function() {
-                    getAttrs(["Skl_gf","Skl_gi"], function(v) {
-                        setAttrs({Skl_gtotal: Number(v.Skl_gf)+Number(v.Skl_gi)});
-                    });
-                });
-                on("change:Spd_gf change:Spd_gi", function() {
-                    getAttrs(["Spd_gf","Spd_gi"], function(v) {
-                        setAttrs({Spd_gtotal: Number(v.Spd_gf)+Number(v.Spd_gi)});
-                    });
-                });
-                on("change:Lck_gf change:Lck_gi", function() {
-                    getAttrs(["Lck_gf","Lck_gi"], function(v) {
-                        setAttrs({Lck_gtotal: Number(v.Lck_gf)+Number(v.Lck_gi)});
-                    });
-                });
-                on("change:Def_gf change:Def_gi", function() {
-                    getAttrs(["Def_gf","Def_gi"], function(v) {
-                        setAttrs({Def_gtotal:Number(v.Def_gf)+Number(v.Def_gi)});
-                    });
-                });
-                on("change:Res_gf change:Res_gi", function() {
-                    getAttrs(["Res_gf","Res_gi"], function(v) {
-                        setAttrs({Res_gtotal:Number(v.Res_gf)+Number(v.Res_gi)});
-                    });
-                });
-                on("change:Con_gf change:Con_gi", function() {
-                    getAttrs(["Con_gf","Con_gi"], function(v) {
-                        setAttrs({Con_gtotal:Number(v.Con_gi)});
-                    });
-                });
-                on("change:Mov_gf change:Mov_gi", function() {
-                    getAttrs(["Mov_gf","Mov_gi"], function(v) {
-                        setAttrs({Mov_gtotal:Number(v.Mov_gf)+Number(v.Mov_gi)});
-                    });
-                });
-
-                // QTotals calculation (unchanged)
+                }
+            
+                // QTotals calculation remains similar, but consolidated trigger is already handled.
+            
                 const statsForQTotals = ['HP', 'Str','Mag','Spd','Def','Res','Con','Mov','Hit','Avo','Crit','Ddg','Weight','Mit'];
                 const checks = Array.from({length:12}, (_,i)=>`bonus_${i+1}_check`);
-
                 let allStatAttrs = [];
                 statsForQTotals.forEach(stat => {
                     allStatAttrs.push(`${stat}_M`, `${stat}_S`);
@@ -1032,14 +1008,14 @@
                         allStatAttrs.push(`${stat}_${i}`);
                     }
                 });
-
-                const allTriggers = checks.map(c=>"change:"+c).concat(allStatAttrs.map(a=>"change:"+a)).join(" ");
-
+            
+                const allTriggersQtotal = checks.map(c=>"change:"+c).concat(allStatAttrs.map(a=>"change:"+a)).join(" ");
+                on(allTriggersQtotal, updateAllQTotals);
+            
                 function updateAllQTotals() {
                     const allNeededAttrs = checks.concat(allStatAttrs);
                     getAttrs(allNeededAttrs, function(values) {
                         let update = {};
-
                         statsForQTotals.forEach(stat => {
                             let statModifiers = [
                                 values[`${stat}_M`],
@@ -1048,143 +1024,126 @@
                             for (let i=1; i<=10; i++){
                                 statModifiers.push(values[`${stat}_${i}`]);
                             }
-
+            
                             let sumBonus = 0;
                             statModifiers.forEach((modValue, i) => {
                                 let checkValue = values[checks[i]];
                                 if(Number(checkValue) === 1) {
-                                    sumBonus += Number(modValue) || 0;
+                                    sumBonus += Number(modValue)||0;
                                 }
                             });
-
+            
                             update[`${stat}_Qtotal`] = sumBonus;
                         });
-
+            
                         setAttrs(update);
                     });
                 }
-
-                on(allTriggers, updateAllQTotals);
-
-                // NEW: A single function to update all derived stats
-                function updateDerivedStats() {
-                    // We gather all attributes needed for derived calculations
-                    const needed = [
-                        "atktype","WSlot","SSlot","Str_total","Mag_total","Def_total","Res_total","Skl_total","Lck_total","Atkspd",
-                        "Protb","prot_bd","Resb","ward_bd","Avo_bd","Avomod","Avob","Avo_Qtotal","Hitb","Hitmod","Hit_Qtotal","hit_bd",
-                        "Critb","Critmod","Crit_Qtotal","Crit_bd","Ddg_bd","Ddg_Qtotal","phys_bd","Physb","myst_bd","Magb","Critavob"
-                    ];
-                    getAttrs(needed, function(v) {
-                        let atktype = v.atktype;
-                        let Str = Number(v.Str_total)||0;
-                        let Mag = Number(v.Mag_total)||0;
-                        let Def = Number(v.Def_total)||0;
-                        let Res = Number(v.Res_total)||0;
-                        let Skl = Number(v.Skl_total)||0;
-                        let Lck = Number(v.Lck_total)||0;
-                        let spd = Number(v.Atkspd)||0;
-
-                        let Protb = Number(v.Protb)||0;
-                        let prot_bd = Number(v.prot_bd)||0;
-                        let Resb = Number(v.Resb)||0;
-                        let ward_bd = Number(v.ward_bd)||0;
-
-                        let Avo_bd = Number(v.Avo_bd)||0;
-                        let Avob = Number(v.Avob)||0; 
-                        let Avomod = Number(v.Avomod)||0; 
-                        let AvoQ = Number(v.Avo_Qtotal)||0;
-
-                        let Hitb = Number(v.Hitb)||0;
-                        let Hitmod = Number(v.Hitmod)||0;
-                        let HitQ = Number(v.Hit_Qtotal)||0;
-                        let hit_bd = Number(v.hit_bd)||0;
-
-                        let Critb = Number(v.Critb)||0;
-                        let Critmod = Number(v.Critmod)||0;
-                        let CritQ = Number(v.Crit_Qtotal)||0;
-                        let Crit_bd = Number(v.Crit_bd)||0;
-
-                        let Ddg_bd = Number(v.Ddg_bd)||0;
-                        let DdgQ = Number(v.Ddg_Qtotal)||0;
-
-                        let phys_bd = Number(v.phys_bd)||0;
-                        let Physb = Number(v.Physb)||0;
-                        let myst_bd = Number(v.myst_bd)||0;
-                        let Magb = Number(v.Magb)||0;
-                        
-                        let prot_total = Def + Protb + prot_bd;
-                        let ward_total = Res + Resb + ward_bd;
-
-                        let avo = spd*2 + Math.floor(Lck/2) + Avo_bd + AvoQ;
-
-                        getActiveItemBaseStats(function(itemStats) {
-                            let wMt = itemStats.Mt;
-                            let wHit = itemStats.Hit;
-                            let wCrit = itemStats.Crit;
-                            let wDdg = itemStats.Ddg;
-
-                            let effdmg = 0;
-                            let phys_total = 0;
-                            let myst_total = 0;
-                            let Hit = 0;
-                            let Crit = 0;
-                            let Ddg = 0;
-
-                            if(atktype==="Phys"){
-                                phys_total = Str + wMt + Physb + phys_bd;
-                                effdmg = Str + 3*wMt + Physb + phys_bd;
-                                
-                                Hit = wHit + hit_bd + Hitb + Hitmod + Skl*2 + Math.floor(Lck/2) + HitQ;
-
-                                Crit = Math.round((Skl/2)+(Lck/2)+CritQ + wCrit + Crit_bd);
-
-                                Ddg = 100 + Lck + DdgQ + wDdg + Ddg_bd;
-                            } else if(atktype==="Mag"){
-                                myst_total = Mag + wMt + Magb + myst_bd;
-                                effdmg = Mag + 3*wMt + Magb + myst_bd;
-
-                                Hit = wHit + hit_bd + Hitb + Hitmod + Skl*2 + Math.floor(Lck/2) + HitQ;
-
-                                Crit = Math.round((Skl/2)+(Lck/2)+wCrit+Critb+Critmod+CritQ+Crit_bd);
-
-                                Ddg = 100 + Lck + DdgQ + wDdg + Ddg_bd;
-                            } else {
-                            }
-
-                            // Set all derived values at once
-                            let update = {
-                                phys_total,
-                                myst_total,
-                                prot_total,
-                                ward_total,
-                                avo,
-                                Hit,
-                                Crit,
-                                Ddg,
-                                effdmg
-                            };
-                            setAttrs(update);
-                        });
-                    });
-                }
-
+            
+                // Centralized Derived Stats Calculation
+                // We define a single handler after all relevant changes
+                // We'll gather a large set of attributes and compute all derived stats at once.
                 const derivedTriggers = [
-                    // From old handlers (consolidating them):
                     "change:Str_total","change:repeating_weapons:WType","change:Mov_total","change:repeating_weapons:Mt","change:_reporder:weapons","remove:repeating_weapons",
                     "change:Physb","change:WSlot","change:atktype","change:phys_bd",
                     "change:Mag_total","change:repeating_spells:Mt","change:repeating_weapons:SType","change:_reporder:spells","remove:repeating_spells","change:Magb","change:SSlot","change:myst_bd",
                     "change:Def_total","change:Protb","change:prot_bd",
                     "change:Res_total","change:Resb","change:ward_bd",
-                    "change:Atkspd","change:Avo_bd","change:Lck_total","change:Avomod","change:Avob","change:Avo_Qtotal",
-                    "change:Skl_total","change:Lck_total","change:Hitmod","change:repeating_weapons:Hit","change:repeating_spells:Hit",
+                    "change:Atkspd","change:Avo_bd","change:Lck_total","change:Avo_Qtotal",
+                    "change:Skl_total","change:Hitmod","change:repeating_weapons:Hit","change:repeating_spells:Hit",
                     "change:Hitb","change:Hit_Qtotal","change:hit_bd",
                     "change:Critmod","change:repeating_weapons:Crit","change:repeating_spells:Crit","change:Critb","change:Crit_Qtotal","change:Crit_bd",
-                    "change:Critavob", // included though wasn't previously used in calculations
                     "change:Ddg_bd","change:Ddg_Qtotal","change:repeating_weapons:Ddg","change:repeating_spells:Ddg"
                 ].join(" ");
-
+            
                 on(derivedTriggers, updateDerivedStats);
-
+            
+                function updateDerivedStats() {
+                    const needed = [
+                        "atktype","WSlot","SSlot","Str_total","Mag_total","Def_total","Res_total","Skl_total","Lck_total","Atkspd",
+                        "Protb","prot_bd","Resb","ward_bd","Avo_bd","Avo_Qtotal","Hitb","Hitmod","Hit_Qtotal","hit_bd",
+                        "Critb","Critmod","Crit_Qtotal","Crit_bd","Ddg_bd","Ddg_Qtotal","phys_bd","Physb","myst_bd","Magb"
+                    ];
+                    getAttrs(needed, function(v) {
+                        getActiveItemBaseStats(function(itemStats) {
+                            const update = calculateAllDerivedStats(v, itemStats);
+                            setAttrs(update);
+                        });
+                    });
+                }
+            
+                function calculateAllDerivedStats(v, itemStats) {
+                    let atktype = v.atktype;
+                    let Str = Number(v.Str_total)||0;
+                    let Mag = Number(v.Mag_total)||0;
+                    let Def = Number(v.Def_total)||0;
+                    let Res = Number(v.Res_total)||0;
+                    let Skl = Number(v.Skl_total)||0;
+                    let Lck = Number(v.Lck_total)||0;
+                    let spd = Number(v.Atkspd)||0;
+            
+                    let Protb = Number(v.Protb)||0;
+                    let prot_bd = Number(v.prot_bd)||0;
+                    let Resb = Number(v.Resb)||0;
+                    let ward_bd = Number(v.ward_bd)||0;
+                    let Avo_bd = Number(v.Avo_bd)||0;
+                    let AvoQ = Number(v.Avo_Qtotal)||0;
+                    let Hitb = Number(v.Hitb)||0;
+                    let Hitmod = Number(v.Hitmod)||0;
+                    let HitQ = Number(v.Hit_Qtotal)||0;
+                    let hit_bd = Number(v.hit_bd)||0;
+                    let Critb = Number(v.Critb)||0;
+                    let Critmod = Number(v.Critmod)||0;
+                    let CritQ = Number(v.Crit_Qtotal)||0;
+                    let Crit_bd = Number(v.Crit_bd)||0;
+                    let Ddg_bd = Number(v.Ddg_bd)||0;
+                    let DdgQ = Number(v.Ddg_Qtotal)||0;
+                    let phys_bd = Number(v.phys_bd)||0;
+                    let Physb = Number(v.Physb)||0;
+                    let myst_bd = Number(v.myst_bd)||0;
+                    let Magb = Number(v.Magb)||0;
+            
+                    let prot_total = Def + Protb + prot_bd;
+                    let ward_total = Res + Resb + ward_bd;
+                    let avo = spd*2 + Math.floor(Lck/2) + Avo_bd + AvoQ;
+            
+                    let wMt = itemStats.Mt;
+                    let wHit = itemStats.Hit;
+                    let wCrit = itemStats.Crit;
+                    let wDdg = itemStats.Ddg;
+            
+                    let phys_total = 0, myst_total = 0, Hit = 0, Crit = 0, Ddg = 0, effdmg = 0;
+            
+                    if(atktype==="Phys"){
+                        phys_total = Str + wMt + Physb + phys_bd;
+                        effdmg = Str + 3*wMt + Physb + phys_bd;
+                        Hit = wHit + hit_bd + Hitb + Hitmod + Skl*2 + Math.floor(Lck/2) + HitQ;
+                        Crit = Math.round((Skl/2)+(Lck/2)+CritQ + wCrit + Crit_bd);
+                        Ddg = 100 + Lck + DdgQ + wDdg + Ddg_bd;
+                    } else if(atktype==="Mag"){
+                        myst_total = Mag + wMt + Magb + myst_bd;
+                        effdmg = Mag + 3*wMt + Magb + myst_bd;
+                        Hit = wHit + hit_bd + Hitb + Hitmod + Skl*2 + Math.floor(Lck/2) + HitQ;
+                        Crit = Math.round((Skl/2)+(Lck/2)+wCrit+Critb+Critmod+CritQ+Crit_bd);
+                        Ddg = 100 + Lck + DdgQ + wDdg + Ddg_bd;
+                    } else {
+                        // Neutral atktype
+                    }
+            
+                    return {
+                        phys_total,
+                        myst_total,
+                        prot_total,
+                        ward_total,
+                        avo,
+                        Hit,
+                        Crit,
+                        Ddg,
+                        effdmg
+                    };
+                }
+            
+                // Update weapon and spell lists
                 on('change:repeating_weapons remove:repeating_weapons change:atktype change:WSlot', () => {
                     getSectionIDsOrdered('repeating_weapons', (idarray) => {
                         let keys = idarray.map((id)=>"repeating_weapons_"+id+"_WName");
@@ -1194,7 +1153,7 @@
                         });
                     });
                 });
-
+            
                 on('change:repeating_spells remove:repeating_spells change:atktype change:SSlot', () => {
                     getSectionIDsOrdered('repeating_spells', (idarray) => {
                         let keys = idarray.map((id)=>"repeating_spells_"+id+"_SName");
@@ -1204,7 +1163,7 @@
                         });
                     });
                 });
-
+            
                 on("change:repeating_weapons:WName change:repeating_spells:SName change:repeating_weapons:Eff_wp change:repeating_spells:Eff_wp change:repeating_weapons:WepEff1 change:repeating_weapons:WepEff2 change:repeating_spells:WepEff1 change:repeating_spells:WepEff2 change:repeating_weapons:Skill_wp change:repeating_spells:Skill_wp change:atktype change:_reporder:weapons change:_reporder:spells remove:repeating_spells remove:repeating_weapons change:WSlot change:SSlot", function() {
                     getAttrs(["WSlot","SSlot","atktype"], function(vals) {
                         let atktype = vals.atktype;
@@ -1220,82 +1179,46 @@
                                 let wepdesc = v[prefix+"Skill_wp"];
                                 let effdesc = v[prefix+"Eff_wp"];
                                 let namedesc = v[prefix+(section==="weapons"?"WName":"SName")];
-                                setAttrs({currDesc: wepdesc,currEff: effdesc,currName: namedesc});
+                                setAttrs({currDesc: wepdesc, currEff: effdesc, currName: namedesc});
                             });
                         });
                     });
                 });
-
-                function setRank(currEXP){
+            
+                // Single Weapon Rank Handler
+                const weaponTypes = ["Sword","Lance","Axe","Bow","Staves","Dark","Anima","Light"];
+                weaponTypes.forEach(type => {
+                    on(`change:${type}EXP`, () => updateWeaponRank(type));
+                });
+            
+                function updateWeaponRank(type) {
+                    getAttrs([`${type}EXP`], v => {
+                        let currEXP = Number(v[`${type}EXP`])||0;
+                        let [rank, exp] = setRank(currEXP);
+                        let update = {};
+                        update[`${type}EXP`] = exp;
+                        // For displayed rank attribute, using lowercase for the attribute name as per original code:
+                        update[`${type.toLowerCase()}rank`] = rank;
+                        setAttrs(update);
+                    });
+                }
+            
+                function setRank(currEXP) {
                     let Rank = "E";
                     let r = currEXP;
-                    if (currEXP <= 30){Rank = "E";}
-                    else if (currEXP <= 70){Rank = "D";}
-                    else if (currEXP <=120){Rank = "C";}
-                    else if (currEXP <=180){Rank = "B";}
-                    else if (currEXP <=254){Rank = "A";}
-                    else {Rank = "S";}
-                    if (currEXP>255) {Rank = "S"; r = 255;}
+                    if (currEXP <= 30) Rank = "E";
+                    else if (currEXP <= 70) Rank = "D";
+                    else if (currEXP <=120) Rank = "C";
+                    else if (currEXP <=180) Rank = "B";
+                    else if (currEXP <=254) Rank = "A";
+                    else {
+                        Rank = "S";
+                        r = 255;
+                    }
                     return [Rank, r];
                 }
-
-                on("change:SwordEXP", function() {
-                    getAttrs(["Swordrank_max", "SwordEXP"], function(v) {
-                        let currEXP = Number(v.SwordEXP)||0;
-                        let tRanks = setRank(currEXP);
-                        setAttrs({SwordEXP: tRanks[1],Swordrank: tRanks[0]});
-                    });
-                });
-                on("change:LanceEXP", function() {
-                    getAttrs(["Lancerank_max", "LanceEXP"], function(v) {
-                        let currEXP = Number(v.LanceEXP)||0;
-                        let tRanks = setRank(currEXP);
-                        setAttrs({LanceEXP: tRanks[1],Lancerank: tRanks[0]});
-                    });
-                });
-                on("change:AxeEXP", function() {
-                    getAttrs(["Axerank_max", "AxeEXP"], function(v) {
-                        let currEXP = Number(v.AxeEXP)||0;
-                        let tRanks = setRank(currEXP);
-                        setAttrs({AxeEXP: tRanks[1],Axerank: tRanks[0]});
-                    });
-                });
-                on("change:BowEXP", function() {
-                    getAttrs(["Bowrank_max", "BowEXP"], function(v) {
-                        let currEXP = Number(v.BowEXP)||0;
-                        let tRanks = setRank(currEXP);
-                        setAttrs({BowEXP: tRanks[1],Bowrank: tRanks[0]});
-                    });
-                });
-                on("change:StavesEXP", function() {
-                    getAttrs(["Stavesrank_max", "StavesEXP"], function(v) {
-                        let currEXP = Number(v.StavesEXP)||0;
-                        let tRanks = setRank(currEXP);
-                        setAttrs({StavesEXP: tRanks[1],Stavesrank: tRanks[0]});
-                    });
-                });
-                on("change:DarkEXP", function() {
-                    getAttrs(["Darkrank_max", "DarkEXP"], function(v) {
-                        let currEXP = Number(v.DarkEXP)||0;
-                        let tRanks = setRank(currEXP);
-                        setAttrs({DarkEXP: tRanks[1],Darkrank: tRanks[0]});
-                    });
-                });
-                on("change:AnimaEXP", function() {
-                    getAttrs(["Animarank_max", "AnimaEXP"], function(v) {
-                        let currEXP = Number(v.AnimaEXP)||0;
-                        let tRanks = setRank(currEXP);
-                        setAttrs({AnimaEXP: tRanks[1],Animarank: tRanks[0]});
-                    });
-                });
-                on("change:LightEXP", function() {
-                    getAttrs(["Lightrank_max", "LightEXP"], function(v) {
-                        let currEXP = Number(v.LightEXP)||0;
-                        let tRanks = setRank(currEXP);
-                        setAttrs({LightEXP: tRanks[1],Lightrank: tRanks[0]});
-                    });
-                });
-
+            
+                // Handle uses going to zero for weapons/spells
                 on("change:repeating_weapons:uses", function() {
                     getAttrs(["repeating_weapons_WName","repeating_weapons_uses"], function(v){
                         let usev = parseInt(v["repeating_weapons_uses"])||0;
@@ -1312,7 +1235,22 @@
                         }
                     });
                 });
-
+            
+                // Initial triggers on sheet open
+                on("sheet:opened", function() {
+                    updateHPTotal();
+                    updateMovTotal();
+                    baseStats.forEach(stat => updateStatTotal(stat));
+                    updateDerivedStats();
+                    updateAllQTotals();
+                    growthStats.forEach(updateGrowthTotal);
+                    weaponTypes.forEach(updateWeaponRank);
+                });
+            
+                // Additional triggers for HP/Mov changes
+                on("change:HP_i change:HP_bd change:HP_Qtotal change:WSlot change:SSlot change:atktype remove:repeating_weapons remove:repeating_spells change:repeating_weapons:HP_wp change:repeating_spells:HP_wp change:_reporder:weapons change:_reporder:spells", updateHPTotal);
+                on("change:Mov_i change:Mov_bd change:Mov_Qtotal change:Mov_multi", updateMovTotal);
+            
             </script>
         </div>
     </div>
