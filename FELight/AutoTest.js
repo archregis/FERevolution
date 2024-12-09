@@ -500,11 +500,6 @@ on('chat:message', function(msg) {
     var DmgTaken = 0;
     var DefMit = 0;
     let dodge = Number(getAttrValue(attacker.id, "Ddg"));
-    if (dmgtype == "Physical"){
-      var WepSlot = Number(getAttrValue(attacker.id, "WSlot"));
-      var WepUses = getAttr(attacker.id, 'repeating_weapons_uses');
-      log('wepslot= '+WepSlot+' has uses '+WepUses);
-    }
 
     // Initialize skill function I/O
     var BattleInput = {
