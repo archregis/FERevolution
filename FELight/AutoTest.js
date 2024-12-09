@@ -385,7 +385,7 @@ function PrideOfSteel(BattleInput, BattleOutput) {
   }
 }
 
-// WIP
+// Done
 function Thunderstorm(BattleInput, BattleOutput) {
   if (BattleInput.WhoseSkill == 1) { return; }
   if (BattleInput.AWWeight > BattleInput.DWWeight) {
@@ -450,8 +450,7 @@ on('chat:message', function(msg) {
     //Initialize Attacker and Defender
     var selectedId = parts[0];
     var targetId = parts[1];
-
-    var BattlePhase = parts[2];
+    var initiating = parts[2];
 
     var selectedToken = getObj('graphic', selectedId);
     var attacker = getObj('character', selectedToken.get('represents'));
@@ -489,35 +488,27 @@ on('chat:message', function(msg) {
 
     let spdiff = getAttrValue(attacker.id, 'Atkspd') - getAttrValue(defender.id, 'Atkspd');
     log(getAttrValue(attacker.id, 'Atkspd') + ' speed');
-    var ACurrHP = selectObj.get("bar3_value"); //attacker HP
-    var DCurrHP = targetObj.get("bar3_value"); //defender HP
-    var AMaxHP = selectObj.get("bar3_max");
-    var DMaxHP = targetObj.get("bar3_max");
     var dmgtype = getAttr(attacker.id,'atktype').get('current');
     var DmgTaken = 0;
-    var AttkDmg = 0;
+    var AtkDmg = 0;
     var DefMit = 0;
-    let awtype = getAttr(attacker.id, "currWep").get('current');
-    let dwtype = getAttr(defender.id, "currWep").get('current');
-    log("awtype: " + awtype + " dwtype: " + dwtype);
-    let dhit = Number(getAttrValue(defender.id, "Hit"));
-    let aavo = Number(getAttrValue(attacker.id, "avo"));
-    let ddodge = Number(getAttrValue(attacker.id, "Ddg"));
+    let dodge = Number(getAttrValue(attacker.id, "Ddg"));
 
 
-    //Initialize skill function I/O
+    // Initialize skill function I/O
     let BattleInput = {
       "WhoseSkill": -1, // To ensure we don't activate a defender's skill when we shouldn't. 0 = attacker, 1 = defender
+      "IsInitiating": initiating, // Determine if you are intiating the attack or counter-attacking. 0 = initiating, 1 = countering
       "Attacker": selected,
       "Defender": target,
-      "AWType": awtype,
-      "DWType": dwtype,
+      "AWType": getAttr(attacker.id, "currWep").get('current'),
+      "DWType": getAttr(defender.id, "currWep").get('current'),
       "AWWeight" : getAttrValue(attacker.id,'currWt'),
       "DWWeight" : getAttrValue(defender.id,'currWt'),
-      "AMaxHP": AMaxHP,
-      "DMaxHP": DMaxHP,
-      "ACurrHP": ACurrHP,
-      "DCurrHP": DCurrHP,
+      "AMaxHP": selectObj.get("bar3_max"),
+      "DMaxHP": targetObj.get("bar3_max"),
+      "ACurrHP": selectObj.get("bar3_value"),
+      "DCurrHP": targetObj.get("bar3_value"),
       "AStr": Number(getAttrValue(attacker.id, "Str_total")),
       "ARes": Number(getAttrValue(attacker.id, "Res_total")),
       "ADef": Number(getAttrValue(attacker.id, "Def_total")),
@@ -605,28 +596,12 @@ on('chat:message', function(msg) {
     }
 
 
-    // Damage Typing
-    if (dmgtype == 'Physical') {
-      log('AddDmg is really: ' + AddedDmg);
-      AttkDmg = getAttrValue(attacker.id, "phys_total") + AddedDmg;
-      DefMit = getAttrValue(defender.id, "prot_total") + getAttrValue(defender.id, "Mit_Qtotal") + AddedProt;
-      sendChat(target,'<p style = "margin-bottom: 0px;">' + AttkDmg + ' physical damage vs ' + DefMit + ' protection!</p>');
-      DmgTaken = AttkDmg - DefMit;
-    }
-    else if (dmgtype == 'Magical') {
-      AttkDmg = getAttrValue(attacker.id, "myst_total") + AddedDmg;
-      DefMit = getAttrValue(defender.id, "ward_total") + getAttrValue(defender.id, "Mit_Qtotal") + AddedWard;
-      sendChat(target,'<p style = "margin-bottom: 0px;">' + AttkDmg + ' mystical damage vs ' + DefMit + ' resistance!</p>');
-      DmgTaken = AttkDmg - DefMit;
-    }
-
-
     // Weapon triangle
     let triangle = 'Neutral';
     let mult = 1;
     let weaponTriangle = { 'Sword': 1, 'Axe':2, 'Lance':3, 'Anima':4, 'Light':5, 'Dark':6 };
-    let atkTriMap = weaponTriangle[awtype];
-    let defTriMap = weaponTriangle[dwtype];
+    let atkTriMap = weaponTriangle[BattleInput.AWType];
+    let defTriMap = weaponTriangle[BattleInput.DWType];
     if ((atkTriMap < 4 && defTriMap < 4) || (atkTriMap >= 4 && defTriMap >= 4)) {
       if ((atkTriMap+1)%3 == defTriMap%3) {
         triangle = 'Adv';
@@ -646,22 +621,37 @@ on('chat:message', function(msg) {
     let triangleMsg = "";
     if (triangle == 'Adv') {
       Hit += 15 * mult;
-      DmgTaken += 1 * mult;
+      AtkDmg += 1 * mult;
       triangleMsg = '<div ' + headstyle + '>Attacking with advantage!</div>'
     }
     else if (triangle == 'Disadv') {
       Hit += -15 * mult;
-      DmgTaken += -1 * mult;
+      AtkDmg += -1 * mult;
       triangleMsg = '<div ' + headstyle + '>Attacking with disadvantage!</div>'
     }
     sendChat(target, '<div ' + divstyle + '>' + //--
     triangleMsg +
     '<div style = "margin: 0 auto; width: 80%; margin-top: 4px;">' + //--
     '<p style = "margin-bottom: 0px;">' + Hit + ' hit vs ' + BattleOutput.Avoid + ' avoid!</p>' +//--
-    '<p style = "margin-bottom: 0px;">' + Crit + ' crit vs ' + ddodge + ' dodge!</p>' +//--
+    '<p style = "margin-bottom: 0px;">' + Crit + ' crit vs ' + dodge + ' dodge!</p>' +//--
     '</div>' + //--
     '</div>'
     );
+
+
+    // Damage Typing
+    if (dmgtype == 'Physical') {
+      log('AddDmg is really: ' + AddedDmg);
+      AtkDmg += getAttrValue(attacker.id, "phys_total") + AddedDmg;
+      DefMit = getAttrValue(defender.id, "prot_total") + getAttrValue(defender.id, "Mit_Qtotal") + AddedProt;
+      sendChat(target,'<p style = "margin-bottom: 0px;">' + AtkDmg + ' physical damage vs ' + DefMit + ' protection!</p>');
+    }
+    else if (dmgtype == 'Magical') {
+      AtkDmg += getAttrValue(attacker.id, "myst_total") + AddedDmg;
+      DefMit = getAttrValue(defender.id, "ward_total") + getAttrValue(defender.id, "Mit_Qtotal") + AddedWard;
+      sendChat(target,'<p style = "margin-bottom: 0px;">' + AtkDmg + ' mystical damage vs ' + DefMit + ' resistance!</p>');
+    }
+    DmgTaken = AtkDmg - DefMit;
 
 
     // End of calculation skill procs
@@ -676,13 +666,14 @@ on('chat:message', function(msg) {
 
     // Output battle outcome
     if (Hit >= Avoid) {
-      if (Crit > ddodge) {
-        DmgTaken *= 3;
+      if (Crit > dodge) {
+        DmgTaken = Math.max(0, Math.min(BattleInput.DCurrHP, DmgTaken * 3));
         if (BattleOutput.Resilience == 1) { DmgTaken /= 2; }
         sendChat(target, 'You crit and deal '+ DmgTaken + ' damage!');
         CurrHP = targetObj.set("bar3_value", parseInt(targetObj.get("bar3_value")) - DmgTaken);
       }
       else {
+        DmgTaken = Math.max(0, Math.min(BattleInput.DCurrHP, DmgTaken));
         CurrHP = targetObj.set("bar3_value", parseInt(targetObj.get("bar3_value")) - DmgTaken);
         sendChat(target, 'You hit and deal '+ DmgTaken + ' damage!');
       }
