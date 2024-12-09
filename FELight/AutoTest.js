@@ -164,7 +164,7 @@ function Adept(BattleInput, BattleOutput) {
   }
 }
 
-// WIP
+// Done
 function Luna(BattleInput, BattleOutput) {
   if (BattleInput.WhoseSkill == 1) { return; }
   if (randomInteger(100) <= Number(BattleInput.ASkill)) {
@@ -177,7 +177,8 @@ function Luna(BattleInput, BattleOutput) {
 function Sol(BattleInput, BattleOutput) {
   if (BattleInput.WhoseSkill == 1) { return; }
   if (randomInteger(100) <= Number(BattleInput.ASkill)) {
-
+    outputSkill(BattleInput.Attacker, "Sol");
+    BattleOutput.Sol = 1;
   }
 }
 
@@ -486,6 +487,7 @@ on('chat:message', function(msg) {
       "Reaver": 0,
       "Resilience": 0,
       "Luna": 0,
+      "Sol": 0,
     }
 
     // Skill checks
@@ -637,6 +639,10 @@ on('chat:message', function(msg) {
         sendChat(target, 'You crit and deal '+ DmgTaken + ' damage!');
         getAttr(defender.id, "HP_current").setWithWorker("current",FinalHP);
         CurrHP = targetObj.set("bar3_value", FinalHP);
+        if(BattleOutput.Sol == 1){
+          getAttr(defender.id, "HP_current").setWithWorker("current",FinalHP);
+          CurrHP = targetObj.set("bar3_value", FinalHP);
+        }
 
       }
       else {
