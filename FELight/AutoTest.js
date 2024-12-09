@@ -438,6 +438,18 @@ function Nullify(BattleInput, BattleOutput) {
   BattleOutput.Nullify = 1;
 }
 
+// Weapon attribute map to avoid multiple if-statements
+
+
+  // Update weapon EXP based on wtype and wepGain
+  function updateWeaponEXP(attackerId, wtype, wepGain) {
+    if (!weaponMap[wtype]) return;
+    const attr = getAttr(attackerId, weaponMap[wtype]);
+    if (!attr) return;
+    const currentVal = Number(attr.get("current")) || 0;
+    attr.setWithWorker("current", currentVal + wepGain);
+  }
+
 on('chat:message', function(msg) {
   if (msg.type != 'api') return;
   var parts = processInlinerolls(msg).split(' ');
@@ -500,6 +512,19 @@ on('chat:message', function(msg) {
     var DmgTaken = 0;
     var DefMit = 0;
     let dodge = Number(getAttrValue(attacker.id, "Ddg"));
+
+    var wepGain = Number(getAttrValue(attacker.id, "currWexp"));
+
+    var weaponMap = {
+      "Sword": "SwordEXP",
+      "Lance": "LanceEXP",
+      "Axe": "AxeEXP",
+      "Bow": "BowEXP",
+      "Staff": "StavesEXP",
+      "Dark": "DarkEXP",
+      "Anima": "AnimaEXP",
+      "Light": "LightEXP"
+    };
 
     // Initialize skill function I/O
     var BattleInput = {
@@ -698,6 +723,9 @@ on('chat:message', function(msg) {
         getAttr(attacker.id, "HP_current").setWithWorker("current",Math.min(ACurrHP+Math.min(DmgTaken,DCurrHP),AMaxHP));
         CurrHP = selectObj.set("bar3_value", Math.min(ACurrHP+Math.min(DmgTaken,DCurrHP),AMaxHP))
       }
+      log('awtype is '+BattleInput.AWType);
+      log('Wep gain is '+wepGain);
+      updateWeaponEXP(attacker.id, BattleInput.AWType, wepGain);
     }
     else {
     sendChat(target, 'You missed!');

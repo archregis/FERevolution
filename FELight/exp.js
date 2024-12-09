@@ -27,27 +27,6 @@ function getAttr(characterId, attrName) {
     msgContainer: 'style="margin: 0 auto; width: 80%; margin-top: 4px;"'
   };
 
-  // Weapon attribute map to avoid multiple if-statements
-  const weaponMap = {
-    "Sword": "SwordEXP",
-    "Lance": "LanceEXP",
-    "Axe": "AxeEXP",
-    "Bow": "BowEXP",
-    "Staff": "StavesEXP",
-    "Dark": "DarkEXP",
-    "Anima": "AnimaEXP",
-    "Light": "LightEXP"
-  };
-
-  // Update weapon EXP based on wtype and wepGain
-  function updateWeaponEXP(attackerId, wtype, wepGain) {
-    if (!weaponMap[wtype]) return;
-    const attr = getAttr(attackerId, weaponMap[wtype]);
-    if (!attr) return;
-    const currentVal = Number(attr.get("current")) || 0;
-    attr.setWithWorker("current", currentVal + wepGain);
-  }
-
   // Handle leveling up and stat growth
   function handleLevelUp(attackerId, CurrEXP, LvA, who) {
     while (CurrEXP.get("current") >= 100) {
@@ -149,16 +128,6 @@ function getAttr(characterId, attrName) {
         who = 'character|' + who.id;
       }
 
-      // If EXPAmod >= 0, handle weapon EXP gain
-      if (EXPAmod >= 0) {
-        const wep = getAttr(attacker.id, "currWep");
-        const wtype = wep ? wep.get('current') : "";
-        const Gain = getAttr(attacker.id, "currWexp");
-        const wepGain = Gain ? Number(Gain.get('current')) : 0;
-
-        updateWeaponEXP(attacker.id, wtype, wepGain);
-      }
-
       // Update character EXP
       CurrEXP.set("current", EXPA + EXPAmod);
 
@@ -174,4 +143,3 @@ function getAttr(characterId, attrName) {
       handleLevelUp(attacker.id, CurrEXP, LvA, who);
     }
   });
-  

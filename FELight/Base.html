@@ -2208,7 +2208,7 @@ on("change:Survival_check change:Res_total change:Lck_total",function(eventInfo)
 
 
 //Weapon Type
-on("change:repeating_weapons:WType change:repeating_weapons:wEXP change:repeating_spells:SType change:atktype change:_reporder:weapons change:_reporder:spells remove:repeating_spells remove:repeating_weapons change:WSlot change:SSlot", function(eventInfo) {
+on("change:repeating_weapons:WType change:repeating_weapons:wEXP change:repeating_spells:wEXP change:repeating_spells:SType change:atktype change:_reporder:weapons change:_reporder:spells remove:repeating_spells remove:repeating_weapons change:WSlot change:SSlot", function(eventInfo) {
 	getAttrs(["WSlot","SSlot","atktype"], function(v) {
 		if (v.atktype == "Physical"){
 			getSectionIDsOrdered("repeating_weapons", function(idarray) {
