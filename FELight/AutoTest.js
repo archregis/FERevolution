@@ -496,13 +496,15 @@ on('chat:message', function(msg) {
       selectObj = selectPossibles[0];
     }
 
-    var dmgType = getAttr(attacker.id,'atktype').get('current');
+    var dmgtype = getAttr(attacker.id,'atktype').get('current');
     var DmgTaken = 0;
-    var AtkDmg = 0;
     var DefMit = 0;
     let dodge = Number(getAttrValue(attacker.id, "Ddg"));
-    
-
+    if (dmgtype == "Physical"){
+      var WepSlot = Number(getAttrValue(attacker.id, "WSlot"));
+      var WepUses = Number(getAttrValue(attacker.id, `repeating_weapons_${WepSlot}_uses`));
+      log(`Wep uses has ${WepUses}`);
+    }
 
     // Initialize skill function I/O
     var BattleInput = {
@@ -524,13 +526,13 @@ on('chat:message', function(msg) {
       "ASkill": Number(getAttrValue(attacker.id, "Skl_total")),
       "ASpeed": Number(getAttrValue(attacker.id, "Spd_total")),
       "ALuck": Number(getAttrValue(attacker.id, "Lck_total")),
-      "DWard": Number(getAttrValue(attacker.id, "ward_total")),
-      "DProt": Number(getAttrValue(attacker.id, "prot_total")),
+      "DWard": Number(getAttrValue(defender.id, "ward_total")),
+      "DProt": Number(getAttrValue(defender.id, "prot_total")),
     };
 
     let BattleOutput = {
-      "DWard": Number(getAttrValue(attacker.id, "ward_total")),
-      "DProt": Number(getAttrValue(attacker.id, "prot_total")),
+      "DWard": Number(getAttrValue(defender.id, "ward_total")),
+      "DProt": Number(getAttrValue(defender.id, "prot_total")),
       "Hit": Number(getAttrValue(attacker.id, "Hit"))+randomInteger(100),
       "Crit": Number(getAttrValue(attacker.id, "Crit"))+randomInteger(100),
       "Avoid" : Number(getAttrValue(defender.id, "avo")),
@@ -641,12 +643,12 @@ on('chat:message', function(msg) {
     var triangleMsg = "";
     if (triangle == 'Adv') {
       Hit += 15 * mult;
-      AtkDmg += 1 * mult;
+      DmgTaken += 1 * mult;
       triangleMsg = '<div ' + headstyle + '>Attacking with advantage!</div>'
     }
     else if (triangle == 'Disadv') {
       Hit += -15 * mult;
-      AtkDmg += -1 * mult;
+      DmgTaken += -1 * mult;
       triangleMsg = '<div ' + headstyle + '>Attacking with disadvantage!</div>'
     }
     sendChat(target, '<div ' + divstyle + '>' + //--
@@ -662,13 +664,13 @@ on('chat:message', function(msg) {
     if (dmgtype == 'Physical') {
       log('AddDmg is really: ' + AddedDmg);
       AttkDmg = getAttrValue(attacker.id, "phys_total") + AddedDmg;
-      DefMit = BattleOutput.DProt + getAttrValue(defender.id, "Mit_Qtotal") + AddedMit;
+      DefMit = BattleOutput.DProt + getAttrValue(defender.id, "Mit_Qtotal") + AddedProt;
       sendChat(target,'<p style = "margin-bottom: 0px;">' + AttkDmg + ' physical damage vs ' + DefMit + ' protection!</p>');
       DmgTaken = AttkDmg - DefMit;
     }
     else if (dmgtype == 'Magical') {
       AttkDmg = getAttrValue(attacker.id, "myst_total") + AddedDmg;
-      DefMit = BattleOutput.DWard + getAttrValue(defender.id, "Mit_Qtotal") + AddedMit;
+      DefMit = BattleOutput.DWard + getAttrValue(defender.id, "Mit_Qtotal") + AddedWard;
       sendChat(target,'<p style = "margin-bottom: 0px;">' + AttkDmg + ' mystical damage vs ' + DefMit + ' resistance!</p>');
       DmgTaken = AttkDmg - DefMit;
     }
