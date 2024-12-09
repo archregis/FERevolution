@@ -317,11 +317,11 @@ function Chivalry(BattleInput, BattleOutput) {
 
 // Done
 function FortressOfWill(BattleInput, BattleOutput){
-  if (BattleInput.WhoseSkill == 0 && BattleInput.ACurrHP == BattleInput.AMaxHP) { 
+  if (BattleInput.WhoseSkill == 0 && BattleInput.ACurrHP == BattleInput.AMaxHP) {
     outputSkill(BattleInput.Attacker, "Fortress of Will");
     BattleOutput.AddDmg += 4;
   }
-  if (BattleInput.WhoseSkill == 1 && BattleInput.DCurrHP == BattleInput.DMaxHP) { 
+  if (BattleInput.WhoseSkill == 1 && BattleInput.DCurrHP == BattleInput.DMaxHP) {
     outputSkill(BattleInput.Defender, "Fortress of Will");
     BattleOutput.AddMit += 4;
   }
