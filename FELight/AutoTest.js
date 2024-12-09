@@ -215,7 +215,7 @@ function Colossus(BattleInput, BattleOutput) {
   if (BattleInput.WhoseSkill == 1) { return; }
   if (randomInteger(100) <= BattleInput.ASkill) {
     outputSkill(BattleInput.Attacker, "Colossus");
-    BattleOutput.AddDmg += BattleInput.AStr * 2;
+    BattleOutput.AddDmg += BattleInput.AStr;
   }
 }
 
@@ -224,7 +224,7 @@ function Ignis(BattleInput, BattleOutput) {
   if (BattleInput.WhoseSkill == 1) { return; }
   if (randomInteger(100) <= BattleInput.ASkill) {
     outputSkill(BattleInput.Attacker, "Ignis");
-    BattleOutput.AddDmg += BattleInput.ARes / 2 + BattleInput.ADef/ 2;
+    BattleOutput.AddDmg += Math.floor(BattleInput.ARes / 2) + Math.floor(BattleInput.ADef/ 2);
   }
 }
 
@@ -232,7 +232,7 @@ function Ignis(BattleInput, BattleOutput) {
 function Armsthrift(BattleInput, BattleOutput) {
   if (BattleInput.WhoseSkill == 1) { return; }
   if (randomInteger(100) <= BattleInput.ALuck) {
-
+    outputSkill(BattleInput.Attacker, "Armsthrift");
   }
 }
 
@@ -403,16 +403,27 @@ function Thunderstorm(BattleInput, BattleOutput) {
 function Resolve(BattleInput, BattleOutput) {
    if (BattleInput.WhoseSkill == 0 && BattleInput.ACurrHP < BattleInput.AMaxHP / 2) {
      outputSkill(BattleInput.Attacker, "Resolve");
+     BattleInput.ASkill += Math.floor(BattleInput.ASkill / 10 * 3);
+     BattleInput.ASpeed += Math.floor(BattleInput.ASkill / 10 * 3);
+     if (BattleInput.DmgType == 'Physical') {
+      BattleOutput.AddDmg += Math.floor(BattleInput.AStr / 10 * 3);
+     }
+     else if (BattleInput.DmgType == 'Mystical') {
+      BattleOutput.AddDmg += Math.floor(BattleInput.AMag / 10 * 3);
+     }
    }
    else if (BattleInput.WhoseSkill == 1 && BattleInput.DCurrHP < BattleInput.DMaxHP / 2) {
      outputSkill(BattleInput.Defender, "Resolve");
+     BattleInput.Avoid += 2 * Math.floor(BattleInput.DSpd / 10 * 3);
+     BattleInput.AtkSpd += Math.floor(BattleInput.DSpd / 10 * 3);
    }
 
 }
 
 // +5 damage to unmounted units
 function Trample(BattleInput, BattleOutput) {
-
+  if (BattleInput.WhoseSkill == 1 || BattleInput.DWeakness.includes("Flying") || BattleInput.DWeakness.includes("Cavalry")) { return; }
+  BattleOutput.AddDmg += 5;
 }
 
 // Critical hits do 1.5x damage instead of 3x
@@ -438,6 +449,8 @@ function Nullify(BattleInput, BattleOutput) {
   BattleOutput.Nullify = 1;
 }
 
+
+
 on('chat:message', function(msg) {
   if (msg.type != 'api') return;
   var parts = processInlinerolls(msg).split(' ');
@@ -456,6 +469,7 @@ on('chat:message', function(msg) {
       return;
     }
     log(msg);
+
 
     //Initialize Attacker and Defender
     var selectedId = parts[0];
@@ -501,10 +515,13 @@ on('chat:message', function(msg) {
     var DefMit = 0;
     let dodge = Number(getAttrValue(attacker.id, "Ddg"));
 
+
     // Initialize skill function I/O
     var BattleInput = {
       "WhoseSkill": -1, // To ensure we don't activate a defender's skill when we shouldn't. 0 = attacker, 1 = defender
       "IsInitiating": initiating, // Determine if you are intiating the attack or counter-attacking. 0 = initiating, 1 = countering
+      "DWeakness": getAttr(defender.id,'Weak_total').get('current').split(','),
+      "DmgType": dmgtype,
       "Attacker": selected,
       "Defender": target,
       "AWType": getAttr(attacker.id, "currWep").get('current'),
@@ -516,11 +533,13 @@ on('chat:message', function(msg) {
       "ACurrHP": selectObj.get("bar3_value"),
       "DCurrHP": targetObj.get("bar3_value"),
       "AStr": Number(getAttrValue(attacker.id, "Str_total")),
+      "AMag": Number(getAttrValue(attacker.id, "Mag_total")),
       "ARes": Number(getAttrValue(attacker.id, "Res_total")),
       "ADef": Number(getAttrValue(attacker.id, "Def_total")),
       "ASkill": Number(getAttrValue(attacker.id, "Skl_total")),
       "ASpeed": Number(getAttrValue(attacker.id, "Spd_total")),
       "ALuck": Number(getAttrValue(attacker.id, "Lck_total")),
+      "DSpeed": Number(getAttrValue(defender.id, "Spd_total")),
       "DWard": Number(getAttrValue(defender.id, "ward_total")),
       "DProt": Number(getAttrValue(defender.id, "prot_total")),
     };
@@ -528,8 +547,8 @@ on('chat:message', function(msg) {
     let BattleOutput = {
       "DWard": Number(getAttrValue(defender.id, "ward_total")),
       "DProt": Number(getAttrValue(defender.id, "prot_total")),
-      "Hit": Number(getAttrValue(attacker.id, "Hit"))+randomInteger(100),
-      "Crit": Number(getAttrValue(attacker.id, "Crit"))+randomInteger(100),
+      "Hit": Number(getAttrValue(attacker.id, "Hit")) + randomInteger(100),
+      "Crit": Number(getAttrValue(attacker.id, "Crit")) + randomInteger(100),
       "Avoid" : Number(getAttrValue(defender.id, "avo")),
       "AtkSpd": Number(getAttrValue(attacker.id, 'Atkspd')),
       "AddDmg": 0,
@@ -544,6 +563,7 @@ on('chat:message', function(msg) {
       "Sol": 0,
 
     }
+
 
     // Skill checks
     var AllSkills = new Set(["SureShot","Adept","Luna","Sol","Glacias","Flare","Impale","Colossus","Ignis","Armsthrift","QuickDraw","DartingBlow",
@@ -592,19 +612,18 @@ on('chat:message', function(msg) {
       sendChat(target,'<p style = "margin-bottom: 0px;"> You double the enemy! </p>');
     }
 
+
     // Effectiveness
     if (BattleOutput.Nullify == 0) {
-      var AEffective = getAttr(attacker.id,'currEff').get('current').split(',');
+      var AEff = getAttr(attacker.id,'currEff').get('current').split(',');
       var DWeak = getAttr(defender.id,'Weak_total').get('current').split(',');
       var isEffective = 0;
 
-      AEffective.forEach(function (Eff) {
-        for(let i=0; i<DWeak.length; i++) {
-          if (DWeak[i] == Eff){
-            isEffective = 1;
-          }
+      for (let i=0; i<AEff.length; i++) {
+        if (DWeak.includes(AEff[i])) {
+          isEffective = 1;
         }
-      });
+      }
 
       if (isEffective == 1) {
         sendChat(target,'<p style = "margin-bottom: 0px;"> You deal Effective Damage!</p>');
@@ -655,6 +674,7 @@ on('chat:message', function(msg) {
     '</div>'
     );
 
+
     // Damage Typing
     if (dmgtype == 'Physical') {
       log('AddDmg is really: ' + AddedDmg);
@@ -695,8 +715,8 @@ on('chat:message', function(msg) {
 
       }
       if(BattleOutput.Sol == 1){
-        getAttr(attacker.id, "HP_current").setWithWorker("current",Math.min(ACurrHP+Math.min(DmgTaken,DCurrHP),AMaxHP));
-        CurrHP = selectObj.set("bar3_value", Math.min(ACurrHP+Math.min(DmgTaken,DCurrHP),AMaxHP))
+        getAttr(attacker.id, "HP_current").setWithWorker("current", Math.min(ACurrHP + Math.min(DmgTaken, DCurrHP), AMaxHP));
+        CurrHP = selectObj.set("bar3_value", Math.min(ACurrHP + Math.min(DmgTaken, DCurrHP), AMaxHP))
       }
     }
     else {
