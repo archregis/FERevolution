@@ -1,16 +1,20 @@
 <html>
 <body class="charsheet">
-<div class="sheet-maindiv">
-    <div class="sheet-useBackground">
-        <div class="sheet-background">
-            <div class="sheet-cdiv"></div>
-            <div>
-                <button type="action" name="act_character">Character</button>
-                <button type="action" name="act_misc">Misc</button>
-                <button type="action" name="act_equip">Bonuses</button>
-            </div>
-            <input type="hidden" class="sheet-tabstoggle" name="attr_sheetTab" value="character"/>
-
+    <div class="sheet-maindiv">
+        <div class="sheet-useBackground">
+            <div class="sheet-background">
+    
+                <!-- Radio inputs for tabs -->
+                <input type="radio" name="attr_sheetTab" value="character" class="sheet-tabstoggle" id="tab-character" checked>
+                <input type="radio" name="attr_sheetTab" value="misc" class="sheet-tabstoggle" id="tab-misc">
+                <input type="radio" name="attr_sheetTab" value="equip" class="sheet-tabstoggle" id="tab-equip">
+    
+                <!-- Buttons that toggle the radio inputs via labels -->
+                <div class="sheet-tabs">
+                    <label for="tab-character" class="sheet-tab-button">Character</label>
+                    <label for="tab-misc" class="sheet-tab-button">Misc</label>
+                    <label for="tab-equip" class="sheet-tab-button">Bonuses</label>
+                </div>    
             <!-- Character Page -->
             <div class="sheet-character">
                 <div id="left-column">
@@ -27,8 +31,8 @@
                                 </td>
                                 <td>
                                     <label class="nowrap black-text">
-                                        Gender:
-                                        <input type="text" name="attr_gender" class="sheet-input-55"/>
+                                        Class:
+                                        <input type="text" name="attr_class" class="sheet-input-55"/>
                                     </label>
                                 </td>
                                 <td>
@@ -1077,5 +1081,3 @@
 </div>
 </body>
 </html>
-
-
