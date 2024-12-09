@@ -31,7 +31,7 @@ function outputSkill(Name, Skill) {
 
 // Weapon Specific Skills
 
-// Done
+// +30 hit/30 if enemy is using a sword
 function Swordbreaker(BattleInput, BattleOutput) {
   if (BattleInput.DWType == "Sword" && BattleInput.WhoseSkill == 0) {
     outputSkill(BattleInput.Attacker, "Swordbreaker");
@@ -43,7 +43,7 @@ function Swordbreaker(BattleInput, BattleOutput) {
   }
 }
 
-// Done
+// +30 hit/30 if enemy is using an axe
 function AxeBreaker(BattleInput, BattleOutput) {
   if (BattleInput.DWType == "Axe" && BattleInput.WhoseSkill == 0) {
     outputSkill(BattleInput.Attacker, "Axebreaker");
@@ -55,7 +55,7 @@ function AxeBreaker(BattleInput, BattleOutput) {
   }
 }
 
-// Done
+// +30 hit/30 if enemy is using a lance
 function LanceBreaker(BattleInput, BattleOutput) {
   if (BattleInput.DWType == "Lance" && BattleInput.WhoseSkill == 0) {
     outputSkill(BattleInput.Attacker, "Lancebreaker");
@@ -67,7 +67,7 @@ function LanceBreaker(BattleInput, BattleOutput) {
   }
 }
 
-// Done
+// +30 hit/30 if enemy is using a bow
 function BowBreaker(BattleInput, BattleOutput) {
   if (BattleInput.DWType == "Bow" && BattleInput.WhoseSkill == 0) {
     outputSkill(BattleInput.Attacker, "Bowbreaker");
@@ -79,7 +79,7 @@ function BowBreaker(BattleInput, BattleOutput) {
   }
 }
 
-// Done
+// +30 hit/30 if enemy is using a tome
 function TomeBreaker(BattleInput, BattleOutput) {
   if ((BattleInput.DWType == "Anima" || BattleInput.DWType == "Dark" || BattleInput.DWType == "Light") && BattleInput.WhoseSkill == 0) {
     outputSkill(BattleInput.Attacker, "Tomebreaker");
@@ -91,7 +91,7 @@ function TomeBreaker(BattleInput, BattleOutput) {
   }
 }
 
-// Done
+// +5 damage when using a sword
 function Swordfaire(BattleInput, BattleOutput) {
   if (BattleInput.WhoseSkill == 1) { return; }
   if (BattleInput.AWType == "Sword") {
@@ -100,7 +100,7 @@ function Swordfaire(BattleInput, BattleOutput) {
   }
 }
 
-// Done
+// +5 damage when using an axe
 function Axefaire(BattleInput, BattleOutput) {
   if (BattleInput.WhoseSkill == 1) { return; }
   if (BattleInput.AWType == "Axe") {
@@ -109,7 +109,7 @@ function Axefaire(BattleInput, BattleOutput) {
   }
 }
 
-// Done
+// +5 damage when using a lance
 function Lancefaire(BattleInput, BattleOutput) {
   if (BattleInput.WhoseSkill == 1) { return; }
   if (BattleInput.AWType == "Lance") {
@@ -118,7 +118,7 @@ function Lancefaire(BattleInput, BattleOutput) {
   }
 }
 
-// Done
+// +5 damage when using a bow
 function Bowfaire(BattleInput, BattleOutput) {
   if (BattleInput.WhoseSkill == 1) { return; }
   if (BattleInput.AWType == "Bow") {
@@ -127,7 +127,7 @@ function Bowfaire(BattleInput, BattleOutput) {
   }
 }
 
-// Done
+// +5 damage when using a tome
 function Tomefaire(BattleInput, BattleOutput) {
   if (BattleInput.WhoseSkill == 1) { return; }
   if (BattleInput.AWType == "Anima" || BattleInput.AWType == "Dark" || BattleInput.AWType == "Light") {
@@ -136,7 +136,7 @@ function Tomefaire(BattleInput, BattleOutput) {
   }
 }
 
-// Done
+// Weapon triangle reversed and doubled
 function Reaver(BattleInput, BattleOutput) {
   if (BattleInput.WhoseSkill == 0) { outputSkill(BattleInput.Attacker, "Reaver"); }
   else if (BattleInput.WhoseSkill == 1) { outputSkill(BattleInput.Defender, "Reaver"); }
@@ -155,7 +155,7 @@ function SureShot(BattleInput, BattleOutput) {
   }
 }
 
-// Done
+// Guaranteed hit and 150% damage, skill% activation
 function Adept(BattleInput, BattleOutput) {
   if (BattleInput.WhoseSkill == 1) { return; }
   if (randomInteger(100) <= BattleInput.ASpeed) {
@@ -164,7 +164,7 @@ function Adept(BattleInput, BattleOutput) {
   }
 }
 
-// WIP
+// Sets enemy ward and prot to 0, skill% activation
 function Luna(BattleInput, BattleOutput) {
   if (BattleInput.WhoseSkill == 1) { return; }
   if (randomInteger(100) <= BattleInput.ASkill) {
@@ -172,7 +172,7 @@ function Luna(BattleInput, BattleOutput) {
   }
 }
 
-// WIP
+// Restores damage dealt as HP, skill% activation
 function Sol(BattleInput, BattleOutput) {
   if (BattleInput.WhoseSkill == 1) { return; }
   if (randomInteger(100) <= BattleInput.ASkill) {
@@ -180,7 +180,7 @@ function Sol(BattleInput, BattleOutput) {
   }
 }
 
-// Done
+// Add res to damage, skill% activation
 function Glacies(BattleInput, BattleOutput) {
   if (BattleInput.WhoseSkill == 1) { return; }
   if (randomInteger(100) <= BattleInput.ASkill) {
@@ -189,7 +189,7 @@ function Glacies(BattleInput, BattleOutput) {
   }
 }
 
-// WIP
+// Halve enemy res, skill% activation
 function Flare(BattleInput, BattleOutput) {
   if (BattleInput.WhoseSkill == 1) { return; }
   if (randomInteger(100) <= BattleInput.ASkill) {
@@ -197,7 +197,7 @@ function Flare(BattleInput, BattleOutput) {
   }
 }
 
-// Done
+// Deal 3x damage, skill% activation
 function Impale(BattleInput, BattleOutput) {
   if (BattleInput.WhoseSkill == 1) { return; }
   if (randomInteger(100) <= BattleInput.ASkill) {
@@ -206,7 +206,7 @@ function Impale(BattleInput, BattleOutput) {
   }
 }
 
-// Done
+// Double str, skill% activation
 function Colossus(BattleInput, BattleOutput) {
   if (BattleInput.WhoseSkill == 1) { return; }
   if (randomInteger(100) <= BattleInput.ASkill) {
@@ -215,7 +215,7 @@ function Colossus(BattleInput, BattleOutput) {
   }
 }
 
-// Done
+// Add half res and def to damage, skill% activation
 function Ignis(BattleInput, BattleOutput) {
   if (BattleInput.WhoseSkill == 1) { return; }
   if (randomInteger(100) <= BattleInput.ASkill) {
@@ -224,7 +224,7 @@ function Ignis(BattleInput, BattleOutput) {
   }
 }
 
-// WIP
+// Do not use weapon durability, luck% activation
 function Armsthrift(BattleInput, BattleOutput) {
   if (BattleInput.WhoseSkill == 1) { return; }
   if (randomInteger(100) <= BattleInput.ALuck) {
@@ -236,42 +236,42 @@ function Armsthrift(BattleInput, BattleOutput) {
 
 // Initiate Skills
 
-// Done
+// +5 damage on initiate
 function QuickDraw(BattleInput, BattleOutput) {
   if (BattleInput.WhoseSkill == 1 || BattleInput.IsInitiating == 0) { return; }
   outputSkill(BattleInput.Attacker, "Quick Draw");
   BattleOutput.AddDmg += 5;
 }
 
-// Done
+// +5 attack speed on initiate
 function DartingBlow(BattleInput, BattleOutput) {
   if (BattleInput.WhoseSkill == 1 || BattleInput.IsInitiating == 0) { return; }
   outputSkill(BattleInput.Attacker, "Darting Blow");
-  BattleOutput.AddAtkSpd += 5;
+  BattleOutput.AtkSpd += 5;
 }
 
-// Done
+// +30 hit on initiate
 function GoodBet(BattleInput, BattleOutput) {
   if (BattleInput.WhoseSkill == 1 || BattleInput.IsInitiating == 0) { return; }
   outputSkill(BattleInput.Attacker, "Good Bet");
   BattleOutput.Hit += 30;
 }
 
-// Done
+// +30 avoid on initiate
 function DuelistBlow(BattleInput, BattleOutput) {
   if (BattleInput.WhoseSkill == 0 || BattleInput.IsInitiating == 1) { return; }
   outputSkill(BattleInput.Defender, "Duelist's Blow");
   BattleOutput.Avoid += 30;
 }
 
-// Done
+// +20 crit on initiate
 function DeathBlow(BattleInput, BattleOutput) {
   if (BattleInput.WhoseSkill == 1 || BattleInput.IsInitiating == 0) { return; }
   outputSkill(BattleInput.Attacker, "Death Blow");
   BattleOutput.Crit += 20;
 }
 
-// Done
+// +15 hit and avoid on initiate
 function Prescience(BattleInput, BattleOutput) {
   if (BattleInput.WhoseSkill == 0 && BattleInput.IsInitiating == 1) {
     outputSkill(BattleInput.Attacker, "Prescience");
@@ -287,14 +287,14 @@ function Prescience(BattleInput, BattleOutput) {
 
 // Counter Skills
 
-// Done
+// +3 damage on counter
 function StrongRiposte(BattleInput, BattleOutput) {
   if (BattleInput.WhoseSkill == 1 || BattleInput.IsInitiating == 1) { return; }
   outputSkill(BattleInput.Attacker, "Strong Riposte");
   BattleOutput.AddDmg += 3;
 }
 
-// Done
+// +4 damage and +4 prot/ward on counter
 function Sturdy(BattleInput, BattleOutput) {
   if (BattleInput.WhoseSkill == 0 && BattleInput.IsInitiating == 0) {
     outputSkill(BattleInput.Attacker, "Sturdy");
@@ -307,14 +307,14 @@ function Sturdy(BattleInput, BattleOutput) {
   }
 }
 
-// Done
+// +6 prot on counter
 function Brawler(BattleInput, BattleOutput) {
   if (BattleInput.WhoseSkill == 0 || BattleInput.IsInitiating == 0) { return; }
   outputSkill(BattleInput.Defender, "Brawler");
   BattleOutput.AddProt += 6;
 }
 
-// Done
+// +10 avoid on counter
 function Patience(BattleInput, BattleOutput) {
   if (BattleInput.WhoseSkill == 0 || BattleInput.IsInitiating == 0) { return; }
   outputSkill(BattleInput.Attacker, "Patience");
@@ -325,7 +325,7 @@ function Patience(BattleInput, BattleOutput) {
 
 // Generic Skills
 
-// Done
+// +50 crit when below half hp
 function Wrath(BattleInput, BattleOutput) {
   if (BattleInput.WhoseSkill == 1) { return; }
   if (BattleInput.ACurrHP < BattleInput.AMaxHP / 2) {
@@ -334,7 +334,7 @@ function Wrath(BattleInput, BattleOutput) {
   }
 }
 
-// Done
+// +4 damage and +4 prot/ward when enemy is at full hp
 function Chivalry(BattleInput, BattleOutput) {
   if (BattleInput.WhoseSkill == 0 && BattleInput.DCurrHP == BattleInput.DMaxHP) {
     outputSkill(BattleInput.Attacker, "Chivalry");
@@ -347,7 +347,7 @@ function Chivalry(BattleInput, BattleOutput) {
   }
 }
 
-// Done
+// +4 damage and +4 prot/ward when at full hp
 function FortressOfWill(BattleInput, BattleOutput){
   if (BattleInput.WhoseSkill == 0 && BattleInput.ACurrHP == BattleInput.AMaxHP) {
     outputSkill(BattleInput.Attacker, "Fortress of Will");
@@ -360,14 +360,14 @@ function FortressOfWill(BattleInput, BattleOutput){
   }
 }
 
-// Done
+// +1 crit per skill
 function DeadlyStrikes(BattleInput, BattleOutput) {
   if (BattleInput.WhoseSkill == 1) { return; }
   outputSkill(BattleInput.Attacker, "Deadly Strikes");
   BattleOutput.Crit += BattleInput.ASkill;
 }
 
-// Done
+// +2 damage and +2 prot/ward for each missing 25% hp
 function PrideOfSteel(BattleInput, BattleOutput) {
   if (BattleInput.WhoseSkill == 0) {
     var Name = BattleInput.Attacker;
@@ -385,7 +385,7 @@ function PrideOfSteel(BattleInput, BattleOutput) {
   }
 }
 
-// Done
+// +2 damage, +15 hit, +5 crit when weapon weighs more than enemy weapon
 function Thunderstorm(BattleInput, BattleOutput) {
   if (BattleInput.WhoseSkill == 1) { return; }
   if (BattleInput.AWWeight > BattleInput.DWWeight) {
@@ -395,24 +395,24 @@ function Thunderstorm(BattleInput, BattleOutput) {
   }
 }
 
-// WIP
+// +30% strength, magic, skill, and speed when below half hp
 function Resolve(BattleInput, BattleOutput) {
 
 }
 
-// WIP
+// +5 damage to unmounted units
 function Trample(BattleInput, BattleOutput) {
 
 }
 
-// Done
+// Critical hits do 1.5x damage instead of 3x
 function Resilience(BattleInput, BattleOutput) {
   if (BattleInput.WhoseSkill == 0) { return; }
   outputSkill(BattleInput.Defender, "Resilience");
   BattleOutput.Resilience = 1;
 }
 
-// Done
+// +5 damage when missing hp
 function Dragonblood(BattleInput, BattleOutput) {
   if (BattleInput.WhoseSkill == 1) { return; }
   if (Number(BattleInput.ACurrHP) < Number(BattleInput.AMaxHP)) {
@@ -421,7 +421,7 @@ function Dragonblood(BattleInput, BattleOutput) {
   }
 }
 
-// Done
+// Effective attacks do not deal extra damage
 function Nullify(BattleInput, BattleOutput) {
   if (BattleInput.WhoseSkill == 0) { return; }
   outputSkill(BattleInput.Defender, "Nullify");
@@ -486,17 +486,15 @@ on('chat:message', function(msg) {
       selectObj = selectPossibles[0];
     }
 
-    let spdiff = getAttrValue(attacker.id, 'Atkspd') - getAttrValue(defender.id, 'Atkspd');
-    log(getAttrValue(attacker.id, 'Atkspd') + ' speed');
-    var dmgtype = getAttr(attacker.id,'atktype').get('current');
+    var dmgType = getAttr(attacker.id,'atktype').get('current');
     var DmgTaken = 0;
     var AtkDmg = 0;
     var DefMit = 0;
-    let dodge = Number(getAttrValue(attacker.id, "Ddg"));
+    var dodge = Number(getAttrValue(attacker.id, "Ddg"));
 
 
     // Initialize skill function I/O
-    let BattleInput = {
+    var BattleInput = {
       "WhoseSkill": -1, // To ensure we don't activate a defender's skill when we shouldn't. 0 = attacker, 1 = defender
       "IsInitiating": initiating, // Determine if you are intiating the attack or counter-attacking. 0 = initiating, 1 = countering
       "Attacker": selected,
@@ -517,10 +515,11 @@ on('chat:message', function(msg) {
       "ALuck": Number(getAttrValue(attacker.id, "Lck_total")),
     };
 
-    let BattleOutput = {
+    var BattleOutput = {
       "Hit": Number(getAttrValue(attacker.id, "Hit")) + randomInteger(100),
       "Crit": Number(getAttrValue(attacker.id, "Crit")) + randomInteger(100),
       "Avoid" : Number(getAttrValue(defender.id, "avo")),
+      "AtkSpd": Number(getAttrValue(attacker.id, 'Atkspd')),
       "AddDmg": 0,
       "AddProt": 0,
       "AddWard": 0,
@@ -533,7 +532,7 @@ on('chat:message', function(msg) {
     }
 
     // Skill checks
-    let AllSkills = new Set(["SureShot","Adept","Luna","Sol","Glacias","Flare","Impale","Colossus","Ignis","Armsthrift","QuickDraw","DartingBlow",
+    var AllSkills = new Set(["SureShot","Adept","Luna","Sol","Glacias","Flare","Impale","Colossus","Ignis","Armsthrift","QuickDraw","DartingBlow",
     "GoodBet","DuelistBlow","DeathBlow","Prescience","StrongRiposte","Sturdy","Brawler","Patience","Swordbreaker","Lancebreaker","Axebreaker",
     "Bowbreaker","Tomebreaker","Swordfaire","Lancefaire","Axefaire","Bowfaire","Tomefaire","Reaver","Brave","Wrath","Chivalry","FortressOfWill","DeadlyStrikes","PrideOfSteel","Thunderstorm","Resolve",
     "Trample","Resilience","Dragonblood","Nullify"]);
@@ -546,9 +545,9 @@ on('chat:message', function(msg) {
     }
     else {
       BattleInput.WhoseSkill = 0;
-      for(let i=0; i<ASkills.length; i++){
+      for(let i=0; i<ASkills.length; i++) {
         if (AllSkills.has(ASkills[i])) {
-          let skillName = ASkills[i];
+          var skillName = ASkills[i];
           log("Proccing: " + skillName);
           eval(skillName + "(BattleInput, BattleOutput)");
         }
@@ -561,19 +560,23 @@ on('chat:message', function(msg) {
       BattleInput.WhoseSkill = 1;
       for (let i=0; i<DSkills.length; i++) {
         if (AllSkills.has(DSkills[i])) {
-          let skillName = DSkills[i];
+          var skillName = DSkills[i];
           log("Def Proccing: " + skillName);
           eval(skillName + "(BattleInput, BattleOutput)");
         }
       }
     }
-    let AddedDmg = BattleOutput.AddDmg;
-    let AddedProt = BattleOutput.AddProt;
-    let AddedWard = BattleOutput.AddWard;
-    let Hit = BattleOutput.Hit;
-    let Crit = BattleOutput.Crit;
-    let Avoid = BattleOutput.Avoid;
+    var AddedDmg = BattleOutput.AddDmg;
+    var AddedProt = BattleOutput.AddProt;
+    var AddedWard = BattleOutput.AddWard;
+    var Hit = BattleOutput.Hit;
+    var Crit = BattleOutput.Crit;
+    var Avoid = BattleOutput.Avoid;
+    var AtkSpdDiff = BattleOutput.AtkSpd - getAttrValue(defender.id, 'Atkspd');
 
+    if (AtkSpdDiff >= 4) {
+      sendChat(target,'<p style = "margin-bottom: 0px;"> You double the enemy! </p>');
+    }
 
     // Effectiveness
     if (BattleOutput.Nullify == 0) {
@@ -582,7 +585,7 @@ on('chat:message', function(msg) {
       var isEffective = 0;
 
       AEffective.forEach(function (Eff) {
-        for(i=0; i<DWeak.length; i++) {
+        for(let i=0; i<DWeak.length; i++) {
           if (DWeak[i] == Eff){
             isEffective = 1;
           }
@@ -591,17 +594,17 @@ on('chat:message', function(msg) {
 
       if (isEffective == 1) {
         sendChat(target,'<p style = "margin-bottom: 0px;"> You deal Effective Damage!</p>');
-        BattleOutput.AddDmg+=2*getAttrValue(attacker.id,'currMt');
+        BattleOutput.AddDmg += 2 * getAttrValue(attacker.id,'currMt');
       }
     }
 
 
     // Weapon triangle
-    let triangle = 'Neutral';
-    let mult = 1;
-    let weaponTriangle = { 'Sword': 1, 'Axe':2, 'Lance':3, 'Anima':4, 'Light':5, 'Dark':6 };
-    let atkTriMap = weaponTriangle[BattleInput.AWType];
-    let defTriMap = weaponTriangle[BattleInput.DWType];
+    var triangle = 'Neutral';
+    var mult = 1;
+    var weaponTriangle = { 'Sword': 1, 'Axe':2, 'Lance':3, 'Anima':4, 'Light':5, 'Dark':6 };
+    var atkTriMap = weaponTriangle[BattleInput.AWType];
+    var defTriMap = weaponTriangle[BattleInput.DWType];
     if ((atkTriMap < 4 && defTriMap < 4) || (atkTriMap >= 4 && defTriMap >= 4)) {
       if ((atkTriMap+1)%3 == defTriMap%3) {
         triangle = 'Adv';
@@ -618,7 +621,7 @@ on('chat:message', function(msg) {
 
     log(triangle);
 
-    let triangleMsg = "";
+    var triangleMsg = "";
     if (triangle == 'Adv') {
       Hit += 15 * mult;
       AtkDmg += 1 * mult;
@@ -640,13 +643,13 @@ on('chat:message', function(msg) {
 
 
     // Damage Typing
-    if (dmgtype == 'Physical') {
+    if (dmgType == 'Physical') {
       log('AddDmg is really: ' + AddedDmg);
       AtkDmg += getAttrValue(attacker.id, "phys_total") + AddedDmg;
       DefMit = getAttrValue(defender.id, "prot_total") + getAttrValue(defender.id, "Mit_Qtotal") + AddedProt;
       sendChat(target,'<p style = "margin-bottom: 0px;">' + AtkDmg + ' physical damage vs ' + DefMit + ' protection!</p>');
     }
-    else if (dmgtype == 'Magical') {
+    else if (dmgType == 'Magical') {
       AtkDmg += getAttrValue(attacker.id, "myst_total") + AddedDmg;
       DefMit = getAttrValue(defender.id, "ward_total") + getAttrValue(defender.id, "Mit_Qtotal") + AddedWard;
       sendChat(target,'<p style = "margin-bottom: 0px;">' + AtkDmg + ' mystical damage vs ' + DefMit + ' resistance!</p>');
@@ -656,7 +659,7 @@ on('chat:message', function(msg) {
 
     // End of calculation skill procs
     if (BattleOutput.SureShot == 1) {
-      Hit = 255;
+      Hit = 999;
       DmgTaken *= 1.5;
     }
     if (BattleOutput.Impale == 1) {
@@ -669,8 +672,8 @@ on('chat:message', function(msg) {
       if (Crit > dodge) {
         DmgTaken = Math.max(0, Math.min(BattleInput.DCurrHP, DmgTaken * 3));
         if (BattleOutput.Resilience == 1) { DmgTaken /= 2; }
-        sendChat(target, 'You crit and deal '+ DmgTaken + ' damage!');
         CurrHP = targetObj.set("bar3_value", parseInt(targetObj.get("bar3_value")) - DmgTaken);
+        sendChat(target, 'You crit and deal '+ DmgTaken + ' damage!');
       }
       else {
         DmgTaken = Math.max(0, Math.min(BattleInput.DCurrHP, DmgTaken));
