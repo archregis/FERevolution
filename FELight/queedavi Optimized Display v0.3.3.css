@@ -29,7 +29,8 @@
 .sheet-select-80 { width: 80px; }
 .sheet-select-65 { width: 65px; }
 
-.sheet-notes-textarea { width: 215px; height: 300px; }
+/* Increased notes height for alignment */
+.sheet-notes-textarea { width: 215px; height: 320px; }
 .sheet-supportlist-textarea { width: 350px; height: 500px; }
 .sheet-quartzlist-textarea { width: 350px; height: 400px; }
 .sheet-equiplist-textarea { width: 350px; height: 400px; }
@@ -41,14 +42,49 @@
 
 /* Tab display */
 .sheet-character,
-.sheet-equip,
-.sheet-misc {
+.sheet-misc,
+.sheet-equip {
     display: none;
 }
-.sheet-tabstoggle[value="character"] ~ div.sheet-character,
-.sheet-tabstoggle[value="equip"] ~ div.sheet-equip,
-.sheet-tabstoggle[value="misc"] ~ div.sheet-misc {
+
+/* Show the correct page depending on which radio is checked */
+.sheet-tabstoggle[value="character"]:checked ~ .sheet-character {
     display: block;
+}
+.sheet-tabstoggle[value="misc"]:checked ~ .sheet-misc {
+    display: block;
+}
+.sheet-tabstoggle[value="equip"]:checked ~ .sheet-equip {
+    display: block;
+}
+
+/* Style for tab buttons (the labels) */
+.sheet-tabs {
+    margin-bottom: 10px;
+}
+/* Hide the actual radio inputs */
+.sheet-tabstoggle[type="radio"] {
+    display: none;
+}
+.sheet-tab-button {
+    display: inline-block;
+    background-color: #ccc;
+    padding: 5px 10px;
+    cursor: pointer;
+    margin-right: 5px;
+    border: 1px solid #000;
+    border-radius: 3px;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+.sheet-tab-button:hover {
+    background-color: #bbb;
+}
+/* Highlight the active tab button when its radio is checked */
+#tab-character:checked ~ .sheet-tabs label[for="tab-character"],
+#tab-misc:checked ~ .sheet-tabs label[for="tab-misc"],
+#tab-equip:checked ~ .sheet-tabs label[for="tab-equip"] {
+    background-color: #aaa;
 }
 
 .charsheet {
@@ -165,12 +201,59 @@
     text-transform: uppercase;
 }
 
+/* Weapons and Spells adjustments */
 .charsheet .sheet-weapons,
 .charsheet .sheet-spells {
     vertical-align: top;
     background-color: var(--color-secondary-bg);
     display: inline-block;
-    width: 45%;
+    width: 49%; /* Use more horizontal space */
+    box-sizing: border-box;
+    padding: 5px; /* Add padding so fields are not flush against the edge */
+}
+
+.charsheet .sheet-weapons {
+    margin-right: 1%;
+}
+
+/* Ensure internal tables have consistent spacing and center alignment */
+.charsheet .sheet-weapons table,
+.charsheet .sheet-spells table {
+    table-layout: fixed;
+    width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.charsheet .sheet-weapons table th,
+.charsheet .sheet-weapons table td,
+.charsheet .sheet-spells table th,
+.charsheet .sheet-spells table td {
+    padding: 3px 5px;
+    text-align: center;
+    vertical-align: middle;
+}
+
+/* Let the weapon/spell name and type scale within available space */
+.repeating_weapons input[name="attr_WName"],
+.repeating_spells input[name="attr_SName"] {
+    width: auto; 
+    max-width: 100%;
+    box-sizing: border-box;
+    text-align: center;
+}
+
+.repeating_weapons select[name="attr_WType"],
+.repeating_spells select[name="attr_SType"] {
+    width: auto; 
+    max-width: 100%;
+    box-sizing: border-box;
+    text-align: center;
+}
+
+.sheet-thicc input[type="text"],
+.sheet-thicc select {
+    max-width: 100%;
 }
 
 .charsheet input.sheet-toggle-stats {
@@ -236,4 +319,21 @@
     vertical-align: middle;
     width: 100%;
     border-collapse: collapse;
+}
+
+/* Ensure that main attributes and derived stats tables have centered content */
+.sheet-mainstats table th,
+.sheet-mainstats table td {
+    text-align: center;
+    vertical-align: middle;
+}
+
+.sheet-currentvals table {
+    table-layout: fixed;
+}
+.sheet-currentvals table th,
+.sheet-currentvals table td {
+    width: 20%;
+    text-align: center;
+    vertical-align: middle;
 }
