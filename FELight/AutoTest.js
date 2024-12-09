@@ -1,12 +1,25 @@
+// Globals
+var weaponMap = {
+  "Sword": "SwordEXP",
+  "Lance": "LanceEXP",
+  "Axe": "AxeEXP",
+  "Bow": "BowEXP",
+  "Staff": "StavesEXP",
+  "Dark": "DarkEXP",
+  "Anima": "AnimaEXP",
+  "Light": "LightEXP"
+};
 
 
-// Helper function to get an attribute object by name for a given character.
 
+// Helpers
+
+// Gets an attribute object by name for a given character.
 function getAttr(characterId, attrName) {
   return findObjs({ characterid: characterId, name: attrName, type: "attribute" })[0];
 }
 
-// Helper to safely get a numeric attribute value. Returns 0 if the attribute doesn't exist.
+// Safely gets a numeric attribute value. Returns 0 if the attribute doesn't exist.
 function getAttrValue(characterId, attrName) {
   var attr = getAttr(characterId, attrName);
   return attr ? Number(attr.get("current")) : 0;
@@ -23,10 +36,20 @@ function processInlinerolls(msg) {
   return newContent;
 }
 
-// Helper function to display skill activation
+  // Update weapon EXP based on wtype and wepGain
+  function updateWeaponEXP(attackerId, wtype, wepGain) {
+    if (!weaponMap[wtype]) return;
+    const attr = getAttr(attackerId, weaponMap[wtype]);
+    if (!attr) return;
+    const currentVal = Number(attr.get("current")) || 0;
+    attr.setWithWorker("current", currentVal + wepGain);
+  }
+
+// Displays skill activation
 function outputSkill(Name, Skill) {
   sendChat(Name, Skill + " is active.");
 }
+
 
 
 // Weapon Specific Skills
@@ -451,18 +474,6 @@ function Nullify(BattleInput, BattleOutput) {
 
 
 
-// Weapon attribute map to avoid multiple if-statements
-
-
-  // Update weapon EXP based on wtype and wepGain
-  function updateWeaponEXP(attackerId, wtype, wepGain) {
-    if (!weaponMap[wtype]) return;
-    const attr = getAttr(attackerId, weaponMap[wtype]);
-    if (!attr) return;
-    const currentVal = Number(attr.get("current")) || 0;
-    attr.setWithWorker("current", currentVal + wepGain);
-  }
-
 on('chat:message', function(msg) {
   if (msg.type != 'api') return;
   var parts = processInlinerolls(msg).split(' ');
@@ -528,17 +539,6 @@ on('chat:message', function(msg) {
     let dodge = Number(getAttrValue(attacker.id, "Ddg"));
 
     var wepGain = Number(getAttrValue(attacker.id, "currWexp"));
-
-    var weaponMap = {
-      "Sword": "SwordEXP",
-      "Lance": "LanceEXP",
-      "Axe": "AxeEXP",
-      "Bow": "BowEXP",
-      "Staff": "StavesEXP",
-      "Dark": "DarkEXP",
-      "Anima": "AnimaEXP",
-      "Light": "LightEXP"
-    };
 
     // Initialize skill function I/O
     var BattleInput = {
