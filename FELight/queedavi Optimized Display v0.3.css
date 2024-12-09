@@ -212,7 +212,7 @@
 
 .sheet-prowess th,
 .sheet-prowess td {
-    padding: 0;               /* Remove default padding */
+    padding: 0;              
     vertical-align: middle;
     text-align: right;        /* Align contents to the right if desired */
     font-size: 11px;
@@ -225,14 +225,13 @@
     white-space: nowrap;      /* Left align the first column (e.g., for labels) */
 }
 
-/* Restore font size for inputs */
 .sheet-prowess input[type="text"],
 .sheet-prowess input[type="number"] {
     display: inline-block;
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-size: 11px;          /* Restore readable font size for the inputs */
+    font-size: 11px;          
     vertical-align: middle;
     width: 100%;
     border-collapse:collapse;
