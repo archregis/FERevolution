@@ -5,46 +5,13 @@
     src: url('https://fonts.gstatic.com/s/merriweather/v17/ZvcMqxEwPfh2qDWBPxn6nk4GofcKVZz6wtzX_QUIqsI.woff2') format('woff2');
 }
 
-/* Common Variables */
-:root {
-    --color-primary-bg: #353535;
-    --color-secondary-bg: #f3f3f3;
-    --color-primary-text: #000;
-    --color-secondary-text: #f3f3f3;
-    --color-header-text: #fff;
-    --border-color: #f3f3f3;
-}
-
-/* Utility Classes */
-.inline-block { display: inline-block; }
-.no-padding { padding: 0; }
-.no-margin { margin: 0; }
-.black-text { color: #000; }
-.white-text { color: #fff; }
-.nowrap { white-space: nowrap; }
-
-.sheet-input-75 { width: 75px; }
-.sheet-input-55 { width: 55px; }
-.sheet-input-40 { width: 40px; }
-.sheet-select-80 { width: 80px; }
-.sheet-select-65 { width: 65px; }
-
-.sheet-notes-textarea { width: 215px; height: 300px; }
-.sheet-supportlist-textarea { width: 350px; height: 500px; }
-.sheet-quartzlist-textarea { width: 350px; height: 400px; }
-.sheet-equiplist-textarea { width: 350px; height: 400px; }
-
-/* Main Container */
-.sheet-maindiv {
-    width: 840px;
-}
-
 /* Tab display */
 .sheet-character,
 .sheet-equip,
 .sheet-misc {
     display: none;
 }
+
 .sheet-tabstoggle[value="character"] ~ div.sheet-character,
 .sheet-tabstoggle[value="equip"] ~ div.sheet-equip,
 .sheet-tabstoggle[value="misc"] ~ div.sheet-misc {
@@ -52,7 +19,7 @@
 }
 
 .charsheet {
-    background-color: var(--color-primary-bg);
+    background-color: #353535;
     font-family: "Merriweather";
     font-size: 11px;
     min-height: 100%;
@@ -72,7 +39,7 @@
 .charsheet .sheet-charinfo,
 .charsheet .sheet-mainstats,
 .charsheet .sheet-currentvals {
-    background-color: var(--color-secondary-bg);
+    background-color: #f3f3f3;
     width: 100%;
     display: inline-block;
     margin-bottom: 10px;
@@ -80,18 +47,18 @@
 
 .charsheet .sheet-abilityinfo,
 .charsheet .sheet-supportinfo {
-    background-color: var(--color-secondary-bg);
+    background-color: #f3f3f3;
     padding-left: 5px;
     display: inline-block;
     margin-bottom: 10px;
     margin-right: 5px;
     margin-left: 5px;
-    border-right: var(--color-secondary-bg) 4px solid;
-    border-left: var(--color-secondary-bg) 4px solid;
+    border-right: #f3f3f3 4px solid;
+    border-left: #f3f3f3 4px solid;
 }
 
 .charsheet .sheet-checks {
-    background-color: var(--color-secondary-bg);
+    background-color: #f3f3f3;
     width: 27%;
     padding: 0 5px;
     float: right;
@@ -101,7 +68,7 @@
 }
 
 .charsheet .sheet-prowess {
-    background-color: var(--color-secondary-bg);
+    background-color: #f3f3f3;
 }
 
 #left-column {
@@ -117,26 +84,51 @@
 .charsheet table {
     font-size: 13px;
     width: 100%;
-    border-right: var(--color-secondary-bg) 4px solid;
-    border-bottom: var(--color-secondary-bg) 4px solid;
+    border-right: #f3f3f3 4px solid;
+    border-bottom: #f3f3f3 4px solid;
 }
 
-.sheet-charinfo table {
-    border-collapse: collapse;
-    width: auto;
-    color: #000;
+.charsheet td {
+    padding-top: 10px;
+    text-align: center;
 }
-.sheet-charinfo table tr {
-    line-height: 1;
-    margin: 0;
-    padding: 0;
-    color: #000;
+
+.charsheet .sheet-div {
+    background-color: #353535;
 }
-.sheet-charinfo table td {
-    padding: 0 5px;
+
+.charsheet th {
+    text-align: center;
 }
-.sheet-charinfo table td:first-child {
-    padding: 0 5px 0 0;
+
+.charsheet .sheet-statlabel,
+.charsheet .sheet-labelrow {
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-weight: bold;
+    background-color: #353535;
+    color: #f3f3f3;
+    text-transform: uppercase;
+}
+
+.charsheet th.sheet-statlabel {
+    padding-left: 5px;
+}
+
+.charsheet .sheet-labelrow {
+    font-size: 15px;
+}
+
+.charsheet select {
+    background-color: #F9F9F9;
+    color: #555;
+    box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.075) inset;
+    display: inline;
+    margin: 5px 0;
+}
+
+.charsheet .sheet-row {
+    display: inline;
+    padding-left: 5px;
 }
 
 .charsheet .sheet-header {
@@ -144,33 +136,29 @@
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-size: 15px;
     padding: 3px;
-    background-color: var(--color-primary-bg);
-    color: var(--color-header-text);
-    border: var(--color-secondary-bg) 4px solid;
+    background-color: #353535;
+    color: #f3f3f3;
+    border: #f3f3f3 4px solid;
     border-bottom-width: 2px;
     font-weight: bold;
-    margin-bottom: 5px;
-}
-
-.charsheet .sheet-div {
-    background-color: var(--color-primary-bg);
-}
-
-.charsheet .sheet-statlabel,
-.charsheet .sheet-labelrow {
-    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-    font-weight: bold;
-    background-color: var(--color-primary-bg);
-    color: var(--color-secondary-text);
-    text-transform: uppercase;
 }
 
 .charsheet .sheet-weapons,
 .charsheet .sheet-spells {
     vertical-align: top;
-    background-color: var(--color-secondary-bg);
+    background-color: #f3f3f3;
     display: inline-block;
     width: 45%;
+}
+
+.charsheet .sheet-weapons select,
+.charsheet .sheet-weapons input[type="text"],
+.charsheet .sheet-spells input[type="text"] {
+    width: 100%;
+}
+
+.charsheet .sheet-thicc td input[type="text"] {
+    width: 100%;
 }
 
 .charsheet input.sheet-toggle-stats {
@@ -183,47 +171,58 @@
     width: 16px;
     height: 16px;
 }
+
 .charsheet input.sheet-toggle-stats::after {
-    content: "⏷";
+    content: "â·";
 }
+
 .charsheet input.sheet-toggle-stats:checked::after {
-    content: "⏶";
+    content: "â¶";
 }
 
 .charsheet .sheet-hiddenstats {
     display: none;
 }
+
 .charsheet .sheet-hiddenskill {
     display: none;
     margin-left: 8px;
     margin-top: 10px;
 }
+
 .charsheet input.sheet-toggle-stats:checked ~ .sheet-hiddenstats {
     display: table;
 }
+
 .charsheet input.sheet-toggle-stats:checked ~ .sheet-hiddenskill {
     display: inline-block;
 }
 
-/* Prowess Table Layout */
+/* For fields within cells:
+   - Remove extra margins/padding
+   - Ensure full width usage
+   - Align text to right for consistency
+*/
 .sheet-prowess table {
-    table-layout: fixed;
+    table-layout: fixed;      /* Keeps columns consistent */
     border-collapse: collapse;
     border-spacing: 0;
     width: 40%;
 }
+
 .sheet-prowess th,
 .sheet-prowess td {
-    padding: 0;
+    padding: 0;              
     vertical-align: middle;
-    text-align: right;
+    text-align: right;        /* Align contents to the right if desired */
     font-size: 11px;
-    white-space: nowrap;
+    white-space: nowrap;      /* Prevent wrapping of inputs */
 }
+
 .sheet-prowess th:first-child,
 .sheet-prowess td:first-child {
     text-align: left;
-    white-space: nowrap;
+    white-space: nowrap;      /* Left align the first column (e.g., for labels) */
 }
 
 .sheet-prowess input[type="text"],
@@ -232,8 +231,10 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-size: 11px;
+    font-size: 11px;          
     vertical-align: middle;
     width: 100%;
-    border-collapse: collapse;
+    border-collapse:collapse;
+    /* Adjust width or max-width as needed */
+    /* Example: max-width: 40%; or just let it size naturally */
 }
