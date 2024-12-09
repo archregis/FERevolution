@@ -169,11 +169,12 @@ function Luna(BattleInput, BattleOutput) {
   if (BattleInput.WhoseSkill == 1) { return; }
   if (randomInteger(100) <= Number(BattleInput.ASkill)) {
     outputSkill(BattleInput.Attacker, "Luna");
-    BattleOutput.Luna = 1;
+    BattleOutput.DWard = 0;
+    BattleOutput.DProt = 0;
   }
 }
 
-// WIP
+// Done
 function Sol(BattleInput, BattleOutput) {
   if (BattleInput.WhoseSkill == 1) { return; }
   if (randomInteger(100) <= Number(BattleInput.ASkill)) {
@@ -195,7 +196,8 @@ function Glacies(BattleInput, BattleOutput) {
 function Flare(BattleInput, BattleOutput) {
   if (BattleInput.WhoseSkill == 1) { return; }
   if (randomInteger(100) <= Number(BattleInput.ASkill)) {
-
+    outputSkill(BattleInput.Attacker, "Flare");
+    BattleOutput.DWard = Math.floor(BattleInput.DWard/2);
   }
 }
 
@@ -453,6 +455,7 @@ on('chat:message', function(msg) {
     let dhit = Number(getAttrValue(defender.id, "Hit"));
     let aavo = Number(getAttrValue(attacker.id, "avo"));
     let ddodge = Number(getAttrValue(attacker.id, "Ddg"));
+    
 
 
     //Initialize skill function I/O
@@ -472,9 +475,13 @@ on('chat:message', function(msg) {
       "ASkill": Number(getAttrValue(attacker.id, "Skl_total")),
       "ASpeed": Number(getAttrValue(attacker.id, "Spd_total")),
       "ALuck": Number(getAttrValue(attacker.id, "Lck_total")),
+      "DWard": Number(getAttrValue(attacker.id, "ward_total")),
+      "DProt": Number(getAttrValue(attacker.id, "prot_total")),
     };
 
     let BattleOutput = {
+      "DWard": Number(getAttrValue(attacker.id, "ward_total")),
+      "DProt": Number(getAttrValue(attacker.id, "prot_total")),
       "Hit": Number(getAttrValue(attacker.id, "Hit"))+randomInteger(100),
       "Crit": Number(getAttrValue(attacker.id, "Crit"))+randomInteger(100),
       "Avoid" : Number(getAttrValue(defender.id, "avo")),
@@ -486,8 +493,8 @@ on('chat:message', function(msg) {
       "Nullify": 0,
       "Reaver": 0,
       "Resilience": 0,
-      "Luna": 0,
       "Sol": 0,
+
     }
 
     // Skill checks
@@ -557,21 +564,13 @@ on('chat:message', function(msg) {
     if (dmgtype == 'Physical') {
       log('AddDmg is really: ' + AddedDmg);
       AttkDmg = getAttrValue(attacker.id, "phys_total") + AddedDmg;
-      if (BattleOutput.Luna ==1){
-        DefMit = getAttrValue(defender.id, "Mit_Qtotal") + AddedMit
-      } else{
-      DefMit = getAttrValue(defender.id, "prot_total") + getAttrValue(defender.id, "Mit_Qtotal") + AddedMit;
-      }
+      DefMit = BattleOutput.DProt + getAttrValue(defender.id, "Mit_Qtotal") + AddedMit;
       sendChat(target,'<p style = "margin-bottom: 0px;">' + AttkDmg + ' physical damage vs ' + DefMit + ' protection!</p>');
       DmgTaken = AttkDmg - DefMit;
     }
     else if (dmgtype == 'Magical') {
       AttkDmg = getAttrValue(attacker.id, "myst_total") + AddedDmg;
-      if (BattleOutput.Luna ==1){
-        DefMit = getAttrValue(defender.id, "Mit_Qtotal") + AddedMit
-      } else{
-      DefMit = getAttrValue(defender.id, "ward_total") + getAttrValue(defender.id, "Mit_Qtotal") + AddedMit;
-      }
+      DefMit = BattleOutput.DWard + getAttrValue(defender.id, "Mit_Qtotal") + AddedMit;
       sendChat(target,'<p style = "margin-bottom: 0px;">' + AttkDmg + ' mystical damage vs ' + DefMit + ' resistance!</p>');
       DmgTaken = AttkDmg - DefMit;
     }
@@ -648,8 +647,8 @@ on('chat:message', function(msg) {
 
       }
       if(BattleOutput.Sol == 1){
-        getAttr(attacker.id, "HP_current").setWithWorker("current",Math.min(ACurrHP+DmgTaken,AMaxHP));
-        CurrHP = selectObj.set("bar3_value", Math.min(ACurrHP+DmgTaken,AMaxHP))
+        getAttr(attacker.id, "HP_current").setWithWorker("current",Math.min(ACurrHP+Math.min(DmgTaken,DCurrHP),AMaxHP));
+        CurrHP = selectObj.set("bar3_value", Math.min(ACurrHP+Math.min(DmgTaken,DCurrHP),AMaxHP))
       }
     }
     else {
