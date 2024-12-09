@@ -347,6 +347,12 @@ function Thunderstorm(BattleInput, BattleOutput) {
 
 // WIP
 function Resolve(BattleInput, BattleOutput) {
+   if (BattleInput.WhoseSkill == 0 && BattleInput.ACurrHP < BattleInput.AMaxHP / 2) {
+     outputSkill(BattleInput.Attacker, "Resolve");
+   }
+   else if (BattleInput.WhoseSkill == 1 && BattleInput.ACurrHP < BattleInput.AMaxHP / 2) {
+     outputSkill(BattleInput.Defender, "Resolve");
+   }
 
 }
 
@@ -627,11 +633,16 @@ on('chat:message', function(msg) {
       if (Crit > ddodge) {
         DmgTaken *= 3;
         if (BattleOutput.Resilience == 1) { DmgTaken /= 2; }
+        var FinalHP = DCurrHP-DmgTaken;
         sendChat(target, 'You crit and deal '+ DmgTaken + ' damage!');
-        CurrHP = targetObj.set("bar3_value", parseInt(targetObj.get("bar3_value")) - DmgTaken);
+        getAttr(defender.id, "HP_current").setWithWorker("current",FinalHP);
+        CurrHP = targetObj.set("bar3_value", FinalHP);
+
       }
       else {
-        CurrHP = targetObj.set("bar3_value", parseInt(targetObj.get("bar3_value")) - DmgTaken);
+        var FinalHP = DCurrHP-DmgTaken;
+        getAttr(defender.id, "HP_current").setWithWorker("current",FinalHP);
+        CurrHP = targetObj.set("bar3_value", FinalHP);
         sendChat(target, 'You hit and deal '+ DmgTaken + ' damage!');
       }
     }
