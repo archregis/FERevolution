@@ -1906,78 +1906,7 @@ on(checkchange+"change:Ele_M change:Ele_S change:Ele_1 change:Ele_2 change:Ele_3
 		});
 	});
 });
-//Resolve
 
-on("change:HP_current change:HP_current_max change:Mag_total change:Str_total change:Skl_total change:Spd_total change:Ele_Qtotal", function(eventInfo) {
-    getAttrs([
-        "HP_current","HP_current_max",
-        "Mag_total","Str_total","Skl_total","Spd_total",
-        "Ele_Qtotal","resolve_applied","resolve_orig_Mag_total","resolve_orig_Str_total","resolve_orig_Skl_total","resolve_orig_Spd_total"
-    ], function(v) {
-        var currSkills = v.Ele_Qtotal || "";
-        var ActiveSkills = currSkills.split(",");
-
-        // Check if "Resolve" is present
-        var hasResolve = 0;
-        for (var i = 0; i < ActiveSkills.length; i++){
-            if (ActiveSkills[i].trim() === "Resolve") {
-                hasResolve = 1;
-                break;
-            }
-        }
-
-        var HP_current = parseInt(v.HP_current,10) || 0;
-        var HP_current_max = parseInt(v.HP_current_max,10) || 1;
-        var Mag_total = parseInt(v.Mag_total,10) || 0;
-        var Str_total = parseInt(v.Str_total,10) || 0;
-        var Skl_total = parseInt(v.Skl_total,10) || 0;
-        var Spd_total = parseInt(v.Spd_total,10) || 0;
-        var alreadyApplied = (parseInt(v.resolve_applied,10) === 1);
-
-        var percentHP = 1 - ((HP_current_max - HP_current) / HP_current_max);
-
-        // If HP < 0.5, Resolve present, and not yet applied, apply the buff
-        if (hasResolve === 1 && percentHP < 0.5 && !alreadyApplied) {
-            setAttrs({
-                "Mag_total": Math.floor(Mag_total * 1.3),
-                "Str_total": Math.floor(Str_total * 1.3),
-                "Skl_total": Math.floor(Skl_total * 1.3),
-                "Spd_total": Math.floor(Spd_total * 1.3),
-                "resolve_applied": 1,
-
-                // Store original values to revert back later
-                "resolve_orig_Mag_total": Mag_total,
-                "resolve_orig_Str_total": Str_total,
-                "resolve_orig_Skl_total": Skl_total,
-                "resolve_orig_Spd_total": Spd_total
-            }, {silent:true});
-        }
-
-        // If HP >= 0.5 and Resolve buff is currently applied, revert to original values
-        if (hasResolve === 1 && percentHP >= 0.5 && alreadyApplied) {
-            var orig_Mag_total = parseInt(v.resolve_orig_Mag_total,10) || Mag_total;
-            var orig_Str_total = parseInt(v.resolve_orig_Str_total,10) || Str_total;
-            var orig_Skl_total = parseInt(v.resolve_orig_Skl_total,10) || Skl_total;
-            var orig_Spd_total = parseInt(v.resolve_orig_Spd_total,10) || Spd_total;
-
-            setAttrs({
-                "Mag_total": orig_Mag_total,
-                "Str_total": orig_Str_total,
-                "Skl_total": orig_Skl_total,
-                "Spd_total": orig_Spd_total,
-                "resolve_applied": 0,
-
-                // Clear original values now that we've reverted
-                "resolve_orig_Mag_total": "",
-                "resolve_orig_Str_total": "",
-                "resolve_orig_Skl_total": "",
-                "resolve_orig_Spd_total": ""
-            }, {silent:true});
-        }
-
-        // If none of the above conditions are met, do nothing, leaving stats as they are.
-    });
-});
 
 //Weaknesses
 const weak = ['Flying', 'Armor', 'Cavalry', 'Dragon', 'Terror', 'Flammable'];
