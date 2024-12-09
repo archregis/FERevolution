@@ -351,7 +351,7 @@ function Resolve(BattleInput, BattleOutput) {
    if (BattleInput.WhoseSkill == 0 && BattleInput.ACurrHP < BattleInput.AMaxHP / 2) {
      outputSkill(BattleInput.Attacker, "Resolve");
    }
-   else if (BattleInput.WhoseSkill == 1 && BattleInput.ACurrHP < BattleInput.AMaxHP / 2) {
+   else if (BattleInput.WhoseSkill == 1 && BattleInput.DCurrHP < BattleInput.DMaxHP / 2) {
      outputSkill(BattleInput.Defender, "Resolve");
    }
 
@@ -639,17 +639,17 @@ on('chat:message', function(msg) {
         sendChat(target, 'You crit and deal '+ DmgTaken + ' damage!');
         getAttr(defender.id, "HP_current").setWithWorker("current",FinalHP);
         CurrHP = targetObj.set("bar3_value", FinalHP);
-        if(BattleOutput.Sol == 1){
-          getAttr(defender.id, "HP_current").setWithWorker("current",FinalHP);
-          CurrHP = targetObj.set("bar3_value", FinalHP);
-        }
-
       }
       else {
         var FinalHP = DCurrHP-DmgTaken;
         getAttr(defender.id, "HP_current").setWithWorker("current",FinalHP);
         CurrHP = targetObj.set("bar3_value", FinalHP);
         sendChat(target, 'You hit and deal '+ DmgTaken + ' damage!');
+
+      }
+      if(BattleOutput.Sol == 1){
+        getAttr(attacker.id, "HP_current").setWithWorker("current",Math.min(ACurrHP+DmgTaken,AMaxHP));
+        CurrHP = selectObj.set("bar3_value", Math.min(ACurrHP+DmgTaken,AMaxHP))
       }
     }
     else {
