@@ -168,7 +168,8 @@ function Adept(BattleInput, BattleOutput) {
 function Luna(BattleInput, BattleOutput) {
   if (BattleInput.WhoseSkill == 1) { return; }
   if (randomInteger(100) <= Number(BattleInput.ASkill)) {
-
+    outputSkill(BattleInput.Attacker, "Luna");
+    BattleOutput.Luna = 1;
   }
 }
 
@@ -478,6 +479,7 @@ on('chat:message', function(msg) {
       "Nullify": 0,
       "Reaver": 0,
       "Resilience": 0,
+      "Luna": 0,
     }
 
     // Skill checks
@@ -547,13 +549,21 @@ on('chat:message', function(msg) {
     if (dmgtype == 'Physical') {
       log('AddDmg is really: ' + AddedDmg);
       AttkDmg = getAttrValue(attacker.id, "phys_total") + AddedDmg;
+      if (BattleOutput.Luna ==1){
+        DefMit = getAttrValue(defender.id, "Mit_Qtotal") + AddedMit
+      } else{
       DefMit = getAttrValue(defender.id, "prot_total") + getAttrValue(defender.id, "Mit_Qtotal") + AddedMit;
+      }
       sendChat(target,'<p style = "margin-bottom: 0px;">' + AttkDmg + ' physical damage vs ' + DefMit + ' protection!</p>');
       DmgTaken = AttkDmg - DefMit;
     }
     else if (dmgtype == 'Magical') {
       AttkDmg = getAttrValue(attacker.id, "myst_total") + AddedDmg;
+      if (BattleOutput.Luna ==1){
+        DefMit = getAttrValue(defender.id, "Mit_Qtotal") + AddedMit
+      } else{
       DefMit = getAttrValue(defender.id, "ward_total") + getAttrValue(defender.id, "Mit_Qtotal") + AddedMit;
+      }
       sendChat(target,'<p style = "margin-bottom: 0px;">' + AttkDmg + ' mystical damage vs ' + DefMit + ' resistance!</p>');
       DmgTaken = AttkDmg - DefMit;
     }
