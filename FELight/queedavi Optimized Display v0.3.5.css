@@ -34,6 +34,7 @@ html, body {
 .sheet-input-40 { width: 40px; }
 .sheet-select-80 { width: 80px; }
 .sheet-select-65 { width: 65px; }
+.sheet-input-100 {width: 100px;}
 
 /* Textareas */
 .sheet-notes-textarea { width: 215px; height: 320px; }
@@ -143,8 +144,7 @@ html, body {
 .charsheet table td {
     text-align: center;
     vertical-align: middle;
-    /* Set default padding if desired:
-       padding: 3px 5px; */
+    padding: 5px;
 }
 
 /* Charinfo specific */
@@ -231,6 +231,33 @@ html, body {
     max-width: 100%;
     box-sizing: border-box;
     text-align: center;
+}
+
+.repeating_weapons table th,
+.repeating_weapons table td,
+.repeating_spells table th,
+.repeating_spells table td {
+    vertical-align: middle;
+    padding: 5px;
+}
+
+.repeating_weapons input[name="attr_WName"],
+.repeating_weapons select[name="attr_WType"],
+.repeating_weapons input[name="attr_Uses"],
+.repeating_spells input[name="attr_Sname"],
+.repeating_spells select[name="attr_SType"],
+.repeating_spells input[name="attr_Uses"] {
+    vertical-align: middle;
+    margin: 0; /* Remove any extra margin if present */
+    line-height: 1.2;
+    height: 1.8em;
+    font-size; 13px;
+    border: 1px solid #ccc;
+}
+
+.repeating_weapons select[name="attr_Wtype"],
+.repeating_spells select[name="attr_Stype"] {
+    text-align:center;
 }
 
 .sheet-thicc input[type="text"],
