@@ -167,16 +167,19 @@ function Adept(BattleInput, BattleOutput) {
 // Sets enemy ward and prot to 0, skill% activation
 function Luna(BattleInput, BattleOutput) {
   if (BattleInput.WhoseSkill == 1) { return; }
-  if (randomInteger(100) <= BattleInput.ASkill) {
-
+  if (randomInteger(100) <= Number(BattleInput.ASkill)) {
+    outputSkill(BattleInput.Attacker, "Luna");
+    BattleOutput.DWard = 0;
+    BattleOutput.DProt = 0;
   }
 }
 
 // Restores damage dealt as HP, skill% activation
 function Sol(BattleInput, BattleOutput) {
   if (BattleInput.WhoseSkill == 1) { return; }
-  if (randomInteger(100) <= BattleInput.ASkill) {
-
+  if (randomInteger(100) <= Number(BattleInput.ASkill)) {
+    outputSkill(BattleInput.Attacker, "Sol");
+    BattleOutput.Sol = 1;
   }
 }
 
@@ -192,8 +195,9 @@ function Glacies(BattleInput, BattleOutput) {
 // Halve enemy res, skill% activation
 function Flare(BattleInput, BattleOutput) {
   if (BattleInput.WhoseSkill == 1) { return; }
-  if (randomInteger(100) <= BattleInput.ASkill) {
-
+  if (randomInteger(100) <= Number(BattleInput.ASkill)) {
+    outputSkill(BattleInput.Attacker, "Flare");
+    BattleOutput.DWard = Math.floor(BattleInput.DWard/2);
   }
 }
 
@@ -397,6 +401,12 @@ function Thunderstorm(BattleInput, BattleOutput) {
 
 // +30% strength, magic, skill, and speed when below half hp
 function Resolve(BattleInput, BattleOutput) {
+   if (BattleInput.WhoseSkill == 0 && BattleInput.ACurrHP < BattleInput.AMaxHP / 2) {
+     outputSkill(BattleInput.Attacker, "Resolve");
+   }
+   else if (BattleInput.WhoseSkill == 1 && BattleInput.DCurrHP < BattleInput.DMaxHP / 2) {
+     outputSkill(BattleInput.Defender, "Resolve");
+   }
 
 }
 
@@ -490,7 +500,8 @@ on('chat:message', function(msg) {
     var DmgTaken = 0;
     var AtkDmg = 0;
     var DefMit = 0;
-    var dodge = Number(getAttrValue(attacker.id, "Ddg"));
+    let dodge = Number(getAttrValue(attacker.id, "Ddg"));
+    
 
 
     // Initialize skill function I/O
@@ -513,11 +524,15 @@ on('chat:message', function(msg) {
       "ASkill": Number(getAttrValue(attacker.id, "Skl_total")),
       "ASpeed": Number(getAttrValue(attacker.id, "Spd_total")),
       "ALuck": Number(getAttrValue(attacker.id, "Lck_total")),
+      "DWard": Number(getAttrValue(attacker.id, "ward_total")),
+      "DProt": Number(getAttrValue(attacker.id, "prot_total")),
     };
 
-    var BattleOutput = {
-      "Hit": Number(getAttrValue(attacker.id, "Hit")) + randomInteger(100),
-      "Crit": Number(getAttrValue(attacker.id, "Crit")) + randomInteger(100),
+    let BattleOutput = {
+      "DWard": Number(getAttrValue(attacker.id, "ward_total")),
+      "DProt": Number(getAttrValue(attacker.id, "prot_total")),
+      "Hit": Number(getAttrValue(attacker.id, "Hit"))+randomInteger(100),
+      "Crit": Number(getAttrValue(attacker.id, "Crit"))+randomInteger(100),
       "Avoid" : Number(getAttrValue(defender.id, "avo")),
       "AtkSpd": Number(getAttrValue(attacker.id, 'Atkspd')),
       "AddDmg": 0,
@@ -529,6 +544,8 @@ on('chat:message', function(msg) {
       "Nullify": 0,
       "Reaver": 0,
       "Resilience": 0,
+      "Sol": 0,
+
     }
 
     // Skill checks
@@ -641,21 +658,20 @@ on('chat:message', function(msg) {
     '</div>'
     );
 
-
     // Damage Typing
-    if (dmgType == 'Physical') {
+    if (dmgtype == 'Physical') {
       log('AddDmg is really: ' + AddedDmg);
-      AtkDmg += getAttrValue(attacker.id, "phys_total") + AddedDmg;
-      DefMit = getAttrValue(defender.id, "prot_total") + getAttrValue(defender.id, "Mit_Qtotal") + AddedProt;
-      sendChat(target,'<p style = "margin-bottom: 0px;">' + AtkDmg + ' physical damage vs ' + DefMit + ' protection!</p>');
+      AttkDmg = getAttrValue(attacker.id, "phys_total") + AddedDmg;
+      DefMit = BattleOutput.DProt + getAttrValue(defender.id, "Mit_Qtotal") + AddedMit;
+      sendChat(target,'<p style = "margin-bottom: 0px;">' + AttkDmg + ' physical damage vs ' + DefMit + ' protection!</p>');
+      DmgTaken = AttkDmg - DefMit;
     }
-    else if (dmgType == 'Magical') {
-      AtkDmg += getAttrValue(attacker.id, "myst_total") + AddedDmg;
-      DefMit = getAttrValue(defender.id, "ward_total") + getAttrValue(defender.id, "Mit_Qtotal") + AddedWard;
-      sendChat(target,'<p style = "margin-bottom: 0px;">' + AtkDmg + ' mystical damage vs ' + DefMit + ' resistance!</p>');
+    else if (dmgtype == 'Magical') {
+      AttkDmg = getAttrValue(attacker.id, "myst_total") + AddedDmg;
+      DefMit = BattleOutput.DWard + getAttrValue(defender.id, "Mit_Qtotal") + AddedMit;
+      sendChat(target,'<p style = "margin-bottom: 0px;">' + AttkDmg + ' mystical damage vs ' + DefMit + ' resistance!</p>');
+      DmgTaken = AttkDmg - DefMit;
     }
-    DmgTaken = AtkDmg - DefMit;
-
 
     // End of calculation skill procs
     if (BattleOutput.SureShot == 1) {
@@ -679,6 +695,11 @@ on('chat:message', function(msg) {
         DmgTaken = Math.max(0, Math.min(BattleInput.DCurrHP, DmgTaken));
         CurrHP = targetObj.set("bar3_value", parseInt(targetObj.get("bar3_value")) - DmgTaken);
         sendChat(target, 'You hit and deal '+ DmgTaken + ' damage!');
+
+      }
+      if(BattleOutput.Sol == 1){
+        getAttr(attacker.id, "HP_current").setWithWorker("current",Math.min(ACurrHP+Math.min(DmgTaken,DCurrHP),AMaxHP));
+        CurrHP = selectObj.set("bar3_value", Math.min(ACurrHP+Math.min(DmgTaken,DCurrHP),AMaxHP))
       }
     }
     else {
