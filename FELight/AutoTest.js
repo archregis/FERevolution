@@ -33,11 +33,11 @@ function outputSkill(Name, Skill) {
 
 // Done
 function Swordbreaker(BattleInput, BattleOutput) {
-  if (BattleInput.Dwtype == "Sword" && BattleInput.WhoseSkill == 0) {
+  if (BattleInput.DWType == "Sword" && BattleInput.WhoseSkill == 0) {
     outputSkill(BattleInput.Attacker, "Swordbreaker");
     BattleOutput.Hit += 30;
   }
-  if (BattleInput.Awtype == "Sword" && BattleInput.WhoseSkill == 1) {
+  if (BattleInput.AWType == "Sword" && BattleInput.WhoseSkill == 1) {
     outputSkill(BattleInput.Defender, "Swordbreaker");
     BattleOutput.Avoid += 30;
   }
@@ -45,11 +45,11 @@ function Swordbreaker(BattleInput, BattleOutput) {
 
 // Done
 function AxeBreaker(BattleInput, BattleOutput) {
-  if (BattleInput.Dwtype == "Axe" && BattleInput.WhoseSkill == 0) {
+  if (BattleInput.DWType == "Axe" && BattleInput.WhoseSkill == 0) {
     outputSkill(BattleInput.Attacker, "Axebreaker");
     BattleOutput.Hit += 30;
   }
-  if (BattleInput.Awtype == "Axe" && BattleInput.WhoseSkill == 1) {
+  if (BattleInput.AWType == "Axe" && BattleInput.WhoseSkill == 1) {
     outputSkill(BattleInput.Defender, "Axebreaker");
     BattleOutput.Avoid += 30;
   }
@@ -57,11 +57,11 @@ function AxeBreaker(BattleInput, BattleOutput) {
 
 // Done
 function LanceBreaker(BattleInput, BattleOutput) {
-  if (BattleInput.Dwtype == "Lance" && BattleInput.WhoseSkill == 0) {
+  if (BattleInput.DWType == "Lance" && BattleInput.WhoseSkill == 0) {
     outputSkill(BattleInput.Attacker, "Lancebreaker");
     BattleOutput.Hit += 30;
   }
-  if (BattleInput.Awtype == "Lance" && BattleInput.WhoseSkill == 1) {
+  if (BattleInput.AWType == "Lance" && BattleInput.WhoseSkill == 1) {
     outputSkill(BattleInput.Defender, "Lancebreaker");
     BattleOutput.Avoid += 30;
   }
@@ -69,11 +69,11 @@ function LanceBreaker(BattleInput, BattleOutput) {
 
 // Done
 function BowBreaker(BattleInput, BattleOutput) {
-  if (BattleInput.Dwtype == "Bow" && BattleInput.WhoseSkill == 0) {
+  if (BattleInput.DWType == "Bow" && BattleInput.WhoseSkill == 0) {
     outputSkill(BattleInput.Attacker, "Bowbreaker");
     BattleOutput.Hit += 30;
   }
-  if (BattleInput.Awtype == "Bow" && BattleInput.WhoseSkill == 1) {
+  if (BattleInput.AWType == "Bow" && BattleInput.WhoseSkill == 1) {
     outputSkill(BattleInput.Defender, "Bowbreaker");
     BattleOutput.Avoid += 30;
   }
@@ -81,11 +81,11 @@ function BowBreaker(BattleInput, BattleOutput) {
 
 // Done
 function TomeBreaker(BattleInput, BattleOutput) {
-  if ((BattleInput.Dwtype == "Anima" || BattleInput.Dwtype == "Dark" || BattleInput.Dwtype == "Light") && BattleInput.WhoseSkill == 0) {
+  if ((BattleInput.DWType == "Anima" || BattleInput.DWType == "Dark" || BattleInput.DWType == "Light") && BattleInput.WhoseSkill == 0) {
     outputSkill(BattleInput.Attacker, "Tomebreaker");
     BattleOutput.Hit += 30;
   }
-  if ((BattleInput.Awtype == "Anima" || BattleInput.Awtype == "Dark" || BattleInput.Awtype == "Light") && BattleInput.WhoseSkill == 1) {
+  if ((BattleInput.AWType == "Anima" || BattleInput.AWType == "Dark" || BattleInput.AWType == "Light") && BattleInput.WhoseSkill == 1) {
     outputSkill(BattleInput.Attacker, "Tomebreaker");
     BattleOutput.Avoid += 30;
   }
@@ -94,7 +94,7 @@ function TomeBreaker(BattleInput, BattleOutput) {
 // Done
 function Swordfaire(BattleInput, BattleOutput) {
   if (BattleInput.WhoseSkill == 1) { return; }
-  if (BattleInput.Awtype == "Sword") {
+  if (BattleInput.AWType == "Sword") {
     outputSkill(BattleInput.Attacker, "Swordfaire");
     BattleOutput.AddDmg += 5
   }
@@ -103,7 +103,7 @@ function Swordfaire(BattleInput, BattleOutput) {
 // Done
 function Axefaire(BattleInput, BattleOutput) {
   if (BattleInput.WhoseSkill == 1) { return; }
-  if (BattleInput.Awtype == "Axe") {
+  if (BattleInput.AWType == "Axe") {
     outputSkill(BattleInput.Attacker, "Axefaire");
     BattleOutput.AddDmg += 5;
   }
@@ -112,7 +112,7 @@ function Axefaire(BattleInput, BattleOutput) {
 // Done
 function Lancefaire(BattleInput, BattleOutput) {
   if (BattleInput.WhoseSkill == 1) { return; }
-  if (BattleInput.Awtype == "Lance") {
+  if (BattleInput.AWType == "Lance") {
     outputSkill(BattleInput.Attacker, "Lancefaire");
     BattleOutput.AddDmg += 5;
   }
@@ -121,7 +121,7 @@ function Lancefaire(BattleInput, BattleOutput) {
 // Done
 function Bowfaire(BattleInput, BattleOutput) {
   if (BattleInput.WhoseSkill == 1) { return; }
-  if (BattleInput.Awtype == "Bow") {
+  if (BattleInput.AWType == "Bow") {
     outputSkill(BattleInput.Attacker, "Bowfaire");
     BattleOutput.AddDmg += 5;
   }
@@ -130,7 +130,7 @@ function Bowfaire(BattleInput, BattleOutput) {
 // Done
 function Tomefaire(BattleInput, BattleOutput) {
   if (BattleInput.WhoseSkill == 1) { return; }
-  if (BattleInput.Awtype == "Anima" || BattleInput.Awtype == "Dark" || BattleInput.Awtype == "Light") {
+  if (BattleInput.AWType == "Anima" || BattleInput.AWType == "Dark" || BattleInput.AWType == "Light") {
     outputSkill(BattleInput.Attacker, "Tomefaire");
     BattleOutput.AddDmg += 5;
   }
@@ -149,7 +149,7 @@ function Reaver(BattleInput, BattleOutput) {
 // Done
 function SureShot(BattleInput, BattleOutput) {
   if (BattleInput.WhoseSkill == 1) { return; }
-  if (randomInteger(100) <= Number(BattleInput.ASkill)) {
+  if (randomInteger(100) <= BattleInput.ASkill) {
     outputSkill(BattleInput.Attacker, "Sure Shot");
     BattleOutput.SureShot = 1;
   }
@@ -158,7 +158,7 @@ function SureShot(BattleInput, BattleOutput) {
 // Done
 function Adept(BattleInput, BattleOutput) {
   if (BattleInput.WhoseSkill == 1) { return; }
-  if (randomInteger(100) <= Number(BattleInput.ASpeed)) {
+  if (randomInteger(100) <= BattleInput.ASpeed) {
     outputSkill(BattleInput.Attacker, "Adept");
     BattleOutput.Adept = 1;
   }
@@ -167,7 +167,7 @@ function Adept(BattleInput, BattleOutput) {
 // WIP
 function Luna(BattleInput, BattleOutput) {
   if (BattleInput.WhoseSkill == 1) { return; }
-  if (randomInteger(100) <= Number(BattleInput.ASkill)) {
+  if (randomInteger(100) <= BattleInput.ASkill) {
 
   }
 }
@@ -175,7 +175,7 @@ function Luna(BattleInput, BattleOutput) {
 // WIP
 function Sol(BattleInput, BattleOutput) {
   if (BattleInput.WhoseSkill == 1) { return; }
-  if (randomInteger(100) <= Number(BattleInput.ASkill)) {
+  if (randomInteger(100) <= BattleInput.ASkill) {
 
   }
 }
@@ -183,16 +183,16 @@ function Sol(BattleInput, BattleOutput) {
 // Done
 function Glacies(BattleInput, BattleOutput) {
   if (BattleInput.WhoseSkill == 1) { return; }
-  if (randomInteger(100) <= Number(BattleInput.ASkill)) {
+  if (randomInteger(100) <= BattleInput.ASkill) {
     outputSkill(BattleInput.Attacker, "Glacies");
-    BattleOutput.AddDmg += Number(BattleInput.ARes);
+    BattleOutput.AddDmg += BattleInput.ARes;
   }
 }
 
 // WIP
 function Flare(BattleInput, BattleOutput) {
   if (BattleInput.WhoseSkill == 1) { return; }
-  if (randomInteger(100) <= Number(BattleInput.ASkill)) {
+  if (randomInteger(100) <= BattleInput.ASkill) {
 
   }
 }
@@ -200,7 +200,7 @@ function Flare(BattleInput, BattleOutput) {
 // Done
 function Impale(BattleInput, BattleOutput) {
   if (BattleInput.WhoseSkill == 1) { return; }
-  if (randomInteger(100) <= Number(BattleInput.ASkill)) {
+  if (randomInteger(100) <= BattleInput.ASkill) {
     outputSkill(BattleInput.Attacker, "Impale");
     BattleOutput.Impale = 1;
   }
@@ -209,25 +209,25 @@ function Impale(BattleInput, BattleOutput) {
 // Done
 function Colossus(BattleInput, BattleOutput) {
   if (BattleInput.WhoseSkill == 1) { return; }
-  if (randomInteger(100) <= Number(BattleInput.ASkill)) {
+  if (randomInteger(100) <= BattleInput.ASkill) {
     outputSkill(BattleInput.Attacker, "Colossus");
-    BattleOutput.AddDmg += Number(BattleInput.AStr) * 2;
+    BattleOutput.AddDmg += BattleInput.AStr * 2;
   }
 }
 
 // Done
 function Ignis(BattleInput, BattleOutput) {
   if (BattleInput.WhoseSkill == 1) { return; }
-  if (randomInteger(100) <= Number(BattleInput.ASkill)) {
+  if (randomInteger(100) <= BattleInput.ASkill) {
     outputSkill(BattleInput.Attacker, "Ignis");
-    BattleOutput.AddDmg += Number(BattleInput.ARes) / 2 + Number(BattleInput.ADef) / 2;
+    BattleOutput.AddDmg += BattleInput.ARes / 2 + BattleInput.ADef/ 2;
   }
 }
 
 // WIP
 function Armsthrift(BattleInput, BattleOutput) {
   if (BattleInput.WhoseSkill == 1) { return; }
-  if (randomInteger(100) <= Number(BattleInput.ALuck)) {
+  if (randomInteger(100) <= BattleInput.ALuck) {
 
   }
 }
@@ -236,58 +236,89 @@ function Armsthrift(BattleInput, BattleOutput) {
 
 // Initiate Skills
 
-// WIP
+// Done
 function QuickDraw(BattleInput, BattleOutput) {
-
+  if (BattleInput.WhoseSkill == 1 || BattleInput.IsInitiating == 0) { return; }
+  outputSkill(BattleInput.Attacker, "Quick Draw");
+  BattleOutput.AddDmg += 5;
 }
 
-// WIP
+// Done
 function DartingBlow(BattleInput, BattleOutput) {
-
+  if (BattleInput.WhoseSkill == 1 || BattleInput.IsInitiating == 0) { return; }
+  outputSkill(BattleInput.Attacker, "Darting Blow");
+  BattleOutput.AddAtkSpd += 5;
 }
 
-// WIP
+// Done
 function GoodBet(BattleInput, BattleOutput) {
-
+  if (BattleInput.WhoseSkill == 1 || BattleInput.IsInitiating == 0) { return; }
+  outputSkill(BattleInput.Attacker, "Good Bet");
+  BattleOutput.Hit += 30;
 }
 
-// WIP
+// Done
 function DuelistBlow(BattleInput, BattleOutput) {
-
+  if (BattleInput.WhoseSkill == 0 || BattleInput.IsInitiating == 1) { return; }
+  outputSkill(BattleInput.Defender, "Duelist's Blow");
+  BattleOutput.Avoid += 30;
 }
 
-// WIP
+// Done
 function DeathBlow(BattleInput, BattleOutput) {
-
+  if (BattleInput.WhoseSkill == 1 || BattleInput.IsInitiating == 0) { return; }
+  outputSkill(BattleInput.Attacker, "Death Blow");
+  BattleOutput.Crit += 20;
 }
 
-// WIP
+// Done
 function Prescience(BattleInput, BattleOutput) {
-
+  if (BattleInput.WhoseSkill == 0 && BattleInput.IsInitiating == 1) {
+    outputSkill(BattleInput.Attacker, "Prescience");
+    BattleOutput.Hit += 15;
+  }
+  else if (BattleInput.WhoseSkill == 1 && BattleInput.IsInitiating == 0) {
+    outputSkill(BattleInput.Defender, "Prescience");
+    BattleOutput.Avoid += 15;
+  }
 }
 
 
 
 // Counter Skills
 
-// WIP
+// Done
 function StrongRiposte(BattleInput, BattleOutput) {
-
+  if (BattleInput.WhoseSkill == 1 || BattleInput.IsInitiating == 1) { return; }
+  outputSkill(BattleInput.Attacker, "Strong Riposte");
+  BattleOutput.AddDmg += 3;
 }
 
-// WIP
+// Done
 function Sturdy(BattleInput, BattleOutput) {
-
+  if (BattleInput.WhoseSkill == 0 && BattleInput.IsInitiating == 0) {
+    outputSkill(BattleInput.Attacker, "Sturdy");
+    BattleOutput.AddDmg += 4;
+  }
+  else if (BattleInput.WhoseSkill == 1 && BattleInput.IsInitiating == 1) {
+    outputSkill(BattleInput.Defender, "Sturdy");
+    BattleOutput.AddProt += 4;
+    BattleOutput.AddWard += 4;
+  }
 }
 
-// WIP
+// Done
 function Brawler(BattleInput, BattleOutput) {
-
+  if (BattleInput.WhoseSkill == 0 || BattleInput.IsInitiating == 0) { return; }
+  outputSkill(BattleInput.Defender, "Brawler");
+  BattleOutput.AddProt += 6;
 }
 
-// WIP
+// Done
 function Patience(BattleInput, BattleOutput) {
-
+  if (BattleInput.WhoseSkill == 0 || BattleInput.IsInitiating == 0) { return; }
+  outputSkill(BattleInput.Attacker, "Patience");
+  BattleOutput.Avoid += 10;
 }
 
 
@@ -311,7 +342,8 @@ function Chivalry(BattleInput, BattleOutput) {
   }
   else if (BattleInput.WhoseSkill == 1 && BattleInput.ACurrHP == BattleInput.AMaxHP) {
     outputSkill(BattleInput.Defender, "Chivalry");
-    BattleOutput.AddMit += 4;
+    BattleOutput.AddProt += 4;
+    BattleOutput.AddWard += 4;
   }
 }
 
@@ -323,7 +355,8 @@ function FortressOfWill(BattleInput, BattleOutput){
   }
   if (BattleInput.WhoseSkill == 1 && BattleInput.DCurrHP == BattleInput.DMaxHP) { 
     outputSkill(BattleInput.Defender, "Fortress of Will");
-    BattleOutput.AddMit += 4;
+    BattleOutput.AddProt += 4;
+    BattleOutput.AddWard += 4;
   }
 }
 
@@ -334,14 +367,32 @@ function DeadlyStrikes(BattleInput, BattleOutput) {
   BattleOutput.Crit += BattleInput.ASkill;
 }
 
-// WIP
+// Done
 function PrideOfSteel(BattleInput, BattleOutput) {
-
+  if (BattleInput.WhoseSkill == 0) {
+    var Name = BattleInput.Attacker;
+    var Stacks = 4 - Math.ceil(4 * BattleInput.ACurrHP / BattleInput.AMaxHP);
+    BattleOutput.AddDmg += 2 * Stacks;
+  }
+  else if (BattleInput.WhoseSkill == 1) {
+    var Name = BattleInput.Defender;
+    var Stacks = 4 - Math.ceil(4 * BattleInput.DCurrHP / BattleInput.DMaxHP);
+    BattleOutput.AddProt += 2 * Stacks;
+    BattleOutput.AddWard += 2 * Stacks;
+  }
+  if (Stacks > 0) {
+    outputSkill(Name, "Pride of Steel");
+  }
 }
 
 // WIP
 function Thunderstorm(BattleInput, BattleOutput) {
-
+  if (BattleInput.WhoseSkill == 1) { return; }
+  if (BattleInput.AWWeight > BattleInput.DWWeight) {
+    BattleOutput.AddDmg += 2;
+    BattleOutput.Hit += 15;
+    BattleOutput.Crit += 5;
+  }
 }
 
 // WIP
@@ -452,8 +503,10 @@ on('chat:message', function(msg) {
       "WhoseSkill": -1, // To ensure we don't activate a defender's skill when we shouldn't. 0 = attacker, 1 = defender
       "Attacker": selected,
       "Defender": target,
-      "Awtype": awtype,
-      "Dwtype": dwtype,
+      "AWType": awtype,
+      "DWType": dwtype,
+      "AWWeight" : getAttrValue(attacker.id,'currWt'),
+      "DWWeight" : getAttrValue(defender.id,'currWt'),
       "AMaxHP": AMaxHP,
       "DMaxHP": DMaxHP,
       "ACurrHP": ACurrHP,
@@ -467,11 +520,12 @@ on('chat:message', function(msg) {
     };
 
     let BattleOutput = {
-      "Hit": Number(getAttrValue(attacker.id, "Hit"))+randomInteger(100),
-      "Crit": Number(getAttrValue(attacker.id, "Crit"))+randomInteger(100),
+      "Hit": Number(getAttrValue(attacker.id, "Hit")) + randomInteger(100),
+      "Crit": Number(getAttrValue(attacker.id, "Crit")) + randomInteger(100),
       "Avoid" : Number(getAttrValue(defender.id, "avo")),
       "AddDmg": 0,
-      "AddMit": 0,
+      "AddProt": 0,
+      "AddWard": 0,
       "SureShot": 0,
       "Adept": 0,
       "Impale": 0,
@@ -516,7 +570,8 @@ on('chat:message', function(msg) {
       }
     }
     let AddedDmg = BattleOutput.AddDmg;
-    let AddedMit = BattleOutput.AddMit;
+    let AddedProt = BattleOutput.AddProt;
+    let AddedWard = BattleOutput.AddWard;
     let Hit = BattleOutput.Hit;
     let Crit = BattleOutput.Crit;
     let Avoid = BattleOutput.Avoid;
@@ -547,13 +602,13 @@ on('chat:message', function(msg) {
     if (dmgtype == 'Physical') {
       log('AddDmg is really: ' + AddedDmg);
       AttkDmg = getAttrValue(attacker.id, "phys_total") + AddedDmg;
-      DefMit = getAttrValue(defender.id, "prot_total") + getAttrValue(defender.id, "Mit_Qtotal") + AddedMit;
+      DefMit = getAttrValue(defender.id, "prot_total") + getAttrValue(defender.id, "Mit_Qtotal") + AddedProt;
       sendChat(target,'<p style = "margin-bottom: 0px;">' + AttkDmg + ' physical damage vs ' + DefMit + ' protection!</p>');
       DmgTaken = AttkDmg - DefMit;
     }
     else if (dmgtype == 'Magical') {
       AttkDmg = getAttrValue(attacker.id, "myst_total") + AddedDmg;
-      DefMit = getAttrValue(defender.id, "ward_total") + getAttrValue(defender.id, "Mit_Qtotal") + AddedMit;
+      DefMit = getAttrValue(defender.id, "ward_total") + getAttrValue(defender.id, "Mit_Qtotal") + AddedWard;
       sendChat(target,'<p style = "margin-bottom: 0px;">' + AttkDmg + ' mystical damage vs ' + DefMit + ' resistance!</p>');
       DmgTaken = AttkDmg - DefMit;
     }
