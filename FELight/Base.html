@@ -932,6 +932,7 @@
 	<input name="attr_WepEff_2" value = " " hidden>
 	<input name="attr_currName" value = " " hidden>
 	<input name="attr_currMt" value = "0" hidden>
+	<input name="attr_currWt" value = "0" hidden>
 	<input name="attr_currHit" value = "0" hidden>
 	<input name="attr_currCrit" value = "0" hidden>
 	<input name="attr_currDdg" value = "0" hidden>
@@ -2717,24 +2718,27 @@ on("change:atktype change:repeating_weapons change:repeating_spells change:repea
 });
 
 //PhysDmg
-on("change:Str_total change:repeating_weapons:WType change:Cha_total change:repeating_weapons:Mt change:_reporder:weapons remove:repeating_weapons change:Physb change:WSlot change:atktype change:phys_bd", function(eventInfo) {
+on("change:Str_total change:repeating_weapons:WType change:Cha_total change:repeating_weapons:Mt change:repeating_weapons:Wt change:_reporder:weapons remove:repeating_weapons change:Physb change:WSlot change:atktype change:phys_bd", function(eventInfo) {
 	getAttrs(["WSlot"], function(v) {
 		getSectionIDsOrdered("repeating_weapons", function(idarray) {
 			slotnum = v.WSlot
 			fID = idarray[Number(slotnum)-1];
 			log("fID is" + fID)
-			getAttrs(["Str_total", "repeating_weapons_"+fID+"_Mt","repeating_weapons_"+fID+"_WType", "Cha_total", "Physb", "atktype", "phys_bd"], function(v) {
+			getAttrs(["Str_total", "repeating_weapons_"+fID+"_Mt","repeating_weapons_"+fID+"_WType", "repeating_weapons_"+fID+"_Wt", "Cha_total", "Physb", "atktype", "phys_bd"], function(v) {
 				log(JSON.stringify(v))
 				let nindex = Object.keys(v)[1];
 				let mindex = Object.keys(v)[2];
+				let wtindex = Object.keys(v)[3];
 				log(nindex)
 				let wMt = parseInt(v[nindex])||0;
+				let wWt = parseInt(v[wtindex])||0;
 				log("wMt is " + wMt)
 				let Str = v.Str_total;
 				let Bonus = v.Physb;
 
 				setAttrs({
-					currMt: Number(wMt)
+					currMt: Number(wMt),
+					currWt: Number(wWt)
 				})
 				setAttrs({
 					phys_total: Math.round((Str) + wMt) + Number(Bonus) + Number(v.phys_bd),
@@ -2749,24 +2753,27 @@ on("change:Str_total change:repeating_weapons:WType change:Cha_total change:repe
 
 
 //MagDmg
-on("change:Mag_total change:repeating_spells:Mt change:repeating_weapons:SType change:_reporder:spells remove:repeating_spells change:Magb change:SSlot change:atktype change:myst_bd", function(eventInfo) {
+on("change:Mag_total change:repeating_spells:Mt change:repeating_weapons:SType change:repeating_weapons:Wt change:_reporder:spells remove:repeating_spells change:Magb change:SSlot change:atktype change:myst_bd", function(eventInfo) {
 	getAttrs(["SSlot"], function(v) {
 		getSectionIDsOrdered("repeating_spells", function(idarray) {
 			slotnum = v.SSlot
 			fID = idarray[Number(slotnum)-1];
 			log("fID is" + fID)
-			getAttrs(["Mag_total", "repeating_spells_"+fID+"_Mt","repeating_spells_"+fID+"_SType", "Cha_total","Magb","myst_bd", "atktype"], function(v) {
+			getAttrs(["Mag_total", "repeating_spells_"+fID+"_Mt","repeating_spells_"+fID+"_SType", "repeating_spells_"+fID+"_Wt", "Cha_total","Magb","myst_bd", "atktype"], function(v) {
 				log(JSON.stringify(v))
 				let nindex = Object.keys(v)[1];
 				let mindex = Object.keys(v)[2];
+				let wtindex = Object.keys(v)[3];
 				log(nindex)
 				let wMt = parseInt(v[nindex])||0;
+				let wWt = parseInt(v[wtindex])||0;
 				log("wMt is " + wMt)
 				let Mag = v.Mag_total;
 				let Bonus = v.Magb;
 				if (v.atktype == "Magical"){
 					setAttrs({
 						currMt: Number(wMt),
+						currWt: Number(wWt),
 						effdmg: Mag + 3*wMt + Number(Bonus) + Number(v.myst_bd)
 					})
 				}
@@ -3202,8 +3209,9 @@ on("change:Species change:Class", function(eventInfo) {
 
 //Initialize values for API, because ded
 on("sheet:opened", function(){
-	getAttrs(["AttackCounter","HPHolder","weplist","splist","colist","effdmg","currEff","currName","currMt","class_exp0","class_gain0","currDesc","currWexp","currWep","atktype","EXP","SwordEXP","LanceEXP","AxeEXP","BowEXP","StavesEXP","DarkEXP","AnimaEXP","LightEXP","AuthorityEXP","RidingEXP","ArmorEXP","FlyingEXP","Flyingrank","Level","HP_i","Str_i","Mag_i","Skl_i","Spd_i","Lck_i","Def_i","Res_i","Mov_i","HP_bd","Str_bd","Mag_bd","Skl_bd","Spd_bd","Lck_bd","Def_bd","Res_bd","Mov_bd","HP_rb","Str_rb","Mag_rb","Skl_rb","Spd_rb","Lck_rb","Def_rb","Res_rb","Mov_rb","item_uses0","item_uses1","item_uses2","Swordrank","Lancerank","Axerank","Bowrank","Stavesrank","Hiddenrank","Darkrank","Lightrank","Authorityrank","Ridingrank","Armorrank","Hitmod","Critmod","Avomod","Ddgmod","Dmgmod","Hitmod_class","Hitb","Physb","Magb","Critb","Avob","Protb","Resb","Chab","Critavob","Ghitb","Critmod_class","Avomod_class","Ddgmod_class","fid","SwordGain","LanceGain","AxeGain","BowGain","StavesGain","HiddenGain","AnimaGain","LightGain","AuthorityGain","RidingGain","ArmorGain","FlyingGain","phys_bd","myst_bd","ward_bd","prot_bd","Weak_total","Ele_Qtotal","Hit","Crit","Ddg","avo"], function(v){
+	getAttrs(["currWt","AttackCounter","HPHolder","weplist","splist","colist","effdmg","currEff","currName","currMt","class_exp0","class_gain0","currDesc","currWexp","currWep","atktype","EXP","SwordEXP","LanceEXP","AxeEXP","BowEXP","StavesEXP","DarkEXP","AnimaEXP","LightEXP","AuthorityEXP","RidingEXP","ArmorEXP","FlyingEXP","Flyingrank","Level","HP_i","Str_i","Mag_i","Skl_i","Spd_i","Lck_i","Def_i","Res_i","Mov_i","HP_bd","Str_bd","Mag_bd","Skl_bd","Spd_bd","Lck_bd","Def_bd","Res_bd","Mov_bd","HP_rb","Str_rb","Mag_rb","Skl_rb","Spd_rb","Lck_rb","Def_rb","Res_rb","Mov_rb","item_uses0","item_uses1","item_uses2","Swordrank","Lancerank","Axerank","Bowrank","Stavesrank","Hiddenrank","Darkrank","Lightrank","Authorityrank","Ridingrank","Armorrank","Hitmod","Critmod","Avomod","Ddgmod","Dmgmod","Hitmod_class","Hitb","Physb","Magb","Critb","Avob","Protb","Resb","Chab","Critavob","Ghitb","Critmod_class","Avomod_class","Ddgmod_class","fid","SwordGain","LanceGain","AxeGain","BowGain","StavesGain","HiddenGain","AnimaGain","LightGain","AuthorityGain","RidingGain","ArmorGain","FlyingGain","phys_bd","myst_bd","ward_bd","prot_bd","Weak_total","Ele_Qtotal","Hit","Crit","Ddg","avo"], function(v){
 		setAttrs({
+			currWt: v.currWt,
 			AttackCounter: v.AttackCounter,
 			HPHolder: v.HPHolder,
 			EXP: v.EXP,

@@ -909,6 +909,8 @@
                         updates["currDesc"] = "";
                         updates["currEff"] = "";
                         updates["currName"] = "";
+                        updates["currWep"] = "";
+                        updates["currMt"] = 0;
                         return updates;
                     }
                     let IDs = (section==="weapons")?weaponIDs:spellIDs;
@@ -917,12 +919,16 @@
                         updates["currDesc"] = "";
                         updates["currEff"] = "";
                         updates["currName"] = "";
+                        updates["currWep"] = "";
+                        updates["currMt"] = 0;
                         return updates;
                     }
                     let prefix = `repeating_${section}_${fID}_`;
                     let wepdesc = values[prefix+"Skill_wp"]||"";
                     let effdesc = values[prefix+"Eff_wp"]||"";
                     let namedesc = values[prefix+(section==="weapons"?"WName":"SName")]||"";
+                    let typedesc = values[prefix+(section==="weapons"?"wtype":"stype")]||"";
+
                     updates["currDesc"] = wepdesc;
                     updates["currEff"] = effdesc;
                     updates["currName"] = namedesc;
