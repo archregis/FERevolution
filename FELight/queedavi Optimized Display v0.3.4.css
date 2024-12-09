@@ -15,7 +15,12 @@
     --border-color: #f3f3f3;
 }
 
-/* Utility Classes */
+/* Base/Utility */
+html, body {
+    margin: 0;
+    padding: 0;
+}
+
 .inline-block { display: inline-block; }
 .no-padding { padding: 0; }
 .no-margin { margin: 0; }
@@ -23,13 +28,14 @@
 .white-text { color: #fff; }
 .nowrap { white-space: nowrap; }
 
+/* Input sizing utilities */
 .sheet-input-75 { width: 75px; }
 .sheet-input-55 { width: 55px; }
 .sheet-input-40 { width: 40px; }
 .sheet-select-80 { width: 80px; }
 .sheet-select-65 { width: 65px; }
 
-/* Increased notes height for alignment */
+/* Textareas */
 .sheet-notes-textarea { width: 215px; height: 320px; }
 .sheet-supportlist-textarea { width: 350px; height: 500px; }
 .sheet-quartzlist-textarea { width: 350px; height: 400px; }
@@ -40,10 +46,15 @@
     width: 840px;
 }
 
-/* Tab display */
+/* Tabs (Radio-based) */
 .sheet-character,
 .sheet-misc,
 .sheet-equip {
+    display: none;
+}
+
+/* Hide the actual radio inputs */
+.sheet-tabstoggle[type="radio"] {
     display: none;
 }
 
@@ -62,10 +73,7 @@
 .sheet-tabs {
     margin-bottom: 10px;
 }
-/* Hide the actual radio inputs */
-.sheet-tabstoggle[type="radio"] {
-    display: none;
-}
+
 .sheet-tab-button {
     display: inline-block;
     background-color: #ccc;
@@ -80,6 +88,7 @@
 .sheet-tab-button:hover {
     background-color: #bbb;
 }
+
 /* Highlight the active tab button when its radio is checked */
 #tab-character:checked ~ .sheet-tabs label[for="tab-character"],
 #tab-misc:checked ~ .sheet-tabs label[for="tab-misc"],
@@ -87,6 +96,7 @@
     background-color: #aaa;
 }
 
+/* Charsheet base styling */
 .charsheet {
     background-color: var(--color-primary-bg);
     font-family: "Merriweather";
@@ -97,49 +107,19 @@
     overflow: auto;
 }
 
-.charsheet .sheet-mainstats,
-.charsheet .sheet-checks,
-.charsheet .sheet-wepprof,
-.charsheet .sheet-inventory,
-.charsheet .sheet-prowess {
-    overflow: hidden;
-}
-
+/* Common section styling */
 .charsheet .sheet-charinfo,
 .charsheet .sheet-mainstats,
-.charsheet .sheet-currentvals {
+.charsheet .sheet-currentvals,
+.charsheet .sheet-abilityinfo,
+.charsheet .sheet-supportinfo {
     background-color: var(--color-secondary-bg);
     width: 100%;
     display: inline-block;
     margin-bottom: 10px;
 }
 
-.charsheet .sheet-abilityinfo,
-.charsheet .sheet-supportinfo {
-    background-color: var(--color-secondary-bg);
-    padding-left: 5px;
-    display: inline-block;
-    margin-bottom: 10px;
-    margin-right: 5px;
-    margin-left: 5px;
-    border-right: var(--color-secondary-bg) 4px solid;
-    border-left: var(--color-secondary-bg) 4px solid;
-}
-
-.charsheet .sheet-checks {
-    background-color: var(--color-secondary-bg);
-    width: 27%;
-    padding: 0 5px;
-    float: right;
-    display: inline-block;
-    clear: both;
-    margin-bottom: 10px;
-}
-
-.charsheet .sheet-prowess {
-    background-color: var(--color-secondary-bg);
-}
-
+/* Positioning */
 #left-column {
     float: left;
     width: 72%;
@@ -150,22 +130,27 @@
     width: 27%;
 }
 
+/* Table default styling */
 .charsheet table {
     font-size: 13px;
     width: 100%;
     border-right: var(--color-secondary-bg) 4px solid;
     border-bottom: var(--color-secondary-bg) 4px solid;
+    border-collapse: collapse;
 }
 
+.charsheet table th,
+.charsheet table td {
+    text-align: center;
+    vertical-align: middle;
+    /* Set default padding if desired:
+       padding: 3px 5px; */
+}
+
+/* Charinfo specific */
 .sheet-charinfo table {
     border-collapse: collapse;
     width: auto;
-    color: #000;
-}
-.sheet-charinfo table tr {
-    line-height: 1;
-    margin: 0;
-    padding: 0;
     color: #000;
 }
 .sheet-charinfo table td {
@@ -175,6 +160,7 @@
     padding: 0 5px 0 0;
 }
 
+/* Headers */
 .charsheet .sheet-header {
     text-align: center;
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -192,6 +178,7 @@
     background-color: var(--color-primary-bg);
 }
 
+/* Statlabels and labelrows */
 .charsheet .sheet-statlabel,
 .charsheet .sheet-labelrow {
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -201,40 +188,35 @@
     text-transform: uppercase;
 }
 
-/* Weapons and Spells adjustments */
+/* Current values specific */
+.sheet-currentvals table th,
+.sheet-currentvals table td {
+    width: 20%;
+}
+
+/* Weapons and Spells */
 .charsheet .sheet-weapons,
 .charsheet .sheet-spells {
     vertical-align: top;
     background-color: var(--color-secondary-bg);
     display: inline-block;
-    width: 49%; /* Use more horizontal space */
+    width: 49%;
     box-sizing: border-box;
-    padding: 5px; /* Add padding so fields are not flush against the edge */
+    padding: 5px;
 }
 
 .charsheet .sheet-weapons {
     margin-right: 1%;
 }
 
-/* Ensure internal tables have consistent spacing and center alignment */
 .charsheet .sheet-weapons table,
 .charsheet .sheet-spells table {
     table-layout: fixed;
-    width: 100%;
     white-space: nowrap;
     overflow: hidden;
 }
 
-.charsheet .sheet-weapons table th,
-.charsheet .sheet-weapons table td,
-.charsheet .sheet-spells table th,
-.charsheet .sheet-spells table td {
-    padding: 3px 5px;
-    text-align: center;
-    vertical-align: middle;
-}
-
-/* Let the weapon/spell name and type scale within available space */
+/* Weapons/Spells input adjustments */
 .repeating_weapons input[name="attr_WName"],
 .repeating_spells input[name="attr_SName"] {
     width: auto; 
@@ -256,12 +238,11 @@
     max-width: 100%;
 }
 
+/* Toggle stats */
 .charsheet input.sheet-toggle-stats {
     border: none;
     margin-bottom: 2vh;
     margin-left: 1vw;
-    -webkit-appearance: none;
-    -moz-appearance: none;
     appearance: none;
     width: 16px;
     height: 16px;
@@ -276,13 +257,13 @@
 .charsheet .sheet-hiddenstats {
     display: none;
 }
+.charsheet input.sheet-toggle-stats:checked ~ .sheet-hiddenstats {
+    display: table;
+}
 .charsheet .sheet-hiddenskill {
     display: none;
     margin-left: 8px;
     margin-top: 10px;
-}
-.charsheet input.sheet-toggle-stats:checked ~ .sheet-hiddenstats {
-    display: table;
 }
 .charsheet input.sheet-toggle-stats:checked ~ .sheet-hiddenskill {
     display: inline-block;
@@ -295,6 +276,7 @@
     border-spacing: 0;
     width: 40%;
 }
+
 .sheet-prowess th,
 .sheet-prowess td {
     padding: 0;
@@ -303,6 +285,7 @@
     font-size: 11px;
     white-space: nowrap;
 }
+
 .sheet-prowess th:first-child,
 .sheet-prowess td:first-child {
     text-align: left;
@@ -319,21 +302,4 @@
     vertical-align: middle;
     width: 100%;
     border-collapse: collapse;
-}
-
-/* Ensure that main attributes and derived stats tables have centered content */
-.sheet-mainstats table th,
-.sheet-mainstats table td {
-    text-align: center;
-    vertical-align: middle;
-}
-
-.sheet-currentvals table {
-    table-layout: fixed;
-}
-.sheet-currentvals table th,
-.sheet-currentvals table td {
-    width: 20%;
-    text-align: center;
-    vertical-align: middle;
 }
