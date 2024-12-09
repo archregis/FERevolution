@@ -317,11 +317,11 @@ function Chivalry(BattleInput, BattleOutput) {
 
 // Done
 function FortressOfWill(BattleInput, BattleOutput){
-  if (BattleInput.WhoseSkill == 0 && BattleInput.ACurrHP == BattleInput.AMaxHP) { 
+  if (BattleInput.WhoseSkill == 0 && BattleInput.ACurrHP == BattleInput.AMaxHP) {
     outputSkill(BattleInput.Attacker, "Fortress of Will");
     BattleOutput.AddDmg += 4;
   }
-  if (BattleInput.WhoseSkill == 1 && BattleInput.DCurrHP == BattleInput.DMaxHP) { 
+  if (BattleInput.WhoseSkill == 1 && BattleInput.DCurrHP == BattleInput.DMaxHP) {
     outputSkill(BattleInput.Defender, "Fortress of Will");
     BattleOutput.AddMit += 4;
   }
@@ -390,11 +390,18 @@ on('chat:message', function(msg) {
       sendChat('SYSTEM', 'You must provide a dmg value');
       return;
     }
+    if (parts.length < 3) {
+      sendChat('SYSTEM', 'You must provide Initiative or Defending');
+      return;
+    }
     log(msg);
 
     //Initialize Attacker and Defender
     var selectedId = parts[0];
     var targetId = parts[1];
+
+    var BattlePhase = parts[2];
+
     var selectedToken = getObj('graphic', selectedId);
     var attacker = getObj('character', selectedToken.get('represents'));
 
