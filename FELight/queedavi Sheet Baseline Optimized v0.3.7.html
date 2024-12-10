@@ -461,145 +461,234 @@
                 </div>
             </div>
 
-            <!-- Misc Page -->
-            <div class="sheet-misc">
-                <div class="sheet-supportinfo">
-                    <div class="sheet-header">Supports</div>
-                    <textarea name="attr_supportlist" class="sheet-supportlist-textarea"></textarea>
-                </div>
-                <div class="sheet-weapons">
-                    <div class="sheet-header">WEAPON RANKS</div>
-                    <table>
-                        <tr>
-                            <th>Weap. Type</th>
-                            <th>EXP</th>
-                            <th>Rank</th>
-                        </tr>
-                        <tr>
-                            <td>Swords</td>
-                            <td><input type="number" value="0" name="attr_SwordEXP" min="0" max="1000"></td>
-                            <td><span name="attr_swordrank"></span></td>
-                        </tr>
-                        <tr>
-                            <td>Lances</td>
-                            <td><input type="number" value="0" name="attr_LanceEXP" min="0" max="1000"></td>
-                            <td><span name="attr_lancerank"></span></td>
-                        </tr>
-                        <tr>
-                            <td>Axes</td>
-                            <td><input type="number" value="0" name="attr_AxeEXP" min="0" max="1000"></td>
-                            <td><span name="attr_axerank"></span></td>
-                        </tr>
-                        <tr>
-                            <td>Bows</td>
-                            <td><input type="number" value="0" name="attr_BowEXP" min="0" max="1000"></td>
-                            <td><span name="attr_bowrank"></span></td>
-                        </tr>
-                        <tr>
-                            <td>Staves</td>
-                            <td><input type="number" value="0" name="attr_StavesEXP" min="0" max="1000"></td>
-                            <td><span name="attr_stavesrank"></span></td>
-                        </tr>
-                        <tr>
-                            <td>Anima</td>
-                            <td><input type="number" value="0" name="attr_AnimaEXP" min="0" max="1000"></td>
-                            <td><span name="attr_animarank"></span></td>
-                        </tr>
-                        <tr>
-                            <td>Light</td>
-                            <td><input type="number" value="0" name="attr_LightEXP" min="0" max="1000"></td>
-                            <td><span name="attr_lightrank"></span></td>
-                        </tr>
-                        <tr>
-                            <td>Dark</td>
-                            <td><input type="number" value="0" name="attr_DarkEXP" min="0" max="1000"></td>
-                            <td><span name="attr_darkrank"></span></td>
-                        </tr>
-                    </table>
-                </div>
-            </div>
+<!-- Misc Page -->
+<div class="sheet-misc">
+    <!-- Supports section full width -->
+    <div class="sheet-supportinfo" style="width:100%;">
+        <div class="sheet-header">SUPPORTS</div>
+        <textarea name="attr_supportlist" class="sheet-supportlist-textarea" style="resize:none;"></textarea>
+    </div>
 
-            <!-- Equip Page -->
-            <div class="sheet-equip">
-                <div class="sheet-prowess">
-                    <div class="sheet-header">Bonuses</div>
-                    <!-- Table for Header and Sum -->
-                    <table class="bonus-layout" style="table-layout:fixed; width:100%;">
-                        <thead>
-                            <tr>
-                                <th style="width:12%;">Name</th>
-                                <th style="width:5%;">HP</th>
-                                <th style="width:5%;">STR</th>
-                                <th style="width:5%;">MAG</th>
-                                <th style="width:5%;">SPD</th>
-                                <th style="width:5%;">DEF</th>
-                                <th style="width:5%;">RES</th>
-                                <th style="width:5%;">CON</th>
-                                <th style="width:5%;">MOV</th>
-                                <th style="width:5%;">Hit</th>
-                                <th style="width:5%;">Avo</th>
-                                <th style="width:5%;">Crit</th>
-                                <th style="width:5%;">Ddg</th>
-                                <th style="width:5%;">Weight</th>
-                                <th style="width:5%;">Mit</th>
-                            </tr>
-                        </thead>
-                        <tfoot>
-                            <tr>
-                                <td><strong>Sum</strong></td>
-                                <td><span name="attr_HP_Qtotal">0</span></td>
-                                <td><span name="attr_Str_Qtotal">0</span></td>
-                                <td><span name="attr_Mag_Qtotal">0</span></td>
-                                <td><span name="attr_Spd_Qtotal">0</span></td>
-                                <td><span name="attr_Def_Qtotal">0</span></td>
-                                <td><span name="attr_Res_Qtotal">0</span></td>
-                                <td><span name="attr_Con_Qtotal">0</span></td>
-                                <td><span name="attr_Mov_Qtotal">0</span></td>
-                                <td><span name="attr_Hit_Qtotal">0</span></td>
-                                <td><span name="attr_Avo_Qtotal">0</span></td>
-                                <td><span name="attr_Crit_Qtotal">0</span></td>
-                                <td><span name="attr_Ddg_Qtotal">0</span></td>
-                                <td><span name="attr_Weight_Qtotal">0</span></td>
-                                <td><span name="attr_Mit_Qtotal">0</span></td>
-                            </tr>
-                        </tfoot>
-                    </table>
+    <!-- Below supports: two columns (Weapon Ranks on left, Designation on right) -->
+    <div class="lower-container">
+        <div class="sheet-weapons">
+            <div class="sheet-header">WEAPON RANKS</div>
+            <table>
+                <tr>
+                    <th>Weap. Type</th>
+                    <th>EXP</th>
+                    <th>Rank</th>
+                </tr>
+                <tr>
+                    <td>Swords</td>
+                    <td><input type="number" value="0" name="attr_SwordEXP" min="0" max="1000"></td>
+                    <td><span name="attr_swordrank"></span></td>
+                </tr>
+                <tr>
+                    <td>Lances</td>
+                    <td><input type="number" value="0" name="attr_LanceEXP" min="0" max="1000"></td>
+                    <td><span name="attr_lancerank"></span></td>
+                </tr>
+                <tr>
+                    <td>Axes</td>
+                    <td><input type="number" value="0" name="attr_AxeEXP" min="0" max="1000"></td>
+                    <td><span name="attr_axerank"></span></td>
+                </tr>
+                <tr>
+                    <td>Bows</td>
+                    <td><input type="number" value="0" name="attr_BowEXP" min="0" max="1000"></td>
+                    <td><span name="attr_bowrank"></span></td>
+                </tr>
+                <tr>
+                    <td>Staves</td>
+                    <td><input type="number" value="0" name="attr_StavesEXP" min="0" max="1000"></td>
+                    <td><span name="attr_stavesrank"></span></td>
+                </tr>
+                <tr>
+                    <td>Anima</td>
+                    <td><input type="number" value="0" name="attr_AnimaEXP" min="0" max="1000"></td>
+                    <td><span name="attr_animarank"></span></td>
+                </tr>
+                <tr>
+                    <td>Light</td>
+                    <td><input type="number" value="0" name="attr_LightEXP" min="0" max="1000"></td>
+                    <td><span name="attr_lightrank"></span></td>
+                </tr>
+                <tr>
+                    <td>Dark</td>
+                    <td><input type="number" value="0" name="attr_DarkEXP" min="0" max="1000"></td>
+                    <td><span name="attr_darkrank"></span></td>
+                </tr>
+            </table>
+        </div>
 
-                    <!-- Fieldset for Repeating Lines -->
-                    <fieldset class="repeating_bonuses">
-                        <table class="bonus-layout" style="table-layout:fixed; width:100%;">
-                            <tr>
-                                <td>
-                                    <input type="checkbox" name="attr_bonus_check" value="1" style="vertical-align:middle; margin-right:5px;">
-                                    <input type="text" name="attr_Ele" style="vertical-align:middle;">
-                                </td>
-                                <td><input type="number" name="attr_HP"></td>
-                                <td><input type="number" name="attr_Str"></td>
-                                <td><input type="number" name="attr_Mag"></td>
-                                <td><input type="number" name="attr_Spd"></td>
-                                <td><input type="number" name="attr_Def"></td>
-                                <td><input type="number" name="attr_Res"></td>
-                                <td><input type="number" name="attr_Con"></td>
-                                <td><input type="number" name="attr_Mov"></td>
-                                <td><input type="number" name="attr_Hit"></td>
-                                <td><input type="number" name="attr_Avo"></td>
-                                <td><input type="number" name="attr_Crit"></td>
-                                <td><input type="number" name="attr_Ddg"></td>
-                                <td><input type="number" name="attr_Weight"></td>
-                                <td><input type="number" name="attr_Mit"></td>
-                            </tr>
-                        </table>
-                    </fieldset>
-                </div>
-                <div class="sheet-abilityinfo">
-                    <div class="sheet-header">Bonuses</div>
-                    <textarea name="attr_Quartzlist" class="sheet-quartzlist-textarea"></textarea>
-                </div>
-                <div class="sheet-supportinfo">
-                    <div class="sheet-header">Equipment</div>
-                    <textarea name="attr_equiplist" class="sheet-equiplist-textarea"></textarea>
-                </div>
-            </div>
+        <div class="sheet-designation">
+            <div class="sheet-header">DESIGNATION</div>
+            <table>
+                <thead>
+                    <tr>
+                        <th colspan="2">Human</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><input type="checkbox" name="attr_desig_inf" value="1"></td>
+                        <td>Infantry</td>
+                    </tr>
+                    <tr>
+                        <td><input type="checkbox" name="attr_desig_armor" value="1"></td>
+                        <td>Armored</td>
+                    </tr>
+                    <tr>
+                        <td><input type="checkbox" name="attr_desig_fly" value="1"></td>
+                        <td>Flying</td>
+                    </tr>
+                    <tr>
+                        <td><input type="checkbox" name="attr_desig_cav" value="1"></td>
+                        <td>Cavalry</td>
+                    </tr>
+                    <tr>
+                        <td><input type="checkbox" name="attr_desig_dra" value="1"></td>
+                        <td>Dragon</td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <th colspan="2">Monster</th>
+                    </tr>
+                    <tr>
+                        <td><input type="checkbox" name="attr_desig_ter" value="1"></td>
+                        <td>Terror</td>
+                    </tr>
+                    <tr>
+                        <td><input type="checkbox" name="attr_desig_flam" value="1"></td>
+                        <td>Flammable</td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- Equip Page -->
+<div class="sheet-equip">
+    <div class="sheet-prowess">
+        <div class="sheet-header">BONUSES</div>
+        <!-- Main bonuses header and sum table -->
+        <table class="bonus-layout" style="table-layout:fixed; width:100%;">
+            <colgroup>
+                <col style="width:12%;">
+                <col style="width:5%;">
+                <col style="width:5%;">
+                <col style="width:5%;">
+                <col style="width:5%;">
+                <col style="width:5%;">
+                <col style="width:5%;">
+                <col style="width:5%;">
+                <col style="width:5%;">
+                <col style="width:5%;">
+                <col style="width:5%;">
+                <col style="width:5%;">
+                <col style="width:5%;">
+                <col style="width:5%;">
+                <col style="width:5%;">
+            </colgroup>
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>HP</th>
+                    <th>STR</th>
+                    <th>MAG</th>
+                    <th>SPD</th>
+                    <th>DEF</th>
+                    <th>RES</th>
+                    <th>CON</th>
+                    <th>MOV</th>
+                    <th>Hit</th>
+                    <th>Avo</th>
+                    <th>Crit</th>
+                    <th>Ddg</th>
+                    <th>Weight</th>
+                    <th>Mit</th>
+                </tr>
+            </thead>
+            <tfoot>
+                <tr>
+                    <td><strong>Sum</strong></td>
+                    <td><span name="attr_HP_Qtotal">0</span></td>
+                    <td><span name="attr_Str_Qtotal">0</span></td>
+                    <td><span name="attr_Mag_Qtotal">0</span></td>
+                    <td><span name="attr_Spd_Qtotal">0</span></td>
+                    <td><span name="attr_Def_Qtotal">0</span></td>
+                    <td><span name="attr_Res_Qtotal">0</span></td>
+                    <td><span name="attr_Con_Qtotal">0</span></td>
+                    <td><span name="attr_Mov_Qtotal">0</span></td>
+                    <td><span name="attr_Hit_Qtotal">0</span></td>
+                    <td><span name="attr_Avo_Qtotal">0</span></td>
+                    <td><span name="attr_Crit_Qtotal">0</span></td>
+                    <td><span name="attr_Ddg_Qtotal">0</span></td>
+                    <td><span name="attr_Weight_Qtotal">0</span></td>
+                    <td><span name="attr_Mit_Qtotal">0</span></td>
+                </tr>
+            </tfoot>
+        </table>
+
+        <!-- Repeating bonuses section -->
+        <fieldset class="repeating_bonuses">
+            <table class="bonus-layout" style="table-layout:fixed; width:100%;">
+                <colgroup>
+                    <col style="width:12%;">
+                    <col style="width:5%;">
+                    <col style="width:5%;">
+                    <col style="width:5%;">
+                    <col style="width:5%;">
+                    <col style="width:5%;">
+                    <col style="width:5%;">
+                    <col style="width:5%;">
+                    <col style="width:5%;">
+                    <col style="width:5%;">
+                    <col style="width:5%;">
+                    <col style="width:5%;">
+                    <col style="width:5%;">
+                    <col style="width:5%;">
+                    <col style="width:5%;">
+                </colgroup>
+                <tbody>
+                    <tr>
+                        <td>
+                            <input type="checkbox" name="attr_bonus_check" value="1" style="vertical-align:middle; margin-right:5px;">
+                            <input type="text" name="attr_Ele" style="vertical-align:middle;">
+                        </td>
+                        <td><input type="number" name="attr_HP"></td>
+                        <td><input type="number" name="attr_Str"></td>
+                        <td><input type="number" name="attr_Mag"></td>
+                        <td><input type="number" name="attr_Spd"></td>
+                        <td><input type="number" name="attr_Def"></td>
+                        <td><input type="number" name="attr_Res"></td>
+                        <td><input type="number" name="attr_Con"></td>
+                        <td><input type="number" name="attr_Mov"></td>
+                        <td><input type="number" name="attr_Hit"></td>
+                        <td><input type="number" name="attr_Avo"></td>
+                        <td><input type="number" name="attr_Crit"></td>
+                        <td><input type="number" name="attr_Ddg"></td>
+                        <td><input type="number" name="attr_Weight"></td>
+                        <td><input type="number" name="attr_Mit"></td>
+                    </tr>
+                    <!-- Additional repeating rows will be added here by Roll20 -->
+                </tbody>
+            </table>
+        </fieldset>
+    </div>
+    <div class="sheet-abilityinfo">
+        <div class="sheet-header">BONUSES</div>
+        <textarea name="attr_Quartzlist" class="sheet-quartzlist-textarea" style="resize:none;"></textarea>
+    </div>
+    <div class="sheet-supportinfo">
+        <div class="sheet-header">EQUIPMENT</div>
+        <textarea name="attr_equiplist" class="sheet-equiplist-textarea" style="resize:none;"></textarea>
+    </div>
+</div>
+<!-- End of Equip Page -->
 
             <script type="text/worker">
                 const buttonlist = ["character", "misc", "equip"];
@@ -612,6 +701,7 @@
                 const weaponTypes = ["Sword","Lance","Axe","Bow","Staves","Dark","Anima","Light"];
                 const growthStats = ["HP","Str","Mag","Skl","Spd","Lck","Def","Res","Con","Mov"];
                 const statsForQTotals = ['HP','Str','Mag','Spd','Def','Res','Con','Mov','Hit','Avo','Crit','Ddg','Weight','Mit'];
+                const vulnerabilitiesTypes = ["Infantry","Armored","Flying","Dragon","Cavalry","Terror","Flammable"];
 
                 // Base needed attributes
                 const neededAttributes = [
@@ -622,8 +712,9 @@
                     "Critb","Critmod","Crit_Qtotal","Crit_bd","Ddg_bd","Ddg_Qtotal","Avo_bd","Avo_Qtotal","Atkspd",
                     ...growthStats.flatMap(stat=>[`${stat}_gf`,`${stat}_gi`]),
                     "SwordEXP","LanceEXP","AxeEXP","BowEXP","StavesEXP","AnimaEXP","LightEXP","DarkEXP",
-                    "_reporder_weapons","_reporder_spells","_reporder_bonuses"
-                ];
+                    "_reporder_weapons","_reporder_spells","_reporder_bonuses",
+                    "desig_inf", "desig_armor", "desig_cav", "desig_dra", "desig_fly", "desig_ter","desig_flam","class_vuln_total"               
+                    ];
 
                 function setRank(currEXP) {
                     let Rank = "E";
@@ -638,6 +729,19 @@
                         r = 255;
                     }
                     return [Rank, r];
+                }
+
+                function setVulnerabilities(values){    //Vulnerabilities based on class checkbox.
+                    let updates = {};
+                    let sumClassVuln = '';
+                    vulnerabilitiesTypes.forEach(vuln => {
+                        let check = values['${vuln}_check'];
+                        if (Number(check)===1) {
+                            sumClassVuln+=vuln+',';
+                        }
+                    });
+                    updates["class_vuln_total"] = sumClassVuln;
+                    return updates;
                 }
 
                 // Calculation Functions
@@ -974,6 +1078,7 @@
                 on("change:Str_i change:Str_bd change:Str_Qtotal change:Mag_i change:Mag_bd change:Mag_Qtotal change:Skl_i change:Skl_bd change:Skl_Qtotal change:Spd_i change:Spd_bd change:Spd_Qtotal change:Lck_i change:Lck_bd change:Lck_Qtotal change:Def_i change:Def_bd change:Def_Qtotal change:Res_i change:Res_bd change:Res_Qtotal change:Con_i change:Con_bd change:Con_Qtotal", updateAll);
                 on("change:Physb change:phys_bd change:Magb change:myst_bd change:Protb change:prot_bd change:Resb change:ward_bd change:Hitb change:Hitmod change:Hit_Qtotal change:hit_bd change:Critb change:Critmod change:Crit_Qtotal change:Crit_bd change:Ddg_bd change:Ddg_Qtotal change:Avo_bd change:Avo_Qtotal change:Atkspd", updateAll);
                 on("change:SwordEXP change:LanceEXP change:AxeEXP change:BowEXP change:StavesEXP change:AnimaEXP change:LightEXP change:DarkEXP", updateAll);
+                on("change: desig_inf change:desig_armor change:desig_cav change:desig_dra change: desig_fly change:desig_ter change:desig_flam",updateAll);
 
                 growthStats.forEach(stat => {
                     on(`change:${stat}_gf change:${stat}_gi`, updateAll);
@@ -1078,6 +1183,7 @@
     <input name="attr_Avob" value="0" hidden>
     <input name="attr_Protb" value="0" hidden>
     <input name="attr_Resb" value="0" hidden>
+    <input name="attr_class_vuln_total" value="0" hidden>
 </div>
 </body>
 </html>
