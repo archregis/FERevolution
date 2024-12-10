@@ -38,9 +38,9 @@ html, body {
 
 /* Textareas */
 .sheet-notes-textarea { width: 215px; height: 320px; }
-.sheet-supportlist-textarea { width: 350px; height: 500px; }
-.sheet-quartzlist-textarea { width: 350px; height: 400px; }
-.sheet-equiplist-textarea { width: 350px; height: 400px; }
+.sheet-supportlist-textarea { width: 100%; height: 100%; resize: none; box-sizing: border-box; padding: 5px; }
+.sheet-quartzlist-textarea { width: 100%; height: 100%; resize: none; box-sizing: border-box; padding: 5px; }
+.sheet-equiplist-textarea { width: 100%; height: 100%; resize: none; box-sizing: border-box; padding: 5px; }
 
 /* Main Container */
 .sheet-maindiv {
@@ -111,13 +111,36 @@ html, body {
 /* Common section styling */
 .charsheet .sheet-charinfo,
 .charsheet .sheet-mainstats,
-.charsheet .sheet-currentvals,
-.charsheet .sheet-abilityinfo,
-.charsheet .sheet-supportinfo {
+.charsheet .sheet-currentvals {
     background-color: var(--color-secondary-bg);
     width: 100%;
     display: inline-block;
     margin-bottom: 10px;
+}
+
+.charsheet .sheet-abilityinfo,
+.charsheet .sheet-supportinfo {
+    width: 100%;
+    height: 220px;
+    position: relative;
+    box-sizing: border-box;
+    padding: 5px;
+}
+
+.bonus-layout tfoot tr,
+.bonus-layout tfoot td,
+.charsheet .sheet-equip .sheet-prowess .bonus-layout tfoot span[name^="attr_"] {
+    color: #fff !important;
+}
+
+.charsheet .sheet-equip .sheet-prowess .bonus-layout thead th {
+    color: #fff !important;
+}
+
+.bonus-layout td input[name="attr_Ele"] {
+    width: 80%;
+    box-sizing: border-box;
+    margin right: 5px;
 }
 
 /* Positioning */
@@ -294,6 +317,63 @@ html, body {
 }
 .charsheet input.sheet-toggle-stats:checked ~ .sheet-hiddenskill {
     display: inline-block;
+}
+
+.sheet-misc {
+    width: 100%;
+}
+
+.sheet-misc .lower-container {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    box-sizing: border-box;
+    margin-top: 10px;
+}
+
+.sheet-misc .sheet-weapons,
+.sheet-misc .sheet-designation {
+    background-color: var(--color-secondary-bg);
+    box-sizing: border-box;
+    padding: 5px;
+    flex: 1;
+    display: inline-block;
+    vertical-align: top;
+    min-height: 350px;
+    margin: 0 5px;
+}
+
+.sheet-misc .sheet-weapons table,
+.sheet-misc .sheet-designation table {
+    width: 100%;
+    border-collapse: collapse;
+    border-right: var(--color-secondary-bg) 4px solid;
+    border-bottom: var(--color-secondary-bg) 4px solid;
+    table-layout: fixed;
+}
+
+.sheet-misc .sheet-weapons table th,
+.sheet-misc .sheet-weapons table td.
+.sheet-misc .sheet-designation table th,
+.sheet-misc .sheet-designation table td {
+    text-align: center;
+    vertical-align: middle;
+    padding: 5px;
+    font-size: 13px;
+}
+
+.sheet-designation .sheet-header,
+.sheet-weapons .sheet-header {
+    text-align: center;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 15px;
+    padding: 3px;
+    background-color: var(--color-primary-bg);
+    color: var(--color-header-text);
+    border: var(--color-secondary-bg) 4px solid;
+    border-bottom-width: 2px;
+    font-weight: bold;
+    margin-bottom: 5px;
 }
 
 /* Prowess Table Layout */
