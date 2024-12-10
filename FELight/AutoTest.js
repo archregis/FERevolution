@@ -51,6 +51,7 @@ function outputSkill(Name, Skill) {
 }
 
 // Updates a given token's health. Inputting negative damage can be used to heal
+// Returns damage taken for use in adapative scales
 function UpdateHealth(Token, Damage, Health, MaxHP) {
   var Shield = Token.get("bar2_value")||0;
 
@@ -64,6 +65,8 @@ function UpdateHealth(Token, Damage, Health, MaxHP) {
       Token.set("bar3_value", Math.max(0, Health - Damage));
     }
   }
+  if (Shield == 0 && Damage > 0) { return Damage; }
+  return 0;
 }
 
 
@@ -495,11 +498,10 @@ function Nullify(BattleInput, BattleOutput) {
   BattleOutput.Nullify = 1;
 }
 
-// WIP (Will need to do entire combat in one go to implement with minimal fuss)
 // Gain a temporay shield equal to damage taken after enemy initiates combat if no shield already exists
 function AdaptiveScales(BattleInput, BattleOutput) {
   if (BattleInput.WhoseSkill == 0 || BattleInput.IsInitiating == 0) { return; }
-  
+  if (BattleInput.DGreyHP == 0) { BattleOutput.Scales = 1; }
 }
 
 
@@ -526,34 +528,43 @@ on('chat:message', function(msg) {
     //Initialize Attacker and Defender
     var selectedId = parts[0];
     var targetId = parts[1];
+    var info = {
+      brave: 0,
+      counter: 0,
+      double: 0,
+      died: 0,
+      addGreyHP: 0,
+      atkTotDmg: 0,
+    }
 
     // Attacker initial combat
-    var info = DoOneCombatStep(selectedId, targetId, 1);
+    DoOneCombatStep(selectedId, targetId, 1, info);
     if (info.died == 1) { return; }
-    var attackerDoubled = info.double; // Necessary to save off here due to Darting Blow skill
+    var attackerDoubled = info.double; // Necessary to save off here due to info being overwritten
+    var addGreyHP = info.addGreyHP; // Same logic here
     // Attacker goes again if brave active
     if (info.brave == 1) {
-      info = DoOneCombatStep(selectedId, targetId, 1);
+      DoOneCombatStep(selectedId, targetId, 1, info);
       if (info.died == 1) { return; }
     }
 
     // Can the enemy counter?
     if (info.counter == 1) {
       // Counter initial combat
-      info = DoOneCombatStep(targetId, selectedId, 0);
+      DoOneCombatStep(targetId, selectedId, 0, info);
       if (info.died == 1) { return; }
       // Counter goes again if brave active
       if (info.brave == 1) {
-        info = DoOneCombatStep(targetId, selectedId, 0);
+        DoOneCombatStep(targetId, selectedId, 0, info);
         if (info.died == 1) { return; }
       }
       // Counterer doubled, go again
       if (info.double == 1) {
-        info = DoOneCombatStep(targetId, selectedId, 0);
+        DoOneCombatStep(targetId, selectedId, 0, info);
         if (info.died == 1) { return; }
         // Counter goes again if brave active
         if (info.brave == 1) { 
-          info = DoOneCombatStep(targetId, selectedId, 0);
+          DoOneCombatStep(targetId, selectedId, 0, info);
           if (info.died == 1) { return; }
         }
       }
@@ -561,18 +572,24 @@ on('chat:message', function(msg) {
 
     // Attacker doubled, go again
     if (attackerDoubled == 1) {
-      info = DoOneCombatStep(selectedId, targetId, 1);
+      DoOneCombatStep(selectedId, targetId, 1, info);
       if (info.died == 1) { return; }
       // Attacker goes again if brave active
       if (info.brave) {
-        DoOneCombatStep(selectedId, targetId, 1);
+        DoOneCombatStep(selectedId, targetId, 1, info);
       }
+    }
+
+    // Apply shield if adaptive scales + no grey hp at combat start
+    if (addGreyHP == 1) { 
+      var token = findObjs({_type: "graphic", _id: targetId})[0]; 
+      token.set("bar2_value", info.atkTotDmg);
     }
 };
 });
 
 
-function DoOneCombatStep(selectedId, targetId, initiating) {
+function DoOneCombatStep(selectedId, targetId, initiating, info) {
   var selectedToken = getObj('graphic', selectedId);
   var attacker = getObj('character', selectedToken.get('represents'));
   var selected = 'character|' + attacker.id;
@@ -606,6 +623,7 @@ function DoOneCombatStep(selectedId, targetId, initiating) {
     "DMaxHP": targetObj.get("bar3_max"),
     "ACurrHP": selectObj.get("bar3_value"),
     "DCurrHP": targetObj.get("bar3_value"),
+    "DGreyHP": targetObj.get("bar2_value"),
     "AStr": Number(getAttrValue(attacker.id, "Str_total")),
     "AMag": Number(getAttrValue(attacker.id, "Mag_total")),
     "ARes": Number(getAttrValue(attacker.id, "Res_total")),
@@ -635,6 +653,7 @@ function DoOneCombatStep(selectedId, targetId, initiating) {
     "Reaver": 0,
     "Resilience": 0,
     "Sol": 0,
+    "Scales": 0,
   };
 
 
@@ -642,7 +661,7 @@ function DoOneCombatStep(selectedId, targetId, initiating) {
   var AllSkills = new Set(["SureShot","Adept","Luna","Sol","Glacias","Flare","Impale","Colossus","Ignis","Armsthrift","QuickDraw","DartingBlow",
   "GoodBet","DuelistBlow","DeathBlow","Prescience","StrongRiposte","Sturdy","Brawler","Patience","Swordbreaker","Lancebreaker","Axebreaker",
   "Bowbreaker","Tomebreaker","Swordfaire","Lancefaire","Axefaire","Bowfaire","Tomefaire","Reaver","Brave","Wrath","Chivalry","FortressOfWill","DeadlyStrikes","PrideOfSteel","Thunderstorm","Resolve",
-  "Trample","Resilience","Dragonblood","Nullify"]);
+  "Trample","Resilience","Dragonblood","Nullify","AdaptiveScales"]);
 
   var ASkills = getAttr(attacker.id,'Ele_Qtotal').get('current').split(',');
   var DSkills = getAttr(defender.id,'Ele_Qtotal').get('current').split(',');
@@ -769,15 +788,16 @@ function DoOneCombatStep(selectedId, targetId, initiating) {
 
 
   // Output battle outcome
+  var trueDamage = 0;
   if (Hit >= Avoid) {
     if (Crit > Dodge) {
       DmgTaken *= 3;
       if (BattleOutput.Resilience == 1) { DmgTaken /= 2; }
-      UpdateHealth(targetObj, DmgTaken, BattleInput.DCurrHP);
+      trueDamage = UpdateHealth(targetObj, DmgTaken, BattleInput.DCurrHP);
       sendChat(target, 'You crit and deal '+ DmgTaken + ' damage!'); // Intentionally not capping damage numbers put in chat. Hitting low hp enemies for ludicrous damage numbers is fun
     }
     else {
-      UpdateHealth(targetObj, DmgTaken, BattleInput.DCurrHP);
+      trueDamage = UpdateHealth(targetObj, DmgTaken, BattleInput.DCurrHP);
       sendChat(target, 'You hit and deal '+ DmgTaken + ' damage!'); // See above
 
     }
@@ -792,17 +812,18 @@ function DoOneCombatStep(selectedId, targetId, initiating) {
   sendChat(target, "===END==="); // Temp for ease of viewing
 
   // Gather info for future battle steps
-  var info = {
+  Object.assign(info, {
     brave: BattleOutput.Brave || getAttrValue(attacker.id, 'currBrave'),
     counter: CanCounter(defender.id, Led.from(selectedToken).to(targetToken).byManhattan().inSquares()),
     double: AtkSpdDiff >= 4 ? 1 : 0,
     died: targetObj.get("bar3_value") == 0 ? 1 : 0,
-  }
+    addGreyHP: BattleOutput.Scales,
+    atkTotDmg: info.atkTotDmg + trueDamage * initiating,
+  });
+  log("brave: " + info.brave + " counter: " + info.counter + " double: " + info.double + " died: " + info.died + " addGrey: " + info.addGreyHP + " totalDmg: " + info.atkTotDmg);
   
   var divstyle = 'style="width: 189px; border: 1px solid #353535; background-color: #f3f3f3; padding: 5px; color: #353535;"';
   var headstyle = 'style="color: #f3f3f3; font-size: 18px; text-align: left; font-variant: small-caps; background-color: #353535; padding: 4px; font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;"';
-
-  return info;
 }
 
 // returns 1 if the given token identifier is using a weapon that is within range to counter-attack
