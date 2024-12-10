@@ -524,43 +524,17 @@ on('chat:message', function(msg) {
 
     var selectedToken = getObj('graphic', selectedId);
     var attacker = getObj('character', selectedToken.get('represents'));
+    var selected = 'character|' + attacker.id;
+    var selectObj = findObjs({_type: "graphic", _id: selectedId})[0];
 
     var targetToken = getObj('graphic', targetId);
     var defender = getObj('character', targetToken.get('represents'));
+    var target = 'character|' + defender.id;
+    var targetObj = findObjs({_type: "graphic", _id: targetId})[0];
 
-    var target = getObj('character', targetToken.get('represents'));
-    if (!target) {
-      target = targetToken.get('name');
-    }
-    else {
-      target = 'character|' + target.id;
-    }
-
-    var selected = getObj('character', selectedToken.get('represents'));
-    if (!selected) {
-      selected = selectedToken.get('name');
-    }
-    else {
-      selected = 'character|' + selected.id;
-    }
-
-    var targetObj;
-    var tokenPossibles = findObjs({_type: "graphic", _id: targetId});
-    if (tokenPossibles.length > 0) {
-      targetObj = tokenPossibles[0];
-    }
-
-    var selectObj;
-    var selectPossibles = findObjs({_type: "graphic", _id: selectedId});
-    if (selectPossibles.length > 0) {
-      selectObj = selectPossibles[0];
-    }
-
-    var dmgtype = getAttr(attacker.id,'atktype').get('current');
     var DmgTaken = 0;
     var DefMit = 0;
-    let dodge = Number(getAttrValue(attacker.id, "Ddg"));
-
+    let Dodge = Number(getAttrValue(attacker.id, "Ddg"));
     var wepGain = Number(getAttrValue(attacker.id, "currWexp"));
 
     // Initialize skill function I/O
@@ -568,7 +542,7 @@ on('chat:message', function(msg) {
       "WhoseSkill": -1, // To ensure we don't activate a defender's skill when we shouldn't. 0 = attacker, 1 = defender
       "IsInitiating": initiating, // Determine if you are intiating the attack or counter-attacking. 0 = initiating, 1 = countering
       "DWeakness": getAttr(defender.id,'Weak_total').get('current').split(','),
-      "DmgType": dmgtype,
+      "DmgType": getAttr(attacker.id,'atktype').get('current'),
       "Attacker": selected,
       "Defender": target,
       "AWType": getAttr(attacker.id, "currWep").get('current'),
@@ -608,7 +582,6 @@ on('chat:message', function(msg) {
       "Reaver": 0,
       "Resilience": 0,
       "Sol": 0,
-
     }
 
 
@@ -629,7 +602,6 @@ on('chat:message', function(msg) {
       for(let i=0; i<ASkills.length; i++) {
         if (AllSkills.has(ASkills[i])) {
           var skillName = ASkills[i];
-          log("Proccing: " + skillName);
           eval(skillName + "(BattleInput, BattleOutput)");
         }
       }
@@ -642,7 +614,6 @@ on('chat:message', function(msg) {
       for (let i=0; i<DSkills.length; i++) {
         if (AllSkills.has(DSkills[i])) {
           var skillName = DSkills[i];
-          log("Def Proccing: " + skillName);
           eval(skillName + "(BattleInput, BattleOutput)");
         }
       }
@@ -699,8 +670,6 @@ on('chat:message', function(msg) {
       mult = 2;
     }
 
-    log(triangle);
-
     var triangleMsg = "";
     if (triangle == 'Adv') {
       Hit += 15 * mult;
@@ -716,25 +685,25 @@ on('chat:message', function(msg) {
     triangleMsg +
     '<div style = "margin: 0 auto; width: 80%; margin-top: 4px;">' + //--
     '<p style = "margin-bottom: 0px;">' + Hit + ' hit vs ' + BattleOutput.Avoid + ' avoid!</p>' +//--
-    '<p style = "margin-bottom: 0px;">' + Crit + ' crit vs ' + dodge + ' dodge!</p>' +//--
+    '<p style = "margin-bottom: 0px;">' + Crit + ' crit vs ' + Dodge + ' dodge!</p>' +//--
     '</div>' + //--
     '</div>'
     );
 
 
     // Damage Typing
-    if (dmgtype == 'Physical') {
-      log('AddDmg is really: ' + AddedDmg);
+    if (BattleInput.DmgType == 'Physical') {
       AtkDmg = getAttrValue(attacker.id, "phys_total") + AddedDmg;
       DefMit = BattleOutput.DProt + getAttrValue(defender.id, "Mit_Qtotal") + AddedProt;
       sendChat(target,'<p style = "margin-bottom: 0px;">' + AtkDmg + ' physical damage vs ' + DefMit + ' protection!</p>');
     }
-    else if (dmgtype == 'Magical') {
+    else if (BattleInput.DmgType == 'Magical') {
       AtkDmg = getAttrValue(attacker.id, "myst_total") + AddedDmg;
       DefMit = BattleOutput.DWard + getAttrValue(defender.id, "Mit_Qtotal") + AddedWard;
       sendChat(target,'<p style = "margin-bottom: 0px;">' + AtkDmg + ' mystical damage vs ' + DefMit + ' resistance!</p>');
     }
     DmgTaken = Math.max(0, AtkDmg - DefMit);
+
 
     // End of calculation skill procs
     if (BattleOutput.SureShot == 1) {
@@ -748,7 +717,7 @@ on('chat:message', function(msg) {
 
     // Output battle outcome
     if (Hit >= Avoid) {
-      if (Crit > dodge) {
+      if (Crit > Dodge) {
         DmgTaken *= 3;
         if (BattleOutput.Resilience == 1) { DmgTaken /= 2; }
         UpdateHealth(targetObj, DmgTaken, BattleInput.DCurrHP);
@@ -762,8 +731,6 @@ on('chat:message', function(msg) {
       if(BattleOutput.Sol == 1){
         UpdateHealth(selectObj, -Math.min(BattleInput.DCurrHP, DmgTaken), BattleInput.ACurrHP, BattleInput.AMaxHP);
       }
-      log('awtype is ' + BattleInput.AWType);
-      log('Wep gain is ' + wepGain);
       updateWeaponEXP(attacker.id, BattleInput.AWType, wepGain);
     }
     else {
