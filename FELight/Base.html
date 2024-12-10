@@ -447,6 +447,20 @@
 								<td><input name = "attr_Res_wp" type = "number" value = "0"></td>
 								<td><input name = "attr_Con_wp" type = "number" value = "0"></td>
 							</tr>
+							<tr>
+								<th>Min</th>
+								<th>Max</th>
+								<th>Ctr</th>
+								<th>Brv</th>
+								<th></th>
+							</tr>
+							<tr>
+								<td><input name = "attr_MinDist_wp" type = "number" value = "0"></td>
+								<td><input name = "attr_MaxDist_wp" type = "number" value = "0"></td>
+								<td><input name = "attr_Counter_wp" type = "checkbox" value = "1"></td>
+								<td><input name = "attr_Brave_wp" type = "checkbox" value = "1"></td>
+								<td></td>
+							</tr>
 						</table>
 						<div class = "sheet-hiddenskill">
 							<label style = "font-size: 13px; font-weight: bold"> Weapon Description
@@ -938,6 +952,10 @@
 	<input name="attr_currDdg" value = "0" hidden>
 	<input name="attr_effdmg" value = "0" hidden>
 	<input name="attr_currWep" value = "Sword" hidden>
+	<input name="attr_currMinDist" value = "0" hidden>
+	<input name="attr_currMaxDist" value = "0" hidden>
+	<input name="attr_currCounter" value = "0" hidden>
+	<input name="attr_currBrave" value = "0" hidden>
 	<input name="attr_currDesc" value = "Attacking @{target|token_name}!" hidden>
 	<input name="attr_class_exp0" value = "0" hidden>
 	<input name="attr_class_exp1" value = "0" hidden>
@@ -967,7 +985,7 @@
 	<input name="attr_Hit_Qtotal" value = "0" hidden>
 	<input name="attr_Avo_Qtotal" value = "0" hidden>
 	<input name="attr_Weight_Qtotal" value = "0" hidden>
-  <input name="attr_Mit_Qtotal" value = "0" hidden>
+  	<input name="attr_Mit_Qtotal" value = "0" hidden>
 	<input name="attr_Ele_Qtotal" value = "" hidden>
 	<input name="attr_Weak_total" value = "None" hidden>
 	<input name="attr_HP_total_max" value = "0" hidden>
@@ -2255,6 +2273,50 @@ on("change:repeating_weapons:WType change:repeating_weapons:wEXP change:repeatin
 	});
 });
 
+// Weapon Info
+on("change:repeating_weapons:MinDist_wp change:repeating_weapons:MaxDist_wp change:repeating_weapons:Counter_wp change:repeating_weapons:Brave_wp change:_reporder:weapons change:_reporder:spells remove:repeating_spells remove:repeating_weapons change:WSlot change:SSlot", function(eventInfo) {
+	getAttrs(["WSlot","SSlot","CSlot","atktype"], function(v) {
+		if (v.atktype == "Physical"){
+			getSectionIDsOrdered("repeating_weapons", function(idarray) {
+				slotnum = v.WSlot
+				fID = idarray[Number(slotnum)-1];
+				log("fID is" + fID)
+				getAttrs(["repeating_weapons_"+fID+"_MinDist_wp", "repeating_weapons_"+fID+"_MaxDist_wp", "repeating_weapons_"+fID+"_Counter_wp", "repeating_weapons_"+fID+"_Brave_wp"], function(v) {
+					let nindex0 = Object.keys(v)[0];
+					let nindex1 = Object.keys(v)[1];
+					let nindex2 = Object.keys(v)[2];
+					let nindex3 = Object.keys(v)[3];
+					setAttrs({
+						currMinDist: parseInt(v[nindex0])||0,
+						currMaxDist: parseInt(v[nindex1])||0,
+						currCounter: parseInt(v[nindex2])||0,
+						currBrave: parseInt(v[nindex3])||0,
+					});
+				});
+			});
+		}
+		if (v.atktype == "Magical"){
+			getSectionIDsOrdered("repeating_spells", function(idarray) {
+				slotnum = v.SSlot
+				fID = idarray[Number(slotnum)-1];
+				log("fID is" + fID)
+				getAttrs(["repeating_spells_"+fID+"_MinDist_wp", "repeating_spells_"+fID+"_MaxDist_wp", "repeating_spells_"+fID+"_Counter_wp", "repeating_spells_"+fID+"_Brave_wp"], function(v) {
+					let nindex0 = Object.keys(v)[0];
+					let nindex1 = Object.keys(v)[1];
+					let nindex2 = Object.keys(v)[2];
+					let nindex3 = Object.keys(v)[3];
+					setAttrs({
+						currMinDist: parseInt(v[nindex[0]])||0,
+						currMaxDist: parseInt(v[nindex[1]])||0,
+						currCounter: parseInt(v[nindex[2]])||0,
+						currBrave: parseInt(v[nindex[3]])||0,
+					});
+				});
+			});
+		}
+	});
+});
+
 //Weapon ranks!
 
 function setRank(tRank, currEXP){
@@ -3138,7 +3200,7 @@ on("change:Species change:Class", function(eventInfo) {
 
 //Initialize values for API, because ded
 on("sheet:opened", function(){
-	getAttrs(["WSlot","SSlot","currWt","AttackCounter","HPHolder","weplist","splist","colist","effdmg","currEff","currName","currMt","class_exp0","class_gain0","currDesc","currWexp","currWep","atktype","EXP","SwordEXP","LanceEXP","AxeEXP","BowEXP","StavesEXP","DarkEXP","AnimaEXP","LightEXP","AuthorityEXP","RidingEXP","ArmorEXP","FlyingEXP","Flyingrank","Level","HP_i","Str_i","Mag_i","Skl_i","Spd_i","Lck_i","Def_i","Res_i","Mov_i","HP_bd","Str_bd","Mag_bd","Skl_bd","Spd_bd","Lck_bd","Def_bd","Res_bd","Mov_bd","HP_rb","Str_rb","Mag_rb","Skl_rb","Spd_rb","Lck_rb","Def_rb","Res_rb","Mov_rb","item_uses0","item_uses1","item_uses2","Swordrank","Lancerank","Axerank","Bowrank","Stavesrank","Hiddenrank","Darkrank","Lightrank","Authorityrank","Ridingrank","Armorrank","Hitmod","Critmod","Avomod","Ddgmod","Dmgmod","Hitmod_class","Hitb","Physb","Magb","Critb","Avob","Protb","Resb","Chab","Critavob","Ghitb","Critmod_class","Avomod_class","Ddgmod_class","fid","SwordGain","LanceGain","AxeGain","BowGain","StavesGain","HiddenGain","AnimaGain","LightGain","AuthorityGain","RidingGain","ArmorGain","FlyingGain","phys_bd","myst_bd","ward_bd","prot_bd","Weak_total","Ele_Qtotal","Hit","Crit","Ddg","avo"], function(v){
+	getAttrs(["WSlot","SSlot","currWt","AttackCounter","HPHolder","weplist","splist","colist","effdmg","currEff","currName","currMt","class_exp0","class_gain0","currDesc","currWexp","currWep","currMinDist","currMaxDist","currCounter","currBrave","atktype","EXP","SwordEXP","LanceEXP","AxeEXP","BowEXP","StavesEXP","DarkEXP","AnimaEXP","LightEXP","AuthorityEXP","RidingEXP","ArmorEXP","FlyingEXP","Flyingrank","Level","HP_i","Str_i","Mag_i","Skl_i","Spd_i","Lck_i","Def_i","Res_i","Mov_i","HP_bd","Str_bd","Mag_bd","Skl_bd","Spd_bd","Lck_bd","Def_bd","Res_bd","Mov_bd","HP_rb","Str_rb","Mag_rb","Skl_rb","Spd_rb","Lck_rb","Def_rb","Res_rb","Mov_rb","item_uses0","item_uses1","item_uses2","Swordrank","Lancerank","Axerank","Bowrank","Stavesrank","Hiddenrank","Darkrank","Lightrank","Authorityrank","Ridingrank","Armorrank","Hitmod","Critmod","Avomod","Ddgmod","Dmgmod","Hitmod_class","Hitb","Physb","Magb","Critb","Avob","Protb","Resb","Chab","Critavob","Ghitb","Critmod_class","Avomod_class","Ddgmod_class","fid","SwordGain","LanceGain","AxeGain","BowGain","StavesGain","HiddenGain","AnimaGain","LightGain","AuthorityGain","RidingGain","ArmorGain","FlyingGain","phys_bd","myst_bd","ward_bd","prot_bd","Weak_total","Ele_Qtotal","Hit","Crit","Ddg","avo"], function(v){
 		setAttrs({
 			WSlot: v.WSlot,
 			SSlot: v.SSlot,
@@ -3158,6 +3220,10 @@ on("sheet:opened", function(){
 			currDesc: v.currDesc,
 			currWep: v.currWep,
 			currWexp: v.currWexp,
+			currMinDist: v.currMinDist,
+			currMaxDist: v.currMaxDist,
+			currCounter: v.currCounter,
+			currBrave: v.currBrave,
 			atktype: v.atktype,
 			SwordGain: v.SwordGain,
 			LanceGain: v.LanceGain,

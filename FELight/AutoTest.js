@@ -1,12 +1,25 @@
+// Globals
+var weaponMap = {       
+  "Sword": "SwordEXP",
+  "Lance": "LanceEXP",
+  "Axe": "AxeEXP",
+  "Bow": "BowEXP",
+  "Staff": "StavesEXP",
+  "Dark": "DarkEXP",
+  "Anima": "AnimaEXP",
+  "Light": "LightEXP"
+};
 
 
-// Helper function to get an attribute object by name for a given character.
 
+// Helpers
+
+// Gets an attribute object by name for a given character.
 function getAttr(characterId, attrName) {
   return findObjs({ characterid: characterId, name: attrName, type: "attribute" })[0];
-}
+} 
 
-// Helper to safely get a numeric attribute value. Returns 0 if the attribute doesn't exist.
+// Safely gets a numeric attribute value. Returns 0 if the attribute doesn't exist.
 function getAttrValue(characterId, attrName) {
   var attr = getAttr(characterId, attrName);
   return attr ? Number(attr.get("current")) : 0;
@@ -15,7 +28,7 @@ function getAttrValue(characterId, attrName) {
 // Process inline rolls more simply without Lodash
 function processInlinerolls(msg) {
   if (!msg.inlinerolls) return msg.content;
-  let newContent = msg.content;
+  var newContent = msg.content;
   msg.inlinerolls.forEach((roll, i) => {
     var total = roll.results?.total || 0;
     newContent = newContent.replace(`$[[${i}]]`, total);
@@ -23,10 +36,39 @@ function processInlinerolls(msg) {
   return newContent;
 }
 
-// Helper function to display skill activation
+  // Update weapon EXP based on wtype and wepGain
+  function updateWeaponEXP(attackerId, wtype, wepGain) {
+    if (!weaponMap[wtype]) return;
+    const attr = getAttr(attackerId, weaponMap[wtype]);
+    if (!attr) return;
+    const currentVal = Number(attr.get("current")) || 0;
+    attr.setWithWorker("current", currentVal + wepGain);
+  }
+
+// Displays skill activation
 function outputSkill(Name, Skill) {
   sendChat(Name, Skill + " is active.");
 }
+
+// Updates a given token's health. Inputting negative damage can be used to heal
+// Returns damage taken for use in adapative scales
+function UpdateHealth(Token, Damage, Health, MaxHP) {
+  var Shield = Token.get("bar2_value")||0;
+
+  if (Damage < 0) { // Healing only affects health
+    Token.set("bar3_value", Math.min(MaxHP, Health - Damage));
+  }
+  else if (Damage > 0) {// Deplete shield first, then health
+    Token.set("bar2_value", Math.max(0, Shield - Damage));
+    if (Damage > Shield) {
+      Damage -= Shield;
+      Token.set("bar3_value", Math.max(0, Health - Damage));
+    }
+  }
+  if (Shield == 0 && Damage > 0) { return Damage; }
+  return 0;
+}
+
 
 
 // Weapon Specific Skills
@@ -147,7 +189,7 @@ function Reaver(BattleInput, BattleOutput) {
 //Activation Skills
 
 // Done
-function SureShot(BattleInput, BattleOutput) {
+function SureShot(BattleInput, BattleOutput) {  
   if (BattleInput.WhoseSkill == 1) { return; }
   if (randomInteger(100) <= BattleInput.ASkill) {
     outputSkill(BattleInput.Attacker, "Sure Shot");
@@ -160,7 +202,7 @@ function Adept(BattleInput, BattleOutput) {
   if (BattleInput.WhoseSkill == 1) { return; }
   if (randomInteger(100) <= BattleInput.ASpeed) {
     outputSkill(BattleInput.Attacker, "Adept");
-    BattleOutput.Adept = 1;
+    BattleOutput.Brave = 1;
   }
 }
 
@@ -329,6 +371,13 @@ function Patience(BattleInput, BattleOutput) {
 
 // Generic Skills
 
+// Attack twice during combat
+function Brave(BattleInput, BattleOutput) {
+  if (BattleInput.WhoseSkill == 1) { return; }
+  outputSkill(BattleInput.Attacker, "Brave");
+  BattleOutput.Brave = 1;
+}
+
 // +50 crit when below half hp
 function Wrath(BattleInput, BattleOutput) {
   if (BattleInput.WhoseSkill == 1) { return; }
@@ -449,19 +498,12 @@ function Nullify(BattleInput, BattleOutput) {
   BattleOutput.Nullify = 1;
 }
 
+// Gain a temporay shield equal to damage taken after enemy initiates combat if no shield already exists
+function AdaptiveScales(BattleInput, BattleOutput) {
+  if (BattleInput.WhoseSkill == 0 || BattleInput.IsInitiating == 0) { return; }
+  if (BattleInput.DGreyHP == 0) { BattleOutput.Scales = 1; }
+}
 
-
-// Weapon attribute map to avoid multiple if-statements
-
-
-  // Update weapon EXP based on wtype and wepGain
-  function updateWeaponEXP(attackerId, wtype, wepGain) {
-    if (!weaponMap[wtype]) return;
-    const attr = getAttr(attackerId, weaponMap[wtype]);
-    if (!attr) return;
-    const currentVal = Number(attr.get("current")) || 0;
-    attr.setWithWorker("current", currentVal + wepGain);
-  }
 
 on('chat:message', function(msg) {
   if (msg.type != 'api') return;
@@ -486,278 +528,309 @@ on('chat:message', function(msg) {
     //Initialize Attacker and Defender
     var selectedId = parts[0];
     var targetId = parts[1];
-    var initiating = parts[2];
-
-    var selectedToken = getObj('graphic', selectedId);
-    var attacker = getObj('character', selectedToken.get('represents'));
-
-    var targetToken = getObj('graphic', targetId);
-    var defender = getObj('character', targetToken.get('represents'));
-
-    var target = getObj('character', targetToken.get('represents'));
-    if (!target) {
-      target = targetToken.get('name');
-    }
-    else {
-      target = 'character|' + target.id;
+    var info = {
+      brave: 0,
+      counter: 0,
+      double: 0,
+      died: 0,
+      addGreyHP: 0,
+      atkTotDmg: 0,
     }
 
-    var selected = getObj('character', selectedToken.get('represents'));
-    if (!selected) {
-      selected = selectedToken.get('name');
-    }
-    else {
-      selected = 'character|' + selected.id;
-    }
-
-    var targetObj;
-    var tokenPossibles = findObjs({_type: "graphic", _id: targetId});
-    if (tokenPossibles.length > 0) {
-      targetObj = tokenPossibles[0];
+    // Attacker initial combat
+    DoOneCombatStep(selectedId, targetId, 1, info);
+    if (info.died == 1) { return; }
+    var attackerDoubled = info.double; // Necessary to save off here due to info being overwritten
+    var addGreyHP = info.addGreyHP; // Same logic here
+    // Attacker goes again if brave active
+    if (info.brave == 1) {
+      DoOneCombatStep(selectedId, targetId, 1, info);
+      if (info.died == 1) { return; }
     }
 
-    var selectObj;
-    var selectPossibles = findObjs({_type: "graphic", _id: selectedId});
-    if (selectPossibles.length > 0) {
-      selectObj = selectPossibles[0];
-    }
-
-    var dmgtype = getAttr(attacker.id,'atktype').get('current');
-    var DmgTaken = 0;
-    var DefMit = 0;
-    let dodge = Number(getAttrValue(attacker.id, "Ddg"));
-
-    var wepGain = Number(getAttrValue(attacker.id, "currWexp"));
-
-    var weaponMap = {
-      "Sword": "SwordEXP",
-      "Lance": "LanceEXP",
-      "Axe": "AxeEXP",
-      "Bow": "BowEXP",
-      "Staff": "StavesEXP",
-      "Dark": "DarkEXP",
-      "Anima": "AnimaEXP",
-      "Light": "LightEXP"
-    };
-
-    // Initialize skill function I/O
-    var BattleInput = {
-      "WhoseSkill": -1, // To ensure we don't activate a defender's skill when we shouldn't. 0 = attacker, 1 = defender
-      "IsInitiating": initiating, // Determine if you are intiating the attack or counter-attacking. 0 = initiating, 1 = countering
-      "DWeakness": getAttr(defender.id,'Weak_total').get('current').split(','),
-      "DmgType": dmgtype,
-      "Attacker": selected,
-      "Defender": target,
-      "AWType": getAttr(attacker.id, "currWep").get('current'),
-      "DWType": getAttr(defender.id, "currWep").get('current'),
-      "AWWeight" : getAttrValue(attacker.id,'currWt'),
-      "DWWeight" : getAttrValue(defender.id,'currWt'),
-      "AMaxHP": selectObj.get("bar3_max"),
-      "DMaxHP": targetObj.get("bar3_max"),
-      "ACurrHP": selectObj.get("bar3_value"),
-      "DCurrHP": targetObj.get("bar3_value"),
-      "AStr": Number(getAttrValue(attacker.id, "Str_total")),
-      "AMag": Number(getAttrValue(attacker.id, "Mag_total")),
-      "ARes": Number(getAttrValue(attacker.id, "Res_total")),
-      "ADef": Number(getAttrValue(attacker.id, "Def_total")),
-      "ASkill": Number(getAttrValue(attacker.id, "Skl_total")),
-      "ASpeed": Number(getAttrValue(attacker.id, "Spd_total")),
-      "ALuck": Number(getAttrValue(attacker.id, "Lck_total")),
-      "DSpeed": Number(getAttrValue(defender.id, "Spd_total")),
-      "DWard": Number(getAttrValue(defender.id, "ward_total")),
-      "DProt": Number(getAttrValue(defender.id, "prot_total")),
-    };
-
-    let BattleOutput = {
-      "DWard": Number(getAttrValue(defender.id, "ward_total")),
-      "DProt": Number(getAttrValue(defender.id, "prot_total")),
-      "Hit": Number(getAttrValue(attacker.id, "Hit")) + randomInteger(100),
-      "Crit": Number(getAttrValue(attacker.id, "Crit")) + randomInteger(100),
-      "Avoid" : Number(getAttrValue(defender.id, "avo")),
-      "AtkSpd": Number(getAttrValue(attacker.id, 'Atkspd')),
-      "AddDmg": 0,
-      "AddProt": 0,
-      "AddWard": 0,
-      "SureShot": 0,
-      "Adept": 0,
-      "Impale": 0,
-      "Nullify": 0,
-      "Reaver": 0,
-      "Resilience": 0,
-      "Sol": 0,
-
-    }
-
-
-    // Skill checks
-    var AllSkills = new Set(["SureShot","Adept","Luna","Sol","Glacias","Flare","Impale","Colossus","Ignis","Armsthrift","QuickDraw","DartingBlow",
-    "GoodBet","DuelistBlow","DeathBlow","Prescience","StrongRiposte","Sturdy","Brawler","Patience","Swordbreaker","Lancebreaker","Axebreaker",
-    "Bowbreaker","Tomebreaker","Swordfaire","Lancefaire","Axefaire","Bowfaire","Tomefaire","Reaver","Brave","Wrath","Chivalry","FortressOfWill","DeadlyStrikes","PrideOfSteel","Thunderstorm","Resolve",
-    "Trample","Resilience","Dragonblood","Nullify"]);
-
-    var ASkills = getAttr(attacker.id,'Ele_Qtotal').get('current').split(',');
-    var DSkills = getAttr(defender.id,'Ele_Qtotal').get('current').split(',');
-
-    if (DSkills.includes('Nihil') == true) {
-      outputSkill(BattleInput.Defender, "Nihil");
-    }
-    else {
-      BattleInput.WhoseSkill = 0;
-      for(let i=0; i<ASkills.length; i++) {
-        if (AllSkills.has(ASkills[i])) {
-          var skillName = ASkills[i];
-          log("Proccing: " + skillName);
-          eval(skillName + "(BattleInput, BattleOutput)");
-        }
+    // Can the enemy counter?
+    if (info.counter == 1) {
+      // Counter initial combat
+      DoOneCombatStep(targetId, selectedId, 0, info);
+      if (info.died == 1) { return; }
+      // Counter goes again if brave active
+      if (info.brave == 1) {
+        DoOneCombatStep(targetId, selectedId, 0, info);
+        if (info.died == 1) { return; }
       }
-    }
-    if (ASkills.includes("Nihil") == true) {
-      outputSkill(BattleInput.Attacker, "Nihil");
-    }
-    else {
-      BattleInput.WhoseSkill = 1;
-      for (let i=0; i<DSkills.length; i++) {
-        if (AllSkills.has(DSkills[i])) {
-          var skillName = DSkills[i];
-          log("Def Proccing: " + skillName);
-          eval(skillName + "(BattleInput, BattleOutput)");
+      // Counterer doubled, go again
+      if (info.double == 1) {
+        DoOneCombatStep(targetId, selectedId, 0, info);
+        if (info.died == 1) { return; }
+        // Counter goes again if brave active
+        if (info.brave == 1) { 
+          DoOneCombatStep(targetId, selectedId, 0, info);
+          if (info.died == 1) { return; }
         }
       }
     }
 
-        // Effectiveness
-        if (BattleOutput.Nullify == 0) {
-          var AEff = getAttr(attacker.id,'currEff').get('current').split(',');
-          var DWeak = getAttr(defender.id,'Weak_total').get('current').split(',');
-          var isEffective = 0;
-    
-          for (let i=0; i<AEff.length; i++) {
-            if (DWeak.includes(AEff[i])) {
-              isEffective = 1;
-            }
-          }
-    
-          if (isEffective == 1) {
-            sendChat(target,'<p style = "margin-bottom: 0px;"> You deal Effective Damage!</p>');
-            log('curr mt = '+getAttrValue(attacker.id,'currMt'))
-            BattleOutput.AddDmg += 2 * getAttrValue(attacker.id,'currMt');
-          }
-        }
-
-    var AddedDmg = BattleOutput.AddDmg;
-    var AddedProt = BattleOutput.AddProt;
-    var AddedWard = BattleOutput.AddWard;
-    var Hit = BattleOutput.Hit;
-    var Crit = BattleOutput.Crit;
-    var Avoid = BattleOutput.Avoid;
-    var AtkSpdDiff = BattleOutput.AtkSpd - getAttrValue(defender.id, 'Atkspd');
-
-    if (AtkSpdDiff >= 4) {
-      sendChat(target,'<p style = "margin-bottom: 0px;"> You double the enemy! </p>');
-    }
-
-    // Weapon triangle
-    var triangle = 'Neutral';
-    var mult = 1;
-    var weaponTriangle = { 'Sword': 1, 'Axe':2, 'Lance':3, 'Anima':4, 'Light':5, 'Dark':6 };
-    var atkTriMap = weaponTriangle[BattleInput.AWType];
-    var defTriMap = weaponTriangle[BattleInput.DWType];
-    if ((atkTriMap < 4 && defTriMap < 4) || (atkTriMap >= 4 && defTriMap >= 4)) {
-      if ((atkTriMap+1)%3 == defTriMap%3) {
-        triangle = 'Adv';
-      }
-      else if ((atkTriMap-1)%3 == defTriMap%3) {
-        triangle = 'Disadv';
+    // Attacker doubled, go again
+    if (attackerDoubled == 1) {
+      DoOneCombatStep(selectedId, targetId, 1, info);
+      if (info.died == 1) { return; }
+      // Attacker goes again if brave active
+      if (info.brave) {
+        DoOneCombatStep(selectedId, targetId, 1, info);
       }
     }
-    if (BattleOutput.Reaver == 1) {
-      if (triangle == "Adv") { triangle = "Disadv"; }
-      else if (triangle == "Disadv") { triangle = "Adv"; }
-      mult = 2;
+
+    // Apply shield if adaptive scales + no grey hp at combat start
+    if (addGreyHP == 1) { 
+      var token = findObjs({_type: "graphic", _id: targetId})[0]; 
+      token.set("bar2_value", info.atkTotDmg);
     }
-
-    log(triangle);
-
-    var triangleMsg = "";
-    if (triangle == 'Adv') {
-      Hit += 15 * mult;
-      DmgTaken += 1 * mult;
-      triangleMsg = '<div ' + headstyle + '>Attacking with advantage!</div>'
-    }
-    else if (triangle == 'Disadv') {
-      Hit += -15 * mult;
-      DmgTaken += -1 * mult;
-      triangleMsg = '<div ' + headstyle + '>Attacking with disadvantage!</div>'
-    }
-    sendChat(target, '<div ' + divstyle + '>' + //--
-    triangleMsg +
-    '<div style = "margin: 0 auto; width: 80%; margin-top: 4px;">' + //--
-    '<p style = "margin-bottom: 0px;">' + Hit + ' hit vs ' + BattleOutput.Avoid + ' avoid!</p>' +//--
-    '<p style = "margin-bottom: 0px;">' + Crit + ' crit vs ' + dodge + ' dodge!</p>' +//--
-    '</div>' + //--
-    '</div>'
-    );
-
-
-    // Damage Typing
-    if (dmgtype == 'Physical') {
-      log('AddDmg is really: ' + AddedDmg);
-      AttkDmg = getAttrValue(attacker.id, "phys_total") + AddedDmg;
-      DefMit = BattleOutput.DProt + getAttrValue(defender.id, "Mit_Qtotal") + AddedProt;
-      sendChat(target,'<p style = "margin-bottom: 0px;">' + AttkDmg + ' physical damage vs ' + DefMit + ' protection!</p>');
-      DmgTaken = AttkDmg - DefMit;
-    }
-    else if (dmgtype == 'Magical') {
-      AttkDmg = getAttrValue(attacker.id, "myst_total") + AddedDmg;
-      DefMit = BattleOutput.DWard + getAttrValue(defender.id, "Mit_Qtotal") + AddedWard;
-      sendChat(target,'<p style = "margin-bottom: 0px;">' + AttkDmg + ' mystical damage vs ' + DefMit + ' resistance!</p>');
-      DmgTaken = AttkDmg - DefMit;
-    }
-
-    // End of calculation skill procs
-    if (BattleOutput.SureShot == 1) {
-      Hit = 999;
-      DmgTaken *= 1.5;
-    }
-    if (BattleOutput.Impale == 1) {
-      DmgTaken *= 3;
-    }
-
-
-    // Output battle outcome
-    if (Hit >= Avoid) {
-      if (Crit > dodge) {
-        DmgTaken = Math.max(0, Math.min(BattleInput.DCurrHP, DmgTaken * 3));
-        if (BattleOutput.Resilience == 1) { DmgTaken /= 2; }
-        CurrHP = targetObj.set("bar3_value", parseInt(targetObj.get("bar3_value")) - DmgTaken);
-        sendChat(target, 'You crit and deal '+ DmgTaken + ' damage!');
-      }
-      else {
-        DmgTaken = Math.max(0, Math.min(BattleInput.DCurrHP, DmgTaken));
-        CurrHP = targetObj.set("bar3_value", parseInt(targetObj.get("bar3_value")) - DmgTaken);
-        sendChat(target, 'You hit and deal '+ DmgTaken + ' damage!');
-
-      }
-      if(BattleOutput.Sol == 1){
-        getAttr(attacker.id, "HP_current").setWithWorker("current", Math.min(ACurrHP + Math.min(DmgTaken, DCurrHP), AMaxHP));
-        CurrHP = selectObj.set("bar3_value", Math.min(ACurrHP + Math.min(DmgTaken, DCurrHP), AMaxHP))
-      }
-      log('awtype is '+BattleInput.AWType);
-      log('Wep gain is '+wepGain);
-      updateWeaponEXP(attacker.id, BattleInput.AWType, wepGain);
-    }
-    else {
-    sendChat(target, 'You missed!');
-    }
-
-
-var divstyle = 'style="width: 189px; border: 1px solid #353535; background-color: #f3f3f3; padding: 5px; color: #353535;"'
-var tablestyle = 'style="text-align:center; margin: 0 auto; border-collapse: collapse; margin-top: 5px; border-radius: 2px"';
-var headstyle = 'style="color: #f3f3f3; font-size: 18px; text-align: left; font-variant: small-caps; background-color: #353535; padding: 4px; font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;"';
-var namestyle = 'style="background-color: #353535; color: #f3f3f3; text-align: center; font-weight: bold; overflow: hidden; margin: 4px; margin-right: 0px; border-radius: 10px; font-family: Helvetica, Arial, sans-serif;"'
-var wrapperstyle = 'style="display: inline-block; padding:2px;"'
-var statdiv = 'style="border: 1px solid #353535; border-radius: 5px; overflow: hidden; text-align: center; display: inline-block; margin-left: 4px;"'
-var cellabel = 'style="background-color: #353535; color: #f3f3f3; font-weight: bold; padding: 2px;"'
-
 };
 });
+
+
+function DoOneCombatStep(selectedId, targetId, initiating, info) {
+  var selectedToken = getObj('graphic', selectedId);
+  var attacker = getObj('character', selectedToken.get('represents'));
+  var selected = 'character|' + attacker.id;
+  var selectObj = findObjs({_type: "graphic", _id: selectedId})[0];
+
+  var targetToken = getObj('graphic', targetId);
+  var defender = getObj('character', targetToken.get('represents'));
+  var target = 'character|' + defender.id;
+  var targetObj = findObjs({_type: "graphic", _id: targetId})[0];
+
+  var DmgTaken = 0;
+  var DefMit = 0;
+  var Dodge = Number(getAttrValue(attacker.id, "Ddg"));
+  var wepGain = Number(getAttrValue(attacker.id, "currWexp"));
+
+  sendChat(target, "==START=="); // Temp for ease of viewing
+
+  // Initialize skill function I/O
+  var BattleInput = {
+    "WhoseSkill": -1, // To ensure we don't activate a defender's skill when we shouldn't. 0 = attacker, 1 = defender
+    "IsInitiating": initiating, // Determine if you are intiating the attack or counter-attacking. 0 = initiating, 1 = countering
+    "DWeakness": getAttr(defender.id,'Weak_total').get('current').split(','),
+    "DmgType": getAttr(attacker.id,'atktype').get('current'),
+    "Attacker": selected,
+    "Defender": target,
+    "AWType": getAttr(attacker.id, "currWep").get('current'),
+    "DWType": getAttr(defender.id, "currWep").get('current'),
+    "AWWeight" : getAttrValue(attacker.id,'currWt'),
+    "DWWeight" : getAttrValue(defender.id,'currWt'),
+    "AMaxHP": selectObj.get("bar3_max"),
+    "DMaxHP": targetObj.get("bar3_max"),
+    "ACurrHP": selectObj.get("bar3_value"),
+    "DCurrHP": targetObj.get("bar3_value"),
+    "DGreyHP": targetObj.get("bar2_value"),
+    "AStr": Number(getAttrValue(attacker.id, "Str_total")),
+    "AMag": Number(getAttrValue(attacker.id, "Mag_total")),
+    "ARes": Number(getAttrValue(attacker.id, "Res_total")),
+    "ADef": Number(getAttrValue(attacker.id, "Def_total")),
+    "ASkill": Number(getAttrValue(attacker.id, "Skl_total")),
+    "ASpeed": Number(getAttrValue(attacker.id, "Spd_total")),
+    "ALuck": Number(getAttrValue(attacker.id, "Lck_total")),
+    "DSpeed": Number(getAttrValue(defender.id, "Spd_total")),
+    "DWard": Number(getAttrValue(defender.id, "ward_total")),
+    "DProt": Number(getAttrValue(defender.id, "prot_total")),
+  };
+
+  var BattleOutput = {
+    "DWard": Number(getAttrValue(defender.id, "ward_total")),
+    "DProt": Number(getAttrValue(defender.id, "prot_total")),
+    "Hit": Number(getAttrValue(attacker.id, "Hit")) + randomInteger(100),
+    "Crit": Number(getAttrValue(attacker.id, "Crit")) + randomInteger(100),
+    "Avoid" : Number(getAttrValue(defender.id, "avo")),
+    "AtkSpd": Number(getAttrValue(attacker.id, 'Atkspd')),
+    "AddDmg": 0,
+    "AddProt": 0,
+    "AddWard": 0,
+    "SureShot": 0,
+    "Brave": 0,
+    "Impale": 0,
+    "Nullify": 0,
+    "Reaver": 0,
+    "Resilience": 0,
+    "Sol": 0,
+    "Scales": 0,
+  };
+
+
+  // Skill checks
+  var AllSkills = new Set(["SureShot","Adept","Luna","Sol","Glacias","Flare","Impale","Colossus","Ignis","Armsthrift","QuickDraw","DartingBlow",
+  "GoodBet","DuelistBlow","DeathBlow","Prescience","StrongRiposte","Sturdy","Brawler","Patience","Swordbreaker","Lancebreaker","Axebreaker",
+  "Bowbreaker","Tomebreaker","Swordfaire","Lancefaire","Axefaire","Bowfaire","Tomefaire","Reaver","Brave","Wrath","Chivalry","FortressOfWill","DeadlyStrikes","PrideOfSteel","Thunderstorm","Resolve",
+  "Trample","Resilience","Dragonblood","Nullify","AdaptiveScales"]);
+
+  var ASkills = getAttr(attacker.id,'Ele_Qtotal').get('current').split(',');
+  var DSkills = getAttr(defender.id,'Ele_Qtotal').get('current').split(',');
+
+  if (DSkills.includes('Nihil') == true) {
+    outputSkill(BattleInput.Defender, "Nihil");
+  }
+  else {
+    BattleInput.WhoseSkill = 0;
+    for(let i=0; i<ASkills.length; i++) {
+      if (AllSkills.has(ASkills[i])) {
+        var skillName = ASkills[i];
+        eval(skillName + "(BattleInput, BattleOutput)");
+      }
+    }
+  }
+  if (ASkills.includes("Nihil") == true) {
+    outputSkill(BattleInput.Attacker, "Nihil");
+  }
+  else {
+    BattleInput.WhoseSkill = 1;
+    for (let i=0; i<DSkills.length; i++) {
+      if (AllSkills.has(DSkills[i])) {
+        var skillName = DSkills[i];
+        eval(skillName + "(BattleInput, BattleOutput)");
+      }
+    }
+  }
+  var AddedDmg = BattleOutput.AddDmg;
+  var AddedProt = BattleOutput.AddProt;
+  var AddedWard = BattleOutput.AddWard;
+  var Hit = BattleOutput.Hit;
+  var Crit = BattleOutput.Crit;
+  var Avoid = BattleOutput.Avoid;
+  var AtkSpdDiff = BattleOutput.AtkSpd - getAttrValue(defender.id, 'Atkspd');
+
+  if (AtkSpdDiff >= 4) {
+    sendChat(target,'<p style = "margin-bottom: 0px;"> You double the enemy! </p>');
+  }
+
+
+  // Effectiveness
+  if (BattleOutput.Nullify == 0) {
+    var AEff = getAttr(attacker.id,'currEff').get('current').split(',');
+    var DWeak = getAttr(defender.id,'Weak_total').get('current').split(',');
+    var isEffective = 0;
+
+    for (let i=0; i<AEff.length; i++) {
+      if (DWeak.includes(AEff[i])) {
+        isEffective = 1;
+      }
+    }
+
+    if (isEffective == 1) {
+      sendChat(target,'<p style = "margin-bottom: 0px;"> You deal Effective Damage!</p>');
+      AddedDmg += 2 * getAttrValue(attacker.id, 'currMt');
+    }
+  }
+
+
+  // Weapon triangle
+  var triangle = 'Neutral';
+  var mult = 1;
+  var weaponTriangle = { 'Sword': 1, 'Axe':2, 'Lance':3, 'Anima':4, 'Light':5, 'Dark':6 };
+  var atkTriMap = weaponTriangle[BattleInput.AWType];
+  var defTriMap = weaponTriangle[BattleInput.DWType];
+  if ((atkTriMap < 4 && defTriMap < 4) || (atkTriMap >= 4 && defTriMap >= 4)) {
+    if ((atkTriMap+1)%3 == defTriMap%3) {
+      triangle = 'Adv';
+    }
+    else if ((atkTriMap-1)%3 == defTriMap%3) {
+      triangle = 'Disadv';
+    }
+  }
+  if (BattleOutput.Reaver == 1) {
+    if (triangle == "Adv") { triangle = "Disadv"; }
+    else if (triangle == "Disadv") { triangle = "Adv"; }
+    mult = 2;
+  }
+
+  var triangleMsg = "";
+  if (triangle == 'Adv') {
+    Hit += 15 * mult;
+    DmgTaken += 1 * mult;
+    triangleMsg = '<div ' + headstyle + '>Attacking with advantage!</div>';
+  }
+  else if (triangle == 'Disadv') {
+    Hit += -15 * mult;
+    DmgTaken += -1 * mult;
+    triangleMsg = '<div ' + headstyle + '>Attacking with disadvantage!</div>';
+  }
+  sendChat(target, '<div ' + divstyle + '>' + //--
+  triangleMsg +
+  '<div style = "margin: 0 auto; width: 80%; margin-top: 4px;">' + //--
+  '<p style = "margin-bottom: 0px;">' + Hit + ' hit vs ' + Avoid + ' avoid!</p>' +//--
+  '<p style = "margin-bottom: 0px;">' + Crit + ' crit vs ' + Dodge + ' dodge!</p>' +//--
+  '</div>' + //--
+  '</div>'
+  );
+
+
+  // Damage Typing
+  if (BattleInput.DmgType == 'Physical') {
+    AtkDmg = getAttrValue(attacker.id, "phys_total") + AddedDmg;
+    DefMit = BattleOutput.DProt + getAttrValue(defender.id, "Mit_Qtotal") + AddedProt;
+    sendChat(target,'<p style = "margin-bottom: 0px;">' + AtkDmg + ' physical damage vs ' + DefMit + ' protection!</p>');
+  }
+  else if (BattleInput.DmgType == 'Magical') {
+    AtkDmg = getAttrValue(attacker.id, "myst_total") + AddedDmg;
+    DefMit = BattleOutput.DWard + getAttrValue(defender.id, "Mit_Qtotal") + AddedWard;
+    sendChat(target,'<p style = "margin-bottom: 0px;">' + AtkDmg + ' mystical damage vs ' + DefMit + ' resistance!</p>');
+  }
+  DmgTaken = Math.max(0, AtkDmg - DefMit);
+
+
+  // End of calculation skill procs
+  if (BattleOutput.SureShot == 1) {
+    Hit = 999;
+    DmgTaken *= 1.5;
+  }
+  if (BattleOutput.Impale == 1) {
+    DmgTaken *= 3;
+  }
+
+
+  // Output battle outcome
+  var trueDamage = 0;
+  if (Hit >= Avoid) {
+    if (Crit > Dodge) {
+      DmgTaken *= 3;
+      if (BattleOutput.Resilience == 1) { DmgTaken /= 2; }
+      trueDamage = UpdateHealth(targetObj, DmgTaken, BattleInput.DCurrHP);
+      sendChat(target, 'You crit and deal '+ DmgTaken + ' damage!'); // Intentionally not capping damage numbers put in chat. Hitting low hp enemies for ludicrous damage numbers is fun
+    }
+    else {
+      trueDamage = UpdateHealth(targetObj, DmgTaken, BattleInput.DCurrHP);
+      sendChat(target, 'You hit and deal '+ DmgTaken + ' damage!'); // See above
+
+    }
+    if (BattleOutput.Sol == 1) {
+      UpdateHealth(selectObj, -Math.min(BattleInput.DCurrHP, DmgTaken), BattleInput.ACurrHP, BattleInput.AMaxHP);
+    }
+    updateWeaponEXP(attacker.id, BattleInput.AWType, wepGain);
+  }
+  else {
+  sendChat(target, 'You missed!');
+  }
+  sendChat(target, "===END==="); // Temp for ease of viewing
+
+  // Gather info for future battle steps
+  Object.assign(info, {
+    brave: BattleOutput.Brave || getAttrValue(attacker.id, 'currBrave'),
+    counter: CanCounter(defender.id, Led.from(selectedToken).to(targetToken).byManhattan().inSquares()),
+    double: AtkSpdDiff >= 4 ? 1 : 0,
+    died: targetObj.get("bar3_value") == 0 ? 1 : 0,
+    addGreyHP: BattleOutput.Scales,
+    atkTotDmg: info.atkTotDmg + trueDamage * initiating,
+  });
+  log("brave: " + info.brave + " counter: " + info.counter + " double: " + info.double + " died: " + info.died + " addGrey: " + info.addGreyHP + " totalDmg: " + info.atkTotDmg);
+  
+  var divstyle = 'style="width: 189px; border: 1px solid #353535; background-color: #f3f3f3; padding: 5px; color: #353535;"';
+  var headstyle = 'style="color: #f3f3f3; font-size: 18px; text-align: left; font-variant: small-caps; background-color: #353535; padding: 4px; font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;"';
+}
+
+// returns 1 if the given token identifier is using a weapon that is within range to counter-attack
+function CanCounter(defId, dist) {
+  var counter = Number(getAttrValue(defId, 'currCounter'));
+  var minDist = Number(getAttrValue(defId, 'currMinDist'));
+  var maxDist = Number(getAttrValue(defId, 'currMaxDist'));
+  if (counter == 0 || dist < minDist || dist > maxDist) { return 0; }
+  return 1;
+}
