@@ -1,5 +1,5 @@
 // Globals
-var weaponMap = {
+var weaponMap = {       
   "Sword": "SwordEXP",
   "Lance": "LanceEXP",
   "Axe": "AxeEXP",
@@ -17,7 +17,7 @@ var weaponMap = {
 // Gets an attribute object by name for a given character.
 function getAttr(characterId, attrName) {
   return findObjs({ characterid: characterId, name: attrName, type: "attribute" })[0];
-}
+} 
 
 // Safely gets a numeric attribute value. Returns 0 if the attribute doesn't exist.
 function getAttrValue(characterId, attrName) {
@@ -48,6 +48,22 @@ function processInlinerolls(msg) {
 // Displays skill activation
 function outputSkill(Name, Skill) {
   sendChat(Name, Skill + " is active.");
+}
+
+// Updates a given token's health. Inputting negative damage can be used to heal
+function UpdateHealth(Token, Damage, Health, MaxHP) {
+  var Shield = Token.get("bar2_value")||0;
+
+  if (Damage < 0) { // Healing only affects health
+    Token.set("bar3_value", Math.min(MaxHP, Health - Damage));
+  }
+  else if (Damage > 0) {// Deplete shield first, then health
+    Token.set("bar2_value", Math.max(0, Shield - Damage));
+    if (Damage > Shield) {
+      Damage -= Shield;
+      Token.set("bar3_value", Math.max(0, Health - Damage));
+    }
+  }
 }
 
 
@@ -170,7 +186,7 @@ function Reaver(BattleInput, BattleOutput) {
 //Activation Skills
 
 // Done
-function SureShot(BattleInput, BattleOutput) {
+function SureShot(BattleInput, BattleOutput) {  
   if (BattleInput.WhoseSkill == 1) { return; }
   if (randomInteger(100) <= BattleInput.ASkill) {
     outputSkill(BattleInput.Attacker, "Sure Shot");
@@ -472,6 +488,13 @@ function Nullify(BattleInput, BattleOutput) {
   BattleOutput.Nullify = 1;
 }
 
+// WIP (Will need to do entire combat in one go to implement with minimal fuss)
+// Gain a temporay shield equal to damage taken after enemy initiates combat if no shield already exists
+function AdaptiveScales(BattleInput, BattleOutput) {
+  if (BattleInput.WhoseSkill == 0 || BattleInput.IsInitiating == 0) { return; }
+  
+}
+
 
 
 on('chat:message', function(msg) {
@@ -702,17 +725,16 @@ on('chat:message', function(msg) {
     // Damage Typing
     if (dmgtype == 'Physical') {
       log('AddDmg is really: ' + AddedDmg);
-      AttkDmg = getAttrValue(attacker.id, "phys_total") + AddedDmg;
+      AtkDmg = getAttrValue(attacker.id, "phys_total") + AddedDmg;
       DefMit = BattleOutput.DProt + getAttrValue(defender.id, "Mit_Qtotal") + AddedProt;
-      sendChat(target,'<p style = "margin-bottom: 0px;">' + AttkDmg + ' physical damage vs ' + DefMit + ' protection!</p>');
-      DmgTaken = AttkDmg - DefMit;
+      sendChat(target,'<p style = "margin-bottom: 0px;">' + AtkDmg + ' physical damage vs ' + DefMit + ' protection!</p>');
     }
     else if (dmgtype == 'Magical') {
-      AttkDmg = getAttrValue(attacker.id, "myst_total") + AddedDmg;
+      AtkDmg = getAttrValue(attacker.id, "myst_total") + AddedDmg;
       DefMit = BattleOutput.DWard + getAttrValue(defender.id, "Mit_Qtotal") + AddedWard;
-      sendChat(target,'<p style = "margin-bottom: 0px;">' + AttkDmg + ' mystical damage vs ' + DefMit + ' resistance!</p>');
-      DmgTaken = AttkDmg - DefMit;
+      sendChat(target,'<p style = "margin-bottom: 0px;">' + AtkDmg + ' mystical damage vs ' + DefMit + ' resistance!</p>');
     }
+    DmgTaken = Math.max(0, AtkDmg - DefMit);
 
     // End of calculation skill procs
     if (BattleOutput.SureShot == 1) {
@@ -727,23 +749,21 @@ on('chat:message', function(msg) {
     // Output battle outcome
     if (Hit >= Avoid) {
       if (Crit > dodge) {
-        DmgTaken = Math.max(0, Math.min(BattleInput.DCurrHP, DmgTaken * 3));
+        DmgTaken *= 3;
         if (BattleOutput.Resilience == 1) { DmgTaken /= 2; }
-        CurrHP = targetObj.set("bar3_value", parseInt(targetObj.get("bar3_value")) - DmgTaken);
-        sendChat(target, 'You crit and deal '+ DmgTaken + ' damage!');
+        UpdateHealth(targetObj, DmgTaken, BattleInput.DCurrHP);
+        sendChat(target, 'You crit and deal '+ DmgTaken + ' damage!'); // Intentionally not capping damage numbers put in chat. Hitting low hp enemies for ludicrous damage numbers is fun
       }
       else {
-        DmgTaken = Math.max(0, Math.min(BattleInput.DCurrHP, DmgTaken));
-        CurrHP = targetObj.set("bar3_value", parseInt(targetObj.get("bar3_value")) - DmgTaken);
-        sendChat(target, 'You hit and deal '+ DmgTaken + ' damage!');
+        UpdateHealth(targetObj, DmgTaken, BattleInput.DCurrHP);
+        sendChat(target, 'You hit and deal '+ DmgTaken + ' damage!'); // See above
 
       }
       if(BattleOutput.Sol == 1){
-        getAttr(attacker.id, "HP_current").setWithWorker("current", Math.min(ACurrHP + Math.min(DmgTaken, DCurrHP), AMaxHP));
-        CurrHP = selectObj.set("bar3_value", Math.min(ACurrHP + Math.min(DmgTaken, DCurrHP), AMaxHP))
+        UpdateHealth(selectObj, -Math.min(BattleInput.DCurrHP, DmgTaken), BattleInput.ACurrHP, BattleInput.AMaxHP);
       }
-      log('awtype is '+BattleInput.AWType);
-      log('Wep gain is '+wepGain);
+      log('awtype is ' + BattleInput.AWType);
+      log('Wep gain is ' + wepGain);
       updateWeaponEXP(attacker.id, BattleInput.AWType, wepGain);
     }
     else {
