@@ -624,6 +624,26 @@ on('chat:message', function(msg) {
         }
       }
     }
+
+        // Effectiveness
+        if (BattleOutput.Nullify == 0) {
+          var AEff = getAttr(attacker.id,'currEff').get('current').split(',');
+          var DWeak = getAttr(defender.id,'Weak_total').get('current').split(',');
+          var isEffective = 0;
+    
+          for (let i=0; i<AEff.length; i++) {
+            if (DWeak.includes(AEff[i])) {
+              isEffective = 1;
+            }
+          }
+    
+          if (isEffective == 1) {
+            sendChat(target,'<p style = "margin-bottom: 0px;"> You deal Effective Damage!</p>');
+            log('curr mt = '+getAttrValue(attacker.id,'currMt'))
+            BattleOutput.AddDmg += 2 * getAttrValue(attacker.id,'currMt');
+          }
+        }
+
     var AddedDmg = BattleOutput.AddDmg;
     var AddedProt = BattleOutput.AddProt;
     var AddedWard = BattleOutput.AddWard;
@@ -635,26 +655,6 @@ on('chat:message', function(msg) {
     if (AtkSpdDiff >= 4) {
       sendChat(target,'<p style = "margin-bottom: 0px;"> You double the enemy! </p>');
     }
-
-
-    // Effectiveness
-    if (BattleOutput.Nullify == 0) {
-      var AEff = getAttr(attacker.id,'currEff').get('current').split(',');
-      var DWeak = getAttr(defender.id,'Weak_total').get('current').split(',');
-      var isEffective = 0;
-
-      for (let i=0; i<AEff.length; i++) {
-        if (DWeak.includes(AEff[i])) {
-          isEffective = 1;
-        }
-      }
-
-      if (isEffective == 1) {
-        sendChat(target,'<p style = "margin-bottom: 0px;"> You deal Effective Damage!</p>');
-        BattleOutput.AddDmg += 2 * getAttrValue(attacker.id,'currMt');
-      }
-    }
-
 
     // Weapon triangle
     var triangle = 'Neutral';
