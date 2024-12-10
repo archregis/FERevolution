@@ -12,35 +12,47 @@
     --color-primary-text: #000;
     --color-secondary-text: #f3f3f3;
     --color-header-text: #fff;
-    --border-color: #f3f3f3;
+
+    --font-size-base: 13px;
+    --font-size-header: 15px;
+    --font-size-small: 11px;
+
+    --spacing-base: 5px;
+    --spacing-xs: 3px;
+    --spacing-md: 10px;
 }
+
+/* Utility Classes */
+.u-inline-block { display: inline-block; }
+.u-full-width { width: 100%; }
+.u-mt-10 { margin-top: var(--spacing-md); }
+.u-no-padding { padding: 0; }
+.u-no-margin { margin: 0; }
+.u-black-text { color: var(--color-primary-text); }
 
 /* Base/Utility */
 html, body {
     margin: 0;
     padding: 0;
+    font-family: "Merriweather";
+    font-size: var(--font-size-base);
+    background-color: var(--color-primary-bg);
 }
 
-.inline-block { display: inline-block; }
-.no-padding { padding: 0; }
-.no-margin { margin: 0; }
-.black-text { color: #000; }
-.white-text { color: #fff; }
 .nowrap { white-space: nowrap; }
 
 /* Input sizing utilities */
 .sheet-input-75 { width: 75px; }
-.sheet-input-55 { width: 55px; }
 .sheet-input-40 { width: 40px; }
 .sheet-select-80 { width: 80px; }
 .sheet-select-65 { width: 65px; }
 .sheet-input-100 {width: 100px;}
 
 /* Textareas */
-.sheet-notes-textarea { width: 215px; height: 320px; }
-.sheet-supportlist-textarea { width: 100%; height: 100%; resize: none; box-sizing: border-box; padding: 5px; }
-.sheet-quartzlist-textarea { width: 100%; height: 100%; resize: none; box-sizing: border-box; padding: 5px; }
-.sheet-equiplist-textarea { width: 100%; height: 100%; resize: none; box-sizing: border-box; padding: 5px; }
+.sheet-notes-textarea { width: 215px; height: 320px; resize: none; padding: var(--spacing-base); box-sizing: border-box; }
+.sheet-supportlist-textarea, .sheet-quartzlist-textarea, .sheet-equiplist-textarea {
+    width: 100%; height: 100%; resize: none; box-sizing: border-box; padding: var(--spacing-base);
+}
 
 /* Main Container */
 .sheet-maindiv {
@@ -72,25 +84,26 @@ html, body {
 
 /* Style for tab buttons (the labels) */
 .sheet-tabs {
-    margin-bottom: 10px;
+    margin-bottom: var(--spacing-base);
 }
 
 .sheet-tab-button {
     display: inline-block;
     background-color: #ccc;
-    padding: 5px 10px;
+    padding: var(--spacing-base) var(--spacing-base);
     cursor: pointer;
-    margin-right: 5px;
+    margin-right: var(--spacing-base);
     border: 1px solid #000;
     border-radius: 3px;
     text-transform: uppercase;
     font-weight: bold;
+    font-size: var(--font-size-base);
 }
 .sheet-tab-button:hover {
     background-color: #bbb;
 }
 
-/* Highlight the active tab button when its radio is checked */
+/* Highlight the active tab button */
 #tab-character:checked ~ .sheet-tabs label[for="tab-character"],
 #tab-misc:checked ~ .sheet-tabs label[for="tab-misc"],
 #tab-equip:checked ~ .sheet-tabs label[for="tab-equip"] {
@@ -99,34 +112,32 @@ html, body {
 
 /* Charsheet base styling */
 .charsheet {
-    background-color: var(--color-primary-bg);
-    font-family: "Merriweather";
-    font-size: 11px;
     min-height: 100%;
     min-width: 100%;
     clear: both;
     overflow: auto;
 }
 
-/* Common section styling */
 .charsheet .sheet-charinfo,
 .charsheet .sheet-mainstats,
 .charsheet .sheet-currentvals {
     background-color: var(--color-secondary-bg);
     width: 100%;
     display: inline-block;
-    margin-bottom: 10px;
+    margin-bottom: var(--spacing-base);
 }
 
+/* Common ability/support info areas */
 .charsheet .sheet-abilityinfo,
 .charsheet .sheet-supportinfo {
     width: 100%;
     height: 220px;
     position: relative;
     box-sizing: border-box;
-    padding: 5px;
+    padding: var(--spacing-base);
 }
 
+/* Apply white text for footers and totals */
 .bonus-layout tfoot tr,
 .bonus-layout tfoot td,
 .charsheet .sheet-equip .sheet-prowess .bonus-layout tfoot span[name^="attr_"] {
@@ -137,13 +148,7 @@ html, body {
     color: #fff !important;
 }
 
-.bonus-layout td input[name="attr_Ele"] {
-    width: 80%;
-    box-sizing: border-box;
-    margin right: 5px;
-}
-
-/* Positioning */
+/* Positioning Columns */
 #left-column {
     float: left;
     width: 72%;
@@ -156,45 +161,32 @@ html, body {
 
 /* Table default styling */
 .charsheet table {
-    font-size: 13px;
-    width: 100%;
+    font-size: var(--font-size-base);
     border-right: var(--color-secondary-bg) 4px solid;
     border-bottom: var(--color-secondary-bg) 4px solid;
     border-collapse: collapse;
+    width: 100%;
 }
 
 .charsheet table th,
 .charsheet table td {
     text-align: center;
     vertical-align: middle;
-    padding: 5px;
-}
-
-/* Charinfo specific */
-.sheet-charinfo table {
-    border-collapse: collapse;
-    width: auto;
-    color: #000;
-}
-.sheet-charinfo table td {
-    padding: 0 5px;
-}
-.sheet-charinfo table td:first-child {
-    padding: 0 5px 0 0;
+    padding: var(--spacing-base);
 }
 
 /* Headers */
 .charsheet .sheet-header {
     text-align: center;
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-    font-size: 15px;
-    padding: 3px;
+    font-size: var(--font-size-header);
+    padding: var(--spacing-xs);
     background-color: var(--color-primary-bg);
     color: var(--color-header-text);
     border: var(--color-secondary-bg) 4px solid;
     border-bottom-width: 2px;
     font-weight: bold;
-    margin-bottom: 5px;
+    margin-bottom: var(--spacing-base);
 }
 
 .charsheet .sheet-div {
@@ -211,13 +203,7 @@ html, body {
     text-transform: uppercase;
 }
 
-/* Current values specific */
-.sheet-currentvals table th,
-.sheet-currentvals table td {
-    width: 20%;
-}
-
-/* Weapons and Spells */
+/* Weapons and Spells Containers */
 .charsheet .sheet-weapons,
 .charsheet .sheet-spells {
     vertical-align: top;
@@ -225,13 +211,10 @@ html, body {
     display: inline-block;
     width: 49%;
     box-sizing: border-box;
-    padding: 5px;
+    padding: var(--spacing-base);
 }
 
-.charsheet .sheet-weapons {
-    margin-right: 1%;
-}
-
+/* Reduce repetition in table styling for weapons/spells */
 .charsheet .sheet-weapons table,
 .charsheet .sheet-spells table {
     table-layout: fixed;
@@ -239,48 +222,21 @@ html, body {
     overflow: hidden;
 }
 
-/* Weapons/Spells input adjustments */
+/* Inputs in weapons/spells */
 .repeating_weapons input[name="attr_WName"],
-.repeating_spells input[name="attr_SName"] {
-    width: auto; 
-    max-width: 100%;
-    box-sizing: border-box;
-    text-align: center;
-}
-
+.repeating_spells input[name="attr_SName"],
 .repeating_weapons select[name="attr_WType"],
-.repeating_spells select[name="attr_SType"] {
-    width: auto; 
-    max-width: 100%;
-    box-sizing: border-box;
-    text-align: center;
-}
-
-.repeating_weapons table th,
-.repeating_weapons table td,
-.repeating_spells table th,
-.repeating_spells table td {
-    vertical-align: middle;
-    padding: 5px;
-}
-
-.repeating_weapons input[name="attr_WName"],
-.repeating_weapons select[name="attr_WType"],
-.repeating_weapons input[name="attr_Uses"],
-.repeating_spells input[name="attr_Sname"],
 .repeating_spells select[name="attr_SType"],
+.repeating_weapons input[name="attr_Uses"],
 .repeating_spells input[name="attr_Uses"] {
     vertical-align: middle;
-    margin: 0; /* Remove any extra margin if present */
+    margin: 0;
     line-height: 1.2;
     height: 1.8em;
-    font-size; 13px;
+    font-size: var(--font-size-base);
     border: 1px solid #ccc;
-}
-
-.repeating_weapons select[name="attr_Wtype"],
-.repeating_spells select[name="attr_Stype"] {
-    text-align:center;
+    box-sizing: border-box;
+    text-align: center;
 }
 
 .sheet-thicc input[type="text"],
@@ -289,7 +245,7 @@ html, body {
 }
 
 /* Toggle stats */
-.charsheet input.sheet-toggle-stats {
+.sheet-toggle-stats {
     border: none;
     margin-bottom: 2vh;
     margin-left: 1vw;
@@ -297,28 +253,28 @@ html, body {
     width: 16px;
     height: 16px;
 }
-.charsheet input.sheet-toggle-stats::after {
+.sheet-toggle-stats::after {
     content: "⏷";
 }
-.charsheet input.sheet-toggle-stats:checked::after {
+.sheet-toggle-stats:checked::after {
     content: "⏶";
 }
-
-.charsheet .sheet-hiddenstats {
+.sheet-hiddenstats {
     display: none;
 }
-.charsheet input.sheet-toggle-stats:checked ~ .sheet-hiddenstats {
+.sheet-toggle-stats:checked ~ .sheet-hiddenstats {
     display: table;
 }
-.charsheet .sheet-hiddenskill {
+.sheet-hiddenskill {
     display: none;
-    margin-left: 8px;
-    margin-top: 10px;
+    margin-left: var(--spacing-base);
+    margin-top: var(--spacing-base);
 }
-.charsheet input.sheet-toggle-stats:checked ~ .sheet-hiddenskill {
+.sheet-toggle-stats:checked ~ .sheet-hiddenskill {
     display: inline-block;
 }
 
+/* Misc page layout */
 .sheet-misc {
     width: 100%;
 }
@@ -328,85 +284,53 @@ html, body {
     justify-content: space-between;
     width: 100%;
     box-sizing: border-box;
-    margin-top: 10px;
+    margin-top: var(--spacing-base);
 }
 
 .sheet-misc .sheet-weapons,
 .sheet-misc .sheet-designation {
     background-color: var(--color-secondary-bg);
     box-sizing: border-box;
-    padding: 5px;
+    padding: var(--spacing-base);
     flex: 1;
     display: inline-block;
     vertical-align: top;
     min-height: 350px;
-    margin: 0 5px;
+    margin: 0 var(--spacing-base);
 }
 
-.sheet-misc .sheet-weapons table,
-.sheet-misc .sheet-designation table {
+/* Equipment Page */
+.sheet-equip .sheet-prowess {
     width: 100%;
-    border-collapse: collapse;
-    border-right: var(--color-secondary-bg) 4px solid;
-    border-bottom: var(--color-secondary-bg) 4px solid;
+}
+.bonus-layout {
     table-layout: fixed;
+    width: 100%;
 }
 
-.sheet-misc .sheet-weapons table th,
-.sheet-misc .sheet-weapons table td.
-.sheet-misc .sheet-designation table th,
-.sheet-misc .sheet-designation table td {
+.bonus-layout th, .bonus-layout td {
     text-align: center;
     vertical-align: middle;
-    padding: 5px;
-    font-size: 13px;
+    padding: var(--spacing-base);
+    font-size: var(--font-size-base);
+    white-space: nowrap;
 }
 
-.sheet-designation .sheet-header,
-.sheet-weapons .sheet-header {
-    text-align: center;
-    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-    font-size: 15px;
-    padding: 3px;
-    background-color: var(--color-primary-bg);
-    color: var(--color-header-text);
-    border: var(--color-secondary-bg) 4px solid;
-    border-bottom-width: 2px;
-    font-weight: bold;
-    margin-bottom: 5px;
+/* Common styling for repeated checkboxes and inputs */
+.bonus-layout td input[name="attr_Ele"] {
+    width: 80%;
+    box-sizing: border-box;
+    margin-right: var(--spacing-base);
 }
 
-/* Prowess Table Layout */
-.sheet-prowess table {
+/* Repeating bonuses layout */
+.repeating_bonuses table.bonus-layout {
     table-layout: fixed;
-    border-collapse: collapse;
-    border-spacing: 0;
-    width: 40%;
+    width: 100%;
 }
 
+/* Additional styling */
 .sheet-prowess th,
 .sheet-prowess td {
-    padding: 0;
-    vertical-align: middle;
-    text-align: right;
-    font-size: 11px;
-    white-space: nowrap;
-}
-
-.sheet-prowess th:first-child,
-.sheet-prowess td:first-child {
-    text-align: left;
-    white-space: nowrap;
-}
-
-.sheet-prowess input[type="text"],
-.sheet-prowess input[type="number"] {
-    display: inline-block;
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-size: 11px;
-    vertical-align: middle;
-    width: 100%;
-    border-collapse: collapse;
+    font-size: var(--font-size-small);
 }
