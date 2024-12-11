@@ -383,7 +383,7 @@ function Prescience(BattleInput, BattleOutput) {
 
 // +3 damage for each subsequent attack when initiating combat
 function Petalstorm(BattleInput, BattleOutput) {
-  if (BattleInput.WhoseSkill == 1 || BattleInput.IsInitiating == 0 || BattleInput.atkCount == 0) { return; }
+  if (BattleInput.WhoseSkill == 1 || BattleInput.IsInitiating == 0 || BattleInput.AtkCount == 0) { return; }
   outputSkill(BattleInput.Attacker, "Petalstorm");
   BattleOutput.AddDmg += BattleInput.AtkCount * 3;
 }
