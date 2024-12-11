@@ -25,6 +25,37 @@ function getAttrValue(characterId, attrName) {
   return attr ? Number(attr.get("current")) : 0;
 }
 
+// Gets all section IDs and corresponding attributes for a given repeating section
+function getRepeatingSectionAttrs(charid, prefix, suffix) {
+	// Input
+	//  charid: character id
+	//  prefix: repeating section name, e.g. 'repeating_weapons'
+  //  suffix: optional attribute name, e.g. 'uses'
+	// Output
+	//  repRowIds: array containing all repeating section IDs for the given prefix, ordered in the same way that the rows appear on the sheet
+	//  repeatingAttrs: object containing all repeating attributes that exist for this section
+	const repeatingAttrs = {},
+	regExp = new RegExp(`^${prefix}_(-[-A-Za-z0-9]+?|\\d+)_${suffix}`);
+	let repOrder;
+	// Get attributes
+	findObjs({
+		_type: 'attribute',
+		_characterid: charid
+	}).forEach(o => {
+		const attrName = o.get('name');
+		if (attrName.search(regExp) === 0) repeatingAttrs[attrName] = o;
+		else if (attrName === `_reporder_${prefix}`) repOrder = o.get('current').split(',');
+	});
+	if (!repOrder) repOrder = [];
+	// Get list of repeating row ids by prefix from repeatingAttrs
+	const unorderedIds = [...new Set(Object.keys(repeatingAttrs)
+		.map(n => n.match(regExp))
+		.filter(x => !!x)
+		.map(a => a[1]))];
+	const repRowIds = [...new Set(repOrder.filter(x => unorderedIds.includes(x)).concat(unorderedIds))];
+	return [repRowIds, repeatingAttrs];
+}
+
 // Process inline rolls more simply without Lodash
 function processInlinerolls(msg) {
   if (!msg.inlinerolls) return msg.content;
@@ -67,6 +98,15 @@ function UpdateHealth(Token, Damage, Health, MaxHP) {
   }
   if (Shield == 0 && Damage > 0) { return Damage; }
   return 0;
+}
+
+// returns 1 if the given token identifier is using a weapon that is within range to counter-attack
+function CanCounter(defId, dist) {
+  var counter = Number(getAttrValue(defId, 'currCounter'));
+  var minDist = Number(getAttrValue(defId, 'currMinDist'));
+  var maxDist = Number(getAttrValue(defId, 'currMaxDist'));
+  if (counter == 0 || dist < minDist || dist > maxDist) { return 0; }
+  return 1;
 }
 
 
@@ -275,6 +315,7 @@ function Armsthrift(BattleInput, BattleOutput) {
   if (BattleInput.WhoseSkill == 1) { return; }
   if (randomInteger(100) <= BattleInput.ALuck) {
     outputSkill(BattleInput.Attacker, "Armsthrift");
+    BattleOutput.Armsthrift = 1;
   }
 }
 
@@ -528,55 +569,59 @@ on('chat:message', function(msg) {
     //Initialize Attacker and Defender
     var selectedId = parts[0];
     var targetId = parts[1];
+
     var info = {
       brave: 0,
       counter: 0,
       double: 0,
-      died: 0,
+      killed: 0,
       addGreyHP: 0,
       atkTotDmg: 0,
     }
 
-    // Attacker initial combat
-    DoOneCombatStep(selectedId, targetId, 1, info);
-    if (info.died == 1) { return; }
-    var attackerDoubled = info.double; // Necessary to save off here due to info being overwritten
-    var addGreyHP = info.addGreyHP; // Same logic here
-    // Attacker goes again if brave active
-    if (info.brave == 1) {
+    combatBlock: {
+      // Attacker initial combat
       DoOneCombatStep(selectedId, targetId, 1, info);
-      if (info.died == 1) { return; }
-    }
 
-    // Can the enemy counter?
-    if (info.counter == 1) {
-      // Counter initial combat
-      DoOneCombatStep(targetId, selectedId, 0, info);
-      if (info.died == 1) { return; }
-      // Counter goes again if brave active
+      if (info.killed == 1) { break combatBlock; }
+      var attackerDoubled = info.double; // Necessary to save off here due to info being overwritten
+      var addGreyHP = info.addGreyHP; // Same logic here
+      // Attacker goes again if brave active
       if (info.brave == 1) {
-        DoOneCombatStep(targetId, selectedId, 0, info);
-        if (info.died == 1) { return; }
+        DoOneCombatStep(selectedId, targetId, 1, info);
+        if (info.killed == 1) { break combatBlock; }
       }
-      // Counterer doubled, go again
-      if (info.double == 1) {
+
+      // Can the enemy counter?
+      if (info.counter == 1) {
+        // Counter initial combat
         DoOneCombatStep(targetId, selectedId, 0, info);
-        if (info.died == 1) { return; }
+        if (info.killed == 1) { break combatBlock; }
         // Counter goes again if brave active
-        if (info.brave == 1) { 
+        if (info.brave == 1) {
           DoOneCombatStep(targetId, selectedId, 0, info);
-          if (info.died == 1) { return; }
+          if (info.killed == 1) { break combatBlock; }
+        }
+        // Counterer doubled, go again
+        if (info.double == 1) {
+          DoOneCombatStep(targetId, selectedId, 0, info);
+          if (info.killed == 1) { break combatBlock; }
+          // Counter goes again if brave active
+          if (info.brave == 1) { 
+            DoOneCombatStep(targetId, selectedId, 0, info);
+            if (info.killed == 1) { break combatBlock; }
+          }
         }
       }
-    }
 
-    // Attacker doubled, go again
-    if (attackerDoubled == 1) {
-      DoOneCombatStep(selectedId, targetId, 1, info);
-      if (info.died == 1) { return; }
-      // Attacker goes again if brave active
-      if (info.brave) {
+      // Attacker doubled, go again
+      if (attackerDoubled == 1) {
         DoOneCombatStep(selectedId, targetId, 1, info);
+        if (info.killed == 1) { break combatBlock; }
+        // Attacker goes again if brave active
+        if (info.brave) {
+          DoOneCombatStep(selectedId, targetId, 1, info);
+        }
       }
     }
 
@@ -604,15 +649,35 @@ function DoOneCombatStep(selectedId, targetId, initiating, info) {
   var DefMit = 0;
   var Dodge = Number(getAttrValue(attacker.id, "Ddg"));
   var wepGain = Number(getAttrValue(attacker.id, "currWexp"));
+  var DmgType = getAttr(attacker.id,'atktype').get('current')
+
+  // Check for broken weapon
+  if (DmgType == "Physical") {
+    var slot = getAttrValue(attacker.id, 'WSlot');
+    var prefix = "repeating_weapons";
+    var suffix = "Uses";
+  }
+  else {
+    var slot = getAttrValue(attacker.id, 'SSlot');
+    var prefix = "repeating_spells";
+    var suffix = "Uses";
+  }
+  var [ids, attributes] = getRepeatingSectionAttrs(attacker.id, prefix, suffix);
+  var id = ids[slot-1];
+  log("Attribute: " + attributes[prefix+"_"+id+"_"+suffix]);
+  var currUses = attributes[prefix+"_"+id+"_"+suffix].get('current')
+  if (currUses == 0) { return; }
+
 
   sendChat(selected, "==START=="); // Temp for ease of viewing
+
 
   // Initialize skill function I/O
   var BattleInput = {
     "WhoseSkill": -1, // To ensure we don't activate a defender's skill when we shouldn't. 0 = attacker, 1 = defender
     "IsInitiating": initiating, // Determine if you are intiating the attack or counter-attacking. 0 = initiating, 1 = countering
     "DWeakness": getAttr(defender.id,'Weak_total').get('current').split(','),
-    "DmgType": getAttr(attacker.id,'atktype').get('current'),
+    "DmgType": DmgType,
     "Attacker": selected,
     "Defender": target,
     "AWType": getAttr(attacker.id, "currWep").get('current'),
@@ -646,6 +711,7 @@ function DoOneCombatStep(selectedId, targetId, initiating, info) {
     "AddDmg": 0,
     "AddProt": 0,
     "AddWard": 0,
+    "Armsthrift": 0,
     "SureShot": 0,
     "Brave": 0,
     "Impale": 0,
@@ -789,6 +855,7 @@ function DoOneCombatStep(selectedId, targetId, initiating, info) {
 
   // Output battle outcome
   var trueDamage = 0;
+  var atkHit = 1;
   if (Hit >= Avoid) {
     if (Crit > Dodge) {
       DmgTaken *= 3;
@@ -807,7 +874,8 @@ function DoOneCombatStep(selectedId, targetId, initiating, info) {
     updateWeaponEXP(attacker.id, BattleInput.AWType, wepGain);
   }
   else {
-  sendChat(selected, 'You missed!');
+    atkHit = 0;
+    sendChat(selected, 'You missed!');
   }
   sendChat(selected, "===END==="); // Temp for ease of viewing
 
@@ -816,21 +884,14 @@ function DoOneCombatStep(selectedId, targetId, initiating, info) {
     brave: BattleOutput.Brave || getAttrValue(attacker.id, 'currBrave'),
     counter: CanCounter(defender.id, Led.from(selectedToken).to(targetToken).byManhattan().inSquares()),
     double: AtkSpdDiff >= 4 ? 1 : 0,
-    died: targetObj.get("bar3_value") == 0 ? 1 : 0,
+    killed: targetObj.get("bar3_value") == 0 ? 1 : 0,
     addGreyHP: BattleOutput.Scales,
     atkTotDmg: info.atkTotDmg + trueDamage * initiating,
   });
-  log("brave: " + info.brave + " counter: " + info.counter + " double: " + info.double + " died: " + info.died + " addGrey: " + info.addGreyHP + " totalDmg: " + info.atkTotDmg);
+
+  if (BattleOutput.Armsthrift == 0) { attributes[prefix+"_"+id+"_"+suffix].setWithWorker("current", currUses - atkHit); }
+  log("brave: " + info.brave + " counter: " + info.counter + " double: " + info.double + " killed: " + info.killed + " addGrey: " + info.addGreyHP + " totalDmg: " + info.atkTotDmg);
   
   var divstyle = 'style="width: 189px; border: 1px solid #353535; background-color: #f3f3f3; padding: 5px; color: #353535;"';
   var headstyle = 'style="color: #f3f3f3; font-size: 18px; text-align: left; font-variant: small-caps; background-color: #353535; padding: 4px; font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;"';
-}
-
-// returns 1 if the given token identifier is using a weapon that is within range to counter-attack
-function CanCounter(defId, dist) {
-  var counter = Number(getAttrValue(defId, 'currCounter'));
-  var minDist = Number(getAttrValue(defId, 'currMinDist'));
-  var maxDist = Number(getAttrValue(defId, 'currMaxDist'));
-  if (counter == 0 || dist < minDist || dist > maxDist) { return 0; }
-  return 1;
 }
