@@ -381,6 +381,13 @@ function Prescience(BattleInput, BattleOutput) {
   }
 }
 
+// +3 damage for each subsequent attack when initiating combat
+function Petalstorm(BattleInput, BattleOutput) {
+  if (BattleInput.WhoseSkill == 1 || BattleInput.IsInitiating == 0 || BattleInput.atkCount == 0) { return; }
+  outputSkill(BattleInput.Attacker, "Petalstorm");
+  BattleOutput.AddDmg += BattleInput.AtkCount * 3;
+}
+
 
 
 // Counter Skills
@@ -569,6 +576,7 @@ function Bloodlust(BattleInput, BattleOutput) {
 }
 
 
+
 on('chat:message', function(msg) {
   if (msg.type != 'api') return;
   var parts = processInlinerolls(msg).split(' ');
@@ -593,6 +601,7 @@ on('chat:message', function(msg) {
     killed: 0,
     addGreyHP: 0,
     atkTotDmg: 0,
+    atkCount: 0,
   }
 
   if (command == "hit") {
@@ -722,6 +731,7 @@ function DoOneCombatStep(selectedId, targetId, initiating, info, isSim) {
     "DSpeed": Number(getAttrValue(defender.id, "Spd_total")),
     "DWard": Number(getAttrValue(defender.id, "ward_total")),
     "DProt": Number(getAttrValue(defender.id, "prot_total")),
+    "AtkCount": info.atkCount,
   };
 
   var BattleOutput = {
@@ -750,7 +760,7 @@ function DoOneCombatStep(selectedId, targetId, initiating, info, isSim) {
   var AllSkills = new Set(["SureShot","Adept","Luna","Sol","Glacias","Flare","Impale","Colossus","Ignis","Armsthrift","QuickDraw","DartingBlow",
   "GoodBet","DuelistBlow","DeathBlow","Prescience","StrongRiposte","Sturdy","Brawler","Patience","Swordbreaker","Lancebreaker","Axebreaker",
   "Bowbreaker","Tomebreaker","Swordfaire","Lancefaire","Axefaire","Bowfaire","Tomefaire","Reaver","Brave","Wrath","Chivalry","FortressOfWill","DeadlyStrikes","PrideOfSteel","Thunderstorm","Resolve",
-  "Trample","Resilience","Dragonblood","Nullify","AdaptiveScales","Bloodlust"]);
+  "Trample","Resilience","Dragonblood","Nullify","AdaptiveScales","Bloodlust","Petalstorm"]);
 
   var ASkills = getAttr(attacker.id,'Ele_Qtotal').get('current').split(',');
   var DSkills = getAttr(defender.id,'Ele_Qtotal').get('current').split(',');
@@ -920,6 +930,7 @@ function DoOneCombatStep(selectedId, targetId, initiating, info, isSim) {
       killed: targetObj.get("bar3_value") == 0 ? 1 : 0,
       addGreyHP: BattleOutput.Scales,
       atkTotDmg: info.atkTotDmg + trueDamage * initiating,
+      atkCount: info.atkCount + 1 * initiating,
     });
 
     if (BattleOutput.Armsthrift == 0) { attributes[prefix+"_"+id+"_"+suffix].setWithWorker("current", currUses - atkHit); }
