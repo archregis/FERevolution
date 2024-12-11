@@ -77,8 +77,9 @@ function processInlinerolls(msg) {
   }
 
 // Displays skill activation
-function outputSkill(Name, Skill) {
-  sendChat(Name, Skill + " is active.");
+function outputSkill(Name, Skill, Odds) {
+  if (Odds > 0) {sendChat(Name, Skill + " : " + Odds + "% chance"); }
+  else { sendChat(Name, Skill + " is active."); }
 }
 
 // Updates a given token's health. Inputting negative damage can be used to heal
@@ -231,7 +232,8 @@ function Reaver(BattleInput, BattleOutput) {
 // Done
 function SureShot(BattleInput, BattleOutput) {  
   if (BattleInput.WhoseSkill == 1) { return; }
-  if (randomInteger(100) <= BattleInput.ASkill) {
+  if (BattleInput.IsSim == 1) { outputSkill(BattleInput.Attacker, "Sure Shot", BattleInput.ASkill); }
+  else if (randomInteger(100) <= BattleInput.ASkill) {
     outputSkill(BattleInput.Attacker, "Sure Shot");
     BattleOutput.SureShot = 1;
   }
@@ -240,7 +242,8 @@ function SureShot(BattleInput, BattleOutput) {
 // Guaranteed hit and 150% damage, skill% activation
 function Adept(BattleInput, BattleOutput) {
   if (BattleInput.WhoseSkill == 1) { return; }
-  if (randomInteger(100) <= BattleInput.ASpeed) {
+  if (BattleInput.IsSim == 1) { outputSkill(BattleInput.Attacker, "Adept", BattleInput.ASpeed); }
+  else if (randomInteger(100) <= BattleInput.ASpeed) {
     outputSkill(BattleInput.Attacker, "Adept");
     BattleOutput.Brave = 1;
   }
@@ -249,7 +252,8 @@ function Adept(BattleInput, BattleOutput) {
 // Sets enemy ward and prot to 0, skill% activation
 function Luna(BattleInput, BattleOutput) {
   if (BattleInput.WhoseSkill == 1) { return; }
-  if (randomInteger(100) <= Number(BattleInput.ASkill)) {
+  if (BattleInput.IsSim == 1) { outputSkill(BattleInput.Attacker, "Luna", BattleInput.ASkill); }
+  else if (randomInteger(100) <= Number(BattleInput.ASkill)) {
     outputSkill(BattleInput.Attacker, "Luna");
     BattleOutput.DWard = 0;
     BattleOutput.DProt = 0;
@@ -259,7 +263,8 @@ function Luna(BattleInput, BattleOutput) {
 // Restores damage dealt as HP, skill% activation
 function Sol(BattleInput, BattleOutput) {
   if (BattleInput.WhoseSkill == 1) { return; }
-  if (randomInteger(100) <= Number(BattleInput.ASkill)) {
+  if (BattleInput.IsSim == 1) { outputSkill(BattleInput.Attacker, "Sol", BattleInput.ASkill); }
+  else if (randomInteger(100) <= Number(BattleInput.ASkill)) {
     outputSkill(BattleInput.Attacker, "Sol");
     BattleOutput.Sol = 1;
   }
@@ -268,7 +273,8 @@ function Sol(BattleInput, BattleOutput) {
 // Add res to damage, skill% activation
 function Glacies(BattleInput, BattleOutput) {
   if (BattleInput.WhoseSkill == 1) { return; }
-  if (randomInteger(100) <= BattleInput.ASkill) {
+  if (BattleInput.IsSim == 1) { outputSkill(BattleInput.Attacker, "Glacies", BattleInput.ASkill); }
+  else if (randomInteger(100) <= BattleInput.ASkill) {
     outputSkill(BattleInput.Attacker, "Glacies");
     BattleOutput.AddDmg += BattleInput.ARes;
   }
@@ -277,7 +283,8 @@ function Glacies(BattleInput, BattleOutput) {
 // Halve enemy res, skill% activation
 function Flare(BattleInput, BattleOutput) {
   if (BattleInput.WhoseSkill == 1) { return; }
-  if (randomInteger(100) <= Number(BattleInput.ASkill)) {
+  if (BattleInput.IsSim == 1) { outputSkill(BattleInput.Attacker, "Flare", BattleInput.ASkill); }
+  else if (randomInteger(100) <= Number(BattleInput.ASkill)) {
     outputSkill(BattleInput.Attacker, "Flare");
     BattleOutput.DWard = Math.floor(BattleInput.DWard/2);
   }
@@ -286,7 +293,8 @@ function Flare(BattleInput, BattleOutput) {
 // Deal 3x damage, skill% activation
 function Impale(BattleInput, BattleOutput) {
   if (BattleInput.WhoseSkill == 1) { return; }
-  if (randomInteger(100) <= BattleInput.ASkill) {
+  if (BattleInput.IsSim == 1) { outputSkill(BattleInput.Attacker, "Impale", BattleInput.ASkill); }
+  else if (randomInteger(100) <= BattleInput.ASkill) {
     outputSkill(BattleInput.Attacker, "Impale");
     BattleOutput.Impale = 1;
   }
@@ -295,7 +303,8 @@ function Impale(BattleInput, BattleOutput) {
 // Double str, skill% activation
 function Colossus(BattleInput, BattleOutput) {
   if (BattleInput.WhoseSkill == 1) { return; }
-  if (randomInteger(100) <= BattleInput.ASkill) {
+  if (BattleInput.IsSim == 1) { outputSkill(BattleInput.Attacker, "Colossus", BattleInput.ASkill); }
+  else if (randomInteger(100) <= BattleInput.ASkill) {
     outputSkill(BattleInput.Attacker, "Colossus");
     BattleOutput.AddDmg += BattleInput.AStr;
   }
@@ -304,7 +313,8 @@ function Colossus(BattleInput, BattleOutput) {
 // Add half res and def to damage, skill% activation
 function Ignis(BattleInput, BattleOutput) {
   if (BattleInput.WhoseSkill == 1) { return; }
-  if (randomInteger(100) <= BattleInput.ASkill) {
+  if (BattleInput.IsSim == 1) { outputSkill(BattleInput.Attacker, "Ignis", BattleInput.ASkill); }
+  else if (randomInteger(100) <= BattleInput.ASkill) {
     outputSkill(BattleInput.Attacker, "Ignis");
     BattleOutput.AddDmg += Math.floor(BattleInput.ARes / 2) + Math.floor(BattleInput.ADef/ 2);
   }
@@ -313,7 +323,8 @@ function Ignis(BattleInput, BattleOutput) {
 // Do not use weapon durability, luck% activation
 function Armsthrift(BattleInput, BattleOutput) {
   if (BattleInput.WhoseSkill == 1) { return; }
-  if (randomInteger(100) <= BattleInput.ALuck) {
+  if (BattleInput.IsSim == 1) { outputSkill(BattleInput.Attacker, "Armsthrift", BattleInput.ALuck); }
+  else if (randomInteger(100) <= BattleInput.ALuck) {
     outputSkill(BattleInput.Attacker, "Armsthrift");
     BattleOutput.Armsthrift = 1;
   }
@@ -542,7 +553,10 @@ function Nullify(BattleInput, BattleOutput) {
 // Gain a temporay shield equal to damage taken after enemy initiates combat if no shield already exists
 function AdaptiveScales(BattleInput, BattleOutput) {
   if (BattleInput.WhoseSkill == 0 || BattleInput.IsInitiating == 0) { return; }
-  if (BattleInput.DGreyHP == 0) { BattleOutput.Scales = 1; }
+  if (BattleInput.DGreyHP == 0) { 
+    outputSkill(BattleInput.Defender, "Adaptive Scales");
+    BattleOutput.Scales = 1; 
+  }
 }
 
 
@@ -550,34 +564,30 @@ on('chat:message', function(msg) {
   if (msg.type != 'api') return;
   var parts = processInlinerolls(msg).split(' ');
   var command = parts.shift().substring(1);
-  if (command == 'hit') {
-    if (parts.length < 1) {
-      sendChat('SYSTEM', 'You must provide a selected token id');
-      return;
-    }
-    if (parts.length < 2) {
-      sendChat('SYSTEM', 'You must provide a dmg value');
-      return;
-    }
-    if (parts.length < 3) {
-      sendChat('SYSTEM', 'You must provide Initiative or Defending');
-      return;
-    }
+
+  if (parts.length < 1) {
+    sendChat('SYSTEM', 'You must provide a selected token id');
+    return;
+  }
+  if (parts.length < 2) {
+    sendChat('SYSTEM', 'You must provide a target token id');
+    return;
+  }
+
+  //Initialize Attacker and Defender
+  var selectedId = parts[0];
+  var targetId = parts[1];
+  var info = {
+    brave: 0,
+    counter: 0,
+    double: 0,
+    killed: 0,
+    addGreyHP: 0,
+    atkTotDmg: 0,
+  }
+
+  if (command == "hit") {
     log(msg);
-
-
-    //Initialize Attacker and Defender
-    var selectedId = parts[0];
-    var targetId = parts[1];
-
-    var info = {
-      brave: 0,
-      counter: 0,
-      double: 0,
-      killed: 0,
-      addGreyHP: 0,
-      atkTotDmg: 0,
-    }
 
     combatBlock: {
       // Attacker initial combat
@@ -630,26 +640,29 @@ on('chat:message', function(msg) {
       var token = findObjs({_type: "graphic", _id: targetId})[0]; 
       token.set("bar2_value", info.atkTotDmg);
     }
-};
+}
+else if (command == "sim") {
+  DoOneCombatStep(selectedId, targetId, 1, info, 1);
+  DoOneCombatStep(targetId, selectedId, 0, info, 1);
+}
 });
 
 
-function DoOneCombatStep(selectedId, targetId, initiating, info) {
+function DoOneCombatStep(selectedId, targetId, initiating, info, isSim) {
   var selectedToken = getObj('graphic', selectedId);
   var attacker = getObj('character', selectedToken.get('represents'));
-  var selected = 'character|' + attacker.id;
+  var selected = selectedToken.get('name');
   var selectObj = findObjs({_type: "graphic", _id: selectedId})[0];
 
   var targetToken = getObj('graphic', targetId);
   var defender = getObj('character', targetToken.get('represents'));
-  var target = 'character|' + defender.id;
+  var target = targetToken.get('name');
   var targetObj = findObjs({_type: "graphic", _id: targetId})[0];
 
   var DmgTaken = 0;
   var DefMit = 0;
-  var Dodge = Number(getAttrValue(attacker.id, "Ddg"));
   var wepGain = Number(getAttrValue(attacker.id, "currWexp"));
-  var DmgType = getAttr(attacker.id,'atktype').get('current')
+  var DmgType = getAttr(attacker.id, 'atktype').get('current')
 
   // Check for broken weapon
   if (DmgType == "Physical") {
@@ -674,6 +687,7 @@ function DoOneCombatStep(selectedId, targetId, initiating, info) {
 
   // Initialize skill function I/O
   var BattleInput = {
+    "IsSim": isSim,
     "WhoseSkill": -1, // To ensure we don't activate a defender's skill when we shouldn't. 0 = attacker, 1 = defender
     "IsInitiating": initiating, // Determine if you are intiating the attack or counter-attacking. 0 = initiating, 1 = countering
     "DWeakness": getAttr(defender.id,'Weak_total').get('current').split(','),
@@ -704,8 +718,8 @@ function DoOneCombatStep(selectedId, targetId, initiating, info) {
   var BattleOutput = {
     "DWard": Number(getAttrValue(defender.id, "ward_total")),
     "DProt": Number(getAttrValue(defender.id, "prot_total")),
-    "Hit": Number(getAttrValue(attacker.id, "Hit")) + randomInteger(100),
-    "Crit": Number(getAttrValue(attacker.id, "Crit")) + randomInteger(100),
+    "Hit": Number(getAttrValue(attacker.id, "Hit")),
+    "Crit": Number(getAttrValue(attacker.id, "Crit")),
     "Avoid" : Number(getAttrValue(defender.id, "avo")),
     "AtkSpd": Number(getAttrValue(attacker.id, 'Atkspd')),
     "AddDmg": 0,
@@ -759,14 +773,11 @@ function DoOneCombatStep(selectedId, targetId, initiating, info) {
   var AddedDmg = BattleOutput.AddDmg;
   var AddedProt = BattleOutput.AddProt;
   var AddedWard = BattleOutput.AddWard;
-  var Hit = BattleOutput.Hit;
-  var Crit = BattleOutput.Crit;
+  var Hit = BattleOutput.Hit + randomInteger(100);
+  var Crit = BattleOutput.Crit + randomInteger(100);
   var Avoid = BattleOutput.Avoid;
+  var Dodge = getAttrValue(defender.id, "Ddg");
   var AtkSpdDiff = BattleOutput.AtkSpd - getAttrValue(defender.id, 'Atkspd');
-
-  if (AtkSpdDiff >= 4) {
-    sendChat(selected,'<p style = "margin-bottom: 0px;"> You double the enemy! </p>');
-  }
 
 
   // Effectiveness
@@ -819,78 +830,94 @@ function DoOneCombatStep(selectedId, targetId, initiating, info) {
     DmgTaken += -1 * mult;
     triangleMsg = '<div ' + headstyle + '>Attacking with disadvantage!</div>';
   }
-  sendChat(selected, '<div ' + divstyle + '>' + //--
+  attackMsg = '<div ' + divstyle + '>' + //--
   triangleMsg +
   '<div style = "margin: 0 auto; width: 80%; margin-top: 4px;">' + //--
   '<p style = "margin-bottom: 0px;">' + Hit + ' hit vs ' + Avoid + ' avoid!</p>' +//--
   '<p style = "margin-bottom: 0px;">' + Crit + ' crit vs ' + Dodge + ' dodge!</p>' +//--
   '</div>' + //--
-  '</div>'
-  );
+  '</div>';
 
 
   // Damage Typing
   if (BattleInput.DmgType == 'Physical') {
     AtkDmg = getAttrValue(attacker.id, "phys_total") + AddedDmg;
     DefMit = BattleOutput.DProt + getAttrValue(defender.id, "Mit_Qtotal") + AddedProt;
-    sendChat(selected,'<p style = "margin-bottom: 0px;">' + AtkDmg + ' physical damage vs ' + DefMit + ' protection!</p>');
+    damageMsg = '<p style = "margin-bottom: 0px;">' + AtkDmg + ' physical damage vs ' + DefMit + ' protection!</p>';
   }
   else if (BattleInput.DmgType == 'Magical') {
     AtkDmg = getAttrValue(attacker.id, "myst_total") + AddedDmg;
     DefMit = BattleOutput.DWard + getAttrValue(defender.id, "Mit_Qtotal") + AddedWard;
-    sendChat(selected,'<p style = "margin-bottom: 0px;">' + AtkDmg + ' mystical damage vs ' + DefMit + ' resistance!</p>');
+    damageMsg = '<p style = "margin-bottom: 0px;">' + AtkDmg + ' mystical damage vs ' + DefMit + ' resistance!</p>';
   }
   DmgTaken = Math.max(0, AtkDmg - DefMit);
 
+  if (isSim == 1) { // Simulate battle outcome
+    var init = BattleInput.IsInitiating == 1 ? "Initiating" : "Countering"
+    sendChat(selected,
+      selected + " is " + init + "<br>" +
+      "Atk Spd: " + AtkSpdDiff + "<br>" +
+      "Dmg: " + AtkDmg + "<br>" +
+      "Mit: " + DefMit + "<br>" +
+      "Hit Rate: " + (101+BattleOutput.Hit-Avoid) + "<br>" +
+      "Crit Rate: " + (101+BattleOutput.Crit-Dodge) + "<br>"
+    );
 
-  // End of calculation skill procs
-  if (BattleOutput.SureShot == 1) {
-    Hit = 999;
-    DmgTaken *= 1.5;
   }
-  if (BattleOutput.Impale == 1) {
-    DmgTaken *= 3;
-  }
+  else { // Output battle outcome
 
-
-  // Output battle outcome
-  var trueDamage = 0;
-  var atkHit = 1;
-  if (Hit >= Avoid) {
-    if (Crit > Dodge) {
+    // End of calculation skill procs
+    if (BattleOutput.SureShot == 1) {
+      Hit = 999;
+      DmgTaken *= 1.5;
+    }
+    if (BattleOutput.Impale == 1) {
       DmgTaken *= 3;
-      if (BattleOutput.Resilience == 1) { DmgTaken /= 2; }
-      trueDamage = UpdateHealth(targetObj, DmgTaken, BattleInput.DCurrHP);
-      sendChat(selected, 'You crit and deal '+ DmgTaken + ' damage!'); // Intentionally not capping damage numbers put in chat. Hitting low hp enemies for ludicrous damage numbers is fun
+    }
+
+    // Update token values
+    var trueDamage = 0;
+    var atkHit = 1;
+    if (Hit >= Avoid) {
+      if (Crit > Dodge) {
+        DmgTaken *= 3;
+        if (BattleOutput.Resilience == 1) { DmgTaken /= 2; }
+        trueDamage = UpdateHealth(targetObj, DmgTaken, BattleInput.DCurrHP);
+        outcomeMsg = 'You crit and deal '+ DmgTaken + ' damage!'; // Intentionally not capping damage numbers put in chat. Hitting low hp enemies for ludicrous damage numbers is fun
+      }
+      else {
+        trueDamage = UpdateHealth(targetObj, DmgTaken, BattleInput.DCurrHP);
+        outcomeMsg = 'You hit and deal '+ DmgTaken + ' damage!'; // See above
+
+      }
+      if (BattleOutput.Sol == 1) {
+        UpdateHealth(selectObj, -Math.min(BattleInput.DCurrHP, DmgTaken), BattleInput.ACurrHP, BattleInput.AMaxHP);
+      }
+      updateWeaponEXP(attacker.id, BattleInput.AWType, wepGain);
     }
     else {
-      trueDamage = UpdateHealth(targetObj, DmgTaken, BattleInput.DCurrHP);
-      sendChat(selected, 'You hit and deal '+ DmgTaken + ' damage!'); // See above
+      atkHit = 0;
+      outcomeMsg = 'You missed!';
+    }
+    sendChat(selected, attackMsg);
+    sendChat(selected, damageMsg);
+    sendChat(selected, outcomeMsg);
 
-    }
-    if (BattleOutput.Sol == 1) {
-      UpdateHealth(selectObj, -Math.min(BattleInput.DCurrHP, DmgTaken), BattleInput.ACurrHP, BattleInput.AMaxHP);
-    }
-    updateWeaponEXP(attacker.id, BattleInput.AWType, wepGain);
+    // Gather info for future battle steps
+    Object.assign(info, {
+      brave: BattleOutput.Brave || getAttrValue(attacker.id, 'currBrave'),
+      counter: CanCounter(defender.id, Led.from(selectedToken).to(targetToken).byManhattan().inSquares()),
+      double: AtkSpdDiff >= 4 ? 1 : 0,
+      killed: targetObj.get("bar3_value") == 0 ? 1 : 0,
+      addGreyHP: BattleOutput.Scales,
+      atkTotDmg: info.atkTotDmg + trueDamage * initiating,
+    });
+
+    if (BattleOutput.Armsthrift == 0) { attributes[prefix+"_"+id+"_"+suffix].setWithWorker("current", currUses - atkHit); }
+    log("brave: " + info.brave + " counter: " + info.counter + " double: " + info.double + " killed: " + info.killed + " addGrey: " + info.addGreyHP + " totalDmg: " + info.atkTotDmg);
   }
-  else {
-    atkHit = 0;
-    sendChat(selected, 'You missed!');
-  }
+
   sendChat(selected, "===END==="); // Temp for ease of viewing
-
-  // Gather info for future battle steps
-  Object.assign(info, {
-    brave: BattleOutput.Brave || getAttrValue(attacker.id, 'currBrave'),
-    counter: CanCounter(defender.id, Led.from(selectedToken).to(targetToken).byManhattan().inSquares()),
-    double: AtkSpdDiff >= 4 ? 1 : 0,
-    killed: targetObj.get("bar3_value") == 0 ? 1 : 0,
-    addGreyHP: BattleOutput.Scales,
-    atkTotDmg: info.atkTotDmg + trueDamage * initiating,
-  });
-
-  if (BattleOutput.Armsthrift == 0) { attributes[prefix+"_"+id+"_"+suffix].setWithWorker("current", currUses - atkHit); }
-  log("brave: " + info.brave + " counter: " + info.counter + " double: " + info.double + " killed: " + info.killed + " addGrey: " + info.addGreyHP + " totalDmg: " + info.atkTotDmg);
   
   var divstyle = 'style="width: 189px; border: 1px solid #353535; background-color: #f3f3f3; padding: 5px; color: #353535;"';
   var headstyle = 'style="color: #f3f3f3; font-size: 18px; text-align: left; font-variant: small-caps; background-color: #353535; padding: 4px; font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;"';
