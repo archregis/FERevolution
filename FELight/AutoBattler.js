@@ -559,6 +559,15 @@ function AdaptiveScales(BattleInput, BattleOutput) {
   }
 }
 
+// Adds 1 damage for every 4 hp missing
+function Bloodlust(BattleInput, BattleOutput) {
+  if (BattleInput.WhoseSkill == 1) { return; }
+  if (BattleInput.ACurrHP <= BattleInput.AMaxHP - 4) {
+    outputSkill(BattleInput.Attacker, "Bloodlust");
+    BattleOutput.AddDmg = Math.floor((BattleInput.AMaxHP - BattleInput.ACurrHP) / 4); 
+  }
+}
+
 
 on('chat:message', function(msg) {
   if (msg.type != 'api') return;
@@ -741,7 +750,7 @@ function DoOneCombatStep(selectedId, targetId, initiating, info, isSim) {
   var AllSkills = new Set(["SureShot","Adept","Luna","Sol","Glacias","Flare","Impale","Colossus","Ignis","Armsthrift","QuickDraw","DartingBlow",
   "GoodBet","DuelistBlow","DeathBlow","Prescience","StrongRiposte","Sturdy","Brawler","Patience","Swordbreaker","Lancebreaker","Axebreaker",
   "Bowbreaker","Tomebreaker","Swordfaire","Lancefaire","Axefaire","Bowfaire","Tomefaire","Reaver","Brave","Wrath","Chivalry","FortressOfWill","DeadlyStrikes","PrideOfSteel","Thunderstorm","Resolve",
-  "Trample","Resilience","Dragonblood","Nullify","AdaptiveScales"]);
+  "Trample","Resilience","Dragonblood","Nullify","AdaptiveScales","Bloodlust"]);
 
   var ASkills = getAttr(attacker.id,'Ele_Qtotal').get('current').split(',');
   var DSkills = getAttr(defender.id,'Ele_Qtotal').get('current').split(',');
