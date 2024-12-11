@@ -605,7 +605,7 @@ function DoOneCombatStep(selectedId, targetId, initiating, info) {
   var Dodge = Number(getAttrValue(attacker.id, "Ddg"));
   var wepGain = Number(getAttrValue(attacker.id, "currWexp"));
 
-  sendChat(target, "==START=="); // Temp for ease of viewing
+  sendChat(selected, "==START=="); // Temp for ease of viewing
 
   // Initialize skill function I/O
   var BattleInput = {
@@ -699,7 +699,7 @@ function DoOneCombatStep(selectedId, targetId, initiating, info) {
   var AtkSpdDiff = BattleOutput.AtkSpd - getAttrValue(defender.id, 'Atkspd');
 
   if (AtkSpdDiff >= 4) {
-    sendChat(target,'<p style = "margin-bottom: 0px;"> You double the enemy! </p>');
+    sendChat(selected,'<p style = "margin-bottom: 0px;"> You double the enemy! </p>');
   }
 
 
@@ -716,7 +716,7 @@ function DoOneCombatStep(selectedId, targetId, initiating, info) {
     }
 
     if (isEffective == 1) {
-      sendChat(target,'<p style = "margin-bottom: 0px;"> You deal Effective Damage!</p>');
+      sendChat(selected,'<p style = "margin-bottom: 0px;"> You deal Effective Damage!</p>');
       AddedDmg += 2 * getAttrValue(attacker.id, 'currMt');
     }
   }
@@ -753,7 +753,7 @@ function DoOneCombatStep(selectedId, targetId, initiating, info) {
     DmgTaken += -1 * mult;
     triangleMsg = '<div ' + headstyle + '>Attacking with disadvantage!</div>';
   }
-  sendChat(target, '<div ' + divstyle + '>' + //--
+  sendChat(selected, '<div ' + divstyle + '>' + //--
   triangleMsg +
   '<div style = "margin: 0 auto; width: 80%; margin-top: 4px;">' + //--
   '<p style = "margin-bottom: 0px;">' + Hit + ' hit vs ' + Avoid + ' avoid!</p>' +//--
@@ -767,12 +767,12 @@ function DoOneCombatStep(selectedId, targetId, initiating, info) {
   if (BattleInput.DmgType == 'Physical') {
     AtkDmg = getAttrValue(attacker.id, "phys_total") + AddedDmg;
     DefMit = BattleOutput.DProt + getAttrValue(defender.id, "Mit_Qtotal") + AddedProt;
-    sendChat(target,'<p style = "margin-bottom: 0px;">' + AtkDmg + ' physical damage vs ' + DefMit + ' protection!</p>');
+    sendChat(selected,'<p style = "margin-bottom: 0px;">' + AtkDmg + ' physical damage vs ' + DefMit + ' protection!</p>');
   }
   else if (BattleInput.DmgType == 'Magical') {
     AtkDmg = getAttrValue(attacker.id, "myst_total") + AddedDmg;
     DefMit = BattleOutput.DWard + getAttrValue(defender.id, "Mit_Qtotal") + AddedWard;
-    sendChat(target,'<p style = "margin-bottom: 0px;">' + AtkDmg + ' mystical damage vs ' + DefMit + ' resistance!</p>');
+    sendChat(selected,'<p style = "margin-bottom: 0px;">' + AtkDmg + ' mystical damage vs ' + DefMit + ' resistance!</p>');
   }
   DmgTaken = Math.max(0, AtkDmg - DefMit);
 
@@ -794,11 +794,11 @@ function DoOneCombatStep(selectedId, targetId, initiating, info) {
       DmgTaken *= 3;
       if (BattleOutput.Resilience == 1) { DmgTaken /= 2; }
       trueDamage = UpdateHealth(targetObj, DmgTaken, BattleInput.DCurrHP);
-      sendChat(target, 'You crit and deal '+ DmgTaken + ' damage!'); // Intentionally not capping damage numbers put in chat. Hitting low hp enemies for ludicrous damage numbers is fun
+      sendChat(selected, 'You crit and deal '+ DmgTaken + ' damage!'); // Intentionally not capping damage numbers put in chat. Hitting low hp enemies for ludicrous damage numbers is fun
     }
     else {
       trueDamage = UpdateHealth(targetObj, DmgTaken, BattleInput.DCurrHP);
-      sendChat(target, 'You hit and deal '+ DmgTaken + ' damage!'); // See above
+      sendChat(selected, 'You hit and deal '+ DmgTaken + ' damage!'); // See above
 
     }
     if (BattleOutput.Sol == 1) {
@@ -807,9 +807,9 @@ function DoOneCombatStep(selectedId, targetId, initiating, info) {
     updateWeaponEXP(attacker.id, BattleInput.AWType, wepGain);
   }
   else {
-  sendChat(target, 'You missed!');
+  sendChat(selected, 'You missed!');
   }
-  sendChat(target, "===END==="); // Temp for ease of viewing
+  sendChat(selected, "===END==="); // Temp for ease of viewing
 
   // Gather info for future battle steps
   Object.assign(info, {
