@@ -1732,7 +1732,7 @@ on("change:repeating_weapons:WType change:repeating_weapons:wEXP change:repeatin
 });
 
 // Weapon Info
-on("change:repeating_weapons:MinDist_wp change:repeating_weapons:MaxDist_wp change:repeating_weapons:Counter_wp change:repeating_weapons:Brave_wp change:_reporder:weapons change:_reporder:spells remove:repeating_spells remove:repeating_weapons change:WSlot change:SSlot", function(eventInfo) {
+on("change:repeating_weapons:MinDist_wp change:repeating_weapons:MaxDist_wp change:repeating_weapons:Counter_wp change:repeating_weapons:Brave_wp change:repeating_spells:MinDist_wp change:repeating_spells:MaxDist_wp change:repeating_spells:Counter_wp change:repeating_spells:Brave_wp change:_reporder:weapons change:_reporder:spells remove:repeating_spells remove:repeating_weapons change:atktype change:WSlot change:SSlot", function(eventInfo) {
 	getAttrs(["WSlot","SSlot","atktype"], function(v) {
 		if (v.atktype == "Physical"){
 			getSectionIDsOrdered("repeating_weapons", function(idarray) {
@@ -1764,10 +1764,10 @@ on("change:repeating_weapons:MinDist_wp change:repeating_weapons:MaxDist_wp chan
 					let nindex2 = Object.keys(v)[2];
 					let nindex3 = Object.keys(v)[3];
 					setAttrs({
-						currMinDist: parseInt(v[nindex[0]])||0,
-						currMaxDist: parseInt(v[nindex[1]])||0,
-						currCounter: parseInt(v[nindex[2]])||0,
-						currBrave: parseInt(v[nindex[3]])||0,
+						currMinDist: parseInt(v[nindex0])||0,
+						currMaxDist: parseInt(v[nindex1])||0,
+						currCounter: parseInt(v[nindex2])||0,
+						currBrave: parseInt(v[nindex3])||0,
 					});
 				});
 			});
