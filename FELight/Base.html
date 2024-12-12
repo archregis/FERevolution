@@ -1790,33 +1790,30 @@ on("change:repeating_weapons:MinDist_wp change:repeating_weapons:MaxDist_wp chan
 function setRank(tRank, currEXP){
 	let Rank = tRank;
 	let r = currEXP;
-	if (currEXP <= 30){
+	if (r <= 30){
 		Rank = "E";
 	}
-	if ((currEXP > 30) && (currEXP <= 70)){
+	else if ((r > 30) && (r <= 70)){
 		Rank = "D";
 	}
-	if ((currEXP > 70) && (currEXP <= 120)){
+	else if ((r > 70) && (r <= 120)){
 		Rank = "C";
 	}
-	if ((currEXP > 120) && (currEXP <= 180)){
+	else if ((r > 120) && (r <= 180)){
 		Rank = "B";
 	}
-	if ((currEXP > 180) && (currEXP <= 254)){
+	else if ((r > 180) && (r <= 254)){
 		Rank = "A";
 	}
-	if (currEXP > 254){
-		Rank = "S";
-	}
-	if ((currEXP > 255) && (Rank == "S")){
+	else if (r >= 255){
 		Rank = "S";
 		r = 255;
 	}
 	return [Rank, r]
 }
 
-let maxRank;
-let Rank;
+var maxRank;
+var Rank;
 on("change:SwordEXP", function(eventInfo) {
 	getAttrs(["Swordrank_max", "SwordEXP", "Swordrank"], function(values) {
 		maxRank = values.Swordrank_max
@@ -1827,11 +1824,9 @@ on("change:SwordEXP", function(eventInfo) {
 		console.log(Rank)
 		tRanks = setRank(Rank, currEXP);
 		setAttrs({
-			SwordEXP: tRanks[1]
+			Swordrank: tRanks[0],
+			SwordEXP: tRanks[1],
 		});
-		setAttrs({
-			Swordrank: tRanks[0]
-		})
 	});
 });
 
@@ -1845,10 +1840,8 @@ on("change:LanceEXP", function(eventInfo) {
 		console.log(Rank)
 		tRanks = setRank(Rank, currEXP);
 		setAttrs({
-			LanceEXP: tRanks[1]
-		});
-		setAttrs({
-			Lancerank: tRanks[0]
+			Lancerank: tRanks[0],
+			LanceEXP: tRanks[1],
 		});
 	});
 });
@@ -1863,10 +1856,8 @@ on("change:AxeEXP", function(eventInfo) {
 		console.log(Rank)
 		tRanks = setRank(Rank, currEXP);
 		setAttrs({
-			AxeEXP: tRanks[1]
-		});
-		setAttrs({
-			Axerank: tRanks[0]
+			Axerank: tRanks[0],
+			AxeEXP: tRanks[1],
 		});
 	});
 });
@@ -1881,10 +1872,8 @@ on("change:BowEXP", function(eventInfo) {
 		console.log(Rank)
 		tRanks = setRank(Rank, currEXP);
 		setAttrs({
-			BowEXP: tRanks[1]
-		});
-		setAttrs({
-			Bowrank: tRanks[0]
+			Bowrank: tRanks[0],
+			BowEXP: tRanks[1],
 		});
 	});
 });
@@ -1899,10 +1888,8 @@ on("change:StavesEXP", function(eventInfo) {
 		console.log(Rank)
 		tRanks = setRank(Rank, currEXP);
 		setAttrs({
-			StavesEXP: tRanks[1]
-		});
-		setAttrs({
-			Stavesrank: tRanks[0]
+			Stavesrank: tRanks[0],
+			StavesEXP: tRanks[1],
 		});
 	});
 });
@@ -1917,10 +1904,8 @@ on("change:DarkEXP", function(eventInfo) {
 		console.log(Rank)
 		tRanks = setRank(Rank, currEXP);
 		setAttrs({
-			DarkEXP: tRanks[1]
-		});
-		setAttrs({
-			Darkrank: tRanks[0]
+			Darkrank: tRanks[0],
+			DarkEXP: tRanks[1],
 		});
 	});
 });
@@ -1935,10 +1920,8 @@ on("change:AnimaEXP", function(eventInfo) {
 		console.log(Rank)
 		tRanks = setRank(Rank, currEXP);
 		setAttrs({
-			AnimaEXP: tRanks[1]
-		});
-		setAttrs({
-			Animarank: tRanks[0]
+			Animarank: tRanks[0],
+			AnimaEXP: tRanks[1],
 		});
 	});
 });
@@ -1953,10 +1936,8 @@ on("change:LightEXP", function(eventInfo) {
 		console.log(Rank)
 		tRanks = setRank(Rank, currEXP);
 		setAttrs({
-			LightEXP: tRanks[1]
-		});
-		setAttrs({
-			Lightrank: tRanks[0]
+			Lightrank: tRanks[0],
+			LightEXP: tRanks[1],
 		});
 	});
 });
@@ -2485,7 +2466,7 @@ on("change:repeating_weapons change:_reporder:weapons remove:repeating_weapons",
 
 //Initialize values for API, because ded
 on("sheet:opened", function(){
-	getAttrs(["WSlot","SSlot","currWt","weplist","splist","colist","effdmg","currEff","currName","currMt","currDesc","currWexp","currWep","currMinDist","currMaxDist","currCounter","currBrave","atktype","EXP","SwordEXP","LanceEXP","AxeEXP","BowEXP","StavesEXP","DarkEXP","AnimaEXP","LightEXP","Level","HP_i","Str_i","Mag_i","Skl_i","Spd_i","Lck_i","Def_i","Res_i","Mov_i","HP_bd","Str_bd","Mag_bd","Skl_bd","Spd_bd","Lck_bd","Def_bd","Res_bd","Mov_bd","item_uses0","item_uses1","item_uses2","Swordrank","Lancerank","Axerank","Bowrank","Stavesrank","Hiddenrank","Darkrank","Lightrank","fid","phys_bd","myst_bd","ward_bd","prot_bd","Weak_total","Ele_Qtotal","Hit","Crit","Ddg","avo"], function(v){
+	getAttrs(["WSlot","SSlot","currWt","weplist","splist","colist","effdmg","currEff","currName","currMt","currDesc","currWexp","currWep","currMinDist","currMaxDist","currCounter","currBrave","atktype","EXP","SwordEXP","LanceEXP","AxeEXP","BowEXP","StavesEXP","DarkEXP","AnimaEXP","LightEXP","Level","HP_i","Str_i","Mag_i","Skl_i","Spd_i","Lck_i","Def_i","Res_i","Mov_i","HP_bd","Str_bd","Mag_bd","Skl_bd","Spd_bd","Lck_bd","Def_bd","Res_bd","Mov_bd","item_uses0","item_uses1","item_uses2","Swordrank","Lancerank","Axerank","Bowrank","Stavesrank","Darkrank","Animarank","Lightrank","fid","phys_bd","myst_bd","ward_bd","prot_bd","Weak_total","Ele_Qtotal","Hit","Crit","Ddg","avo"], function(v){
 		setAttrs({
 			WSlot: v.WSlot,
 			SSlot: v.SSlot,
