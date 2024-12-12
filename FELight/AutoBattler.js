@@ -511,8 +511,13 @@ function Thunderstorm(BattleInput, BattleOutput) {
 function Resolve(BattleInput, BattleOutput) {
    if (BattleInput.WhoseSkill == 0 && BattleInput.ACurrHP < BattleInput.AMaxHP / 2) {
      outputSkill(BattleInput.Attacker, "Resolve");
+     BattleOutput.Hit += Math.floor((BattleInput.ASkill / 10 * 3) * 2);
+     BattleOutput.Crit += Math.floor((BattleInput.ASkill / 10 * 3) / 2);
      BattleInput.ASkill += Math.floor(BattleInput.ASkill / 10 * 3);
-     BattleInput.ASpeed += Math.floor(BattleInput.ASkill / 10 * 3);
+
+     BattleOutput.AtkSpd += Math.floor(BattleInput.ASpeed / 10 * 3);
+     BattleInput.ASpeed += Math.floor(BattleInput.ASpeed / 10 * 3);
+
      if (BattleInput.DmgType == 'Physical') {
       BattleOutput.AddDmg += Math.floor(BattleInput.AStr / 10 * 3);
      }
@@ -522,8 +527,8 @@ function Resolve(BattleInput, BattleOutput) {
    }
    else if (BattleInput.WhoseSkill == 1 && BattleInput.DCurrHP < BattleInput.DMaxHP / 2) {
      outputSkill(BattleInput.Defender, "Resolve");
-     BattleInput.Avoid += 2 * Math.floor(BattleInput.DSpd / 10 * 3);
-     BattleInput.AtkSpd += Math.floor(BattleInput.DSpd / 10 * 3);
+     BattleOutput.Avoid += 2 * Math.floor(BattleInput.DSpeed / 10 * 3);
+     BattleOutput.AtkSpd -= Math.floor(BattleInput.DSpeed / 10 * 3);
    }
 
 }
