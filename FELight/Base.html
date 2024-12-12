@@ -948,10 +948,10 @@
 <div class = "hidden">
 	<input name="attr_wepnum" value = "0" hidden>
 	<input name="attr_spellnum" value = "0" hidden>
-	<input name="attr_currEff" value = " " hidden>
-	<input name="attr_WepEff_1" value = " " hidden>
-	<input name="attr_WepEff_2" value = " " hidden>
-	<input name="attr_currName" value = " " hidden>
+	<input name="attr_currEff" value = "" hidden>
+	<input name="attr_WepEff_1" value = "" hidden>
+	<input name="attr_WepEff_2" value = "" hidden>
+	<input name="attr_currName" value = "" hidden>
 	<input name="attr_currMt" value = "0" hidden>
 	<input name="attr_currWt" value = "0" hidden>
 	<input name="attr_currHit" value = "0" hidden>
@@ -1195,7 +1195,6 @@ on("change:HP_i change:HP_bd change:repeating_weapons:HP_wp change:repeating_spe
 			getSectionIDsOrdered("repeating_weapons", function(idarray) {
 				slotnum = v.WSlot
 				fID = idarray[Number(slotnum)-1];
-				log("fID is" + fID)
 				getAttrs(["repeating_weapons_"+fID+"_HP_wp","HP_i","HP_bd","HP_total","HP_Qtotal"], function(v) {
 					log(JSON.stringify(v))
 					let nindex = Object.keys(v)[0];
@@ -1212,7 +1211,6 @@ on("change:HP_i change:HP_bd change:repeating_weapons:HP_wp change:repeating_spe
 			getSectionIDsOrdered("repeating_spells", function(idarray) {
 				slotnum = v.SSlot
 				fID = idarray[Number(slotnum)-1];
-				log("fID is" + fID)
 				getAttrs(["repeating_spells_"+fID+"_HP_wp","HP_i","HP_bd","HP_total","HP_Qtotal"], function(v) {
 					log(JSON.stringify(v))
 					let nindex = Object.keys(v)[0];
@@ -1235,7 +1233,6 @@ on("change:Str_i change:Str_bd change:repeating_weapons:Str_wp change:repeating_
 			getSectionIDsOrdered("repeating_weapons", function(idarray) {
 				slotnum = v.WSlot
 				fID = idarray[Number(slotnum)-1];
-				log("fID is" + fID)
 				getAttrs(["repeating_weapons_"+fID+"_Str_wp","Str_i","Str_bd","Str_total","Str_Qtotal"], function(v) {
 					log(JSON.stringify(v))
 					let nindex = Object.keys(v)[0];
@@ -1251,7 +1248,6 @@ on("change:Str_i change:Str_bd change:repeating_weapons:Str_wp change:repeating_
 			getSectionIDsOrdered("repeating_spells", function(idarray) {
 				slotnum = v.SSlot
 				fID = idarray[Number(slotnum)-1];
-				log("fID is" + fID)
 				getAttrs(["repeating_spells_"+fID+"_Str_wp","Str_i","Str_bd","Str_total","Str_Qtotal"], function(v) {
 					log(JSON.stringify(v))
 					let nindex = Object.keys(v)[0];
@@ -1273,7 +1269,6 @@ on("change:Mag_i change:Mag_bd change:repeating_weapons:Mag_wp change:repeating_
 			getSectionIDsOrdered("repeating_weapons", function(idarray) {
 				slotnum = v.WSlot
 				fID = idarray[Number(slotnum)-1];
-				log("fID is" + fID)
 				getAttrs(["repeating_weapons_"+fID+"_Mag_wp","Mag_i","Mag_bd","Mag_total","Mag_Qtotal"], function(v) {
 					log(JSON.stringify(v))
 					let nindex = Object.keys(v)[0];
@@ -1289,7 +1284,6 @@ on("change:Mag_i change:Mag_bd change:repeating_weapons:Mag_wp change:repeating_
 			getSectionIDsOrdered("repeating_spells", function(idarray) {
 				slotnum = v.SSlot
 				fID = idarray[Number(slotnum)-1];
-				log("fID is" + fID)
 				getAttrs(["repeating_spells_"+fID+"_Mag_wp","Mag_i","Mag_bd","Mag_total","Mag_Qtotal"], function(v) {
 					log(JSON.stringify(v))
 					let nindex = Object.keys(v)[0];
@@ -1311,7 +1305,6 @@ on("change:Con_i change:Con_bd change:repeating_weapons:Con_wp change:repeating_
 			getSectionIDsOrdered("repeating_weapons", function(idarray) {
 				slotnum = v.WSlot
 				fID = idarray[Number(slotnum)-1];
-				log("fID is" + fID)
 				getAttrs(["repeating_weapons_"+fID+"_Con_wp","Con_i","Con_bd","Con_total","Con_Qtotal"], function(v) {
 					log(JSON.stringify(v))
 					let nindex = Object.keys(v)[0];
@@ -1327,7 +1320,6 @@ on("change:Con_i change:Con_bd change:repeating_weapons:Con_wp change:repeating_
 			getSectionIDsOrdered("repeating_spells", function(idarray) {
 				slotnum = v.SSlot
 				fID = idarray[Number(slotnum)-1];
-				log("fID is" + fID)
 				getAttrs(["repeating_spells_"+fID+"_Con_wp","Con_i","Con_bd","Con_total","Con_Qtotal"], function(v) {
 					log(JSON.stringify(v))
 					let nindex = Object.keys(v)[0];
@@ -1349,7 +1341,6 @@ on("change:Skl_i change:Skl_bd change:repeating_weapons:Skl_wp change:repeating_
 			getSectionIDsOrdered("repeating_weapons", function(idarray) {
 				slotnum = v.WSlot
 				fID = idarray[Number(slotnum)-1];
-				log("fID is" + fID)
 				getAttrs(["repeating_weapons_"+fID+"_Skl_wp","Skl_i","Skl_bd","Skl_total","Skl_Qtotal"], function(v) {
 					log(JSON.stringify(v))
 					let nindex = Object.keys(v)[0];
@@ -1365,7 +1356,6 @@ on("change:Skl_i change:Skl_bd change:repeating_weapons:Skl_wp change:repeating_
 			getSectionIDsOrdered("repeating_spells", function(idarray) {
 				slotnum = v.SSlot
 				fID = idarray[Number(slotnum)-1];
-				log("fID is" + fID)
 				getAttrs(["repeating_spells_"+fID+"_Skl_wp","Skl_i","Skl_bd","Skl_total","Skl_Qtotal"], function(v) {
 					log(JSON.stringify(v))
 					let nindex = Object.keys(v)[0];
@@ -1387,7 +1377,6 @@ on("change:Spd_i change:Spd_bd change:repeating_weapons:Spd_wp change:repeating_
 			getSectionIDsOrdered("repeating_weapons", function(idarray) {
 				slotnum = v.WSlot
 				fID = idarray[Number(slotnum)-1];
-				log("fID is" + fID)
 				getAttrs(["repeating_weapons_"+fID+"_Spd_wp","Spd_i","Spd_bd","Spd_total","Spd_Qtotal"], function(v) {
 					log(JSON.stringify(v))
 					let nindex = Object.keys(v)[0];
@@ -1403,7 +1392,6 @@ on("change:Spd_i change:Spd_bd change:repeating_weapons:Spd_wp change:repeating_
 			getSectionIDsOrdered("repeating_spells", function(idarray) {
 				slotnum = v.SSlot
 				fID = idarray[Number(slotnum)-1];
-				log("fID is" + fID)
 				getAttrs(["repeating_spells_"+fID+"_Spd_wp","Spd_i","Spd_bd","Spd_total","Spd_Qtotal"], function(v) {
 					log(JSON.stringify(v))
 					let nindex = Object.keys(v)[0];
@@ -1425,7 +1413,6 @@ on("change:Lck_i change:Lck_bd change:repeating_weapons:Lck_wp change:repeating_
 			getSectionIDsOrdered("repeating_weapons", function(idarray) {
 				slotnum = v.WSlot
 				fID = idarray[Number(slotnum)-1];
-				log("fID is" + fID)
 				getAttrs(["repeating_weapons_"+fID+"_Lck_wp","Lck_i","Lck_bd","Lck_total","Lck_Qtotal"], function(v) {
 					log(JSON.stringify(v))
 					let nindex = Object.keys(v)[0];
@@ -1441,7 +1428,6 @@ on("change:Lck_i change:Lck_bd change:repeating_weapons:Lck_wp change:repeating_
 			getSectionIDsOrdered("repeating_spells", function(idarray) {
 				slotnum = v.SSlot
 				fID = idarray[Number(slotnum)-1];
-				log("fID is" + fID)
 				getAttrs(["repeating_spells_"+fID+"_Lck_wp","Lck_i","Lck_bd","Lck_total","Lck_Qtotal"], function(v) {
 					log(JSON.stringify(v))
 					let nindex = Object.keys(v)[0];
@@ -1463,7 +1449,6 @@ on("change:Def_i change:Def_bd change:repeating_weapons:Def_wp change:repeating_
 			getSectionIDsOrdered("repeating_weapons", function(idarray) {
 				slotnum = v.WSlot
 				fID = idarray[Number(slotnum)-1];
-				log("fID is" + fID)
 				getAttrs(["repeating_weapons_"+fID+"_Def_wp","Def_i","Def_bd","Def_total","Def_Qtotal"], function(v) {
 					log(JSON.stringify(v))
 					let nindex = Object.keys(v)[0];
@@ -1479,7 +1464,6 @@ on("change:Def_i change:Def_bd change:repeating_weapons:Def_wp change:repeating_
 			getSectionIDsOrdered("repeating_spells", function(idarray) {
 				slotnum = v.SSlot
 				fID = idarray[Number(slotnum)-1];
-				log("fID is" + fID)
 				getAttrs(["repeating_spells_"+fID+"_Def_wp","Def_i","Def_bd","Def_total","Def_Qtotal"], function(v) {
 					log(JSON.stringify(v))
 					let nindex = Object.keys(v)[0];
@@ -1501,7 +1485,6 @@ on("change:Res_i change:Res_bd change:repeating_weapons:Res_wp change:repeating_
 			getSectionIDsOrdered("repeating_weapons", function(idarray) {
 				slotnum = v.WSlot
 				fID = idarray[Number(slotnum)-1];
-				log("fID is" + fID)
 				getAttrs(["repeating_weapons_"+fID+"_Res_wp","Res_i","Res_bd","Res_total","Res_Qtotal"], function(v) {
 					log(JSON.stringify(v))
 					let nindex = Object.keys(v)[0];
@@ -1517,7 +1500,6 @@ on("change:Res_i change:Res_bd change:repeating_weapons:Res_wp change:repeating_
 			getSectionIDsOrdered("repeating_spells", function(idarray) {
 				slotnum = v.SSlot
 				fID = idarray[Number(slotnum)-1];
-				log("fID is" + fID)
 				getAttrs(["repeating_spells_"+fID+"_Res_wp","Res_i","Res_bd","Res_total","Res_Qtotal"], function(v) {
 					log(JSON.stringify(v))
 					let nindex = Object.keys(v)[0];
@@ -1597,20 +1579,18 @@ on(checkchange+"change:Ele_M change:Ele_S change:Ele_1 change:Ele_2 change:Ele_3
 
 //Weaknesses
 const weak = ['Flying', 'Armor', 'Cavalry', 'Dragon', 'Terror', 'Flammable'];
-on("change:Flying_check change:Armor_check change:Cavalry_check change:Dragon_check change:Terror_check change:Flammable_check", function(eventInfo){
-	let sumWeak ='';
-	weak.forEach(function (weak){
-		getAttrs([weak+"_check"], function(values){
-			let val = Object.values(values)[0];
-			if(Number(val)==1){
-				sumWeak+=weak+',';
+on("change:Flying_check change:Armor_check change:Cavalry_check change:Dragon_check change:Terror_check change:Flammable_check", function(eventInfo) {
+	getAttrs(["Flying_check", "Armor_check", "Cavalry_check", "Dragon_check", "Terror_check", "Flammable_check"], function(values) {
+		var sumWeak = [];
+		for (let i=0; i<weak.length; i++) {
+			if (Object.values(values)[i] == 1) {
+				sumWeak.push(weak[i]);
 			}
-			log(sumWeak);
-			setAttrs({
-				Weak_total: sumWeak
-			});
-			});
- 	});
+		}
+		setAttrs({
+			Weak_total: sumWeak.join(",")
+		});
+	});
 });
 
 //Growth totals!
@@ -1700,7 +1680,6 @@ on("change:repeating_weapons:WType change:repeating_weapons:wEXP change:repeatin
 			getSectionIDsOrdered("repeating_weapons", function(idarray) {
 				slotnum = v.WSlot
 				fID = idarray[Number(slotnum)-1];
-				log("fID is" + fID)
 				getAttrs(["repeating_weapons_"+fID+"_WType","repeating_weapons_"+fID+"_wEXP"], function(v) {
 					log(JSON.stringify(v))
 					let nindex = Object.keys(v)[0];
@@ -1721,7 +1700,6 @@ on("change:repeating_weapons:WType change:repeating_weapons:wEXP change:repeatin
 			getSectionIDsOrdered("repeating_spells", function(idarray) {
 				slotnum = v.SSlot
 				fID = idarray[Number(slotnum)-1];
-				log("fID is" + fID)
 				getAttrs(["repeating_spells_"+fID+"_SType","repeating_spells_"+fID+"_wEXP"], function(v) {
 					log(JSON.stringify(v))
 					let nindex = Object.keys(v)[0];
@@ -1748,7 +1726,6 @@ on("change:repeating_weapons:MinDist_wp change:repeating_weapons:MaxDist_wp chan
 			getSectionIDsOrdered("repeating_weapons", function(idarray) {
 				slotnum = v.WSlot
 				fID = idarray[Number(slotnum)-1];
-				log("fID is" + fID)
 				getAttrs(["repeating_weapons_"+fID+"_MinDist_wp", "repeating_weapons_"+fID+"_MaxDist_wp", "repeating_weapons_"+fID+"_Counter_wp", "repeating_weapons_"+fID+"_Brave_wp"], function(v) {
 					let nindex0 = Object.keys(v)[0];
 					let nindex1 = Object.keys(v)[1];
@@ -1767,7 +1744,6 @@ on("change:repeating_weapons:MinDist_wp change:repeating_weapons:MaxDist_wp chan
 			getSectionIDsOrdered("repeating_spells", function(idarray) {
 				slotnum = v.SSlot
 				fID = idarray[Number(slotnum)-1];
-				log("fID is" + fID)
 				getAttrs(["repeating_spells_"+fID+"_MinDist_wp", "repeating_spells_"+fID+"_MaxDist_wp", "repeating_spells_"+fID+"_Counter_wp", "repeating_spells_"+fID+"_Brave_wp"], function(v) {
 					let nindex0 = Object.keys(v)[0];
 					let nindex1 = Object.keys(v)[1];
@@ -1817,11 +1793,8 @@ var Rank;
 on("change:SwordEXP", function(eventInfo) {
 	getAttrs(["Swordrank_max", "SwordEXP", "Swordrank"], function(values) {
 		maxRank = values.Swordrank_max
-		console.log(maxRank)
 		currEXP = values.SwordEXP;
-		console.log(currEXP)
 		Rank = values.Swordrank;
-		console.log(Rank)
 		tRanks = setRank(Rank, currEXP);
 		setAttrs({
 			Swordrank: tRanks[0],
@@ -1833,11 +1806,8 @@ on("change:SwordEXP", function(eventInfo) {
 on("change:LanceEXP", function(eventInfo) {
 	getAttrs(["Lancerank_max", "LanceEXP", "Lancerank"], function(values) {
 		maxRank = values.Lancerank_max
-		console.log(maxRank)
 		currEXP = values.LanceEXP;
-		console.log(currEXP)
 		Rank = values.Lancerank;
-		console.log(Rank)
 		tRanks = setRank(Rank, currEXP);
 		setAttrs({
 			Lancerank: tRanks[0],
@@ -1849,11 +1819,8 @@ on("change:LanceEXP", function(eventInfo) {
 on("change:AxeEXP", function(eventInfo) {
 	getAttrs(["Axerank_max", "AxeEXP", "Axerank"], function(values) {
 		maxRank = values.Axerank_max
-		console.log(maxRank)
 		currEXP = values.AxeEXP;
-		console.log(currEXP)
 		Rank = values.Axerank;
-		console.log(Rank)
 		tRanks = setRank(Rank, currEXP);
 		setAttrs({
 			Axerank: tRanks[0],
@@ -1865,11 +1832,8 @@ on("change:AxeEXP", function(eventInfo) {
 on("change:BowEXP", function(eventInfo) {
 	getAttrs(["Bowrank_max", "BowEXP", "Bowrank"], function(values) {
 		maxRank = values.Bowrank_max
-		console.log(maxRank)
 		currEXP = values.BowEXP;
-		console.log(currEXP)
 		Rank = values.Bowrank;
-		console.log(Rank)
 		tRanks = setRank(Rank, currEXP);
 		setAttrs({
 			Bowrank: tRanks[0],
@@ -1881,11 +1845,8 @@ on("change:BowEXP", function(eventInfo) {
 on("change:StavesEXP", function(eventInfo) {
 	getAttrs(["Stavesrank_max", "StavesEXP", "Stavesrank"], function(values) {
 		maxRank = values.Stavesrank_max
-		console.log(maxRank)
 		currEXP = values.StavesEXP;
-		console.log(currEXP)
 		Rank = values.Stavesrank;
-		console.log(Rank)
 		tRanks = setRank(Rank, currEXP);
 		setAttrs({
 			Stavesrank: tRanks[0],
@@ -1897,11 +1858,8 @@ on("change:StavesEXP", function(eventInfo) {
 on("change:DarkEXP", function(eventInfo) {
 	getAttrs(["Darkrank_max", "DarkEXP", "Darkrank"], function(values) {
 		maxRank = values.Darkrank_max
-		console.log(maxRank)
 		currEXP = values.DarkEXP;
-		console.log(currEXP)
 		Rank = values.Darkrank;
-		console.log(Rank)
 		tRanks = setRank(Rank, currEXP);
 		setAttrs({
 			Darkrank: tRanks[0],
@@ -1913,11 +1871,8 @@ on("change:DarkEXP", function(eventInfo) {
 on("change:AnimaEXP", function(eventInfo) {
 	getAttrs(["Animarank_max", "AnimaEXP", "Animarank"], function(values) {
 		maxRank = values.Animarank_max
-		console.log(maxRank)
 		currEXP = values.AnimaEXP;
-		console.log(currEXP)
 		Rank = values.Animarank;
-		console.log(Rank)
 		tRanks = setRank(Rank, currEXP);
 		setAttrs({
 			Animarank: tRanks[0],
@@ -1929,11 +1884,8 @@ on("change:AnimaEXP", function(eventInfo) {
 on("change:LightEXP", function(eventInfo) {
 	getAttrs(["Lightrank_max", "LightEXP", "Lightrank"], function(values) {
 		maxRank = values.Lightrank_max
-		console.log(maxRank)
 		currEXP = values.LightEXP;
-		console.log(currEXP)
 		Rank = values.Lightrank;
-		console.log(Rank)
 		tRanks = setRank(Rank, currEXP);
 		setAttrs({
 			Lightrank: tRanks[0],
@@ -1949,7 +1901,6 @@ on("change:repeating_weapons:WName change:repeating_spells:SName change:repeatin
 			getSectionIDsOrdered("repeating_weapons", function(idarray) {
 				slotnum = v.WSlot
 				fID = idarray[Number(slotnum)-1];
-				log("fID is" + fID)
 				getAttrs(["repeating_weapons_"+fID+"_Skill_wp","repeating_weapons_"+fID+"_Eff_wp","repeating_weapons_"+fID+"_WName","repeating_weapons_"+fID+"_WepEff1","repeating_weapons_"+fID+"_WepEff2"], function(v) {
 					log(JSON.stringify(v))
 					let nindex = Object.keys(v)[0];
@@ -1957,7 +1908,6 @@ on("change:repeating_weapons:WName change:repeating_spells:SName change:repeatin
 					let windex = Object.keys(v)[2];
 					let sindex = Object.keys(v)[3];
 					let sindex2 = Object.keys(v)[4];
-					log(nindex)
 					let wepdesc = v[nindex];
 					let effdesc = v[eindex];
 					let namedesc = v[windex];
@@ -1977,7 +1927,6 @@ on("change:repeating_weapons:WName change:repeating_spells:SName change:repeatin
 			getSectionIDsOrdered("repeating_spells", function(idarray) {
 				slotnum = v.SSlot
 				fID = idarray[Number(slotnum)-1];
-				log("fID is" + fID)
 				getAttrs(["repeating_spells_"+fID+"_Skill_wp","repeating_spells_"+fID+"_Eff_wp","repeating_spells_"+fID+"_SName","repeating_spells_"+fID+"_WepEff1","repeating_spells_"+fID+"_WepEff2"], function(v) {
 					log(JSON.stringify(v))
 					let nindex = Object.keys(v)[0];
@@ -1985,7 +1934,6 @@ on("change:repeating_weapons:WName change:repeating_spells:SName change:repeatin
 					let windex = Object.keys(v)[2];
 					let sindex = Object.keys(v)[3];
 					let sindex2 = Object.keys(v)[4];
-					log(nindex)
 					let wepdesc = v[nindex];
 					let effdesc = v[eindex];
 					let namedesc = v[windex];
@@ -2041,7 +1989,6 @@ on("change:Str_total change:repeating_weapons:WType change:Cha_total change:repe
 		getSectionIDsOrdered("repeating_weapons", function(idarray) {
 			slotnum = v.WSlot
 			fID = idarray[Number(slotnum)-1];
-			log("fID is" + fID)
 			getAttrs(["Str_total", "repeating_weapons_"+fID+"_Mt","repeating_weapons_"+fID+"_WType", "repeating_weapons_"+fID+"_Wt", "Cha_total", "atktype", "phys_bd"], function(v) {
 				log(JSON.stringify(v))
 				let nindex = Object.keys(v)[1];
@@ -2074,7 +2021,6 @@ on("change:Mag_total change:repeating_spells:Mt change:repeating_weapons:SType c
 		getSectionIDsOrdered("repeating_spells", function(idarray) {
 			slotnum = v.SSlot
 			fID = idarray[Number(slotnum)-1];
-			log("fID is" + fID)
 			getAttrs(["Mag_total", "repeating_spells_"+fID+"_Mt","repeating_spells_"+fID+"_SType", "repeating_spells_"+fID+"_Wt", "Cha_total","myst_bd", "atktype"], function(v) {
 				log(JSON.stringify(v))
 				let nindex = Object.keys(v)[1];
@@ -2147,7 +2093,6 @@ on("change:SwordHit change:LanceHit change:AxeHit change:BowHit change:BrawlHit 
 			getSectionIDsOrdered("repeating_weapons", function(idarray) {
 				slotnum = v.WSlot
 				fID = idarray[Number(slotnum)-1];
-				log("fID is" + fID)
 
 				getAttrs(["repeating_weapons_"+fID+"_WType","SwordHit","LanceHit","AxeHit","BowHit","BrawlHit","HiddenHit","SwordAvo","LanceAvo","AxeAvo","BowAvo","BrawlAvo","HiddenAvo","SwordCAvo","LanceCAvo","AxeCAvo","BowCAvo","BrawlCAvo","HiddenCAvo"], function(v) {
 					log(JSON.stringify(v))
@@ -2166,7 +2111,6 @@ on("change:SwordHit change:LanceHit change:AxeHit change:BowHit change:BrawlHit 
 			getSectionIDsOrdered("repeating_spells", function(idarray) {
 				slotnum = v.SSlot
 				fID = idarray[Number(slotnum)-1];
-				log("fID is" + fID)
 
 				getAttrs(["repeating_spells_"+fID+"_SType","ReasonHit","ReasonAvo","ReasonCAvo","FaithHit","FaithAvo","FaithCAvo"], function(v) {
 					log(JSON.stringify(v))
@@ -2198,7 +2142,6 @@ on("change:Skl_total change:Lck_total change:repeating_combat change:repeating_c
 			getSectionIDsOrdered("repeating_weapons", function(idarray) {
 				slotnum = v.WSlot
 				fID = idarray[Number(slotnum)-1];
-				log("fID is" + fID)
 				getAttrs(["Skl_total","Lck_total","repeating_weapons_"+fID+"_hit", "ProwHit","Hit_Qtotal", "Hit_bd"], function(v) {
 					log(JSON.stringify(v))
 					let nindex = Object.keys(v)[2];
@@ -2218,7 +2161,6 @@ on("change:Skl_total change:Lck_total change:repeating_combat change:repeating_c
 			getSectionIDsOrdered("repeating_spells", function(idarray) {
 				slotnum = v.SSlot
 				fID = idarray[Number(slotnum)-1];
-				log("fID is" + fID)
 				getAttrs(["Skl_total","Lck_total","repeating_spells_"+fID+"_hit", "ProwHit", "Hit_Qtotal", "Hit_bd"], function(v) {
 					log(JSON.stringify(v))
 					let nindex = Object.keys(v)[2];
@@ -2408,7 +2350,6 @@ on("change:Cha_total change:repeating_weapons:Hit change:repeating_spells:Hit ch
 			getSectionIDsOrdered("repeating_weapons", function(idarray) {
 				slotnum = v.WSlot
 				fID = idarray[Number(slotnum)-1];
-				log("fID is" + fID)
 				getAttrs(["Cha_total","repeating_weapons_"+fID+"_hit","repeating_weapons_"+fID+"_WType"], function(v) {
 					log(JSON.stringify(v))
 					let nindex = Object.keys(v)[2];
@@ -2424,7 +2365,6 @@ on("change:Cha_total change:repeating_weapons:Hit change:repeating_spells:Hit ch
 			getSectionIDsOrdered("repeating_spells", function(idarray) {
 				slotnum = v.SSlot
 				fID = idarray[Number(slotnum)-1];
-				log("fID is" + fID)
 				getAttrs(["Cha_total","repeating_spells_"+fID+"_hit","repeating_spells_"+fID+"_SType"], function(v) {
 					log(JSON.stringify(v))
 					let nindex = Object.keys(v)[2];
