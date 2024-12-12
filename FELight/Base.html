@@ -949,11 +949,7 @@
 	<input name="attr_currCounter" value = "0" hidden>
 	<input name="attr_currBrave" value = "0" hidden>
 	<input name="attr_currDesc" value = "Attacking @{target|token_name}!" hidden>
-	<input name="attr_ProwHit" value = "0" hidden>
 	<input name="attr_atktype" value = "Physical" hidden>
-	<input name="attr_SwordHit" value = "0" hidden>
-	<input name="attr_ProwAvo" value = "0" hidden>
-	<input name="attr_ProwCAvo" value = "0" hidden>
 	<input name="attr_WSlot" value = "1" hidden>
 	<input name="attr_HP_total" value = "0" hidden>
 	<input name="attr_HP_gtotal" value = "0" hidden>
@@ -2008,61 +2004,9 @@ on("change:Res_total change:ward_bd", function() {
 	});
 });
 
-//PROWESSES
-function setProw(twep, wepn, tHit, tAvo, tCAvo){
-	if (twep == wepn) {
-		setAttrs({
-			ProwHit: tHit
-		});
-		setAttrs({
-			ProwAvo: tAvo
-		});
-		setAttrs({
-			ProwCAvo: tCAvo
-		});
-	};
-}
-
-on("change:SwordHit change:LanceHit change:AxeHit change:BowHit change:BrawlHit change:HiddenHit change:ReasonHit change:FaithHit change:SwordAvo change:LanceAvo change:AxeAvo change:BowAvo change:BrawlAvo change:HiddenAvo change:ReasonAvo change:FaithAvo change:SwordCAvo change:LanceCAvo change:AxeCAvo change:BowCAvo change:BrawlCAvo change:HiddenCAvo change:ReasonCAvo change:FaithCAvo change:repeating_weapons:WType change:repeating_spells:SType change:_reporder:weapons change:_reporder:spells remove:repeating_weapons remove:repeating_spells change:WSlot change:SSlot change:atktype", function(eventInfo) {
-	getAttrs(["WSlot","SSlot","atktype"], function(v) {
-		if (v.atktype == "Physical"){
-			getSectionIDsOrdered("repeating_weapons", function(idarray) {
-				slotnum = v.WSlot
-				fID = idarray[Number(slotnum)-1];
-
-				getAttrs(["repeating_weapons_"+fID+"_WType","SwordHit","LanceHit","AxeHit","BowHit","BrawlHit","HiddenHit","SwordAvo","LanceAvo","AxeAvo","BowAvo","BrawlAvo","HiddenAvo","SwordCAvo","LanceCAvo","AxeCAvo","BowCAvo","BrawlCAvo","HiddenCAvo"], function(v) {
-					log(JSON.stringify(v))
-					let nindex = Object.keys(v)[0];
-					let weptype = v[nindex];
-					setProw(weptype, "Sword", v.SwordHit, v.SwordAvo, v.SwordCAvo)
-					setProw(weptype, "Lance", v.LanceHit, v.LanceAvo, v.LanceCAvo)
-					setProw(weptype, "Axe", v.AxeHit, v.AxeAvo, v.AxeCAvo)
-					setProw(weptype, "Bow", v.BowHit, v.BowAvo, v.BowCAvo)
-					setProw(weptype, "Gauntlet", v.BrawlHit, v.BrawlAvo, v.BrawlCAvo)
-					setProw(weptype, "Hidden Weapon", v.HiddenHit, v.HiddenAvo, v.HiddenCAvo)
-				});
-			});
-		}
-		if (v.atktype == "Magical"){
-			getSectionIDsOrdered("repeating_spells", function(idarray) {
-				slotnum = v.SSlot
-				fID = idarray[Number(slotnum)-1];
-
-				getAttrs(["repeating_spells_"+fID+"_SType","ReasonHit","ReasonAvo","ReasonCAvo","FaithHit","FaithAvo","FaithCAvo"], function(v) {
-					log(JSON.stringify(v))
-					let nindex = Object.keys(v)[0];
-					let weptype = v[nindex];
-					setProw(weptype, "Reason", v.ReasonHit, v.ReasonAvo, v.ReasonCAvo)
-					setProw(weptype, "Faith", v.FaithHit, v.FaithAvo, v.FaithCAvo)
-				});
-			});
-		}
-	});
-});
-
 //Avoid
-on("change:Atkspd change:Avo_bd change:Lck_total change:ProwAvo change:Avo_Qtotal", function() {
-	getAttrs(["Atkspd", "Avo_bd","Lck_total","ProwAvo","Avo_Qtotal"], function(v) {
+on("change:Atkspd change:Avo_bd change:Lck_total change:Avo_Qtotal", function() {
+	getAttrs(["Atkspd", "Avo_bd","Lck_total","Avo_Qtotal"], function(v) {
 		Spd = v.Atkspd;
 		LckA = v.Lck_total;
 		setAttrs({
@@ -2072,13 +2016,13 @@ on("change:Atkspd change:Avo_bd change:Lck_total change:ProwAvo change:Avo_Qtota
 });
 
 //Hit
-on("change:Skl_total change:Lck_total change:repeating_combat change:repeating_combat:Hit change:repeating_weapons:Hit change:repeating_spells:Hit change:_reporder:weapons change:_reporder:spells remove:repeating_weapons remove:repeating_spells change:WSlot change:SSlot change:atktype change:ProwHit change:Hit_Qtotal change:hit_bd", function(eventInfo) {
+on("change:Skl_total change:Lck_total change:repeating_combat change:repeating_combat:Hit change:repeating_weapons:Hit change:repeating_spells:Hit change:_reporder:weapons change:_reporder:spells remove:repeating_weapons remove:repeating_spells change:WSlot change:SSlot change:atktype change:Hit_Qtotal change:hit_bd", function(eventInfo) {
 	getAttrs(["WSlot","SSlot","atktype"], function(v) {
 		if (v.atktype == "Physical"){
 			getSectionIDsOrdered("repeating_weapons", function(idarray) {
 				slotnum = v.WSlot
 				fID = idarray[Number(slotnum)-1];
-				getAttrs(["Skl_total","Lck_total","repeating_weapons_"+fID+"_hit", "ProwHit","Hit_Qtotal", "Hit_bd"], function(v) {
+				getAttrs(["Skl_total","Lck_total","repeating_weapons_"+fID+"_hit","Hit_Qtotal", "Hit_bd"], function(v) {
 					log(JSON.stringify(v))
 					let nindex = Object.keys(v)[2];
 					log(nindex)
@@ -2088,7 +2032,7 @@ on("change:Skl_total change:Lck_total change:repeating_combat change:repeating_c
 					let Lck = v.Lck_total;
 					let temphit = v.Hit_bd;
 					setAttrs({
-						Hit: Math.round(wHit) + Number(temphit) + Number(Skl)*2 + Math.floor(Number(Lck)/2) + Number(v.ProwHit) + Number(v.Hit_Qtotal),
+						Hit: Math.round(wHit) + Number(temphit) + Number(Skl)*2 + Math.floor(Number(Lck)/2) + Number(v.Hit_Qtotal),
 					});
 				});
 			});
@@ -2097,7 +2041,7 @@ on("change:Skl_total change:Lck_total change:repeating_combat change:repeating_c
 			getSectionIDsOrdered("repeating_spells", function(idarray) {
 				slotnum = v.SSlot
 				fID = idarray[Number(slotnum)-1];
-				getAttrs(["Skl_total","Lck_total","repeating_spells_"+fID+"_hit", "ProwHit", "Hit_Qtotal", "Hit_bd"], function(v) {
+				getAttrs(["Skl_total","Lck_total","repeating_spells_"+fID+"_hit", "Hit_Qtotal", "Hit_bd"], function(v) {
 					log(JSON.stringify(v))
 					let nindex = Object.keys(v)[2];
 					log(nindex)
@@ -2107,7 +2051,7 @@ on("change:Skl_total change:Lck_total change:repeating_combat change:repeating_c
 					let Lck = v.Lck_total;
 					let temphit = v.Hit_bd;
 					setAttrs({
-						Hit: Math.round(wHit) + Number(temphit) + Number(Skl)*2 + Math.floor(Number(Lck)/2) + Number(v.ProwHit) + Number(v.Hit_Qtotal)
+						Hit: Math.round(wHit) + Number(temphit) + Number(Skl)*2 + Math.floor(Number(Lck)/2) + Number(v.Hit_Qtotal)
 					});
 					console.log(Math.round((Skl) + wHit));
 				});
@@ -2161,7 +2105,7 @@ on("change:Skl_total change:Lck_total change:repeating_weapons:Crit change:repea
 });
 
 //Crit Avoid
-on("change:Lck_total change:repeating_weapons:Ddg change:repeating_spells:Ddg change:_reporder:weapons change:_reporder:spells remove:repeating_weapons remove:repeating_spells change:WSlot change:SSlot change:atktype change:Atkspd change:ProwCAvo change:Ddg_bd change:Ddg_Qtotal", function() {
+on("change:Lck_total change:repeating_weapons:Ddg change:repeating_spells:Ddg change:_reporder:weapons change:_reporder:spells remove:repeating_weapons remove:repeating_spells change:WSlot change:SSlot change:atktype change:Atkspd change:Ddg_bd change:Ddg_Qtotal", function() {
 	getAttrs(["WSlot","SSlot","atktype"], function(v) {
 		if (v.atktype == "Physical"){
 			getSectionIDsOrdered("repeating_weapons", function(idarray) {
