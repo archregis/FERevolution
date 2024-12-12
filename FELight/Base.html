@@ -85,13 +85,8 @@
 									<option>Enemy</option>
 								</select>
 							</label>
-							<label>
-								Class:
-								<!--I'd love to have this change based on the status of the promo checkbox, but I don't think that's possible given that you can't use IDs in Roll20-->
-								<select name = "attr_Class">
-									<option selected disabled hidden></option>
-									<option>Adventurer</option>
-								</select>
+							<label> Class:
+								<input type = "text" name = "attr_charClass" />
 							</label>
 							<label>
 								Atk Type:
@@ -190,7 +185,6 @@
 							</tr>
 							<tr>
 								<th class="sheet-statlabel">Stats</th>
-								<th>Base</th>
 								<th>Personal</th>
 								<th>Buff/Debuff</th>
 								<th>Total</th>
@@ -201,18 +195,16 @@
 							</tr>
 							<tr class="HP">
 								<td class="sheet-statlabel">HP</td>
-								<td><span name="attr_HP_sf" value = "0">0</span></td>
 								<td><input type= "number" name = "attr_HP_i" value = "0"/></td>
 								<td><input type = "number" name = "attr_HP_bd" value = "0"/></td>
 								<td><span name="attr_HP_total">0</span></td>
 								<td class= "sheet-div"> </td>
 								<td><span name = "attr_HP_gf" value = "0">0</span> </td>
-								<td><input type= "number" name= "attr_HP_gi" value = "0"/></td>
+								<td><input name= "attr_HP_gi" type= "number" value = "0"/></td>
 								<td><span name="attr_HP_gtotal">10</span></td>
 							</tr>
 							<tr class="Str">
 								<td class="sheet-statlabel">Str</td>
-								<td><span name = "attr_Str_sf" value = "0">0</span></td>
 								<td><input name="attr_Str_i" type="number" value = "0"></td>
 								<td><input name="attr_Str_bd" type="number" value = "0"></td>
 								<td><span name="attr_Str_total">0</span></td>
@@ -223,7 +215,6 @@
 							</tr>
 							<tr class="Mag">
 								<td class="sheet-statlabel">Mag</td>
-								<td><span name = "attr_Mag_sf" value = "0">0</span></td>
 								<td><input name="attr_Mag_i" type="number" value = "0"></td>
 								<td><input name="attr_Mag_bd" type="number" value = "0"></td>
 								<td><span name = "attr_Mag_total">0</span></td>
@@ -234,7 +225,6 @@
 							</tr>
 							<tr class="Skl">
 								<td class="sheet-statlabel">Skl</td>
-								<td><span name = "attr_Skl_sf" value = "0">0</span></td>
 								<td><input name="attr_Skl_i" type="number" value = "0"></td>
 								<td><input name="attr_Skl_bd" type="number" value = "0"></td>
 								<td><span name = "attr_Skl_total">0</span></td>
@@ -245,7 +235,6 @@
 							</tr>
 							<tr class="Lck">
 								<td class="sheet-statlabel">Lck</td>
-								<td><span name = "attr_Lck_sf" value = "0">0</span></td>
 								<td><input name="attr_Lck_i" type="number" value = "0"></td>
 								<td><input name="attr_Lck_bd" type="number" value = "0"></td>
 								<td><span name = "attr_Lck_total">0</span></td>
@@ -256,7 +245,6 @@
 							</tr>
 							<tr class="Spd">
 								<td class="sheet-statlabel">Spd</td>
-								<td><span name = "attr_Spd_sf" value = "0">0</span></td>
 								<td><input name="attr_Spd_i" type="number" value = "0"></td>
 								<td><input name="attr_Spd_bd" type="number" value = "0"></td>
 								<td><span name = "attr_Spd_total">0</span></td>
@@ -267,7 +255,6 @@
 							</tr>
 							<tr class="Def">
 								<td class="sheet-statlabel">Def</td>
-								<td><span name = "attr_Def_sf" value = "0">0</span></td>
 								<td><input name="attr_Def_i" type="number" value = "0"></td>
 								<td><input name="attr_Def_bd" type="number" value = "0"></td>
 								<td><span name = "attr_Def_total">0</span></td>
@@ -278,7 +265,6 @@
 							</tr>
 							<tr class="Res">
 								<td class="sheet-statlabel">Res</td>
-								<td><span name = "attr_Res_sf" value = "0">0</span></td>
 								<td><input name="attr_Res_i" type="number" value = "0"></td>
 								<td><input name="attr_Res_bd" type="number" value = "0"></td>
 								<td><span name = "attr_Res_total">0</span></td>
@@ -289,7 +275,6 @@
 							</tr>
 							<tr class="Con">
 								<td class="sheet-statlabel">Con</td>
-								<td><span name = "attr_Con_sf" value = "0">0</span></td>
 								<td><input name="attr_Con_i" type="number" value = "0"></td>
 								<td><input name="attr_Con_bd" type="number" value = "0"></td>
 								<td><span name = "attr_Con_total">0</span></td>
@@ -300,7 +285,6 @@
 							</tr>
 							<tr class="Mov">
 								<td class="sheet-statlabel">Mov</td>
-								<td><span name = "attr_Cha_sf" value = "0">0</span></td>
 								<td><input name="attr_Cha_i" type="number" value = "0"></td>
 								<td><input name="attr_Cha_bd" type="number" value = "0"></td>
 								<td><span name = "attr_Cha_total">0</span></td>
@@ -397,11 +381,6 @@
 									<option>Axe</option>
 									<option>Lance</option>
 									<option>Bow</option>
-									<option>Anima</option>
-									<option>Light</option>
-									<option>Dark</option>
-									<option>Staff</option>
-									<option>Other</option>
 								</select></td>
 								<td><input type = "number" name = "attr_Uses" value = "1" min = "0"/></td>
 							</tr>
@@ -503,15 +482,10 @@
 							<tr class = "sheet-thicc">
 								<td><input name = "attr_SName" type = "text"></td>
 								<td><select name = "attr_SType">
-									<option>Sword</option>
-									<option>Axe</option>
-									<option>Lance</option>
-									<option>Bow</option>
 									<option>Anima</option>
 									<option>Light</option>
 									<option>Dark</option>
 									<option>Staff</option>
-									<option>Other</option>
 								</select></td>
 								<td><input type = "number" name = "attr_Uses" value = "1" min = "0"/></td>
 							</tr>
@@ -962,7 +936,6 @@
 </div>
 <!--The section of the ~forbidden~ inputs. This should always go last.-->
 <div class = "hidden">
-	<input name="attr_MR_base" value = "2" hidden>
 	<input name="attr_wepnum" value = "0" hidden>
 	<input name="attr_spellnum" value = "0" hidden>
 	<input name="attr_currEff" value = " " hidden>
@@ -972,8 +945,6 @@
 	<input name="attr_currMt" value = "0" hidden>
 	<input name="attr_currWt" value = "0" hidden>
 	<input name="attr_currHit" value = "0" hidden>
-	<input name="attr_currCrit" value = "0" hidden>
-	<input name="attr_currDdg" value = "0" hidden>
 	<input name="attr_effdmg" value = "0" hidden>
 	<input name="attr_currWep" value = "Sword" hidden>
 	<input name="attr_currMinDist" value = "0" hidden>
@@ -981,20 +952,13 @@
 	<input name="attr_currCounter" value = "0" hidden>
 	<input name="attr_currBrave" value = "0" hidden>
 	<input name="attr_currDesc" value = "Attacking @{target|token_name}!" hidden>
-	<input name="attr_class_exp0" value = "0" hidden>
-	<input name="attr_class_exp1" value = "0" hidden>
-	<input name="attr_class_exp2" value = "0" hidden>
-	<input name="attr_class_gain0" value = "0" hidden>
 	<input name="attr_ProwHit" value = "0" hidden>
 	<input name="attr_atktype" value = "Physical" hidden>
 	<input name="attr_SwordHit" value = "0" hidden>
 	<input name="attr_ProwAvo" value = "0" hidden>
 	<input name="attr_ProwCAvo" value = "0" hidden>
 	<input name="attr_WSlot" value = "1" hidden>
-	<input name="attr_HP_sf" value = "0" hidden>
 	<input name="attr_HP_total" value = "0" hidden>
-	<input name="attr_HP_rg" value = "0" hidden>
-	<input name="attr_HP_rb" value = "0" hidden>
 	<input name="attr_HP_gf" value = "0" hidden>
 	<input name="attr_HP_gtotal" value = "0" hidden>
 	<input name="attr_Con_Qtotal" value = "0" hidden>
@@ -1012,71 +976,35 @@
   	<input name="attr_Mit_Qtotal" value = "0" hidden>
 	<input name="attr_Ele_Qtotal" value = "" hidden>
 	<input name="attr_Weak_total" value = "None" hidden>
-	<input name="attr_HP_total_max" value = "0" hidden>
 	<input name="attr_HP_current" value = "0" hidden>
 	<input name="attr_HP_current_max" value = "0" hidden>
 	<input name="attr_Con_current" value = "0" hidden>
 	<input name="attr_Con_current_max" value = "0" hidden>
-	<input name="attr_Str_sf" value = "0" hidden>
 	<input name="attr_Str_total" value = "0" hidden>
-	<input name="attr_Str_rg" value = "0" hidden>
-	<input name="attr_Str_rb" value = "0" hidden>
 	<input name="attr_Str_gf" value = "0" hidden>
 	<input name="attr_Str_gtotal" value = "0" hidden>
-	<input name="attr_Str_total_max" value = "0" hidden>
-	<input name="attr_Mag_sf" value = "0" hidden>
 	<input name="attr_Mag_total" value = "0" hidden>
-	<input name="attr_Mag_rg" value = "0" hidden>
-	<input name="attr_Mag_rb" value = "0" hidden>
 	<input name="attr_Mag_gf" value = "0" hidden>
 	<input name="attr_Mag_gtotal" value = "0" hidden>
-	<input name="attr_Mag_total_max" value = "0" hidden>
-	<input name="attr_Skl_sf" value = "0" hidden>
 	<input name="attr_Skl_total" value = "0" hidden>
-	<input name="attr_Skl_rg" value = "0" hidden>
-	<input name="attr_Skl_rb" value = "0" hidden>
 	<input name="attr_Skl_gf" value = "0" hidden>
 	<input name="attr_Skl_gtotal" value = "0" hidden>
-	<input name="attr_Skl_total_max" value = "0" hidden>
-	<input name="attr_Spd_sf" value = "0" hidden>
 	<input name="attr_Spd_total" value = "0" hidden>
-	<input name="attr_Spd_rg" value = "0" hidden>
-	<input name="attr_Spd_rb" value = "0" hidden>
 	<input name="attr_Spd_gf" value = "0" hidden>
 	<input name="attr_Spd_gtotal" value = "0" hidden>
-	<input name="attr_Spd_total_max" value = "0" hidden>
-	<input name="attr_Lck_sf" value = "0" hidden>
 	<input name="attr_Lck_total" value = "0" hidden>
-	<input name="attr_Lck_rg" value = "0" hidden>
-	<input name="attr_Lck_rb" value = "0" hidden>
 	<input name="attr_Lck_gf" value = "0" hidden>
 	<input name="attr_Lck_gtotal" value = "0" hidden>
-	<input name="attr_Lck_total_max" value = "0" hidden>
-	<input name="attr_Def_sf" value = "0" hidden>
 	<input name="attr_Def_total" value = "0" hidden>
-	<input name="attr_Def_rg" value = "0" hidden>
-	<input name="attr_Def_rb" value = "0" hidden>
 	<input name="attr_Def_gf" value = "0" hidden>
 	<input name="attr_Def_gtotal" value = "0" hidden>
-	<input name="attr_Def_total_max" value = "0" hidden>
-	<input name="attr_Res_sf" value = "0" hidden>
 	<input name="attr_Res_total" value = "0" hidden>
-	<input name="attr_Res_rg" value = "0" hidden>
-	<input name="attr_Res_rb" value = "0" hidden>
 	<input name="attr_Res_gf" value = "0" hidden>
 	<input name="attr_Res_gtotal" value = "0" hidden>
-	<input name="attr_Res_total_max" value = "0" hidden>
-	<input name="attr_Cha_sf" value = "0" hidden>
 	<input name="attr_Cha_total" value = "0" hidden>
-	<input name="attr_Cha_rg" value = "0" hidden>
-	<input name="attr_Cha_rb" value = "0" hidden>
 	<input name="attr_Cha_gf" value = "0" hidden>
 	<input name="attr_Cha_gtotal" value = "0" hidden>
-	<input name="attr_Cha_total_max" value = "0" hidden>
-	<input name="attr_Mov_sf" value = "0" hidden>
-	<input name="attr_Mov_rb" value = "0" hidden>
 	<input name="attr_Mov_total" value = "0" hidden>
-	<input name="attr_Mov_total_max" value = "0" hidden>
 	<input name="attr_Str_multi" value = "0" hidden>
 	<input name="attr_Mag_multi" value = "0" hidden>
 	<input name="attr_Spd_multi" value = "0" hidden>
@@ -1085,24 +1013,6 @@
 	<input name="attr_Res_multi" value = "0" hidden>
 	<input name="attr_Cha_multi" value = "0" hidden>
 	<input name="attr_DR_multi" value = "0" hidden>
-	<input name="attr_Athletics_total" value = "0" hidden>
-	<input name="attr_Arcana_total" value = "0" hidden>
-	<input name="attr_History_total" value = "0" hidden>
-	<input name="attr_Investigation_total" value = "0" hidden>
-	<input name="attr_Nature_total" value = "0" hidden>
-	<input name="attr_Religion_total" value = "0" hidden>
-	<input name="attr_Deception_total" value = "0" hidden>
-	<input name="attr_Intimidation_total" value = "0" hidden>
-	<input name="attr_Performance_total" value = "0" hidden>
-	<input name="attr_Persuasion_total" value = "0" hidden>
-	<input name="attr_Acrobatics_total" value = "0" hidden>
-	<input name="attr_SleightofHand_total" value = "0" hidden>
-	<input name="attr_Stealth_total" value = "0" hidden>
-	<input name="attr_AnimalHandling_total" value = "0" hidden>
-	<input name="attr_Insight_total" value = "0" hidden>
-	<input name="attr_Medicine_total" value = "0" hidden>
-	<input name="attr_Perception_total" value = "0" hidden>
-	<input name="attr_Survival_total" value = "0" hidden>
 	<input name="attr_EXP" value = "0" min = "0" max = "200" hidden>
 	<input name="attr_Swordrank" value = "E" type = "text" hidden>
 	<input name="attr_Lancerank" value = "E" type = "text" hidden>
@@ -1110,24 +1020,16 @@
 	<input name="attr_Bowrank" value = "E" type = "text" hidden>
 	<input name="attr_Stavesrank" value = "E" type = "text" hidden>
 	<input name="attr_Darkrank" value = "E" type = "text" hidden>
-	<input name="attr_Authorityrank" value = "E" type = "text" hidden>
 	<input name="attr_Lightrank" value = "E" type = "text" hidden>
 	<input name="attr_Animarank" value = "E" type = "text" hidden>
-	<input name="attr_Armorrank" value = "E" type = "text" hidden>
-	<input name="attr_Ridingrank" value = "E" type = "text" hidden>
-	<input name="attr_Flyingrank" value = "E" type = "text" hidden>
 	<input name="attr_Swordrank_max" value = "E" type = "text" hidden>
 	<input name="attr_Lancerank_max" value = "E" type = "text" hidden>
 	<input name="attr_Axerank_max" value = "E" type = "text" hidden>
 	<input name="attr_Bowrank_max" value = "E" type = "text" hidden>
 	<input name="attr_Stavesrank_max" value = "E" type = "text" hidden>
 	<input name="attr_Darkrank_max" value = "E" type = "text" hidden>
-	<input name="attr_Authorityrank_max" value = "E" type = "text" hidden>
 	<input name="attr_Lightrank_max" value = "E" type = "text" hidden>
 	<input name="attr_Animarank_max" value = "E" type = "text" hidden>
-	<input name="attr_Armorrank_max" value = "E" type = "text" hidden>
-	<input name="attr_Ridingrank_max" value = "E" type = "text" hidden>
-	<input name="attr_Flyingrank_max" value = "E" type = "text" hidden>
 	<input name="attr_Hit" value = "0" hidden>
 	<input name="attr_Crit" value = "0" hidden>
 	<input name="attr_avo" value = "0" hidden>
@@ -1135,7 +1037,6 @@
 	<input name="attr_myst_total" value = "0" hidden>
 	<input name="attr_prot_total" value = "0" hidden>
 	<input name="attr_ward_total" value = "0" hidden>
-	<input name="attr_Ghit" value = "0" hidden>
 	<input name="attr_Atkspd" value = "0" min = "0" hidden>
 	<input name="attr_HP_M" value = "0" hidden>
 	<input name="attr_HP_S" value = "0" hidden>
@@ -1262,27 +1163,9 @@
 	<input type = "checkbox" value="0" name = "attr_isPromo"/>
 	<input name= "attr_fid" value = "" hidden>
 	<input name = "attr_f_WRank" value = "" hidden>
-	<input name = "attr_Hitmod" value = "0" hidden>
-	<input name = "attr_Critmod" value = "0" hidden>
-	<input name = "attr_Avomod" value = "0" hidden>
-	<input name = "attr_Ddgmod" value = "0" hidden>
-	<input name = "attr_Dmgmod" value = "0" hidden>
-	<input name = "attr_UACounter" value = "0" type = "checkbox" hidden>
-	<input name="attr_Physb" value = "0" hidden>
-	<input name="attr_Magb" value = "0" hidden>
-	<input name="attr_Hitb" value = "0" hidden>
-	<input name="attr_Critb" value = "0" hidden>
-	<input name="attr_Critavob" value = "0" hidden>
-	<input name="attr_Avob" value = "0" hidden>
-	<input name="attr_Protb" value = "0" hidden>
-	<input name="attr_Resb" value = "0" hidden>
-	<input name="attr_Chab" value = "0" hidden>
-	<input name="attr_Ghitb" value = "0" hidden>
-	<input name="attr_AttackCounter" value = "0" hidden>
-	<input name="attr_HPHolder" value = "0" hidden>
 </div>
 <script type="text/worker">
-//AAAAA
+
 var getSectionIDsOrdered = function (sectionName, callback) {
 	'use strict';
 	getAttrs([`_reporder_${sectionName}`], function (v) {
@@ -1294,263 +1177,23 @@ var getSectionIDsOrdered = function (sectionName, callback) {
 	});
 };
 
-//Unpromoted Class Bases
-
-const Adventurer = {
-	"Name": "Adventurer",
-	"MR_base": 2,
-	"HP_b": 0,
-	"Str_b": 0,
-	"Mag_b": 0,
-	"Skl_b": 0,
-	"Spd_b": 0,
-	"Lck_b": 0,
-	"Def_b": 0,
-	"Res_b": 0,
-	"Mov_b": 4,
-	"HP_g": 0,
-	"Str_g": 0,
-	"Mag_g": 0,
-	"Skl_g": 0,
-	"Spd_g": 0,
-	"Lck_g": 0,
-	"Def_g": 0,
-	"Res_g": 0,
-	"HP_c": 99,
-	"Str_c": 99,
-	"Mag_c": 99,
-	"Skl_c": 99,
-	"Spd_c": 99,
-	"Lck_c": 99,
-	"Def_c": 99,
-	"Res_c": 99,
-	"Mov_c": 12,
-	"Weapons": "1 2 3 4 5 6 7 8 9 10 11 12",
-	"Wepcaps": "S+ S+ S+ S+ S+ S+ S+ S+ S+ S+ S+ S+"
-}
-
-const unPr_classList = [Adventurer];
-const Pr_classList = [Adventurer];
-const Laguz_alt = ["Bonewalker","Mogall","Mauthe","Bael","Tarvos","Gargoyle"];
-const GLaguz_alt = ["Wight","Arch Mogall","Gwyllgi","Elder Bael","Maeduin","Deathgoyle"];
-
-let classIndex = 0;
-let classType = "";
-let weps;
-let wepcaps;
-let attrs;
-
-//racial growths
-const r_names = ["Human","Manakete","Half-Manakete","Enkindled","Half-Kitsune","Wolfskin","Half-Wolfskin","Beast-Laguz","Bird-Laguz","Monster","Other"];
-const r_HP_g = [0,0,0,0,0,0,0,0,0,0,0];
-const r_Str_g = [0,0,0,0,0,0,0,0,0,0,0];
-const r_Mag_g = [0,0,0,0,0,0,0,0,0,0,0];
-const r_Skl_g = [0,0,0,0,0,0,0,0,0,0,0];
-const r_Spd_g = [0,0,0,0,0,0,0,0,0,0,0];
-const r_Lck_g = [0,0,0,0,0,0,0,0,0,0,0];
-const r_Def_g = [0,0,0,0,0,0,0,0,0,0,0];
-const r_Res_g = [0,0,0,0,0,0,0,0,0,0,0];
-const r_HP_b = [0,0,0,0,0,0,0,0,0,0,0];
-const r_Str_b = [0,0,0,0,0,0,0,0,0,0,0];
-const r_Mag_b = [0,0,0,0,0,0,0,0,0,0,0];
-const r_Skl_b = [0,0,0,0,0,0,0,0,0,0,0];
-const r_Spd_b = [0,0,0,0,0,0,0,0,0,0,0];
-const r_Lck_b = [0,0,0,0,0,0,0,0,0,0,0];
-const r_Def_b = [0,0,0,0,0,0,0,0,0,0,0];
-const r_Res_b = [0,0,0,0,0,0,0,0,0,0,0];
-const r_Cha_b = [0,0,0,0,0,0,0,0,0,0,0];
-const r_Mov_b = [0,0,0,0,0,0,0,0,0,0,0];
-
-on("change:class", function(eventInfo) {
-	//Actual code
-	let currentclass = eventInfo.newValue;
-	log(currentclass)
-	for (var a in unPr_classList){
-		if (currentclass == unPr_classList[a].Name){
-			classIndex = a;
-			classType = "unpr"
-		} else if (Laguz_alt.indexOf(currentclass) != -1){
-			classIndex = 25;
-			classType = "unpr"
-		} else if (currentclass == "Ranger"){
-			classIndex = 9;
-			classType = "unpr"
-		} else if (currentclass == "Acrobat"){
-			classIndex = 14;
-			classType = "unpr"
-		}
-	}
-	for (var b in Pr_classList){
-		if (currentclass == Pr_classList[b].Name){
-			classIndex = b;
-			classType = "pr"
-		} else if (GLaguz_alt.indexOf(currentclass) != -1){
-			classIndex = 30;
-			classType = "pr"
-		} else if (currentclass == "Ranger Knight"){
-			classIndex = 16;
-			classType = "pr"
-		} else if (currentclass == "Performer"){
-			classIndex = 20;
-			classType = "pr"
-		}
-	}
-	console.log(classType)
-	console.log(classIndex)
-	if (classType == "unpr"){
-		attrs = {};
-		attrs.MR_base = unPr_classList[classIndex].MR.base;
-		attrs.HP_sf = unPr_classList[classIndex].HP_b;
-		attrs.HP_gf = unPr_classList[classIndex].HP_g;
-		attrs.HP_total_max = unPr_classList[classIndex].HP_c;
-		attrs.Str_sf = unPr_classList[classIndex].Str_b;
-		attrs.Str_gf = unPr_classList[classIndex].Str_g;
-		attrs.Str_total_max = unPr_classList[classIndex].Str_c;
-		attrs.Mag_sf = unPr_classList[classIndex].Mag_b;
-		attrs.Mag_gf = unPr_classList[classIndex].Mag_g;
-		attrs.Mag_total_max = unPr_classList[classIndex].Mag_c;
-		attrs.Skl_sf = unPr_classList[classIndex].Skl_b;
-		attrs.Skl_gf = unPr_classList[classIndex].Skl_g;
-		attrs.Skl_total_max = unPr_classList[classIndex].Skl_c;
-		attrs.Spd_sf = unPr_classList[classIndex].Spd_b;
-		attrs.Spd_gf = unPr_classList[classIndex].Spd_g;
-		attrs.Spd_total_max = unPr_classList[classIndex].Spd_c;
-		attrs.Lck_sf = unPr_classList[classIndex].Lck_b;
-		attrs.Lck_gf = unPr_classList[classIndex].Lck_g;
-		attrs.Lck_total_max = unPr_classList[classIndex].Lck_c;
-		attrs.Def_sf = unPr_classList[classIndex].Def_b;
-		attrs.Def_gf = unPr_classList[classIndex].Def_g;
-		attrs.Def_total_max = unPr_classList[classIndex].Def_c;
-		attrs.Res_sf = unPr_classList[classIndex].Res_b;
-		attrs.Res_gf = unPr_classList[classIndex].Res_g;
-		attrs.Res_total_max = unPr_classList[classIndex].Res_c;
-		attrs.Cha_sf = unPr_classList[classIndex].Mov_b;
-		attrs.Cha_total_max = unPr_classList[classIndex].Mov_c;
-		attrs.isPromo = 0;
-		console.log(attrs);
-		setAttrs(attrs);
-		weps = unPr_classList[classIndex].Weapons.split(" ");
-		wepcaps = unPr_classList[classIndex].Wepcaps.split(" ");
-	} else if (classType = "pr"){
-		attrs = {};
-		attrs.MR_base = Pr_classList[classIndex].MR.base;
-		attrs.HP_sf = Pr_classList[classIndex].HP_b;
-		attrs.HP_gf = Pr_classList[classIndex].HP_g;
-		attrs.HP_total_max = Pr_classList[classIndex].HP_c;
-		attrs.Str_sf = Pr_classList[classIndex].Str_b;
-		attrs.Str_gf = Pr_classList[classIndex].Str_g;
-		attrs.Str_total_max = Pr_classList[classIndex].Str_c;
-		attrs.Mag_sf = Pr_classList[classIndex].Mag_b;
-		attrs.Mag_gf = Pr_classList[classIndex].Mag_g;
-		attrs.Mag_total_max = Pr_classList[classIndex].Mag_c;
-		attrs.Skl_sf = Pr_classList[classIndex].Skl_b;
-		attrs.Skl_gf = Pr_classList[classIndex].Skl_g;
-		attrs.Skl_total_max = Pr_classList[classIndex].Skl_c;
-		attrs.Spd_sf = Pr_classList[classIndex].Spd_b;
-		attrs.Spd_gf = Pr_classList[classIndex].Spd_g;
-		attrs.Spd_total_max = Pr_classList[classIndex].Spd_c;
-		attrs.Lck_sf = Pr_classList[classIndex].Lck_b;
-		attrs.Lck_gf = Pr_classList[classIndex].Lck_g;
-		attrs.Lck_total_max = Pr_classList[classIndex].Lck_c;
-		attrs.Def_sf = Pr_classList[classIndex].Def_b;
-		attrs.Def_gf = Pr_classList[classIndex].Def_g;
-		attrs.Def_total_max = Pr_classList[classIndex].Def_c;
-		attrs.Res_sf = Pr_classList[classIndex].Res_b;
-		attrs.Res_gf = Pr_classList[classIndex].Res_g;
-		attrs.Res_total_max = Pr_classList[classIndex].Res_c;
-		attrs.Cha_sf = Pr_classList[classIndex].Mov_b;
-		attrs.Cha_total_max = Pr_classList[classIndex].Mov_c;
-		attrs.isPromo = 1;
-		console.log(attrs);
-		setAttrs(attrs);
-		weps = Pr_classList[classIndex].Weapons.split(" ");
-		wepcaps = Pr_classList[classIndex].Wepcaps.split(" ");
-	}
-	console.log("Stats set for " + currentclass+"! Class index is "+ classIndex);
-	if (currentclass == undefined){
-		console.log("Oh no! This is an error. :(");
-	}
-	let wepvals = [];
-	weps.forEach(function(element) {
-		wepvals.push(parseInt(element));
-	});
-	console.log(wepcaps);
-	let update = {
-		SwordU: 0,
-		LanceU: 0,
-		AxeU: 0,
-		BowU: 0,
-		StavesU: 0,
-		DarkU: 0,
-		AnimaU: 0,
-		LightU: 0,
-		AuthorityU: 0,
-		ArmorU: 0,
-		RidingU: 0,
-		FlyingU: 0
-	};
-	const class_Weps = ["Sword", "Lance", "Axe", "Bow", "Staves", "Dark", "Anima", "Light", "Authority", "Armor", "Riding", "Flying"];
-	let i;
-	let j = 0;
-	for(i = 1; i <= 12; i++) {
-		let index = wepvals.indexOf(i);
-		if( index != -1 ) {
-			let prefix = class_Weps[i-1];
-			update[prefix+"U"] = 1;
-			update[prefix+"rank_max"] = wepcaps[j];
-			console.log(wepcaps[j]);
-			j++;
-		}
-	}
-	console.log(update)
-	setAttrs(update)
-
-});
-//racial fills!
-on("change:Species", function(eventinfo) {
-	let currentrace = eventinfo.newValue;
-	if (r_names.indexOf(currentrace) != -1){
-		raceIndex = r_names.indexOf(currentrace);
-		setAttrs({
-			HP_rg: r_HP_g[raceIndex],
-			Str_rg: r_Str_g[raceIndex],
-			Mag_rg: r_Mag_g[raceIndex],
-			Skl_rg: r_Skl_g[raceIndex],
-			Spd_rg: r_Spd_g[raceIndex],
-			Lck_rg: r_Lck_g[raceIndex],
-			Def_rg: r_Def_g[raceIndex],
-			Res_rg: r_Res_g[raceIndex],
-			HP_rb: r_HP_b[raceIndex],
-			Str_rb: r_Str_b[raceIndex],
-			Mag_rb: r_Mag_b[raceIndex],
-			Skl_rb: r_Skl_b[raceIndex],
-			Spd_rb: r_Spd_b[raceIndex],
-			Lck_rb: r_Lck_b[raceIndex],
-			Def_rb: r_Def_b[raceIndex],
-			Res_rb: r_Res_b[raceIndex],
-			Cha_rb: r_Cha_b[raceIndex],
-			Mov_rb: r_Mov_b[raceIndex],
-		});
-	}
-	console.log("Growths set for " +currentrace+"!");
-});
-
-//Base total scripts! Unfortunately, this isn't the end of the scripting, and the load times are just gonna get longer and longer. :(
-on("change:HP_sf change:HP_i change:HP_bd change:HP_rb change:repeating_weapons:HP_wp change:repeating_spells:HP_wp change:_reporder:weapons change:HP_Qtotal change:repeating_combat change:_reporder:weapons change:_reporder:spells remove:repeating_weapons remove:repeating_spells change:WSlot change:SSlot change:atktype", function(eventInfo) {
-	getAttrs(["WSlot","SSlot","CSlot","atktype"], function(v) {
+//Base total scripts! Unfortunately, this isn't the end of the scripting, and the load times are just gonna get longer and longer.
+// HP Stat
+on("change:HP_i change:HP_bd change:repeating_weapons:HP_wp change:repeating_spells:HP_wp change:_reporder:weapons change:HP_Qtotal change:repeating_combat change:_reporder:weapons change:_reporder:spells remove:repeating_weapons remove:repeating_spells change:WSlot change:SSlot change:atktype", function(eventInfo) {
+	getAttrs(["WSlot","SSlot","atktype"], function(v) {
 		if (v.atktype == "Physical"){
 			getSectionIDsOrdered("repeating_weapons", function(idarray) {
 				slotnum = v.WSlot
 				fID = idarray[Number(slotnum)-1];
 				log("fID is" + fID)
-				getAttrs(["HP_sf", "HP_i","HP_bd","HP_total","repeating_weapons_"+fID+"_HP_wp","HP_rb","HP_Qtotal"], function(v) {
+				getAttrs(["repeating_weapons_"+fID+"_HP_wp","HP_i","HP_bd","HP_total","HP_Qtotal"], function(v) {
 					log(JSON.stringify(v))
-					let nindex = Object.keys(v)[4];
+					let nindex = Object.keys(v)[0];
 					log(nindex)
 					let wp = parseInt(v[nindex])||0;
 					setAttrs({
-						HP_total: Number(v.HP_sf) + Number(v.HP_i) + Number(v.HP_rb) + Number(v.HP_bd) + Number(v.HP_Qtotal) + wp,
-						HP_current_max: Number(v.HP_sf) + Number(v.HP_i) + Number(v.HP_rb) + Number(v.HP_bd) + Number(v.HP_Qtotal) + wp,
+						HP_total: Number(v.HP_i) + Number(v.HP_bd) + Number(v.HP_Qtotal) + wp,
+						HP_current_max: Number(v.HP_i) + Number(v.HP_bd) + Number(v.HP_Qtotal) + wp,
 					});
 				});
 			});
@@ -1560,14 +1203,14 @@ on("change:HP_sf change:HP_i change:HP_bd change:HP_rb change:repeating_weapons:
 				slotnum = v.SSlot
 				fID = idarray[Number(slotnum)-1];
 				log("fID is" + fID)
-				getAttrs(["HP_sf", "HP_i","HP_bd","HP_total","repeating_spells_"+fID+"_HP_wp","HP_rb","HP_Qtotal"], function(v) {
+				getAttrs(["repeating_spells_"+fID+"_HP_wp","HP_i","HP_bd","HP_total","HP_Qtotal"], function(v) {
 					log(JSON.stringify(v))
-					let nindex = Object.keys(v)[4];
+					let nindex = Object.keys(v)[0];
 					log(nindex)
 					let wp = parseInt(v[nindex])||0;
 					setAttrs({
-						HP_total: Number(v.HP_sf) + Number(v.HP_i) + Number(v.HP_rb) + Number(v.HP_bd) + Number(v.HP_Qtotal) + wp,
-						HP_current_max: Number(v.HP_sf) + Number(v.HP_i) + Number(v.HP_rb) + Number(v.HP_bd) + Number(v.HP_Qtotal) + wp
+						HP_total: Number(v.HP_i) + Number(v.HP_bd) + Number(v.HP_Qtotal) + wp,
+						HP_current_max: Number(v.HP_i) + Number(v.HP_bd) + Number(v.HP_Qtotal) + wp
 					});
 				});
 			});
@@ -1575,20 +1218,21 @@ on("change:HP_sf change:HP_i change:HP_bd change:HP_rb change:repeating_weapons:
 	});
 });
 
-on("change:Str_sf change:Str_i change:Str_bd change:Str_rb change:repeating_weapons:Str_wp change:repeating_spells:Str_wp change:_reporder:weapons change:Str_Qtotal change:repeating_combat change:_reporder:weapons change:_reporder:spells remove:repeating_weapons remove:repeating_spells change:WSlot change:SSlot change:atktype", function(eventInfo) {
-	getAttrs(["WSlot","SSlot","CSlot","atktype"], function(v) {
+// Str Stat
+on("change:Str_i change:Str_bd change:repeating_weapons:Str_wp change:repeating_spells:Str_wp change:_reporder:weapons change:Str_Qtotal change:repeating_combat change:_reporder:weapons change:_reporder:spells remove:repeating_weapons remove:repeating_spells change:WSlot change:SSlot change:atktype", function(eventInfo) {
+	getAttrs(["WSlot","SSlot","atktype"], function(v) {
 		if (v.atktype == "Physical"){
 			getSectionIDsOrdered("repeating_weapons", function(idarray) {
 				slotnum = v.WSlot
 				fID = idarray[Number(slotnum)-1];
 				log("fID is" + fID)
-				getAttrs(["Str_sf", "Str_i","Str_bd","Str_total","repeating_weapons_"+fID+"_Str_wp","Str_rb","Str_Qtotal"], function(v) {
+				getAttrs(["repeating_weapons_"+fID+"_Str_wp","Str_i","Str_bd","Str_total","Str_Qtotal"], function(v) {
 					log(JSON.stringify(v))
-					let nindex = Object.keys(v)[4];
+					let nindex = Object.keys(v)[0];
 					log(nindex)
 					let wp = parseInt(v[nindex])||0;
 					setAttrs({
-						Str_total: Number(v.Str_sf) + Number(v.Str_i) + Number(v.Str_rb) + Number(v.Str_bd) + Number(v.Str_Qtotal) + wp,
+						Str_total: Number(v.Str_i) + Number(v.Str_bd) + Number(v.Str_Qtotal) + wp,
 					});
 				});
 			});
@@ -1598,13 +1242,13 @@ on("change:Str_sf change:Str_i change:Str_bd change:Str_rb change:repeating_weap
 				slotnum = v.SSlot
 				fID = idarray[Number(slotnum)-1];
 				log("fID is" + fID)
-				getAttrs(["Str_sf", "Str_i","Str_bd","Str_total","repeating_spells_"+fID+"_Str_wp","Str_rb","Str_Qtotal"], function(v) {
+				getAttrs(["repeating_spells_"+fID+"_Str_wp","Str_i","Str_bd","Str_total","Str_Qtotal"], function(v) {
 					log(JSON.stringify(v))
-					let nindex = Object.keys(v)[4];
+					let nindex = Object.keys(v)[0];
 					log(nindex)
 					let wp = parseInt(v[nindex])||0;
 					setAttrs({
-						Str_total: Number(v.Str_sf) + Number(v.Str_i) + Number(v.Str_rb) + Number(v.Str_bd) + Number(v.Str_Qtotal) + wp,
+						Str_total: Number(v.Str_i) + Number(v.Str_bd) + Number(v.Str_Qtotal) + wp,
 					});
 				});
 			});
@@ -1612,20 +1256,21 @@ on("change:Str_sf change:Str_i change:Str_bd change:Str_rb change:repeating_weap
 	});
 });
 
-on("change:Mag_sf change:Mag_i change:Mag_bd change:Mag_rb change:repeating_weapons:Mag_wp change:repeating_spells:Mag_wp change:_reporder:weapons change:Mag_Qtotal change:repeating_combat change:_reporder:weapons change:_reporder:spells remove:repeating_weapons remove:repeating_spells change:WSlot change:SSlot change:atktype", function(eventInfo) {
-	getAttrs(["WSlot","SSlot","CSlot","atktype"], function(v) {
+// Mag Stat
+on("change:Mag_i change:Mag_bd change:repeating_weapons:Mag_wp change:repeating_spells:Mag_wp change:_reporder:weapons change:Mag_Qtotal change:repeating_combat change:_reporder:weapons change:_reporder:spells remove:repeating_weapons remove:repeating_spells change:WSlot change:SSlot change:atktype", function(eventInfo) {
+	getAttrs(["WSlot","SSlot","atktype"], function(v) {
 		if (v.atktype == "Physical"){
 			getSectionIDsOrdered("repeating_weapons", function(idarray) {
 				slotnum = v.WSlot
 				fID = idarray[Number(slotnum)-1];
 				log("fID is" + fID)
-				getAttrs(["Mag_sf", "Mag_i","Mag_bd","Mag_total","repeating_weapons_"+fID+"_Mag_wp","Mag_rb","Mag_Qtotal"], function(v) {
+				getAttrs(["repeating_weapons_"+fID+"_Mag_wp","Mag_i","Mag_bd","Mag_total","Mag_Qtotal"], function(v) {
 					log(JSON.stringify(v))
-					let nindex = Object.keys(v)[4];
+					let nindex = Object.keys(v)[0];
 					log(nindex)
 					let wp = parseInt(v[nindex])||0;
 					setAttrs({
-						Mag_total: Number(v.Mag_sf) + Number(v.Mag_i) + Number(v.Mag_rb) + Number(v.Mag_bd) + Number(v.Mag_Qtotal) + wp,
+						Mag_total: Number(v.Mag_i) + Number(v.Mag_bd) + Number(v.Mag_Qtotal) + wp,
 					});
 				});
 			});
@@ -1635,28 +1280,29 @@ on("change:Mag_sf change:Mag_i change:Mag_bd change:Mag_rb change:repeating_weap
 				slotnum = v.SSlot
 				fID = idarray[Number(slotnum)-1];
 				log("fID is" + fID)
-				getAttrs(["Mag_sf", "Mag_i","Mag_bd","Mag_total","repeating_spells_"+fID+"_Mag_wp","Mag_rb","Mag_Qtotal"], function(v) {
+				getAttrs(["repeating_spells_"+fID+"_Mag_wp","Mag_i","Mag_bd","Mag_total","Mag_Qtotal"], function(v) {
 					log(JSON.stringify(v))
-					let nindex = Object.keys(v)[4];
+					let nindex = Object.keys(v)[0];
 					log(nindex)
 					let wp = parseInt(v[nindex])||0;
 					setAttrs({
-						Mag_total: Number(v.Mag_sf) + Number(v.Mag_i) + Number(v.Mag_rb) + Number(v.Mag_bd) + Number(v.Mag_Qtotal) + wp,
+						Mag_total: Number(v.Mag_i) + Number(v.Mag_bd) + Number(v.Mag_Qtotal) + wp,
 					});
 				});
 			});
 		}
 	});
 });
-//Con Stat
-on("change:Con_sf change:Con_i change:Con_bd change:repeating_weapons:Con_wp change:repeating_spells:Con_wp change:_reporder:weapons change:Con_Qtotal change:repeating_combat change:_reporder:weapons change:_reporder:spells remove:repeating_weapons remove:repeating_spells change:WSlot change:SSlot change:atktype", function(eventInfo) {
-	getAttrs(["WSlot","SSlot","CSlot","atktype"], function(v) {
+
+// Con Stat
+on("change:Con_i change:Con_bd change:repeating_weapons:Con_wp change:repeating_spells:Con_wp change:_reporder:weapons change:Con_Qtotal change:repeating_combat change:_reporder:weapons change:_reporder:spells remove:repeating_weapons remove:repeating_spells change:WSlot change:SSlot change:atktype", function(eventInfo) {
+	getAttrs(["WSlot","SSlot","atktype"], function(v) {
 		if (v.atktype == "Physical"){
 			getSectionIDsOrdered("repeating_weapons", function(idarray) {
 				slotnum = v.WSlot
 				fID = idarray[Number(slotnum)-1];
 				log("fID is" + fID)
-				getAttrs(["repeating_weapons_"+fID+"_Con_wp","Con_sf", "Con_i","Con_bd","Con_total",,"Con_Qtotal"], function(v) {
+				getAttrs(["repeating_weapons_"+fID+"_Con_wp","Con_i","Con_bd","Con_total","Con_Qtotal"], function(v) {
 					log(JSON.stringify(v))
 					let nindex = Object.keys(v)[0];
 					log(nindex)
@@ -1672,7 +1318,7 @@ on("change:Con_sf change:Con_i change:Con_bd change:repeating_weapons:Con_wp cha
 				slotnum = v.SSlot
 				fID = idarray[Number(slotnum)-1];
 				log("fID is" + fID)
-				getAttrs(["repeating_spells_"+fID+"_Con_wp","Con_sf", "Con_i","Con_bd","Con_total","Con_Qtotal"], function(v) {
+				getAttrs(["repeating_spells_"+fID+"_Con_wp","Con_i","Con_bd","Con_total","Con_Qtotal"], function(v) {
 					log(JSON.stringify(v))
 					let nindex = Object.keys(v)[0];
 					log(nindex)
@@ -1686,20 +1332,21 @@ on("change:Con_sf change:Con_i change:Con_bd change:repeating_weapons:Con_wp cha
 	});
 });
 
-on("change:Skl_sf change:Skl_i change:Skl_bd change:Skl_rb change:repeating_weapons:Skl_wp change:repeating_spells:Skl_wp change:_reporder:weapons change:Skl_Qtotal change:repeating_combat change:_reporder:weapons change:_reporder:spells remove:repeating_weapons remove:repeating_spells change:WSlot change:SSlot change:atktype", function(eventInfo) {
-	getAttrs(["WSlot","SSlot","CSlot","atktype"], function(v) {
+// Skl Stat
+on("change:Skl_i change:Skl_bd change:repeating_weapons:Skl_wp change:repeating_spells:Skl_wp change:_reporder:weapons change:Skl_Qtotal change:repeating_combat change:_reporder:weapons change:_reporder:spells remove:repeating_weapons remove:repeating_spells change:WSlot change:SSlot change:atktype", function(eventInfo) {
+	getAttrs(["WSlot","SSlot","atktype"], function(v) {
 		if (v.atktype == "Physical"){
 			getSectionIDsOrdered("repeating_weapons", function(idarray) {
 				slotnum = v.WSlot
 				fID = idarray[Number(slotnum)-1];
 				log("fID is" + fID)
-				getAttrs(["Skl_sf", "Skl_i","Skl_bd","Skl_total","repeating_weapons_"+fID+"_Skl_wp","Skl_rb","Skl_Qtotal"], function(v) {
+				getAttrs(["repeating_weapons_"+fID+"_Skl_wp","Skl_i","Skl_bd","Skl_total","Skl_Qtotal"], function(v) {
 					log(JSON.stringify(v))
-					let nindex = Object.keys(v)[4];
+					let nindex = Object.keys(v)[0];
 					log(nindex)
 					let wp = parseInt(v[nindex])||0;
 					setAttrs({
-						Skl_total: Number(v.Skl_sf) + Number(v.Skl_i) + Number(v.Skl_rb) + Number(v.Skl_bd) + Number(v.Skl_Qtotal) + wp,
+						Skl_total: Number(v.Skl_i) + Number(v.Skl_bd) + Number(v.Skl_Qtotal) + wp,
 					});
 				});
 			});
@@ -1709,13 +1356,13 @@ on("change:Skl_sf change:Skl_i change:Skl_bd change:Skl_rb change:repeating_weap
 				slotnum = v.SSlot
 				fID = idarray[Number(slotnum)-1];
 				log("fID is" + fID)
-				getAttrs(["Skl_sf", "Skl_i","Skl_bd","Skl_total","repeating_spells_"+fID+"_Skl_wp","Skl_rb","Skl_Qtotal"], function(v) {
+				getAttrs(["repeating_spells_"+fID+"_Skl_wp","Skl_i","Skl_bd","Skl_total","Skl_Qtotal"], function(v) {
 					log(JSON.stringify(v))
-					let nindex = Object.keys(v)[4];
+					let nindex = Object.keys(v)[0];
 					log(nindex)
 					let wp = parseInt(v[nindex])||0;
 					setAttrs({
-						Skl_total: Number(v.Skl_sf) + Number(v.Skl_i) + Number(v.Skl_rb) + Number(v.Skl_bd) + Number(v.Skl_Qtotal) + wp,
+						Skl_total: Number(v.Skl_i) + Number(v.Skl_bd) + Number(v.Skl_Qtotal) + wp,
 					});
 				});
 			});
@@ -1723,20 +1370,21 @@ on("change:Skl_sf change:Skl_i change:Skl_bd change:Skl_rb change:repeating_weap
 	});
 });
 
-on("change:Spd_sf change:Spd_i change:Spd_bd change:Spd_rb change:repeating_weapons:Spd_wp change:repeating_spells:Spd_wp change:_reporder:weapons change:Spd_Qtotal change:repeating_combat change:_reporder:weapons change:_reporder:spells remove:repeating_weapons remove:repeating_spells change:WSlot change:SSlot change:atktype", function(eventInfo) {
-	getAttrs(["WSlot","SSlot","CSlot","atktype"], function(v) {
+// Spd Stat
+on("change:Spd_i change:Spd_bd change:repeating_weapons:Spd_wp change:repeating_spells:Spd_wp change:_reporder:weapons change:Spd_Qtotal change:repeating_combat change:_reporder:weapons change:_reporder:spells remove:repeating_weapons remove:repeating_spells change:WSlot change:SSlot change:atktype", function(eventInfo) {
+	getAttrs(["WSlot","SSlot","atktype"], function(v) {
 		if (v.atktype == "Physical"){
 			getSectionIDsOrdered("repeating_weapons", function(idarray) {
 				slotnum = v.WSlot
 				fID = idarray[Number(slotnum)-1];
 				log("fID is" + fID)
-				getAttrs(["Spd_sf", "Spd_i","Spd_bd","Spd_total","repeating_weapons_"+fID+"_Spd_wp","Spd_rb","Spd_Qtotal"], function(v) {
+				getAttrs(["repeating_weapons_"+fID+"_Spd_wp","Spd_i","Spd_bd","Spd_total","Spd_Qtotal"], function(v) {
 					log(JSON.stringify(v))
-					let nindex = Object.keys(v)[4];
+					let nindex = Object.keys(v)[0];
 					log(nindex)
 					let wp = parseInt(v[nindex])||0;
 					setAttrs({
-						Spd_total: Number(v.Spd_sf) + Number(v.Spd_i) + Number(v.Spd_rb) + Number(v.Spd_bd) + Number(v.Spd_Qtotal) + wp,
+						Spd_total: Number(v.Spd_i) + Number(v.Spd_bd) + Number(v.Spd_Qtotal) + wp,
 					});
 				});
 			});
@@ -1746,13 +1394,13 @@ on("change:Spd_sf change:Spd_i change:Spd_bd change:Spd_rb change:repeating_weap
 				slotnum = v.SSlot
 				fID = idarray[Number(slotnum)-1];
 				log("fID is" + fID)
-				getAttrs(["Spd_sf", "Spd_i","Spd_bd","Spd_total","repeating_spells_"+fID+"_Spd_wp","Spd_rb","Spd_Qtotal"], function(v) {
+				getAttrs(["repeating_spells_"+fID+"_Spd_wp","Spd_i","Spd_bd","Spd_total","Spd_Qtotal"], function(v) {
 					log(JSON.stringify(v))
-					let nindex = Object.keys(v)[4];
+					let nindex = Object.keys(v)[0];
 					log(nindex)
 					let wp = parseInt(v[nindex])||0;
 					setAttrs({
-						Spd_total: Number(v.Spd_sf) + Number(v.Spd_i) + Number(v.Spd_rb) + Number(v.Spd_bd) + Number(v.Spd_Qtotal) + wp,
+						Spd_total: Number(v.Spd_i) + Number(v.Spd_bd) + Number(v.Spd_Qtotal) + wp,
 					});
 				});
 			});
@@ -1760,29 +1408,21 @@ on("change:Spd_sf change:Spd_i change:Spd_bd change:Spd_rb change:repeating_weap
 	});
 });
 
-on("change:DR_sf change:DR_i change:DR_bd change:Spd_total change:DR_multi", function(eventInfo) {
-	getAttrs(["DR_sf", "DR_i","DR_bd","DR_total","DR_multi"], function(v) {
-		setAttrs({
-			DR_total: Math.round((Number(v.DR_sf) + Number(v.DR_i) + Number(v.DR_bd))*(Number(100+Number(v.DR_multi))/100)),
-			Delay: Math.round((Number(v.DR_sf) + Number(v.DR_i) + Number(v.DR_bd))*(Number(100+Number(v.DR_multi))/100)),
-		});
-	});
-});
-
-on("change:Lck_sf change:Lck_i change:Lck_bd change:Lck_rb change:repeating_weapons:Lck_wp change:repeating_spells:Lck_wp change:_reporder:weapons change:Lck_Qtotal change:repeating_combat change:_reporder:weapons change:_reporder:spells remove:repeating_weapons remove:repeating_spells change:WSlot change:SSlot change:atktype", function(eventInfo) {
-	getAttrs(["WSlot","SSlot","CSlot","atktype"], function(v) {
+// Lck Stat
+on("change:Lck_i change:Lck_bd change:repeating_weapons:Lck_wp change:repeating_spells:Lck_wp change:_reporder:weapons change:Lck_Qtotal change:repeating_combat change:_reporder:weapons change:_reporder:spells remove:repeating_weapons remove:repeating_spells change:WSlot change:SSlot change:atktype", function(eventInfo) {
+	getAttrs(["WSlot","SSlot","atktype"], function(v) {
 		if (v.atktype == "Physical"){
 			getSectionIDsOrdered("repeating_weapons", function(idarray) {
 				slotnum = v.WSlot
 				fID = idarray[Number(slotnum)-1];
 				log("fID is" + fID)
-				getAttrs(["Lck_sf", "Lck_i","Lck_bd","Lck_total","repeating_weapons_"+fID+"_Lck_wp","Lck_rb","Lck_Qtotal"], function(v) {
+				getAttrs(["repeating_weapons_"+fID+"_Lck_wp","Lck_i","Lck_bd","Lck_total","Lck_Qtotal"], function(v) {
 					log(JSON.stringify(v))
-					let nindex = Object.keys(v)[4];
+					let nindex = Object.keys(v)[0];
 					log(nindex)
 					let wp = parseInt(v[nindex])||0;
 					setAttrs({
-						Lck_total: Number(v.Lck_sf) + Number(v.Lck_i) + Number(v.Lck_rb) + Number(v.Lck_bd) + Number(v.Lck_Qtotal) + wp,
+						Lck_total: Number(v.Lck_i) + Number(v.Lck_bd) + Number(v.Lck_Qtotal) + wp,
 					});
 				});
 			});
@@ -1792,13 +1432,13 @@ on("change:Lck_sf change:Lck_i change:Lck_bd change:Lck_rb change:repeating_weap
 				slotnum = v.SSlot
 				fID = idarray[Number(slotnum)-1];
 				log("fID is" + fID)
-				getAttrs(["Lck_sf", "Lck_i","Lck_bd","Lck_total","repeating_spells_"+fID+"_Lck_wp","Lck_rb","Lck_Qtotal"], function(v) {
+				getAttrs(["repeating_spells_"+fID+"_Lck_wp","Lck_i","Lck_bd","Lck_total","Lck_Qtotal"], function(v) {
 					log(JSON.stringify(v))
-					let nindex = Object.keys(v)[4];
+					let nindex = Object.keys(v)[0];
 					log(nindex)
 					let wp = parseInt(v[nindex])||0;
 					setAttrs({
-						Lck_total: Number(v.Lck_sf) + Number(v.Lck_i) + Number(v.Lck_rb) + Number(v.Lck_bd) + Number(v.Lck_Qtotal) + wp,
+						Lck_total: Number(v.Lck_i) + Number(v.Lck_bd) + Number(v.Lck_Qtotal) + wp,
 					});
 				});
 			});
@@ -1806,20 +1446,21 @@ on("change:Lck_sf change:Lck_i change:Lck_bd change:Lck_rb change:repeating_weap
 	});
 });
 
-on("change:Def_sf change:Def_i change:Def_bd change:Def_rb change:repeating_weapons:Def_wp change:repeating_spells:Def_wp change:_reporder:weapons change:Def_Qtotal change:repeating_combat change:_reporder:weapons change:_reporder:spells remove:repeating_weapons remove:repeating_spells change:WSlot change:SSlot change:atktype", function(eventInfo) {
-	getAttrs(["WSlot","SSlot","CSlot","atktype"], function(v) {
+// Def Stat
+on("change:Def_i change:Def_bd change:repeating_weapons:Def_wp change:repeating_spells:Def_wp change:_reporder:weapons change:Def_Qtotal change:repeating_combat change:_reporder:weapons change:_reporder:spells remove:repeating_weapons remove:repeating_spells change:WSlot change:SSlot change:atktype", function(eventInfo) {
+	getAttrs(["WSlot","SSlot","atktype"], function(v) {
 		if (v.atktype == "Physical"){
 			getSectionIDsOrdered("repeating_weapons", function(idarray) {
 				slotnum = v.WSlot
 				fID = idarray[Number(slotnum)-1];
 				log("fID is" + fID)
-				getAttrs(["Def_sf", "Def_i","Def_bd","Def_total","repeating_weapons_"+fID+"_Def_wp","Def_rb","Def_Qtotal"], function(v) {
+				getAttrs(["repeating_weapons_"+fID+"_Def_wp","Def_i","Def_bd","Def_total","Def_Qtotal"], function(v) {
 					log(JSON.stringify(v))
-					let nindex = Object.keys(v)[4];
+					let nindex = Object.keys(v)[0];
 					log(nindex)
 					let wp = parseInt(v[nindex])||0;
 					setAttrs({
-						Def_total: Number(v.Def_sf) + Number(v.Def_i) + Number(v.Def_rb) + Number(v.Def_bd) + Number(v.Def_Qtotal) + wp,
+						Def_total: Number(v.Def_i) + Number(v.Def_bd) + Number(v.Def_Qtotal) + wp,
 					});
 				});
 			});
@@ -1829,13 +1470,13 @@ on("change:Def_sf change:Def_i change:Def_bd change:Def_rb change:repeating_weap
 				slotnum = v.SSlot
 				fID = idarray[Number(slotnum)-1];
 				log("fID is" + fID)
-				getAttrs(["Def_sf", "Def_i","Def_bd","Def_total","repeating_spells_"+fID+"_Def_wp","Def_rb","Def_Qtotal"], function(v) {
+				getAttrs(["repeating_spells_"+fID+"_Def_wp","Def_i","Def_bd","Def_total","Def_Qtotal"], function(v) {
 					log(JSON.stringify(v))
-					let nindex = Object.keys(v)[4];
+					let nindex = Object.keys(v)[0];
 					log(nindex)
 					let wp = parseInt(v[nindex])||0;
 					setAttrs({
-						Def_total: Number(v.Def_sf) + Number(v.Def_i) + Number(v.Def_rb) + Number(v.Def_bd) + Number(v.Def_Qtotal) + wp,
+						Def_total: Number(v.Def_i) + Number(v.Def_bd) + Number(v.Def_Qtotal) + wp,
 					});
 				});
 			});
@@ -1843,20 +1484,21 @@ on("change:Def_sf change:Def_i change:Def_bd change:Def_rb change:repeating_weap
 	});
 });
 
-on("change:Res_sf change:Res_i change:Res_bd change:Res_rb change:repeating_weapons:Res_wp change:repeating_spells:Res_wp change:_reporder:weapons change:Res_Qtotal change:repeating_combat change:_reporder:weapons change:_reporder:spells remove:repeating_weapons remove:repeating_spells change:WSlot change:SSlot change:atktype", function(eventInfo) {
-	getAttrs(["WSlot","SSlot","CSlot","atktype"], function(v) {
+// Res Stat
+on("change:Res_i change:Res_bd change:repeating_weapons:Res_wp change:repeating_spells:Res_wp change:_reporder:weapons change:Res_Qtotal change:repeating_combat change:_reporder:weapons change:_reporder:spells remove:repeating_weapons remove:repeating_spells change:WSlot change:SSlot change:atktype", function(eventInfo) {
+	getAttrs(["WSlot","SSlot","atktype"], function(v) {
 		if (v.atktype == "Physical"){
 			getSectionIDsOrdered("repeating_weapons", function(idarray) {
 				slotnum = v.WSlot
 				fID = idarray[Number(slotnum)-1];
 				log("fID is" + fID)
-				getAttrs(["Res_sf", "Res_i","Res_bd","Res_total","repeating_weapons_"+fID+"_Res_wp","Res_rb","Res_Qtotal"], function(v) {
+				getAttrs(["repeating_weapons_"+fID+"_Res_wp","Res_i","Res_bd","Res_total","Res_Qtotal"], function(v) {
 					log(JSON.stringify(v))
-					let nindex = Object.keys(v)[4];
+					let nindex = Object.keys(v)[0];
 					log(nindex)
 					let wp = parseInt(v[nindex])||0;
 					setAttrs({
-						Res_total: Number(v.Res_sf) + Number(v.Res_i) + Number(v.Res_rb) + Number(v.Res_bd) + Number(v.Res_Qtotal) + wp,
+						Res_total: Number(v.Res_i) + Number(v.Res_bd) + Number(v.Res_Qtotal) + wp,
 					});
 				});
 			});
@@ -1866,13 +1508,13 @@ on("change:Res_sf change:Res_i change:Res_bd change:Res_rb change:repeating_weap
 				slotnum = v.SSlot
 				fID = idarray[Number(slotnum)-1];
 				log("fID is" + fID)
-				getAttrs(["Res_sf", "Res_i","Res_bd","Res_total","repeating_spells_"+fID+"_Res_wp","Res_rb","Res_Qtotal"], function(v) {
+				getAttrs(["repeating_spells_"+fID+"_Res_wp","Res_i","Res_bd","Res_total","Res_Qtotal"], function(v) {
 					log(JSON.stringify(v))
-					let nindex = Object.keys(v)[4];
+					let nindex = Object.keys(v)[0];
 					log(nindex)
 					let wp = parseInt(v[nindex])||0;
 					setAttrs({
-						Res_total: Number(v.Res_sf) + Number(v.Res_i) + Number(v.Res_rb) + Number(v.Res_bd) + Number(v.Res_Qtotal) + wp,
+						Res_total: Number(v.Res_i) + Number(v.Res_bd) + Number(v.Res_Qtotal) + wp,
 					});
 				});
 			});
@@ -1880,27 +1522,20 @@ on("change:Res_sf change:Res_i change:Res_bd change:Res_rb change:repeating_weap
 	});
 });
 
-on("change:Cha_sf change:Cha_i change:Cha_bd change:Cha_rb change:repeating_weapons:Cha_wp change:_reporder:weapons change:Mov_Qtotal change:Cha_multi", function(eventInfo) {
+// Cha(?) Stat
+on("change:Cha_i change:Cha_bd change:repeating_weapons:Cha_wp change:_reporder:weapons change:Mov_Qtotal change:Cha_multi", function(eventInfo) {
 	getSectionIDsOrdered("repeating_weapons", function(idarray) {
 		fID = idarray[0];
-		getAttrs(["Cha_sf", "Cha_i","Cha_bd","Cha_total","repeating_weapons_"+fID+"_Cha_wp","Cha_rb","Mov_Qtotal","Cha_multi"], function(v) {
+		getAttrs(["repeating_weapons_"+fID+"_Cha_wp","Cha_i","Cha_bd","Cha_total","Mov_Qtotal","Cha_multi"], function(v) {
 			log(JSON.stringify(v))
-			let nindex = Object.keys(v)[4];
+			let nindex = Object.keys(v)[0];
 			log(nindex)
 			let wp = parseInt(v[nindex])||0;
 			log(wp)
 			setAttrs({
-				Cha_total: Math.round((Number(v.Cha_sf) + Number(v.Cha_i) + Number(v.Cha_rb) + Number(v.Cha_bd) + Number(v.Mov_Qtotal))*(Number(100+Number(v.Cha_multi))/100)),
+				Cha_total: Math.round((Number(v.Cha_i) + Number(v.Cha_bd) + Number(v.Mov_Qtotal))*(Number(100+Number(v.Cha_multi))/100)),
 			});
-			log(Number(v.Cha_sf) + Number(v.Cha_i) + Number(v.Cha_bd) + Number(v.Chab));
-		});
-	});
-});
-
-on("change:MR_bd", function(eventInfo) {
-	getAttrs(["MR_base","MR_bd"], function(v) {
-		setAttrs({
-			mr_total: Number(v.MR_base) + Number(v.MR_bd)
+			log(Number(v.Cha_i) + Number(v.Cha_bd));
 		});
 	});
 });
@@ -1969,285 +1604,84 @@ on("change:Flying_check change:Armor_check change:Cavalry_check change:Dragon_ch
 });
 
 //Growth totals!
-on("change:HP_rg change:HP_gf change:HP_gi", function(eventInfo) {
-	getAttrs(["HP_rg", "HP_gf","HP_gi"], function(values) {
+on("change:HP_gi", function(eventInfo) {
+	getAttrs(["HP_gi"], function(values) {
 		setAttrs({
-			HP_gtotal: Number(values.HP_rg) + Number(values.HP_gf) + Number(values.HP_gi)
+			HP_gtotal: Number(values.HP_gi)
 		});
 	});
 });
 
-on("change:Str_rg change:Str_gf change:Str_gi", function(eventInfo) {
-	getAttrs(["Str_rg", "Str_gf","Str_gi"], function(values) {
+on("change:Str_gi", function(eventInfo) {
+	getAttrs(["Str_gi"], function(values) {
 		setAttrs({
-			Str_gtotal: Number(values.Str_rg) + Number(values.Str_gf) + Number(values.Str_gi)
+			Str_gtotal: Number(values.Str_gi)
 		});
 	});
 });
 
-on("change:Mag_rg change:Mag_gf change:Mag_gi", function(eventInfo) {
-	getAttrs(["Mag_rg", "Mag_gf","Mag_gi"], function(values) {
+on("change:Mag_gi", function(eventInfo) {
+	getAttrs(["Mag_gi"], function(values) {
 		setAttrs({
-			Mag_gtotal: Number(values.Mag_rg) + Number(values.Mag_gf) + Number(values.Mag_gi)
+			Mag_gtotal: Number(values.Mag_gi)
 		});
 	});
 });
 
-on("change:Skl_rg change:Skl_gf change:Skl_gi", function(eventInfo) {
-	getAttrs(["Skl_rg", "Skl_gf","Skl_gi"], function(values) {
+on("change:Skl_gi", function(eventInfo) {
+	getAttrs(["Skl_gi"], function(values) {
 		setAttrs({
-			Skl_gtotal: Number(values.Skl_rg) + Number(values.Skl_gf) + Number(values.Skl_gi)
+			Skl_gtotal: Number(values.Skl_gi)
 		});
 	});
 });
 
-on("change:Spd_rg change:Spd_gf change:Spd_gi", function(eventInfo) {
-	getAttrs(["Spd_rg", "Spd_gf","Spd_gi"], function(values) {
+on("change:Spd_gi", function(eventInfo) {
+	getAttrs(["Spd_gi"], function(values) {
 		setAttrs({
-			Spd_gtotal: Number(values.Spd_rg) + Number(values.Spd_gf) + Number(values.Spd_gi)
+			Spd_gtotal: Number(values.Spd_gi)
 		});
 	});
 });
 
-on("change:Lck_rg change:Lck_gf change:Lck_gi", function(eventInfo) {
-	getAttrs(["Lck_rg", "Lck_gf","Lck_gi"], function(values) {
+on("change:Lck_gi", function(eventInfo) {
+	getAttrs(["Lck_gi"], function(values) {
 		setAttrs({
-			Lck_gtotal: Number(values.Lck_rg) + Number(values.Lck_gf) + Number(values.Lck_gi)
+			Lck_gtotal: Number(values.Lck_gi)
 		});
 	});
 });
 
-on("change:Def_rg change:Def_gf change:Def_gi", function(eventInfo) {
-	getAttrs(["Def_rg", "Def_gf","Def_gi"], function(values) {
+on("change:Def_gi", function(eventInfo) {
+	getAttrs(["Def_gi"], function(values) {
 		setAttrs({
-			Def_gtotal: Number(values.Def_rg) + Number(values.Def_gf) + Number(values.Def_gi)
+			Def_gtotal: Number(values.Def_gi)
 		});
 	});
 });
 
-on("change:Res_rg change:Res_gf change:Res_gi", function(eventInfo) {
-	getAttrs(["Res_rg", "Res_gf","Res_gi"], function(values) {
+on("change:Res_gi", function(eventInfo) {
+	getAttrs(["Res_gi"], function(values) {
 		setAttrs({
-			Res_gtotal: Number(values.Res_rg) + Number(values.Res_gf) + Number(values.Res_gi)
+			Res_gtotal: Number(values.Res_gi)
 		});
 	});
 });
-on("change:Con_rg change:Con_gf change:Con_gi", function(eventInfo) {
-	getAttrs(["Con_rg", "Con_gf","Con_gi"], function(values) {
+on("change:Con_gi", function(eventInfo) {
+	getAttrs(["Con_gi"], function(values) {
 		setAttrs({
 			Con_gtotal: Number(values.Con_gi)
 		});
 	});
 });
 
-on("change:Cha_rg change:Cha_gf change:Cha_gi", function(eventInfo) {
-	getAttrs(["Cha_rg", "Cha_gf","Cha_gi"], function(values) {
+on("change:Cha_gi", function(eventInfo) {
+	getAttrs(["Cha_gi"], function(values) {
 		setAttrs({
-			Cha_gtotal: Number(values.Cha_rg) + Number(values.Cha_gf) + Number(values.Cha_gi)
+			Cha_gtotal: Number(values.Cha_gi)
 		});
 	});
 });
-
-//Even more scripting! For skill checks this time. :(
-on("change:Athletics_check change:str_total change:Lck_total",function(eventInfo){
-	getAttrs(["Athletics_check","Str_total","Lck_total"], function(values){
-		let skillbonus = 0;
-		if (values.Athletics_check == "on"){
-			skillbonus = 5;
-		}
-		setAttrs({
-			Athletics_total: Math.round(((values.Str_total + values.Lck_total)/2)/2 + skillbonus)
-		});
-	});
-});
-on("change:Arcana_check change:Mag_total change:Lck_total",function(eventInfo){
-	getAttrs(["Arcana_check","Mag_total","Lck_total"], function(values){
-		let skillbonus = 0;
-		if (values.Arcana_check == "on"){
-			skillbonus = 5;
-		}
-		setAttrs({
-			Arcana_total: Math.round(((values.Mag_total + values.Lck_total)/2)/2 + skillbonus)
-		});
-	});
-});
-on("change:History_check change:Mag_total change:Lck_total",function(eventInfo){
-	getAttrs(["History_check","Mag_total","Lck_total"], function(values){
-		let skillbonus = 0;
-		if (values.History_check == "on"){
-			skillbonus = 5;
-		}
-		setAttrs({
-			History_total: Math.round(((values.Mag_total + values.Lck_total)/2)/2 + skillbonus)
-		});
-	});
-});
-on("change:Investigation_check change:Mag_total change:Lck_total",function(eventInfo){
-	getAttrs(["Investigation_check","Mag_total","Lck_total"], function(values){
-		let skillbonus = 0;
-		if (values.Investigation_check == "on"){
-			skillbonus = 5;
-		}
-		setAttrs({
-			Investigation_total: Math.round(((values.Mag_total + values.Lck_total)/2)/2 + skillbonus)
-		});
-	});
-});
-on("change:Nature_check change:Mag_total change:Lck_total",function(eventInfo){
-	getAttrs(["Nature_check","Mag_total","Lck_total"], function(values){
-		let skillbonus = 0;
-		if (values.Nature_check == "on"){
-			skillbonus = 5;
-		}
-		setAttrs({
-			Nature_total: Math.round(((values.Mag_total + values.Lck_total)/2)/2 + skillbonus)
-		});
-	});
-});
-on("change:Religion_check change:Mag_total change:Lck_total",function(eventInfo){
-	getAttrs(["Religion_check","Mag_total","Lck_total"], function(values){
-		let skillbonus = 0;
-		if (values.Religion_check == "on"){
-			skillbonus = 5;
-		}
-		setAttrs({
-			Religion_total: Math.round(((values.Mag_total + values.Lck_total)/2)/2 + skillbonus)
-		});
-	});
-});
-on("change:Deception_check change:Skl_total change:Lck_total",function(eventInfo){
-	getAttrs(["Deception_check","Skl_total","Lck_total"], function(values){
-		let skillbonus = 0;
-		if (values.Deception_check == "on"){
-			skillbonus = 5;
-		}
-		setAttrs({
-			Deception_total: Math.round(((values.Skl_total + values.Lck_total)/2)/2 + skillbonus)
-		});
-	});
-});
-on("change:Intimidation_check change:Skl_total change:Lck_total",function(eventInfo){
-	getAttrs(["Intimidation_check","Skl_total","Lck_total"], function(values){
-		let skillbonus = 0;
-		if (values.Intimidation_check == "on"){
-			skillbonus = 5;
-		}
-		setAttrs({
-			Intimidation_total: Math.round(((values.Skl_total + values.Lck_total)/2)/2 + skillbonus)
-		});
-	});
-});
-on("change:Performance_check change:Skl_total change:Lck_total",function(eventInfo){
-	getAttrs(["Performance_check","Skl_total","Lck_total"], function(values){
-		let skillbonus = 0;
-		if (values.Performance_check == "on"){
-			skillbonus = 5;
-		}
-		setAttrs({
-			Performance_total: Math.round(((values.Skl_total + values.Lck_total)/2)/2 + skillbonus)
-		});
-	});
-});
-on("change:Persuasion_check change:Skl_total change:Lck_total",function(eventInfo){
-	getAttrs(["Persuasion_check","Skl_total","Lck_total"], function(values){
-		let skillbonus = 0;
-		if (values.Persuasion_check == "on"){
-			skillbonus = 5;
-		}
-		setAttrs({
-			Persuasion_total: Math.round(((values.Skl_total + values.Lck_total)/2)/2 + skillbonus)
-		});
-	});
-});
-on("change:Acrobatics_check change:Spd_total change:Lck_total",function(eventInfo){
-	getAttrs(["Acrobatics_check","Spd_total","Lck_total"], function(values){
-		let skillbonus = 0;
-		if (values.Acrobatics_check == "on"){
-			skillbonus = 5;
-		}
-		setAttrs({
-			Acrobatics_total: Math.round(((values.Spd_total + values.Lck_total)/2)/2 + skillbonus)
-		});
-	});
-});
-on("change:SleightofHand_check change:Spd_total change:Lck_total",function(eventInfo){
-	getAttrs(["SleightofHand_check","Spd_total","Lck_total"], function(values){
-		let skillbonus = 0;
-		if (values.SleightofHand_check == "on"){
-			skillbonus = 5;
-		}
-		setAttrs({
-			SleightofHand_total: Math.round(((values.Spd_total + values.Lck_total)/2)/2 + skillbonus)
-		});
-	});
-});
-on("change:Stealth_check change:Spd_total change:Lck_total",function(eventInfo){
-	getAttrs(["Stealth_check","Spd_total","Lck_total"], function(values){
-		let skillbonus = 0;
-		if (values.Stealth_check == "on"){
-			skillbonus = 5;
-		}
-		setAttrs({
-			Stealth_total: Math.round(((values.Spd_total + values.Lck_total)/2)/2 + skillbonus)
-		});
-	});
-});
-on("change:AnimalHandling_check change:Res_total change:Lck_total",function(eventInfo){
-	getAttrs(["AnimalHandling_check","Res_total","Lck_total"], function(values){
-		let skillbonus = 0;
-		if (values.AnimalHandling_check == "on"){
-			skillbonus = 5;
-		}
-		setAttrs({
-			AnimalHandling_total: Math.round(((values.Res_total + values.Lck_total)/2)/2 + skillbonus)
-		});
-	});
-});
-on("change:Insight_check change:Res_total change:Lck_total",function(eventInfo){
-	getAttrs(["Insight_check","Res_total","Lck_total"], function(values){
-		let skillbonus = 0;
-		if (values.Insight_check == "on"){
-			skillbonus = 5;
-		}
-		setAttrs({
-			Insight_total: Math.round(((values.Res_total + values.Lck_total)/2)/2 + skillbonus)
-		});
-	});
-});
-on("change:Medicine_check change:Res_total change:Lck_total",function(eventInfo){
-	getAttrs(["Medicine_check","Res_total","Lck_total"], function(values){
-		let skillbonus = 0;
-		if (values.Medicine_check == "on"){
-			skillbonus = 5;
-		}
-		setAttrs({
-			Medicine_total: Math.round(((values.Res_total + values.Lck_total)/2)/2 + skillbonus)
-		});
-	});
-});
-on("change:Perception_check change:Res_total change:Lck_total",function(eventInfo){
-	getAttrs(["Perception_check","Res_total","Lck_total"], function(values){
-		let skillbonus = 0;
-		if (values.Perception_check == "on"){
-			skillbonus = 5;
-		}
-		setAttrs({
-			Perception_total: Math.round(((values.Res_total + values.Lck_total)/2)/2 + skillbonus)
-		});
-	});
-});
-on("change:Survival_check change:Res_total change:Lck_total",function(eventInfo){
-	getAttrs(["Survival_check","Res_total","Lck_total"], function(values){
-		let skillbonus = 0;
-		if (values.Survival_check == "on"){
-			skillbonus = 5;
-		}
-		setAttrs({
-			Survival_total: Math.round(((values.Res_total + values.Lck_total)/2)/2 + skillbonus)
-		});
-	});
-});
-
 
 //Weapon Type
 on("change:repeating_weapons:WType change:repeating_weapons:wEXP change:repeating_spells:wEXP change:repeating_spells:SType change:atktype change:_reporder:weapons change:_reporder:spells remove:repeating_spells remove:repeating_weapons change:WSlot change:SSlot", function(eventInfo) {
@@ -2299,7 +1733,7 @@ on("change:repeating_weapons:WType change:repeating_weapons:wEXP change:repeatin
 
 // Weapon Info
 on("change:repeating_weapons:MinDist_wp change:repeating_weapons:MaxDist_wp change:repeating_weapons:Counter_wp change:repeating_weapons:Brave_wp change:_reporder:weapons change:_reporder:spells remove:repeating_spells remove:repeating_weapons change:WSlot change:SSlot", function(eventInfo) {
-	getAttrs(["WSlot","SSlot","CSlot","atktype"], function(v) {
+	getAttrs(["WSlot","SSlot","atktype"], function(v) {
 		if (v.atktype == "Physical"){
 			getSectionIDsOrdered("repeating_weapons", function(idarray) {
 				slotnum = v.WSlot
@@ -2408,6 +1842,7 @@ on("change:LanceEXP", function(eventInfo) {
 		});
 	});
 });
+
 on("change:AxeEXP", function(eventInfo) {
 	getAttrs(["Axerank_max", "AxeEXP", "Axerank"], function(values) {
 		maxRank = values.Axerank_max
@@ -2425,6 +1860,7 @@ on("change:AxeEXP", function(eventInfo) {
 		});
 	});
 });
+
 on("change:BowEXP", function(eventInfo) {
 	getAttrs(["Bowrank_max", "BowEXP", "Bowrank"], function(values) {
 		maxRank = values.Bowrank_max
@@ -2442,6 +1878,7 @@ on("change:BowEXP", function(eventInfo) {
 		});
 	});
 });
+
 on("change:StavesEXP", function(eventInfo) {
 	getAttrs(["Stavesrank_max", "StavesEXP", "Stavesrank"], function(values) {
 		maxRank = values.Stavesrank_max
@@ -2459,6 +1896,7 @@ on("change:StavesEXP", function(eventInfo) {
 		});
 	});
 });
+
 on("change:DarkEXP", function(eventInfo) {
 	getAttrs(["Darkrank_max", "DarkEXP", "Darkrank"], function(values) {
 		maxRank = values.Darkrank_max
@@ -2476,6 +1914,7 @@ on("change:DarkEXP", function(eventInfo) {
 		});
 	});
 });
+
 on("change:AnimaEXP", function(eventInfo) {
 	getAttrs(["Animarank_max", "AnimaEXP", "Animarank"], function(values) {
 		maxRank = values.Animarank_max
@@ -2493,6 +1932,7 @@ on("change:AnimaEXP", function(eventInfo) {
 		});
 	});
 });
+
 on("change:LightEXP", function(eventInfo) {
 	getAttrs(["Lightrank_max", "LightEXP", "Lightrank"], function(values) {
 		maxRank = values.Lightrank_max
@@ -2510,75 +1950,7 @@ on("change:LightEXP", function(eventInfo) {
 		});
 	});
 });
-on("change:AuthorityEXP", function(eventInfo) {
-	getAttrs(["Authorityrank_max", "AuthorityEXP", "Authorityrank"], function(values) {
-		maxRank = values.Authorityrank_max
-		console.log(maxRank)
-		currEXP = values.AuthorityEXP;
-		console.log(currEXP)
-		Rank = values.Authorityrank;
-		console.log(Rank)
-		tRanks = setRank(Rank, currEXP);
-		setAttrs({
-			AuthorityEXP: tRanks[1]
-		});
-		setAttrs({
-			Authorityrank: tRanks[0]
-		});
-	});
-});
-on("change:ArmorEXP", function(eventInfo) {
-	getAttrs(["Armorrank_max", "ArmorEXP", "Armorrank"], function(values) {
-		maxRank = values.Armorrank_max
-		console.log(maxRank)
-		currEXP = values.ArmorEXP;
-		console.log(currEXP)
-		Rank = values.Armorrank;
-		console.log(Rank)
-		tRanks = setRank(Rank, currEXP);
-		setAttrs({
-			ArmorEXP: tRanks[1]
-		});
-		setAttrs({
-			Armorrank: tRanks[0]
-		});
-	});
-});
-on("change:FlyingEXP", function(eventInfo) {
-	getAttrs(["Flyingrank_max", "FlyingEXP", "Flyingrank"], function(values) {
-		maxRank = values.Flyingrank_max
-		console.log(maxRank)
-		currEXP = values.FlyingEXP;
-		console.log(currEXP)
-		Rank = values.Flyingrank;
-		console.log(Rank)
-		tRanks = setRank(Rank, currEXP);
-		setAttrs({
-			FlyingEXP: tRanks[1]
-		});
-		setAttrs({
-			Flyingrank: tRanks[0]
-		});
-	});
-});
-on("change:RidingEXP", function(eventInfo) {
-	getAttrs(["Ridingrank_max", "RidingEXP", "Ridingrank"], function(values) {
-		maxRank = values.Ridingrank_max
-		console.log(maxRank)
-		currEXP = values.RidingEXP;
-		console.log(currEXP)
-		Rank = values.Ridingrank;
-		console.log(Rank)
-		tRanks = setRank(Rank, currEXP);
-		setAttrs({
-			RidingEXP: tRanks[1]
-		});
-		setAttrs({
-			Ridingrank: tRanks[0]
-		});
-	});
 
-});
 //Weapon Description
 on("change:repeating_weapons:WName change:repeating_spells:SName change:repeating_weapons:Eff_wp change:repeating_spells:Eff_wp change:repeating_weapons:WepEff1 change:repeating_weapons:WepEff2 change:repeating_spells:WepEff1 change:repeating_spells:WepEff2 change:repeating_weapons:Skill_wp change:repeating_spells:Skill_wp change:atktype change:_reporder:weapons change:_reporder:spells remove:repeating_spells remove:repeating_weapons change:WSlot change:SSlot", function(eventInfo) {
 	getAttrs(["WSlot","SSlot","atktype"], function(v) {
@@ -2638,22 +2010,6 @@ on("change:repeating_weapons:WName change:repeating_spells:SName change:repeatin
 				});
 			});
 		}
-		if (v.atktype == "Combat Art"){
-			getSectionIDsOrdered("repeating_combat", function(idarray) {
-				slotnum = v.SSlot
-				fID = idarray[Number(slotnum)-1];
-				log("fID is" + fID)
-				getAttrs(["repeating_combat_"+fID+"_Skill_wp"], function(v) {
-					log(JSON.stringify(v))
-					let nindex = Object.keys(v)[0];
-					log(nindex)
-					let wepdesc = v[nindex];
-					setAttrs({
-						currDesc: wepdesc
-					});
-				});
-			});
-		}
 	});
 });
 
@@ -2678,7 +2034,7 @@ on('change:repeating_spells remove:repeating_spells change:atktype change:SSlot'
 	});
 });
 
-on('change:repeating_combat remove:repeating_combat change:atktype change:CSlot', () => {
+on('change:repeating_combat remove:repeating_combat change:atktype', () => {
 	getSectionIDsOrdered('repeating_combat', (idarray) => {
 		getAttrs(idarray.map((id) => `repeating_combat_${id}_CName`), (values) => {
 			setAttrs({
@@ -2688,58 +2044,14 @@ on('change:repeating_combat remove:repeating_combat change:atktype change:CSlot'
 	});
 });
 
-//Strengths
-on("change:atktype change:repeating_weapons change:repeating_spells change:repeating_weapons:Strengths change:repeating_spells:Strengths change:atktype change:_reporder:weapons change:_reporder:spells remove:repeating_spells remove:repeating_weapons change:WSlot change:SSlot", function(eventInfo) {
-	getAttrs(["WSlot","SSlot","atktype"], function(v) {
-		if (v.atktype == "Physical"){
-			getSectionIDsOrdered("repeating_weapons", function(idarray) {
-				slotnum = v.WSlot
-				fID = idarray[Number(slotnum)-1];
-				log("fID is" + fID)
-				getAttrs(["repeating_weapons_"+fID+"_Strengths","repeating_weapons_"+fID+"_Mt"], function(v) {
-					log(JSON.stringify(v))
-					let nindex = Object.keys(v)[0];
-					let nindex2 = Object.keys(v)[1];
-
-					log(nindex)
-					let wepstr = v[nindex];
-					let wepmt = v[nindex2];
-					setAttrs({
-						wepnum: idarray.length
-					});
-				});
-			});
-		}
-		if (v.atktype == "Magical"){
-			getSectionIDsOrdered("repeating_spells", function(idarray) {
-				slotnum = v.SSlot
-				fID = idarray[Number(slotnum)-1];
-				log("fID is" + fID)
-				getAttrs(["repeating_spells_"+fID+"_Strengths","repeating_spells_"+fID+"_Mt"], function(v) {
-					log(JSON.stringify(v))
-					let nindex = Object.keys(v)[0];
-					let nindex2 = Object.keys(v)[1];
-					log(nindex)
-					let wepstr = v[nindex];
-					let wepmt = v[nindex2];
-					setAttrs({
-						currMt: Number(wepmt),
-						spellnum: idarray.length
-					});
-				});
-			});
-		}
-	});
-});
-
 //PhysDmg
-on("change:Str_total change:repeating_weapons:WType change:Cha_total change:repeating_weapons:Mt change:repeating_weapons:Wt change:_reporder:weapons remove:repeating_weapons change:Physb change:WSlot change:atktype change:phys_bd", function(eventInfo) {
+on("change:Str_total change:repeating_weapons:WType change:Cha_total change:repeating_weapons:Mt change:repeating_weapons:Wt change:_reporder:weapons remove:repeating_weapons change:WSlot change:atktype change:phys_bd", function(eventInfo) {
 	getAttrs(["WSlot"], function(v) {
 		getSectionIDsOrdered("repeating_weapons", function(idarray) {
 			slotnum = v.WSlot
 			fID = idarray[Number(slotnum)-1];
 			log("fID is" + fID)
-			getAttrs(["Str_total", "repeating_weapons_"+fID+"_Mt","repeating_weapons_"+fID+"_WType", "repeating_weapons_"+fID+"_Wt", "Cha_total", "Physb", "atktype", "phys_bd"], function(v) {
+			getAttrs(["Str_total", "repeating_weapons_"+fID+"_Mt","repeating_weapons_"+fID+"_WType", "repeating_weapons_"+fID+"_Wt", "Cha_total", "atktype", "phys_bd"], function(v) {
 				log(JSON.stringify(v))
 				let nindex = Object.keys(v)[1];
 				let mindex = Object.keys(v)[2];
@@ -2749,15 +2061,14 @@ on("change:Str_total change:repeating_weapons:WType change:Cha_total change:repe
 				let wWt = parseInt(v[wtindex])||0;
 				log("wMt is " + wMt)
 				let Str = v.Str_total;
-				let Bonus = v.Physb;
 
 				setAttrs({
 					currMt: Number(wMt),
 					currWt: Number(wWt)
 				})
 				setAttrs({
-					phys_total: Math.round((Str) + wMt) + Number(Bonus) + Number(v.phys_bd),
-					effdmg: Str + 3*wMt + Number(Bonus) + Number(v.phys_bd)
+					phys_total: Math.round((Str) + wMt) + Number(v.phys_bd),
+					effdmg: Str + 3*wMt + Number(v.phys_bd)
 				});
 
 				console.log(Math.round((Str) + wMt));
@@ -2766,15 +2077,14 @@ on("change:Str_total change:repeating_weapons:WType change:Cha_total change:repe
 	});
 });
 
-
 //MagDmg
-on("change:Mag_total change:repeating_spells:Mt change:repeating_weapons:SType change:repeating_weapons:Wt change:_reporder:spells remove:repeating_spells change:Magb change:SSlot change:atktype change:myst_bd", function(eventInfo) {
+on("change:Mag_total change:repeating_spells:Mt change:repeating_weapons:SType change:repeating_weapons:Wt change:_reporder:spells remove:repeating_spells change:SSlot change:atktype change:myst_bd", function(eventInfo) {
 	getAttrs(["SSlot"], function(v) {
 		getSectionIDsOrdered("repeating_spells", function(idarray) {
 			slotnum = v.SSlot
 			fID = idarray[Number(slotnum)-1];
 			log("fID is" + fID)
-			getAttrs(["Mag_total", "repeating_spells_"+fID+"_Mt","repeating_spells_"+fID+"_SType", "repeating_spells_"+fID+"_Wt", "Cha_total","Magb","myst_bd", "atktype"], function(v) {
+			getAttrs(["Mag_total", "repeating_spells_"+fID+"_Mt","repeating_spells_"+fID+"_SType", "repeating_spells_"+fID+"_Wt", "Cha_total","myst_bd", "atktype"], function(v) {
 				log(JSON.stringify(v))
 				let nindex = Object.keys(v)[1];
 				let mindex = Object.keys(v)[2];
@@ -2784,12 +2094,11 @@ on("change:Mag_total change:repeating_spells:Mt change:repeating_weapons:SType c
 				let wWt = parseInt(v[wtindex])||0;
 				log("wMt is " + wMt)
 				let Mag = v.Mag_total;
-				let Bonus = v.Magb;
 				if (v.atktype == "Magical"){
 					setAttrs({
 						currMt: Number(wMt),
 						currWt: Number(wWt),
-						effdmg: Mag + 3*wMt + Number(Bonus) + Number(v.myst_bd)
+						effdmg: Mag + 3*wMt + Number(v.myst_bd)
 					})
 				}
 				if (v[mindex] == "Gambit"){
@@ -2799,7 +2108,7 @@ on("change:Mag_total change:repeating_spells:Mt change:repeating_weapons:SType c
 				}
 				else {
 					setAttrs({
-						myst_total: Math.round((Mag) + wMt) + Number(Bonus) + Number(v.myst_bd),
+						myst_total: Math.round((Mag) + wMt) + Number(v.myst_bd),
 					});
 				}
 				console.log(Math.round((Mag) + wMt));
@@ -2809,31 +2118,19 @@ on("change:Mag_total change:repeating_spells:Mt change:repeating_weapons:SType c
 });
 
 //Prot
-on("change:Def_total change:Protb change:prot_bd", function() {
-	getAttrs(["Def_total","Protb","prot_bd"], function(v) {
+on("change:Def_total change:prot_bd", function() {
+	getAttrs(["Def_total","prot_bd"], function(v) {
 		setAttrs({
-			prot_total: Number(v.Def_total) + Number(v.Protb) + Number(v.prot_bd)
+			prot_total: Number(v.Def_total) + Number(v.prot_bd)
 		});
 	});
 });
 
 //Ward
-on("change:Res_total change:Resb change:ward_bd", function() {
-	getAttrs(["Res_total","Resb","ward_bd"], function(v) {
+on("change:Res_total change:ward_bd", function() {
+	getAttrs(["Res_total","ward_bd"], function(v) {
 		setAttrs({
-			ward_total: Number(v.Res_total) + Number(v.Resb) + Number(v.ward_bd)
-		});
-	});
-});
-
-//Avoid
-on("change:Atkspd change:Avo_bd change:Lck_total change:Avomod change:Avob change:ProwAvo change:Avo_Qtotal", function() {
-	getAttrs(["Atkspd", "Avo_bd","Lck_total","Avomod","Avob","ProwAvo","Avo_Qtotal"], function(v) {
-		Spd = v.Atkspd;
-		LckA = v.Lck_total;
-		BonA = v.Avob;
-		setAttrs({
-			avo: Number(Spd)*2 + Math.floor(Number(LckA)/2) + Number(v.Avo_bd) + Number(v.Avo_Qtotal)
+			ward_total: Number(v.Res_total) + Number(v.ward_bd)
 		});
 	});
 });
@@ -2892,28 +2189,36 @@ on("change:SwordHit change:LanceHit change:AxeHit change:BowHit change:BrawlHit 
 	});
 });
 
+//Avoid
+on("change:Atkspd change:Avo_bd change:Lck_total change:ProwAvo change:Avo_Qtotal", function() {
+	getAttrs(["Atkspd", "Avo_bd","Lck_total","ProwAvo","Avo_Qtotal"], function(v) {
+		Spd = v.Atkspd;
+		LckA = v.Lck_total;
+		setAttrs({
+			avo: Number(Spd)*2 + Math.floor(Number(LckA)/2) + Number(v.Avo_bd) + Number(v.Avo_Qtotal)
+		});
+	});
+});
+
 //Hit
-on("change:Skl_total change:Lck_total change:Hitmod change:repeating_combat change:repeating_combat:Hit change:repeating_weapons:Hit change:repeating_spells:Hit change:_reporder:weapons change:_reporder:spells remove:repeating_weapons remove:repeating_spells change:Hitb change:WSlot change:SSlot change:atktype change:ProwHit change:Hit_Qtotal change:hit_bd", function(eventInfo) {
-	getAttrs(["WSlot","SSlot","CSlot","atktype"], function(v) {
+on("change:Skl_total change:Lck_total change:repeating_combat change:repeating_combat:Hit change:repeating_weapons:Hit change:repeating_spells:Hit change:_reporder:weapons change:_reporder:spells remove:repeating_weapons remove:repeating_spells change:WSlot change:SSlot change:atktype change:ProwHit change:Hit_Qtotal change:hit_bd", function(eventInfo) {
+	getAttrs(["WSlot","SSlot","atktype"], function(v) {
 		if (v.atktype == "Physical"){
 			getSectionIDsOrdered("repeating_weapons", function(idarray) {
 				slotnum = v.WSlot
 				fID = idarray[Number(slotnum)-1];
 				log("fID is" + fID)
-				getAttrs(["Skl_total","Lck_total","Hitmod","repeating_weapons_"+fID+"_hit", "Hitb", "ProwHit","Hit_Qtotal", "Hit_bd"], function(v) {
+				getAttrs(["Skl_total","Lck_total","repeating_weapons_"+fID+"_hit", "ProwHit","Hit_Qtotal", "Hit_bd"], function(v) {
 					log(JSON.stringify(v))
-					let nindex = Object.keys(v)[3];
+					let nindex = Object.keys(v)[2];
 					log(nindex)
 					let wHit = parseInt(v[nindex])||0;
 					log("wHit is " + wHit)
 					let Skl = v.Skl_total;
 					let Lck = v.Lck_total;
-					let Mod = v.Hitmod;
-					let Bonus = v.Hitb;
 					let temphit = v.Hit_bd;
 					setAttrs({
-						Hit: Math.round(wHit) + Number(temphit) + Number(Bonus)+ Number(Mod) + Number(Skl)*2 + Math.floor(Number(Lck)/2) + Number(v.ProwHit) + Number(v.Hit_Qtotal),
-						currHit: wHit
+						Hit: Math.round(wHit) + Number(temphit) + Number(Skl)*2 + Math.floor(Number(Lck)/2) + Number(v.ProwHit) + Number(v.Hit_Qtotal),
 					});
 				});
 			});
@@ -2923,22 +2228,19 @@ on("change:Skl_total change:Lck_total change:Hitmod change:repeating_combat chan
 				slotnum = v.SSlot
 				fID = idarray[Number(slotnum)-1];
 				log("fID is" + fID)
-				getAttrs(["Skl_total","Lck_total","Hitmod","repeating_spells_"+fID+"_hit", "Hitb", "ProwHit", "Hit_Qtotal", "Hit_bd"], function(v) {
+				getAttrs(["Skl_total","Lck_total","repeating_spells_"+fID+"_hit", "ProwHit", "Hit_Qtotal", "Hit_bd"], function(v) {
 					log(JSON.stringify(v))
-					let nindex = Object.keys(v)[3];
+					let nindex = Object.keys(v)[2];
 					log(nindex)
 					let wHit = parseInt(v[nindex])||0;
 					log("wHit is " + wHit)
 					let Skl = v.Skl_total;
 					let Lck = v.Lck_total;
-					let Mod = v.Hitmod;
-					let Bonus = v.Hitb;
 					let temphit = v.Hit_bd;
 					setAttrs({
-						Hit: Math.round(wHit) + Number(temphit) + Number(Bonus)+ Number(Mod) + Number(Skl)*2 + Math.floor(Number(Lck)/2) + Number(v.ProwHit) + Number(v.Hit_Qtotal)
+						Hit: Math.round(wHit) + Number(temphit) + Number(Skl)*2 + Math.floor(Number(Lck)/2) + Number(v.ProwHit) + Number(v.Hit_Qtotal)
 					});
 					console.log(Math.round((Skl) + wHit));
-					console.log("Hitmod is" + Mod)
 				});
 			});
 		}
@@ -2947,31 +2249,24 @@ on("change:Skl_total change:Lck_total change:Hitmod change:repeating_combat chan
 });
 
 //Crit
-on("change:Skl_total change:Lck_total change:Critmod change:repeating_weapons:Crit change:repeating_spells:Crit change:_reporder:weapons change:_reporder:spells remove:repeating_weapons remove:repeating_spells change:Critb change:WSlot change:SSlot change:atktype change:Crit_Qtotal change:Crit_bd", function() {
-	getAttrs(["WSlot","SSlot","CSlot","atktype"], function(v) {
+on("change:Skl_total change:Lck_total change:repeating_weapons:Crit change:repeating_spells:Crit change:_reporder:weapons change:_reporder:spells remove:repeating_weapons remove:repeating_spells change:WSlot change:SSlot change:atktype change:Crit_Qtotal change:Crit_bd", function() {
+	getAttrs(["WSlot","SSlot","atktype"], function(v) {
 		if (v.atktype == "Physical"){
 			getSectionIDsOrdered("repeating_weapons", function(idarray) {
 				slotnum = v.WSlot
 				fID = idarray[Number(slotnum)-1];
-				getAttrs(["Skl_total","Lck_total","Critmod","repeating_weapons_"+fID+"_crit","Critb","Crit_Qtotal", "Crit_bd"], function(v) {
+				getAttrs(["Skl_total","Lck_total","repeating_weapons_"+fID+"_Crit","Crit_Qtotal","Crit_bd"], function(v) {
 					log(JSON.stringify(v))
-					let nindex = Object.keys(v)[3];
+					let nindex = Object.keys(v)[2];
 					log(nindex)
 					let wCrit = parseInt(v[nindex])||0;
 					log("wCrit is" + wCrit)
 					let SklC = v.Skl_total;
 					let LckC = v.Lck_total;
-					let ModC = v.Critmod;
 					let CritQ = v.Crit_Qtotal
-					let BonC = v.Critb;
 					setAttrs({
-						Crit: Math.round((SklC / 2) + (LckC / 2) + CritQ + wCrit + Number(v.Crit_bd)),
+						Crit: Math.floor((SklC / 2) + (LckC / 2) + CritQ + wCrit + Number(v.Crit_bd)),
 					});
-					setAttrs({
-						currCrit : wCrit
-					});
-					console.log(Math.round((SklC / 2) + (LckC / 2) + wCrit));
-					console.log("Critmod is" + ModC)
 				});
 			});
 		}
@@ -2979,26 +2274,64 @@ on("change:Skl_total change:Lck_total change:Critmod change:repeating_weapons:Cr
 			getSectionIDsOrdered("repeating_spells", function(idarray) {
 				slotnum = v.SSlot
 				fID = idarray[Number(slotnum)-1];
-				getAttrs(["Skl_total","Lck_total","Critmod","repeating_spells_"+fID+"_crit","Critb","Crit_Qtotal", "Crit_bd"], function(v) {
+				getAttrs(["Skl_total","Lck_total","repeating_spells_"+fID+"_Crit","Crit_Qtotal","Crit_bd"], function(v) {
 					log(JSON.stringify(v))
-					let nindex = Object.keys(v)[3];
+					let nindex = Object.keys(v)[2];
 					log(nindex)
 					let wCrit = parseInt(v[nindex])||0;
 					log("wCrit is" + wCrit)
 					let SklC = v.Skl_total;
 					let LckC = v.Lck_total;
-					let ModC = v.Critmod;
-					let BonC = v.Critb;
 					setAttrs({
-						Crit: Math.round((SklC / 2) + (LckC / 2)  + wCrit) +Number(BonC) + Number(ModC) + Number(v.Crit_Qtotal) + Number(v.Crit_bd)
+						Crit: Math.floor((SklC / 2) + (LckC / 2)  + wCrit) + Number(v.Crit_Qtotal) + Number(v.Crit_bd),
 					});
-					console.log(Math.round((SklC / 2) + (LckC / 2) + wCrit));
-					console.log("Critmod is" + ModC)
 				});
 			});
 		}
 	});
 });
+
+//Crit Avoid
+on("change:Lck_total change:repeating_weapons:Ddg change:repeating_spells:Ddg change:_reporder:weapons change:_reporder:spells remove:repeating_weapons remove:repeating_spells change:WSlot change:SSlot change:atktype change:Atkspd change:ProwCAvo change:Ddg_bd change:Ddg_Qtotal", function() {
+	getAttrs(["WSlot","SSlot","atktype"], function(v) {
+		if (v.atktype == "Physical"){
+			getSectionIDsOrdered("repeating_weapons", function(idarray) {
+				slotnum = v.WSlot
+				fID = idarray[Number(slotnum)-1];
+				getAttrs(["Skl_total","Lck_total","repeating_weapons_"+fID+"_Ddg","Ddg_Qtotal","Ddg_bd"], function(v) {
+					log(JSON.stringify(v))
+					let nindex = Object.keys(v)[2];
+					log(nindex)
+					let wDdg = parseInt(v[nindex])||0;
+					let SklC = v.Skl_total;
+					let LckC = v.Lck_total;
+					setAttrs({
+						Ddg: Math.round(100 + LckC + Number(v.Ddg_Qtotal) + wDdg + Number(v.Ddg_bd)),
+					});
+				});
+			});
+		}
+		if (v.atktype == "Magical"){
+			getSectionIDsOrdered("repeating_spells", function(idarray) {
+				slotnum = v.SSlot
+				fID = idarray[Number(slotnum)-1];
+				getAttrs(["Skl_total","Lck_total","repeating_spells_"+fID+"_Ddg","Ddg_Qtotal","Ddg_bd"], function(v) {
+					log(JSON.stringify(v))
+					let nindex = Object.keys(v)[2];
+					log(nindex)
+					let wDdg = parseInt(v[nindex])||0;
+					let SklC = v.Skl_total;
+					let LckC = v.Lck_total;
+					setAttrs({
+						Ddg: Math.round(100 + LckC + Number(v.Ddg_Qtotal) + wDdg + Number(v.Ddg_bd)),
+					});
+				});
+			});
+		}
+	});
+});
+
+
 //AtkSpd
 on("change:Spd_total change:All change:Con_total change:repeating_weapons:Wt change:repeating_spells:Wt change:_reporder:weapons change:_reporder:spells remove:repeating_weapons remove:repeating_spells change:WSlot change:SSlot change:atktype change:Weight_Qtotal", function() {
 	getAttrs(["WSlot","SSlot","atktype"], function(v) {
@@ -3077,72 +2410,15 @@ on("change:Spd_total change:All change:Con_total change:repeating_weapons:Wt cha
 	});
 });
 
-//Crit Avoid
-
-on("change:Skl_total change:Lck_total change:Critmod change:repeating_weapons:Ddg change:repeating_spells:Ddg change:_reporder:weapons change:_reporder:spells remove:repeating_weapons remove:repeating_spells change:WSlot change:SSlot change:atktype change:Atkspd change:Critavob change:ProwCAvo change:Ddg_bd change:Ddg_Qtotal", function() {
-	getAttrs(["WSlot","SSlot","CSlot","atktype"], function(v) {
-		if (v.atktype == "Physical"){
-			getSectionIDsOrdered("repeating_weapons", function(idarray) {
-				slotnum = v.WSlot
-				fID = idarray[Number(slotnum)-1];
-				getAttrs(["Skl_total","Lck_total","Critmod","repeating_weapons_"+fID+"_Ddg","Ddg_Qtotal", "Ddg_bd"], function(v) {
-					log(JSON.stringify(v))
-					let nindex = Object.keys(v)[3];
-					log(nindex)
-					let wDdg = parseInt(v[nindex])||0;
-					let SklC = v.Skl_total;
-					let LckC = v.Lck_total;
-					setAttrs({
-						Ddg: Math.round(100 + LckC + Number(v.Ddg_Qtotal) + wDdg + Number(v.Ddg_bd)),
-					});
-					setAttrs({
-						currDdg : wDdg
-					});
-				});
-			});
-		}
-		if (v.atktype == "Magical"){
-			getSectionIDsOrdered("repeating_spells", function(idarray) {
-				slotnum = v.SSlot
-				fID = idarray[Number(slotnum)-1];
-				getAttrs(["Skl_total","Lck_total","Critmod","repeating_spells_"+fID+"_Ddg","Ddg_Qtotal", "Ddg_bd"], function(v) {
-					log(JSON.stringify(v))
-					let nindex = Object.keys(v)[3];
-					log(nindex)
-					let wDdg = parseInt(v[nindex])||0;
-					let SklC = v.Skl_total;
-					let LckC = v.Lck_total;
-					setAttrs({
-						Ddg: Math.round(100 + LckC + Number(v.Ddg_Qtotal) + wDdg + Number(v.Ddg_bd)),
-					});
-					setAttrs({
-						currDdg : wDdg
-					});
-				});
-			});
-		}
-	});
-});
-
-// on("change:Lck_total change:Atkspd change:Ddgmod change:Critavob change:ProwCAvo change:Ddg_bd change:Ddg_Qtotal", function() {
-//   getAttrs(["Lck_total", "Avomod", "Critavob","ProwCAvo","Ddg_bd","Ddg_Qtotal"], function(v) {
-//     Lck = v.Lck_total;
-//     Cavo = v.Critavob;
-//     setAttrs({
-//       Ddg: 100 + Number(Lck) + Number(v.ProwCAvo) + Number(v.Avomod) + Number(v.Ddg_bd) + Number(v.Ddg_Qtotal)
-//     });
-//   });
-// });
-
 //Gambit Hit
-on("change:Cha_total change:Ghitb change:repeating_weapons:Hit change:repeating_spells:Hit change:_reporder:weapons change:_reporder:spells remove:repeating_weapons remove:repeating_spells change:repeating_weapons:WType change:repeating_spells:SType change:WSlot change:SSlot change:atktype change:ProwHit", function(eventInfo) {
-	getAttrs(["WSlot","SSlot","CSlot","atktype"], function(v) {
+on("change:Cha_total change:repeating_weapons:Hit change:repeating_spells:Hit change:_reporder:weapons change:_reporder:spells remove:repeating_weapons remove:repeating_spells change:repeating_weapons:WType change:repeating_spells:SType change:WSlot change:SSlot change:atktype change:ProwHit", function(eventInfo) {
+	getAttrs(["WSlot","SSlot","atktype"], function(v) {
 		if (v.atktype == "Physical"){
 			getSectionIDsOrdered("repeating_weapons", function(idarray) {
 				slotnum = v.WSlot
 				fID = idarray[Number(slotnum)-1];
 				log("fID is" + fID)
-				getAttrs(["Cha_total","Ghitb","repeating_weapons_"+fID+"_hit","repeating_weapons_"+fID+"_WType"], function(v) {
+				getAttrs(["Cha_total","repeating_weapons_"+fID+"_hit","repeating_weapons_"+fID+"_WType"], function(v) {
 					log(JSON.stringify(v))
 					let nindex = Object.keys(v)[2];
 					let mindex = Object.keys(v)[3];
@@ -3150,12 +2426,6 @@ on("change:Cha_total change:Ghitb change:repeating_weapons:Hit change:repeating_
 					let wHit = parseInt(v[nindex])||0;
 					log("wHit is " + wHit)
 					let Cha = v.Cha_total;
-					let Bonus = v.Ghitb;
-					if (v[mindex] == "Gambit"){
-						setAttrs({
-							GHit: Math.round((Cha) + wHit + Number(Bonus)),
-						});
-					}
 				});
 			});
 		}
@@ -3164,7 +2434,7 @@ on("change:Cha_total change:Ghitb change:repeating_weapons:Hit change:repeating_
 				slotnum = v.SSlot
 				fID = idarray[Number(slotnum)-1];
 				log("fID is" + fID)
-				getAttrs(["Cha_total","Ghitb","repeating_spells_"+fID+"_hit","repeating_spells_"+fID+"_SType"], function(v) {
+				getAttrs(["Cha_total","repeating_spells_"+fID+"_hit","repeating_spells_"+fID+"_SType"], function(v) {
 					log(JSON.stringify(v))
 					let nindex = Object.keys(v)[2];
 					let mindex = Object.keys(v)[3];
@@ -3172,12 +2442,6 @@ on("change:Cha_total change:Ghitb change:repeating_weapons:Hit change:repeating_
 					let wHit = parseInt(v[nindex])||0;
 					log("wHit is " + wHit)
 					let Cha = v.Cha_total;
-					let Bonus = v.Ghitb;
-					if (v[mindex] == "Gambit"){
-						setAttrs({
-							GHit: Math.round((Cha) + wHit + Number(Bonus)),
-						});
-					}
 				});
 			});
 		}
@@ -3209,28 +2473,13 @@ on("change:repeating_weapons change:_reporder:weapons remove:repeating_weapons",
 	});
 });
 
-on("change:Species change:Class", function(eventInfo) {
-	setAttrs({
-		Weaknesses: ""
-	});
-	let weaklist = [];
-	getAttrs(["Species","Class"], function(v){
-		//Armor
-		setAttrs({
-			Weaknesses: weaklist.join(", ")
-		});
-	});
-});
-
 //Initialize values for API, because ded
 on("sheet:opened", function(){
-	getAttrs(["WSlot","SSlot","currWt","AttackCounter","HPHolder","weplist","splist","colist","effdmg","currEff","currName","currMt","class_exp0","class_gain0","currDesc","currWexp","currWep","currMinDist","currMaxDist","currCounter","currBrave","atktype","EXP","SwordEXP","LanceEXP","AxeEXP","BowEXP","StavesEXP","DarkEXP","AnimaEXP","LightEXP","AuthorityEXP","RidingEXP","ArmorEXP","FlyingEXP","Flyingrank","Level","HP_i","Str_i","Mag_i","Skl_i","Spd_i","Lck_i","Def_i","Res_i","Mov_i","HP_bd","Str_bd","Mag_bd","Skl_bd","Spd_bd","Lck_bd","Def_bd","Res_bd","Mov_bd","HP_rb","Str_rb","Mag_rb","Skl_rb","Spd_rb","Lck_rb","Def_rb","Res_rb","Mov_rb","item_uses0","item_uses1","item_uses2","Swordrank","Lancerank","Axerank","Bowrank","Stavesrank","Hiddenrank","Darkrank","Lightrank","Authorityrank","Ridingrank","Armorrank","Hitmod","Critmod","Avomod","Ddgmod","Dmgmod","Hitmod_class","Hitb","Physb","Magb","Critb","Avob","Protb","Resb","Chab","Critavob","Ghitb","Critmod_class","Avomod_class","Ddgmod_class","fid","SwordGain","LanceGain","AxeGain","BowGain","StavesGain","HiddenGain","AnimaGain","LightGain","AuthorityGain","RidingGain","ArmorGain","FlyingGain","phys_bd","myst_bd","ward_bd","prot_bd","Weak_total","Ele_Qtotal","Hit","Crit","Ddg","avo"], function(v){
+	getAttrs(["WSlot","SSlot","currWt","weplist","splist","colist","effdmg","currEff","currName","currMt","currDesc","currWexp","currWep","currMinDist","currMaxDist","currCounter","currBrave","atktype","EXP","SwordEXP","LanceEXP","AxeEXP","BowEXP","StavesEXP","DarkEXP","AnimaEXP","LightEXP","Level","HP_i","Str_i","Mag_i","Skl_i","Spd_i","Lck_i","Def_i","Res_i","Mov_i","HP_bd","Str_bd","Mag_bd","Skl_bd","Spd_bd","Lck_bd","Def_bd","Res_bd","Mov_bd","item_uses0","item_uses1","item_uses2","Swordrank","Lancerank","Axerank","Bowrank","Stavesrank","Hiddenrank","Darkrank","Lightrank","fid","phys_bd","myst_bd","ward_bd","prot_bd","Weak_total","Ele_Qtotal","Hit","Crit","Ddg","avo"], function(v){
 		setAttrs({
 			WSlot: v.WSlot,
 			SSlot: v.SSlot,
 			currWt: v.currWt,
-			AttackCounter: v.AttackCounter,
-			HPHolder: v.HPHolder,
 			EXP: v.EXP,
 			splist: v.splist,
 			colist: v.colist,
@@ -3239,8 +2488,6 @@ on("sheet:opened", function(){
 			currEff: v.currEff,
 			currName: v.currName,
 			currMt: v.currMt,
-			class_exp0: v.class_exp0,
-			class_gain0: v.class_gain0,
 			currDesc: v.currDesc,
 			currWep: v.currWep,
 			currWexp: v.currWexp,
@@ -3249,18 +2496,6 @@ on("sheet:opened", function(){
 			currCounter: v.currCounter,
 			currBrave: v.currBrave,
 			atktype: v.atktype,
-			SwordGain: v.SwordGain,
-			LanceGain: v.LanceGain,
-			AxeGain: v.AxeGain,
-			BowGain: v.BowGain,
-			StavesGain: v.StavesGain,
-			DarkGain: v.DarkGain,
-			AnimaGain: v.AnimaGain,
-			AuthorityGain: v.AuthorityGain,
-			LightGain: v.LightGain,
-			ArmorGain: v.ArmorGain,
-			RidingGain: v.RidingGain,
-			FlyingGain: v.FlyingGain,
 			SwordEXP: v.SwordEXP,
 			LanceEXP: v.LanceEXP,
 			AxeEXP: v.AxeEXP,
@@ -3268,12 +2503,7 @@ on("sheet:opened", function(){
 			StavesEXP: v.StavesEXP,
 			DarkEXP: v.DarkEXP,
 			AnimaEXP: v.AnimaEXP,
-			AuthorityEXP: v.AuthorityEXP,
 			LightEXP: v.LightEXP,
-			ArmorEXP: v.ArmorEXP,
-			RidingEXP: v.RidingEXP,
-			FlyingEXP: v.FlyingEXP,
-			Flyingrank: v.Flyingrank,
 			Swordrank: v.Swordrank,
 			Lancerank: v.Lancerank,
 			Axerank: v.Axerank,
@@ -3281,10 +2511,7 @@ on("sheet:opened", function(){
 			Stavesrank: v.Stavesrank,
 			Darkrank: v.Darkrank,
 			Animarank: v.Animarank,
-			Authorityrank: v.Authorityrank,
 			Lightrank: v.Lightrank,
-			Armorrank: v.Armorrank,
-			Ridingrank: v.Ridingrank,
 			Level: v.Level,
 			HP_i: v.HP_i,
 			Str_i: v.Str_i,
@@ -3304,32 +2531,9 @@ on("sheet:opened", function(){
 			Def_bd: v.Def_bd,
 			Res_bd: v.Res_bd,
 			Mov_bd: v.Mov_bd,
-			HP_rb: v.HP_rb,
-			Str_rb: v.Str_rb,
-			Mag_rb: v.Mag_rb,
-			Skl_rb: v.Skl_rb,
-			Spd_rb: v.Spd_rb,
-			Lck_rb: v.Lck_rb,
-			Def_rb: v.Def_rb,
-			Res_rb: v.Res_rb,
-			Mov_rb: v.Mov_rb,
 			item_uses0: v.item_uses0,
 			item_uses1: v.item_uses1,
 			item_uses2: v.item_uses2,
-			Hitmod: v.Hitmod,
-			Hitb: v.Hitb,
-			Physb: v.Physb,
-			Critb: v.Critb,
-			Avob: v.Avob,
-			Protb: v.Protb,
-			Resb: v.Resb,
-			Chab: v.Chab,
-			Critmod: v.Critmod,
-			Avomod: v.Avomod,
-			Critavob: v.Critavob,
-			Ghitb: v.Ghitb,
-			Ddgmod: v.Ddgmod,
-			Dmgmod: v.Dmgmod,
 			fid: v.fid,
 			phys_bd: v.phys_bd,
 			myst_bd: v.myst_bd,
