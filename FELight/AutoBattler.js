@@ -103,9 +103,9 @@ function UpdateHealth(Token, Damage, Health, MaxHP) {
 
 // returns 1 if the given token identifier is using a weapon that is within range to counter-attack
 function CanCounter(defId, dist) {
-  var counter = Number(getAttrValue(defId, 'currCounter'));
-  var minDist = Number(getAttrValue(defId, 'currMinDist'));
-  var maxDist = Number(getAttrValue(defId, 'currMaxDist'));
+  var counter = getAttrValue(defId, 'currCounter');
+  var minDist = getAttrValue(defId, 'currMinDist');
+  var maxDist = getAttrValue(defId, 'currMaxDist');
   if (counter == 0 || dist < minDist || dist > maxDist) { return 0; }
   return 1;
 }
@@ -253,7 +253,7 @@ function Adept(BattleInput, BattleOutput) {
 function Luna(BattleInput, BattleOutput) {
   if (BattleInput.WhoseSkill == 1) { return; }
   if (BattleInput.IsSim == 1) { BattleOutput.ASkillMsg += outputSkill("Luna", BattleInput.ASkill); }
-  else if (randomInteger(100) <= Number(BattleInput.ASkill)) {
+  else if (randomInteger(100) <= BattleInput.ASkill) {
     BattleOutput.ASkillMsg += outputSkill("Luna");
     BattleOutput.DWard = 0;
     BattleOutput.DProt = 0;
@@ -264,7 +264,7 @@ function Luna(BattleInput, BattleOutput) {
 function Sol(BattleInput, BattleOutput) {
   if (BattleInput.WhoseSkill == 1) { return; }
   if (BattleInput.IsSim == 1) { BattleOutput.ASkillMsg += outputSkill("Sol", BattleInput.ASkill); }
-  else if (randomInteger(100) <= Number(BattleInput.ASkill)) {
+  else if (randomInteger(100) <= BattleInput.ASkill) {
     BattleOutput.ASkillMsg += outputSkill("Sol");
     BattleOutput.Sol = 1;
   }
@@ -284,7 +284,7 @@ function Glacies(BattleInput, BattleOutput) {
 function Flare(BattleInput, BattleOutput) {
   if (BattleInput.WhoseSkill == 1) { return; }
   if (BattleInput.IsSim == 1) { BattleOutput.ASkillMsg += outputSkill("Flare", BattleInput.ASkill); }
-  else if (randomInteger(100) <= Number(BattleInput.ASkill)) {
+  else if (randomInteger(100) <= BattleInput.ASkill) {
     BattleOutput.ASkillMsg += outputSkill("Flare");
     BattleOutput.DWard = Math.floor(BattleInput.DWard/2);
   }
@@ -546,7 +546,7 @@ function Resilience(BattleInput, BattleOutput) {
 // +5 damage when missing hp
 function Dragonblood(BattleInput, BattleOutput) {
   if (BattleInput.WhoseSkill == 1) { return; }
-  if (Number(BattleInput.ACurrHP) < Number(BattleInput.AMaxHP)) {
+  if (BattleInput.ACurrHP < BattleInput.AMaxHP) {
     BattleOutput.ASkillMsg += outputSkill("Dragonblood");
     BattleOutput.AddDmg += 5;
   }
@@ -682,7 +682,7 @@ function DoOneCombatStep(selectedId, targetId, initiating, info, isSim, whisper)
 
   var DmgTaken = 0;
   var DefMit = 0;
-  var wepGain = Number(getAttrValue(attacker.id, "currWexp"));
+  var wepGain = getAttrValue(attacker.id, "currWexp");
   var DmgType = getAttr(attacker.id, 'atktype').get('current')
 
 
@@ -699,7 +699,8 @@ function DoOneCombatStep(selectedId, targetId, initiating, info, isSim, whisper)
   }
   var [ids, attributes] = getRepeatingSectionAttrs(attacker.id, prefix, suffix);
   var id = ids[slot-1];
-  var currUses = attributes[prefix+"_"+id+"_"+suffix].get('current')
+  var attr = attributes[prefix+"_"+id+"_"+suffix];
+  var currUses = attr ? attr.get('current') : 0;
   if (currUses == 0) { return; }
 
 
@@ -719,16 +720,16 @@ function DoOneCombatStep(selectedId, targetId, initiating, info, isSim, whisper)
     "ACurrHP": selectObj.get("bar3_value"),
     "DCurrHP": targetObj.get("bar3_value"),
     "DGreyHP": targetObj.get("bar2_value"),
-    "AStr": Number(getAttrValue(attacker.id, "Str_total")),
-    "AMag": Number(getAttrValue(attacker.id, "Mag_total")),
-    "ARes": Number(getAttrValue(attacker.id, "Res_total")),
-    "ADef": Number(getAttrValue(attacker.id, "Def_total")),
-    "ASkill": Number(getAttrValue(attacker.id, "Skl_total")),
-    "ASpeed": Number(getAttrValue(attacker.id, "Spd_total")),
-    "ALuck": Number(getAttrValue(attacker.id, "Lck_total")),
-    "DSpeed": Number(getAttrValue(defender.id, "Spd_total")),
-    "DWard": Number(getAttrValue(defender.id, "ward_total")),
-    "DProt": Number(getAttrValue(defender.id, "prot_total")),
+    "AStr": getAttrValue(attacker.id, "Str_total"),
+    "AMag": getAttrValue(attacker.id, "Mag_total"),
+    "ARes": getAttrValue(attacker.id, "Res_total"),
+    "ADef": getAttrValue(attacker.id, "Def_total"),
+    "ASkill": getAttrValue(attacker.id, "Skl_total"),
+    "ASpeed": getAttrValue(attacker.id, "Spd_total"),
+    "ALuck": getAttrValue(attacker.id, "Lck_total"),
+    "DSpeed": getAttrValue(defender.id, "Spd_total"),
+    "DWard": getAttrValue(defender.id, "ward_total"),
+    "DProt": getAttrValue(defender.id, "prot_total"),
     "AtkCount": info.atkCount,
   };
 
@@ -736,12 +737,12 @@ function DoOneCombatStep(selectedId, targetId, initiating, info, isSim, whisper)
     "CombatMsg": `${selected} ${isSim == 1 ? "simulates attacking " : "attacks "} ${target}! <br>`,
     "ASkillMsg": "Attacker Skills: <br>",
     "DSkillMsg": "Defender Skills: <br>",
-    "DWard": Number(getAttrValue(defender.id, "ward_total")),
-    "DProt": Number(getAttrValue(defender.id, "prot_total")),
-    "Hit": Number(getAttrValue(attacker.id, "Hit")),
-    "Crit": Number(getAttrValue(attacker.id, "Crit")),
-    "Avoid" : Number(getAttrValue(defender.id, "avo")),
-    "AtkSpd": Number(getAttrValue(attacker.id, 'Atkspd')),
+    "DWard": getAttrValue(defender.id, "ward_total"),
+    "DProt": getAttrValue(defender.id, "prot_total"),
+    "Hit": getAttrValue(attacker.id, "Hit"),
+    "Crit": getAttrValue(attacker.id, "Crit"),
+    "Avoid" : getAttrValue(defender.id, "avo"),
+    "AtkSpd": getAttrValue(attacker.id, 'Atkspd'),
     "AddDmg": 0,
     "AddProt": 0,
     "AddWard": 0,
