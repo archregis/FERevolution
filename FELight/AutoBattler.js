@@ -683,7 +683,8 @@ function DoOneCombatStep(selectedId, targetId, initiating, info, isSim, whisper)
   var DmgTaken = 0;
   var DefMit = 0;
   var wepGain = getAttrValue(attacker.id, "currWexp");
-  var DmgType = getAttr(attacker.id, 'atktype').get('current')
+  var DmgType = getAttr(attacker.id, 'atktype').get('current');
+  var WepName = getAttr(attacker.id, 'currName').get('current');
 
 
   // Check for broken weapon
@@ -731,10 +732,11 @@ function DoOneCombatStep(selectedId, targetId, initiating, info, isSim, whisper)
     "DWard": getAttrValue(defender.id, "ward_total"),
     "DProt": getAttrValue(defender.id, "prot_total"),
     "AtkCount": info.atkCount,
+    "WepName": WepName,
   };
 
   var BattleOutput = {
-    "CombatMsg": `${selected} ${isSim == 1 ? "simulates attacking " : "attacks "} ${target}! <br>`,
+    "CombatMsg": `${selected} ${isSim == 1 ? "simulates attacking " : "attacks "} ${target} with ${WepName}! <br>`,
     "ASkillMsg": "Attacker Skills: <br>",
     "DSkillMsg": "Defender Skills: <br>",
     "DWard": getAttrValue(defender.id, "ward_total"),
