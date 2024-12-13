@@ -1170,55 +1170,15 @@ function UpdateStat(stat) {
 	});
 }
 
-// HP Stat
-on("change:HP_i change:HP_bd change:repeating_weapons:HP_wp change:repeating_spells:HP_wp change:_reporder:weapons change:HP_Qtotal change:repeating_combat change:_reporder:weapons change:_reporder:spells remove:repeating_weapons remove:repeating_spells change:WSlot change:SSlot change:atktype", function(eventInfo) {
-	UpdateStat("HP");
+const stats = ["HP", "Str", "Mag", "Skl", "Spd", "Lck", "Def", "Res", "Con", "Mov"];
+stats.forEach( function(stat) {
+	var changeStat = "change:"+stat+"_i change:"+stat+"_bd change:repeating_weapons:"+stat+"_wp change:repeating_spells:"+stat+"_wp change:"+stat+"_Qtotal ";
+	var changeOther = "change:_reporder:weapons change:repeating_combat change:_reporder:weapons change:_reporder:spells remove:repeating_weapons remove:repeating_spells change:WSlot change:SSlot change:atktype";
+	on(changeStat + changeOther, function(eventInfo) {
+		UpdateStat(stat);
+	});
 });
 
-// Str Stat
-on("change:Str_i change:Str_bd change:repeating_weapons:Str_wp change:repeating_spells:Str_wp change:_reporder:weapons change:Str_Qtotal change:repeating_combat change:_reporder:weapons change:_reporder:spells remove:repeating_weapons remove:repeating_spells change:WSlot change:SSlot change:atktype", function(eventInfo) {
-	UpdateStat("Str");
-});
-
-// Mag Stat
-on("change:Mag_i change:Mag_bd change:repeating_weapons:Mag_wp change:repeating_spells:Mag_wp change:_reporder:weapons change:Mag_Qtotal change:repeating_combat change:_reporder:weapons change:_reporder:spells remove:repeating_weapons remove:repeating_spells change:WSlot change:SSlot change:atktype", function(eventInfo) {
-	UpdateStat("Mag");
-});
-
-// Skl Stat
-on("change:Skl_i change:Skl_bd change:repeating_weapons:Skl_wp change:repeating_spells:Skl_wp change:_reporder:weapons change:Skl_Qtotal change:repeating_combat change:_reporder:weapons change:_reporder:spells remove:repeating_weapons remove:repeating_spells change:WSlot change:SSlot change:atktype", function(eventInfo) {
-	UpdateStat("Skl");
-});
-
-// Spd Stat
-on("change:Spd_i change:Spd_bd change:repeating_weapons:Spd_wp change:repeating_spells:Spd_wp change:_reporder:weapons change:Spd_Qtotal change:repeating_combat change:_reporder:weapons change:_reporder:spells remove:repeating_weapons remove:repeating_spells change:WSlot change:SSlot change:atktype", function(eventInfo) {
-	UpdateStat("Spd");
-});
-
-// Lck Stat
-on("change:Lck_i change:Lck_bd change:repeating_weapons:Lck_wp change:repeating_spells:Lck_wp change:_reporder:weapons change:Lck_Qtotal change:repeating_combat change:_reporder:weapons change:_reporder:spells remove:repeating_weapons remove:repeating_spells change:WSlot change:SSlot change:atktype", function(eventInfo) {
-	UpdateStat("Lck");
-});
-
-// Def Stat
-on("change:Def_i change:Def_bd change:repeating_weapons:Def_wp change:repeating_spells:Def_wp change:_reporder:weapons change:Def_Qtotal change:repeating_combat change:_reporder:weapons change:_reporder:spells remove:repeating_weapons remove:repeating_spells change:WSlot change:SSlot change:atktype", function(eventInfo) {
-	UpdateStat("Def");
-});
-
-// Res Stat
-on("change:Res_i change:Res_bd change:repeating_weapons:Res_wp change:repeating_spells:Res_wp change:_reporder:weapons change:Res_Qtotal change:repeating_combat change:_reporder:weapons change:_reporder:spells remove:repeating_weapons remove:repeating_spells change:WSlot change:SSlot change:atktype", function(eventInfo) {
-	UpdateStat("Res");
-});
-
-// Con Stat
-on("change:Con_i change:Con_bd change:repeating_weapons:Con_wp change:repeating_spells:Con_wp change:_reporder:weapons change:Con_Qtotal change:repeating_combat change:_reporder:weapons change:_reporder:spells remove:repeating_weapons remove:repeating_spells change:WSlot change:SSlot change:atktype", function(eventInfo) {
-	UpdateStat("Con");
-});
-
-// Mov Stat
-on("change:Mov_i change:Mov_bd change:Mov_Qtotal", function(eventInfo) {
-	UpdateStat("Mov");
-});
 
 //bonus checks
 const bonusStats = ['HP', 'Con', 'Str', 'Mag', 'Spd', 'Def', 'Res', 'Mov', 'Hit', 'Avo', 'Crit', 'Ddg', 'Weight', 'Mit']
@@ -1238,7 +1198,7 @@ bonusStats.forEach(function (stat) {
                 }
             }
             setAttrs({
-            [stat + '_Qtotal']: sumBonus
+            	[stat + '_Qtotal']: sumBonus
             });
         });
     });
@@ -1259,7 +1219,7 @@ on(checkchange+"change:Ele_M change:Ele_S change:Ele_1 change:Ele_2 change:Ele_3
 			}
 		}
 		setAttrs({
-		Ele_Qtotal: sumElebonus
+			Ele_Qtotal: sumElebonus
 		});
 	});
 });
