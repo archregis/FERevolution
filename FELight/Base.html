@@ -268,8 +268,8 @@
 								<td><input name="attr_Con_bd" type="number" value = "0"></td>
 								<td><span name = "attr_Con_total">0</span></td>
 								<td></td>
-								<td><input name="attr_Con_gi" type="number" value = "0"></td>
-								<td><span name="attr_Con_gtotal">0</span></td>
+								<td>--</td>
+								<td>--</td>
 							</tr>
 							<tr class="Mov">
 								<td class="sheet-statlabel">Mov</td>
@@ -1180,6 +1180,18 @@ stats.forEach( function(stat) {
 });
 
 
+const growths = ["HP", "Str", "Mag", "Skl", "Spd", "Lck", "Def", "Res"];
+growths.forEach( function(growth) {
+	on(`change:${growth}_gi`, function(eventInfo) {
+		getAttrs([`${growth}_gi`], function(v) {
+			setAttrs({
+				[growth+"_gtotal"]: Number(v[growth+"_gi"]),
+			});
+		})
+	});
+});
+
+
 //bonus checks
 const bonusStats = ['HP', 'Con', 'Str', 'Mag', 'Spd', 'Def', 'Res', 'Mov', 'Hit', 'Avo', 'Crit', 'Ddg', 'Weight', 'Mit']
 bonusStats.forEach(function (stat) {
@@ -1241,77 +1253,6 @@ on("change:Flying_check change:Armor_check change:Cavalry_check change:Dragon_ch
 	});
 });
 
-//Growth totals!
-on("change:HP_gi", function(eventInfo) {
-	getAttrs(["HP_gi"], function(values) {
-		setAttrs({
-			HP_gtotal: Number(values.HP_gi)
-		});
-	});
-});
-
-on("change:Str_gi", function(eventInfo) {
-	getAttrs(["Str_gi"], function(values) {
-		setAttrs({
-			Str_gtotal: Number(values.Str_gi)
-		});
-	});
-});
-
-on("change:Mag_gi", function(eventInfo) {
-	getAttrs(["Mag_gi"], function(values) {
-		setAttrs({
-			Mag_gtotal: Number(values.Mag_gi)
-		});
-	});
-});
-
-on("change:Skl_gi", function(eventInfo) {
-	getAttrs(["Skl_gi"], function(values) {
-		setAttrs({
-			Skl_gtotal: Number(values.Skl_gi)
-		});
-	});
-});
-
-on("change:Spd_gi", function(eventInfo) {
-	getAttrs(["Spd_gi"], function(values) {
-		setAttrs({
-			Spd_gtotal: Number(values.Spd_gi)
-		});
-	});
-});
-
-on("change:Lck_gi", function(eventInfo) {
-	getAttrs(["Lck_gi"], function(values) {
-		setAttrs({
-			Lck_gtotal: Number(values.Lck_gi)
-		});
-	});
-});
-
-on("change:Def_gi", function(eventInfo) {
-	getAttrs(["Def_gi"], function(values) {
-		setAttrs({
-			Def_gtotal: Number(values.Def_gi)
-		});
-	});
-});
-
-on("change:Res_gi", function(eventInfo) {
-	getAttrs(["Res_gi"], function(values) {
-		setAttrs({
-			Res_gtotal: Number(values.Res_gi)
-		});
-	});
-});
-on("change:Con_gi", function(eventInfo) {
-	getAttrs(["Con_gi"], function(values) {
-		setAttrs({
-			Con_gtotal: Number(values.Con_gi)
-		});
-	});
-});
 
 //Weapon Type
 on("change:repeating_weapons:WType change:repeating_weapons:wEXP change:repeating_spells:wEXP change:repeating_spells:SType change:atktype change:_reporder:weapons change:_reporder:spells remove:repeating_spells remove:repeating_weapons change:WSlot change:SSlot", function(eventInfo) {
