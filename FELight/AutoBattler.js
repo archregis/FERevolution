@@ -734,7 +734,6 @@ function DoOneCombatStep(selectedId, targetId, initiating, info, isSim, whisper)
     "DWard": getAttrValue(defender.id, "ward_total"),
     "DProt": getAttrValue(defender.id, "prot_total"),
     "AtkCount": info.atkCount,
-    "WepName": WepName,
   };
 
   var BattleOutput = {
@@ -798,8 +797,8 @@ function DoOneCombatStep(selectedId, targetId, initiating, info, isSim, whisper)
   var AddedDmg = BattleOutput.AddDmg;
   var AddedProt = BattleOutput.AddProt;
   var AddedWard = BattleOutput.AddWard;
-  var Hit = BattleOutput.Hit + randomInteger(100);
-  var Crit = BattleOutput.Crit + randomInteger(100);
+  var Hit = BattleOutput.Hit;
+  var Crit = BattleOutput.Crit;
   var Avoid = BattleOutput.Avoid;
   var Dodge = getAttrValue(defender.id, "Ddg");
   var AtkSpdDiff = BattleOutput.AtkSpd - getAttrValue(defender.id, 'Atkspd');
@@ -871,13 +870,17 @@ function DoOneCombatStep(selectedId, targetId, initiating, info, isSim, whisper)
 
   if (isSim == 1) { // Simulate battle outcome
     var init = BattleInput.IsInitiating == 1 ? "Initiating" : "Countering"
-    content += `${selected} is ${init} <br> Atk Spd: ${AtkSpdDiff} <br> Dmg: ${AtkDmg} <br> Mit: ${DefMit} <br> Hit Rate: ${101+BattleOutput.Hit-Avoid} <br> Crit Rate: ${(101+BattleOutput.Crit-Dodge)}`;
+    content += `${selected} is ${init} <br> Atk Spd: ${AtkSpdDiff} <br> Dmg: ${AtkDmg} <br> Mit: ${DefMit} <br> Hit Rate: ${101+Hit-Avoid} <br> Crit Rate: ${(101+Crit-Dodge)}`;
     if (whisper) {
       BattleOutput.CombatMsg = `/w "${whisper}" ${BattleOutput.CombatMsg}`;
     }
   }
   else { // Output battle outcome
 
+    // Add variance at the end
+    Hit += randomInteger(100);
+    Crit += randomInteger(100);
+    
     // End of calculation skill procs
     if (BattleOutput.SureShot == 1) {
       Hit = 999;
