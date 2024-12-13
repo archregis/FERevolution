@@ -702,7 +702,9 @@ function DoOneCombatStep(selectedId, targetId, initiating, info, isSim, whisper)
   var id = ids[slot-1];
   var attr = attributes[prefix+"_"+id+"_"+suffix];
   var currUses = attr ? attr.get('current') : 0;
-  if (currUses == 0) { return; }
+  if (currUses == 0) { 
+    sendChat('SYSTEM', 'YOUR WEAPON IS BROKEN!');
+    return; }
 
 
   // Initialize skill function I/O
