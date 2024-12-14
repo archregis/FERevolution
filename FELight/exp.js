@@ -26,23 +26,23 @@ function handleLevelUp(attackerId, CurrEXP, LvA, who) {
     CurrEXP.set("current", CurrEXP.get("current") - 100);
     LvA.set("current", Number(LvA.get("current")) + 1);
 
-    const HPG = getAttrValue(attackerId, 'HP_gtotal');
-    const StrG = getAttrValue(attackerId, 'Str_gtotal');
-    const MagG = getAttrValue(attackerId, 'Mag_gtotal');
-    const SklG = getAttrValue(attackerId, 'Skl_gtotal');
-    const LckG = getAttrValue(attackerId, 'Lck_gtotal');
-    const SpdG = getAttrValue(attackerId, 'Spd_gtotal');
-    const DefG = getAttrValue(attackerId, 'Def_gtotal');
-    const ResG = getAttrValue(attackerId, 'Res_gtotal');
+    const HPG = getAttrValue(attackerId, 'hpTotalGrow');
+    const StrG = getAttrValue(attackerId, 'strTotalGrow');
+    const MagG = getAttrValue(attackerId, 'magTotalGrow');
+    const SklG = getAttrValue(attackerId, 'sklTotalGrow');
+    const LckG = getAttrValue(attackerId, 'lckTotalGrow');
+    const SpdG = getAttrValue(attackerId, 'spdTotalGrow');
+    const DefG = getAttrValue(attackerId, 'defTotalGrow');
+    const ResG = getAttrValue(attackerId, 'resTotalGrow');
 
-    const HPSG = getAttr(attackerId, "HP_i");
-    const StrSG = getAttr(attackerId, "Str_i");
-    const MagSG = getAttr(attackerId, "Mag_i");
-    const SklSG = getAttr(attackerId, "Skl_i");
-    const LckSG = getAttr(attackerId, "Lck_i");
-    const SpdSG = getAttr(attackerId, "Spd_i");
-    const DefSG = getAttr(attackerId, "Def_i");
-    const ResSG = getAttr(attackerId, "Res_i");
+    const HPSG = getAttr(attackerId, "hpBase");
+    const StrSG = getAttr(attackerId, "strBase");
+    const MagSG = getAttr(attackerId, "magBase");
+    const SklSG = getAttr(attackerId, "sklBase");
+    const LckSG = getAttr(attackerId, "lckBase");
+    const SpdSG = getAttr(attackerId, "spdBase");
+    const DefSG = getAttr(attackerId, "defBase");
+    const ResSG = getAttr(attackerId, "resBase");
 
     const growthslist = [HPG, StrG, MagG, SklG, LckG, SpdG, DefG, ResG];
     const statslist = [HPSG, StrSG, MagSG, SklSG, LckSG, SpdSG, DefSG, ResSG];
@@ -107,9 +107,9 @@ on('chat:message', function(msg) {
       return;
     }
 
-    const CurrEXP = getAttr(attacker.id, "EXP");
+    const CurrEXP = getAttr(attacker.id, "exp");
     const EXPA = Number(CurrEXP.get("current")) || 0;
-    const LvA = getAttr(attacker.id, "Level");
+    const LvA = getAttr(attacker.id, "level");
 
     let who = getObj('character', selectedToken.get('represents'));
 

@@ -1,13 +1,13 @@
 // Globals
 var weaponMap = {       
-  "Sword": "SwordEXP",
-  "Lance": "LanceEXP",
-  "Axe": "AxeEXP",
-  "Bow": "BowEXP",
-  "Staff": "StavesEXP",
-  "Dark": "DarkEXP",
-  "Anima": "AnimaEXP",
-  "Light": "LightEXP"
+  "Sword": "swordExp",
+  "Lance": "lanceExp",
+  "Axe": "axeExp",
+  "Bow": "bowExp",
+  "Staff": "stavesExp",
+  "Dark": "darkExp",
+  "Anima": "animaExp",
+  "Light": "lightExp"
 };
 
 
@@ -593,8 +593,6 @@ on('chat:message', function(msg) {
     return;
   }
 
-  log(msg);
-
   //Initialize Attacker and Defender
   var selectedId = parts[0];
   var targetId = parts[1];
@@ -683,20 +681,20 @@ function DoOneCombatStep(selectedId, targetId, initiating, info, isSim, whisper)
   var DmgTaken = 0;
   var DefMit = 0;
   var wepGain = getAttrValue(attacker.id, "currWexp");
-  var DmgType = getAttr(attacker.id, 'atktype').get('current');
+  var DmgType = getAttr(attacker.id, 'atkType').get('current');
   var WepName = getAttr(attacker.id, 'currName').get('current');
 
 
   // Check for broken weapon
   if (DmgType == "Physical") {
-    var slot = getAttrValue(attacker.id, 'WSlot');
+    var slot = getAttrValue(attacker.id, 'wepSlot');
     var prefix = "repeating_weapons";
-    var suffix = "Uses";
+    var suffix = "uses";
   }
   else {
-    var slot = getAttrValue(attacker.id, 'SSlot');
+    var slot = getAttrValue(attacker.id, 'spellSlot');
     var prefix = "repeating_spells";
-    var suffix = "Uses";
+    var suffix = "uses";
   }
   var [ids, attributes] = getRepeatingSectionAttrs(attacker.id, prefix, suffix);
   var id = ids[slot-1];
@@ -712,7 +710,7 @@ function DoOneCombatStep(selectedId, targetId, initiating, info, isSim, whisper)
     "IsSim": isSim,
     "WhoseSkill": -1, // To ensure we don't activate a defender's skill when we shouldn't. 0 = attacker, 1 = defender
     "IsInitiating": initiating, // Determine if you are intiating the attack or counter-attacking. 0 = initiating, 1 = countering
-    "DWeakness": getAttr(defender.id,'Weak_total').get('current').split(','),
+    "DWeakness": getAttr(defender.id,'weakTotal').get('current').split(','),
     "DmgType": DmgType,
     "AWType": getAttr(attacker.id, "currWep").get('current'),
     "DWType": getAttr(defender.id, "currWep").get('current'),
@@ -723,16 +721,16 @@ function DoOneCombatStep(selectedId, targetId, initiating, info, isSim, whisper)
     "ACurrHP": selectObj.get("bar3_value"),
     "DCurrHP": targetObj.get("bar3_value"),
     "DGreyHP": targetObj.get("bar2_value"),
-    "AStr": getAttrValue(attacker.id, "Str_total"),
-    "AMag": getAttrValue(attacker.id, "Mag_total"),
-    "ARes": getAttrValue(attacker.id, "Res_total"),
-    "ADef": getAttrValue(attacker.id, "Def_total"),
-    "ASkill": getAttrValue(attacker.id, "Skl_total"),
-    "ASpeed": getAttrValue(attacker.id, "Spd_total"),
-    "ALuck": getAttrValue(attacker.id, "Lck_total"),
-    "DSpeed": getAttrValue(defender.id, "Spd_total"),
-    "DWard": getAttrValue(defender.id, "ward_total"),
-    "DProt": getAttrValue(defender.id, "prot_total"),
+    "AStr": getAttrValue(attacker.id, "strTotal"),
+    "AMag": getAttrValue(attacker.id, "magTotal"),
+    "ARes": getAttrValue(attacker.id, "resTotal"),
+    "ADef": getAttrValue(attacker.id, "defTotal"),
+    "ASkill": getAttrValue(attacker.id, "sklTotal"),
+    "ASpeed": getAttrValue(attacker.id, "spdTotal"),
+    "ALuck": getAttrValue(attacker.id, "lckTotal"),
+    "DSpeed": getAttrValue(defender.id, "spdTotal"),
+    "DWard": getAttrValue(defender.id, "wardTotal"),
+    "DProt": getAttrValue(defender.id, "protTotal"),
     "AtkCount": info.atkCount,
   };
 
@@ -740,12 +738,12 @@ function DoOneCombatStep(selectedId, targetId, initiating, info, isSim, whisper)
     "CombatMsg": `${selected} ${isSim == 1 ? "simulates attacking " : "attacks "} ${target} with ${WepName}! <br>`,
     "ASkillMsg": "Attacker Skills: <br>",
     "DSkillMsg": "Defender Skills: <br>",
-    "DWard": getAttrValue(defender.id, "ward_total"),
-    "DProt": getAttrValue(defender.id, "prot_total"),
-    "Hit": getAttrValue(attacker.id, "Hit"),
-    "Crit": getAttrValue(attacker.id, "Crit"),
+    "DWard": getAttrValue(defender.id, "wardTotal"),
+    "DProt": getAttrValue(defender.id, "protTotal"),
+    "Hit": getAttrValue(attacker.id, "hit"),
+    "Crit": getAttrValue(attacker.id, "crit"),
     "Avoid" : getAttrValue(defender.id, "avo"),
-    "AtkSpd": getAttrValue(attacker.id, 'Atkspd'),
+    "AtkSpd": getAttrValue(attacker.id, 'atkSpd'),
     "AddDmg": 0,
     "AddProt": 0,
     "AddWard": 0,
@@ -767,8 +765,8 @@ function DoOneCombatStep(selectedId, targetId, initiating, info, isSim, whisper)
   "Bowbreaker","Tomebreaker","Swordfaire","Lancefaire","Axefaire","Bowfaire","Tomefaire","Reaver","Brave","Wrath","Chivalry","FortressOfWill","DeadlyStrikes","PrideOfSteel","Thunderstorm","Resolve",
   "Trample","Resilience","Dragonblood","Nullify","AdaptiveScales","Bloodlust","Petalstorm"]);
 
-  var ASkills = getAttr(attacker.id,'Ele_Qtotal').get('current').split(',');
-  var DSkills = getAttr(defender.id,'Ele_Qtotal').get('current').split(',');
+  var ASkills = getAttr(attacker.id,'bonusDescConcat').get('current').split(',');
+  var DSkills = getAttr(defender.id,'bonusDescConcat').get('current').split(',');
 
   if (DSkills.includes('Nihil') == true) {
     BattleOutput.DSkillMsg += outputSkill("Nihil");
@@ -800,15 +798,15 @@ function DoOneCombatStep(selectedId, targetId, initiating, info, isSim, whisper)
   var Hit = BattleOutput.Hit;
   var Crit = BattleOutput.Crit;
   var Avoid = BattleOutput.Avoid;
-  var Dodge = getAttrValue(defender.id, "Ddg");
-  var AtkSpdDiff = BattleOutput.AtkSpd - getAttrValue(defender.id, 'Atkspd');
+  var Dodge = getAttrValue(defender.id, "ddg");
+  var AtkSpdDiff = BattleOutput.AtkSpd - getAttrValue(defender.id, 'atkSpd');
   var content = "";
 
 
   // Effectiveness
   if (BattleOutput.Nullify == 0) {
     var AEff = getAttr(attacker.id,'currEff').get('current').split(',');
-    var DWeak = getAttr(defender.id,'Weak_total').get('current').split(',');
+    var DWeak = getAttr(defender.id,'weakTotal').get('current').split(',');
     var isEffective = 0;
 
     for (let i=0; i<AEff.length; i++) {
@@ -859,12 +857,12 @@ function DoOneCombatStep(selectedId, targetId, initiating, info, isSim, whisper)
 
   // Damage Typing
   if (BattleInput.DmgType == 'Physical') {
-    AtkDmg = getAttrValue(attacker.id, "phys_total") + AddedDmg;
-    DefMit = BattleOutput.DProt + getAttrValue(defender.id, "Mit_Qtotal") + AddedProt;
+    AtkDmg = getAttrValue(attacker.id, "physTotal") + AddedDmg;
+    DefMit = BattleOutput.DProt + getAttrValue(defender.id, "mitBonusTotal") + AddedProt;
   }
   else if (BattleInput.DmgType == 'Magical') {
-    AtkDmg = getAttrValue(attacker.id, "myst_total") + AddedDmg;
-    DefMit = BattleOutput.DWard + getAttrValue(defender.id, "Mit_Qtotal") + AddedWard;  }
+    AtkDmg = getAttrValue(attacker.id, "mystTotal") + AddedDmg;
+    DefMit = BattleOutput.DWard + getAttrValue(defender.id, "mitBonusTotal") + AddedWard;  }
   DmgTaken = Math.max(0, AtkDmg - DefMit);
 
 
@@ -936,7 +934,6 @@ function DoOneCombatStep(selectedId, targetId, initiating, info, isSim, whisper)
     });
 
     if (BattleOutput.Armsthrift == 0) { attributes[prefix+"_"+id+"_"+suffix].setWithWorker("current", currUses - atkHit); }
-    log("brave: " + info.brave + " counter: " + info.counter + " double: " + info.double + " killed: " + info.killed + " addGrey: " + info.addGreyHP + " totalDmg: " + info.atkTotDmg);
   }
   sendChat(selected, `${BattleOutput.CombatMsg} ${BattleOutput.DSkillMsg} ${BattleOutput.ASkillMsg} ${content} <br> === End Combat ===`);
   
