@@ -302,13 +302,13 @@
 							</tr>
 							<tr class="Eva">
 								<td class="sheet-statlabel">Avoid</td>
-								<td><input type = "number" name = "attr_avo_bd" value = "0"/></td>
-								<td><span name = "attr_avo">0</span></td>
+								<td><input type = "number" name = "attr_Avo_bd" value = "0"/></td>
+								<td><span name = "attr_Avo">0</span></td>
 							</tr>
 							<tr class="Hit">
 								<td class="sheet-statlabel">Hit</td>
-								<td><input type = "number" name = "attr_hit_bd" value = "0"/></td>
-								<td><span name = "attr_hit">0</span></td>
+								<td><input type = "number" name = "attr_Hit_bd" value = "0"/></td>
+								<td><span name = "attr_Hit">0</span></td>
 							</tr>
 							<tr class="Phys">
 								<td class="sheet-statlabel">Phys</td>
@@ -933,8 +933,6 @@
 </div>
 <!--The section of the ~forbidden~ inputs. This should always go last.-->
 <div class = "hidden">
-	<input name="attr_wepnum" value = "0" hidden>
-	<input name="attr_spellnum" value = "0" hidden>
 	<input name="attr_currEff" value = "" hidden>
 	<input name="attr_WepEff_1" value = "" hidden>
 	<input name="attr_WepEff_2" value = "" hidden>
@@ -942,15 +940,12 @@
 	<input name="attr_currMt" value = "0" hidden>
 	<input name="attr_currWt" value = "0" hidden>
 	<input name="attr_currHit" value = "0" hidden>
-	<input name="attr_effdmg" value = "0" hidden>
 	<input name="attr_currWep" value = "Sword" hidden>
 	<input name="attr_currMinDist" value = "0" hidden>
 	<input name="attr_currMaxDist" value = "0" hidden>
 	<input name="attr_currCounter" value = "0" hidden>
 	<input name="attr_currBrave" value = "0" hidden>
 	<input name="attr_currDesc" value = "Attacking @{target|token_name}!" hidden>
-	<input name="attr_atktype" value = "Physical" hidden>
-	<input name="attr_WSlot" value = "1" hidden>
 	<input name="attr_HP_total" value = "0" hidden>
 	<input name="attr_HP_gtotal" value = "0" hidden>
 	<input name="attr_Con_Qtotal" value = "0" hidden>
@@ -968,7 +963,6 @@
   	<input name="attr_Mit_Qtotal" value = "0" hidden>
 	<input name="attr_Ele_Qtotal" value = "" hidden>
 	<input name="attr_Weak_total" value = "None" hidden>
-	<input name="attr_HP_current" value = "0" hidden>
 	<input name="attr_Str_total" value = "0" hidden>
 	<input name="attr_Str_gtotal" value = "0" hidden>
 	<input name="attr_Mag_total" value = "0" hidden>
@@ -984,7 +978,6 @@
 	<input name="attr_Res_total" value = "0" hidden>
 	<input name="attr_Res_gtotal" value = "0" hidden>
 	<input name="attr_Mov_total" value = "0" hidden>
-	<input name="attr_EXP" value = "0" min = "0" max = "200" hidden>
 	<input name="attr_Swordrank" value = "E" type = "text" hidden>
 	<input name="attr_Lancerank" value = "E" type = "text" hidden>
 	<input name="attr_Axerank" value = "E" type = "text" hidden>
@@ -993,142 +986,15 @@
 	<input name="attr_Darkrank" value = "E" type = "text" hidden>
 	<input name="attr_Lightrank" value = "E" type = "text" hidden>
 	<input name="attr_Animarank" value = "E" type = "text" hidden>
-	<input name="attr_Swordrank_max" value = "E" type = "text" hidden>
-	<input name="attr_Lancerank_max" value = "E" type = "text" hidden>
-	<input name="attr_Axerank_max" value = "E" type = "text" hidden>
-	<input name="attr_Bowrank_max" value = "E" type = "text" hidden>
-	<input name="attr_Stavesrank_max" value = "E" type = "text" hidden>
-	<input name="attr_Darkrank_max" value = "E" type = "text" hidden>
-	<input name="attr_Lightrank_max" value = "E" type = "text" hidden>
-	<input name="attr_Animarank_max" value = "E" type = "text" hidden>
 	<input name="attr_Hit" value = "0" hidden>
 	<input name="attr_Crit" value = "0" hidden>
-	<input name="attr_avo" value = "0" hidden>
+	<input name="attr_Ddg" value = "0" hidden>
+	<input name="attr_Avo" value = "0" hidden>
 	<input name="attr_phys_total" value = "0" hidden>
 	<input name="attr_myst_total" value = "0" hidden>
 	<input name="attr_prot_total" value = "0" hidden>
 	<input name="attr_ward_total" value = "0" hidden>
 	<input name="attr_Atkspd" value = "0" min = "0" hidden>
-	<input name="attr_HP_M" value = "0" hidden>
-	<input name="attr_HP_S" value = "0" hidden>
-	<input name="attr_HP_1" value = "0" hidden>
-	<input name="attr_HP_2" value = "0" hidden>
-	<input name="attr_HP_3" value = "0" hidden>
-	<input name="attr_HP_4" value = "0" hidden>
-	<input name="attr_HP_5" value = "0" hidden>
-	<input name="attr_HP_6" value = "0" hidden>
-	<input name="attr_HP_7" value = "0" hidden>
-	<input name="attr_HP_8" value = "0" hidden>
-	<input name="attr_HP_9" value = "0" hidden>
-	<input name="attr_HP_10" value = "0" hidden>
-	<input name="attr_Con_M" value = "0" hidden>
-	<input name="attr_Con_S" value = "0" hidden>
-	<input name="attr_Con_1" value = "0" hidden>
-	<input name="attr_Con_2" value = "0" hidden>
-	<input name="attr_Con_3" value = "0" hidden>
-	<input name="attr_Con_4" value = "0" hidden>
-	<input name="attr_Con_5" value = "0" hidden>
-	<input name="attr_Con_6" value = "0" hidden>
-	<input name="attr_Con_7" value = "0" hidden>
-	<input name="attr_Con_8" value = "0" hidden>
-	<input name="attr_Con_9" value = "0" hidden>
-	<input name="attr_Con_10" value = "0" hidden>
-	<input name="attr_Str_M" value = "0" hidden>
-	<input name="attr_Str_S" value = "0" hidden>
-	<input name="attr_Str_1" value = "0" hidden>
-	<input name="attr_Str_2" value = "0" hidden>
-	<input name="attr_Str_3" value = "0" hidden>
-	<input name="attr_Str_4" value = "0" hidden>
-	<input name="attr_Str_5" value = "0" hidden>
-	<input name="attr_Str_6" value = "0" hidden>
-	<input name="attr_Str_7" value = "0" hidden>
-	<input name="attr_Str_8" value = "0" hidden>
-	<input name="attr_Str_9" value = "0" hidden>
-	<input name="attr_Str_10" value = "0" hidden>
-	<input name="attr_Mag_M" value = "0" hidden>
-	<input name="attr_Mag_S" value = "0" hidden>
-	<input name="attr_Mag_1" value = "0" hidden>
-	<input name="attr_Mag_2" value = "0" hidden>
-	<input name="attr_Mag_3" value = "0" hidden>
-	<input name="attr_Mag_4" value = "0" hidden>
-	<input name="attr_Mag_5" value = "0" hidden>
-	<input name="attr_Mag_6" value = "0" hidden>
-	<input name="attr_Mag_7" value = "0" hidden>
-	<input name="attr_Mag_8" value = "0" hidden>
-	<input name="attr_Mag_9" value = "0" hidden>
-	<input name="attr_Mag_10" value = "0" hidden>
-	<input name="attr_Def_M" value = "0" hidden>
-	<input name="attr_Def_S" value = "0" hidden>
-	<input name="attr_Def_1" value = "0" hidden>
-	<input name="attr_Def_2" value = "0" hidden>
-	<input name="attr_Def_3" value = "0" hidden>
-	<input name="attr_Def_4" value = "0" hidden>
-	<input name="attr_Def_5" value = "0" hidden>
-	<input name="attr_Def_6" value = "0" hidden>
-	<input name="attr_Def_7" value = "0" hidden>
-	<input name="attr_Def_8" value = "0" hidden>
-	<input name="attr_Def_9" value = "0" hidden>
-	<input name="attr_Def_10" value = "0" hidden>
-	<input name="attr_Res_M" value = "0" hidden>
-	<input name="attr_Res_S" value = "0" hidden>
-	<input name="attr_Res_1" value = "0" hidden>
-	<input name="attr_Res_2" value = "0" hidden>
-	<input name="attr_Res_3" value = "0" hidden>
-	<input name="attr_Res_4" value = "0" hidden>
-	<input name="attr_Res_5" value = "0" hidden>
-	<input name="attr_Res_6" value = "0" hidden>
-	<input name="attr_Res_7" value = "0" hidden>
-	<input name="attr_Res_8" value = "0" hidden>
-	<input name="attr_Res_9" value = "0" hidden>
-	<input name="attr_Res_10" value = "0" hidden>
-	<input name="attr_Mov_M" value = "0" hidden>
-	<input name="attr_Mov_S" value = "0" hidden>
-	<input name="attr_Mov_1" value = "0" hidden>
-	<input name="attr_Mov_2" value = "0" hidden>
-	<input name="attr_Mov_3" value = "0" hidden>
-	<input name="attr_Mov_4" value = "0" hidden>
-	<input name="attr_Mov_5" value = "0" hidden>
-	<input name="attr_Mov_6" value = "0" hidden>
-	<input name="attr_Mov_7" value = "0" hidden>
-	<input name="attr_Mov_8" value = "0" hidden>
-	<input name="attr_Mov_9" value = "0" hidden>
-	<input name="attr_Mov_10" value = "0" hidden>
-	<input name="attr_Hit_M" value = "0" hidden>
-	<input name="attr_Hit_S" value = "0" hidden>
-	<input name="attr_Hit_1" value = "0" hidden>
-	<input name="attr_Hit_2" value = "0" hidden>
-	<input name="attr_Hit_3" value = "0" hidden>
-	<input name="attr_Hit_4" value = "0" hidden>
-	<input name="attr_Hit_5" value = "0" hidden>
-	<input name="attr_Hit_6" value = "0" hidden>
-	<input name="attr_Hit_7" value = "0" hidden>
-	<input name="attr_Hit_8" value = "0" hidden>
-	<input name="attr_Hit_9" value = "0" hidden>
-	<input name="attr_Hit_10" value = "0" hidden>
-	<input name="attr_Avo_M" value = "0" hidden>
-	<input name="attr_Avo_S" value = "0" hidden>
-	<input name="attr_Avo_1" value = "0" hidden>
-	<input name="attr_Avo_2" value = "0" hidden>
-	<input name="attr_Avo_3" value = "0" hidden>
-	<input name="attr_Avo_4" value = "0" hidden>
-	<input name="attr_Avo_5" value = "0" hidden>
-	<input name="attr_Avo_6" value = "0" hidden>
-	<input name="attr_Avo_7" value = "0" hidden>
-	<input name="attr_Avo_8" value = "0" hidden>
-	<input name="attr_Avo_9" value = "0" hidden>
-	<input name="attr_Avo_10" value = "0" hidden>
-	<input name="attr_Weight_M" value = "0" hidden>
-	<input name="attr_Weight_S" value = "0" hidden>
-	<input name="attr_Weight_1" value = "0" hidden>
-	<input name="attr_Weight_2" value = "0" hidden>
-	<input name="attr_Weight_3" value = "0" hidden>
-	<input name="attr_Weight_4" value = "0" hidden>
-	<input name="attr_Weight_5" value = "0" hidden>
-	<input name="attr_Weight_6" value = "0" hidden>
-	<input name="attr_Weight_7" value = "0" hidden>
-	<input name="attr_Weight_8" value = "0" hidden>
-	<input name="attr_Weight_9" value = "0" hidden>
-	<input name="attr_Weight_10" value = "0" hidden>
 	<!--Firstmost weapon values, excludes hit/crit because that's already calculated-->
 	<input name= "attr_Weaknesses" value = "" hidden>
 	<input type = "checkbox" value="0" name = "attr_isPromo"/>
@@ -1158,9 +1024,7 @@ function UpdateStat(stat) {
 			const slotNum = v.atktype == "Physical" ? v.WSlot : v.SSlot;
 			fID = idarray[Number(slotNum)-1];
 			getAttrs([`${stat}_i`,`${stat}_bd`,`${stat}_total`,`${stat}_Qtotal`,`${repeatName}_${fID}_${stat}_wp`,], function(v) {
-				log(JSON.stringify(v))
 				let nindex = Object.keys(v)[4];
-				log(nindex)
 				let wp = parseInt(v[nindex])||0;
 				setAttrs({
 					[stat+"_total"]: Number(v[stat+"_i"]) + Number(v[stat+"_bd"]) + Number(v[stat+"_Qtotal"]) + wp,
@@ -1201,10 +1065,8 @@ bonusStats.forEach(function (stat) {
         getAttrs(["bonus_1_check", "bonus_2_check", "bonus_3_check", "bonus_4_check", "bonus_5_check", "bonus_6_check", "bonus_7_check", "bonus_8_check", "bonus_9_check", "bonus_10_check", "bonus_11_check", "bonus_12_check",
                             stat+"_M", stat+"_S", stat+"_1",stat+"_2", stat+"_3", stat+"_4", stat+"_5", stat+"_6", stat+"_7", stat+"_8", stat+"_9", stat+"_10"], function(values) {
             let sumBonus = 0;
-			log('test');
             for (var i=0; i<12; i++) {
                 let val = Object.values(values)[i];
-				log('val='+val);
                 if(Number(val) == 1) {
                     sumBonus += Number(Object.values(values)[i+12]);
                 }
@@ -1220,14 +1082,12 @@ let checkchange = "change:bonus_1_check change:bonus_2_check change:bonus_3_chec
 on(checkchange+"change:Ele_M change:Ele_S change:Ele_1 change:Ele_2 change:Ele_3 change:Ele_4 change:Ele_5 change:Ele_6 change:Ele_7 change:Ele_8 change:Ele_9 change:Ele_10", function(eventInfo) {
 	getAttrs(["bonus_1_check", "bonus_2_check", "bonus_3_check", "bonus_4_check", "bonus_5_check", "bonus_6_check", "bonus_7_check", "bonus_8_check", "bonus_9_check", "bonus_10_check", "bonus_11_check", "bonus_12_check", "Ele_M", "Ele_S", "Ele_1","Ele_2", "Ele_3", "Ele_4", "Ele_5", "Ele_6", "Ele_7", "Ele_8", "Ele_9", "Ele_10"],function(values) {
 		let sumElebonus = '';
-		log('---------------');
 		for (var i=0;i<12;i++){
 			let val = Object.values(values)[i];
 			let keys = Object.keys(values)[i];
 
 			if(Number(val)==1){
 				sumElebonus+=Object.values(values)[i+12]+',';
-				log(sumElebonus);
 			}
 		}
 		setAttrs({
@@ -1265,10 +1125,8 @@ on("change:repeating_weapons:WType change:repeating_weapons:wEXP change:repeatin
 		getSectionIDsOrdered(repeatName, function(idarray) {
 			fID = idarray[Number(slotNum)-1];
 			getAttrs([repeatName+"_"+fID+"_"+repeatType, repeatName+"_"+fID+"_wEXP"], function(v) {
-				log(JSON.stringify(v))
 				let nindex = Object.keys(v)[0];
 				let eindex = Object.keys(v)[1];
-				log(nindex)
 				let weptype = v[nindex];
 				let wepexp = v[eindex];
 				setAttrs({
@@ -1497,14 +1355,11 @@ on("change:Str_total change:repeating_weapons:WType change:repeating_weapons:Mt 
 			slotnum = v.WSlot
 			fID = idarray[Number(slotnum)-1];
 			getAttrs(["Str_total", "repeating_weapons_"+fID+"_Mt","repeating_weapons_"+fID+"_WType", "repeating_weapons_"+fID+"_Wt", "atktype", "phys_bd"], function(v) {
-				log(JSON.stringify(v))
 				let nindex = Object.keys(v)[1];
 				let mindex = Object.keys(v)[2];
 				let wtindex = Object.keys(v)[3];
-				log(nindex)
 				let wMt = parseInt(v[nindex])||0;
 				let wWt = parseInt(v[wtindex])||0;
-				log("wMt is " + wMt)
 				let Str = v.Str_total;
 
 				setAttrs({
@@ -1524,14 +1379,11 @@ on("change:Mag_total change:repeating_spells:Mt change:repeating_weapons:SType c
 			slotnum = v.SSlot
 			fID = idarray[Number(slotnum)-1];
 			getAttrs(["Mag_total", "repeating_spells_"+fID+"_Mt","repeating_spells_"+fID+"_SType", "repeating_spells_"+fID+"_Wt", "myst_bd", "atktype"], function(v) {
-				log(JSON.stringify(v))
 				let nindex = Object.keys(v)[1];
 				let mindex = Object.keys(v)[2];
 				let wtindex = Object.keys(v)[3];
-				log(nindex)
 				let wMt = parseInt(v[nindex])||0;
 				let wWt = parseInt(v[wtindex])||0;
-				log("wMt is " + wMt)
 				let Mag = v.Mag_total;
 
 				setAttrs({
@@ -1568,13 +1420,13 @@ on("change:Atkspd change:Avo_bd change:Lck_total change:Avo_Qtotal", function() 
 		Spd = v.Atkspd;
 		LckA = v.Lck_total;
 		setAttrs({
-			avo: Number(Spd)*2 + Math.floor(Number(LckA)/2) + Number(v.Avo_bd) + Number(v.Avo_Qtotal)
+			Avo: Number(Spd)*2 + Math.floor(Number(LckA)/2) + Number(v.Avo_bd) + Number(v.Avo_Qtotal)
 		});
 	});
 });
 
 // Hit
-on("change:Skl_total change:Lck_total change:repeating_combat change:repeating_combat:Hit change:repeating_weapons:Hit change:repeating_spells:Hit change:_reporder:weapons change:_reporder:spells remove:repeating_weapons remove:repeating_spells change:WSlot change:SSlot change:atktype change:Hit_Qtotal change:hit_bd", function(eventInfo) {
+on("change:Skl_total change:Lck_total change:repeating_combat change:repeating_combat:Hit change:repeating_weapons:Hit change:repeating_spells:Hit change:_reporder:weapons change:_reporder:spells remove:repeating_weapons remove:repeating_spells change:WSlot change:SSlot change:atktype change:Hit_Qtotal change:Hit_bd", function(eventInfo) {
 	getAttrs(["WSlot","SSlot","atktype"], function(v) {
 		const isPhys = v.atktype == "Physical" ? 1 : 0;
 		const repeatName = isPhys ? "repeating_weapons" : "repeating_spells";
@@ -1628,13 +1480,12 @@ on("change:Lck_total change:repeating_weapons:Ddg change:repeating_spells:Ddg ch
 
 		getSectionIDsOrdered(repeatName, function(idarray) {
 			fID = idarray[Number(slotNum)-1];
-			getAttrs(["Skl_total", "Lck_total", repeatName+"_"+fID+"_Ddg", "Ddg_Qtotal", "Ddg_bd"], function(v) {
+			getAttrs(["Lck_total", repeatName+"_"+fID+"_Ddg", "Ddg_Qtotal", "Ddg_bd"], function(v) {
 				let nindex = Object.keys(v)[2];
 				let wDdg = parseInt(v[nindex])||0;
-				let SklC = v.Skl_total;
 				let LckC = v.Lck_total;
 				setAttrs({
-					Ddg: Math.round(100 + LckC + Number(v.Ddg_Qtotal) + wDdg + Number(v.Ddg_bd)),
+					Ddg: Math.floor(100 + Number(LckC) + Number(v.Ddg_Qtotal) + wDdg + Number(v.Ddg_bd)),
 				});
 			});
 		});
@@ -1670,15 +1521,11 @@ on("change:Spd_total change:All change:Con_total change:repeating_weapons:Wt cha
 
 // Other firstmost values for the battlescript
 on("change:repeating_weapons change:_reporder:weapons remove:repeating_weapons", function(eventInfo) {
-	log(eventInfo.newValue)
 	getSectionIDsOrdered("repeating_weapons", function(idarray) {
-		console.log(idarray);
 		if (idarray.length < 1){
-			console.log("No weapon! Filling in default values");
 			update = {
 				fid: undefined
 			};
-			console.log(update);
 			setAttrs(update);
 			return;
 		} else {
@@ -1686,7 +1533,6 @@ on("change:repeating_weapons change:_reporder:weapons remove:repeating_weapons",
 			update = {
 				fid: fID
 			}
-			console.log(fID)
 			setAttrs(update);
 		};
 	});
@@ -1694,7 +1540,7 @@ on("change:repeating_weapons change:_reporder:weapons remove:repeating_weapons",
 
 // Initialize values for API, because ded
 on("sheet:opened", function(){
-	getAttrs(["WSlot","SSlot","currWt","weplist","splist","colist","effdmg","currEff","currName","currMt","currDesc","currWexp","currWep","currMinDist","currMaxDist","currCounter","currBrave","atktype","EXP","SwordEXP","LanceEXP","AxeEXP","BowEXP","StavesEXP","DarkEXP","AnimaEXP","LightEXP","Level","HP_i","Str_i","Mag_i","Skl_i","Spd_i","Lck_i","Def_i","Res_i","Mov_i","HP_bd","Str_bd","Mag_bd","Skl_bd","Spd_bd","Lck_bd","Def_bd","Res_bd","Mov_bd","item_uses0","item_uses1","item_uses2","Swordrank","Lancerank","Axerank","Bowrank","Stavesrank","Darkrank","Animarank","Lightrank","fid","phys_bd","myst_bd","ward_bd","prot_bd","Weak_total","Ele_Qtotal","Hit","Crit","Ddg","avo"], function(v){
+	getAttrs(["WSlot","SSlot","currWt","weplist","splist","colist","effdmg","currEff","currName","currMt","currDesc","currWexp","currWep","currMinDist","currMaxDist","currCounter","currBrave","atktype","EXP","SwordEXP","LanceEXP","AxeEXP","BowEXP","StavesEXP","DarkEXP","AnimaEXP","LightEXP","Level","HP_i","Str_i","Mag_i","Skl_i","Spd_i","Lck_i","Def_i","Res_i","Mov_i","HP_bd","Str_bd","Mag_bd","Skl_bd","Spd_bd","Lck_bd","Def_bd","Res_bd","Mov_bd","item_uses0","item_uses1","item_uses2","Swordrank","Lancerank","Axerank","Bowrank","Stavesrank","Darkrank","Animarank","Lightrank","fid","phys_bd","myst_bd","ward_bd","prot_bd","Weak_total","Ele_Qtotal","Hit","Crit","Ddg","Avo"], function(v){
 		setAttrs({
 			WSlot: v.WSlot,
 			SSlot: v.SSlot,
@@ -1762,10 +1608,9 @@ on("sheet:opened", function(){
 			Ele_Qtotal: v.Ele_Qtotal,
 			Hit: v.Hit,
 			Crit: v.Crit,
-			avo: v.avo,
+			Avo: v.Avo,
 			Ddg: v.Ddg,
 		});
-		console.log("Initializing values...")
 	});
 });
 
@@ -1773,7 +1618,6 @@ on("sheet:opened", function(){
 on("change:repeating_weapons:uses", function(eventInfo) {
 	getAttrs(["repeating_weapons_WName", "repeating_weapons_uses"], function(v){
 		let usev = parseInt(v["repeating_weapons_uses"]);
-		console.log("Uses are" + usev)
 		if (usev == 0 || usev == "0"){
 			setAttrs({
 				"repeating_weapons_WRank": "UU",
@@ -1785,7 +1629,6 @@ on("change:repeating_weapons:uses", function(eventInfo) {
 on("change:repeating_spells:uses", function(eventInfo) {
 	getAttrs(["repeating_spells_SName", "repeating_spells_uses"], function(v){
 		let usev = parseInt(v["repeating_spells_uses"]);
-		console.log("Uses are" + usev)
 		if (usev == 0 || usev == "0"){
 			setAttrs({
 				"repeating_spells_SName": "Broken " + v["repeating_spells_SName"]
