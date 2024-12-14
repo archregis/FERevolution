@@ -46,8 +46,8 @@ function handleLevelUp(attackerId, CurrEXP, LvA, who) {
 
     const growthslist = [HPG, StrG, MagG, SklG, LckG, SpdG, DefG, ResG];
     const statslist = [HPSG, StrSG, MagSG, SklSG, LckSG, SpdSG, DefSG, ResSG];
-    const slist = ["HP","Str","Mag","Skl","Lck","Spd","Def","Res"];
-    let lvlStr = [];
+    const slist = ["HP", "Str", "Mag", "Skl", "Lck", "Spd", "Def", "Res"];
+    let lvlStr = "";
     
     // Build inline roll msg
     for (let i = 0; i < growthslist.length; i++) {
@@ -55,15 +55,13 @@ function handleLevelUp(attackerId, CurrEXP, LvA, who) {
       if (gi > 100) {
         gi -= 100;
       }
-      lvlStr[i] = `[[d100<${gi}]]`;
+      lvlStr += `[[d100<${gi}]] Test `;
     }
     
     // Send level up message
-    const msg = `${lvlStr.join("")}`;
-    sendChat(who, msg, function(val) {
+    sendChat(who, lvlStr, function(val) {
       sendChat(who, `${who} has leveled up!`);
       for (let i=0; i<growthslist.length; i++) {
-        log(i);
         let roll = libInline.getRollTip(val[0].inlinerolls[i]);
         let result = libInline.getValue(val[0].inlinerolls[i]);
         let increase = growthslist[i]>100 ? result+1 : result;
