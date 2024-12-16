@@ -509,63 +509,63 @@
 
 	<!-- Second Page -->
 	<div class='sheet-misc'>
-		<div class="sheet-abilityinfo">
-			<div class = "sheet-header"> Skills </div>
-			<textarea name="attr_abilitylist" type="text" style="width:350px; height:500px"></textarea>
+		<div class="sheet-grid-section">
+			<div class="sheet-ability-info">
+				<div class = "sheet-header"> Skills </div>
+				<textarea name="attr_abilitylist" type="text" style="width:95%; height:450px"></textarea>
+			</div>
+			<div class="sheet-support-info">
+				<div class = "sheet-header"> Supports </div>
+				<textarea name="attr_supportlist" type="text" style="width:95%; height:450px"></textarea>
+			</div>
 		</div>
-		<div class="sheet-supportinfo">
-			<div class = "sheet-header"> Supports </div>
-			<textarea name="attr_supportlist" type="text" style="width:350px; height:500px"></textarea>
-		</div>
-		<div class = "sheet-weapons">
-			<div class = "sheet-header">WEAPON RANKS</div>
-			<table>
-				<tr>
-					<th>Weap. Type</th>
-					<th>EXP</th>
-					<th>Rank</th>
-				</tr>
-				<tr>
-					<td>Swords</td>
-					<td><input type = "number" value = "0" name = "attr_swordExp" min = "0" max = "1000"></td>
-					<td><span name = "attr_swordRank"></span></td>
-				</tr>
-				<tr>
-					<td>Lances</td>
-					<td><input type = "number" value = "0" name = "attr_lanceExp" min = "0" max = "1000"></td>
-					<td><span name = "attr_lanceRank"></span></td>
-				</tr>
-				<tr>
-					<td>Axes</td>
-					<td><input type = "number" value = "0" name = "attr_axeExp" min = "0" max = "1000"></td>
-					<td><span name = "attr_axeRank"></span></td>
-				</tr>
-				<tr>
-					<td>Bows</td>
-					<td><input type = "number" value = "0" name = "attr_bowExp" min = "0" max = "1000"></td>
-					<td><span name = "attr_bowRank"></span></td>
-				</tr>
-				<tr>
-					<td>Staves</td>
-					<td><input type = "number" value = "0" name = "attr_stavesExp" min = "0" max = "1000"></td>
-					<td><span name = "attr_stavesRank"></span></td>
-				</tr>
-				<tr>
-					<td>Anima</td>
-					<td><input type = "number" value = "0" name = "attr_animaEXP" min = "0" max = "1000"></td>
-					<td><span name = "attr_animaRank"></span></td>
-				</tr>
-				<tr>
-					<td>Light</td>
-					<td><input type = "number" value = "0" name = "attr_lightExp" min = "0" max = "1000"></td>
-					<td><span name = "attr_lightRank"></span></td>
-				</tr>
-				<tr>
-					<td>Dark</td>
-					<td><input type = "number" value = "0" name = "attr_darkExp" min = "0" max = "1000"></td>
-					<td><span name = "attr_darkRank"></span></td>
-				</tr>
-			</table>
+		<div class="sheet-weapon-rank-grid">
+			<div class = "sheet-header">Weapon Ranks</div>
+			<div class="sheet-weapon-rank-row sheet-weapon-rank-header">
+				<div>Weap. Type</div>
+				<div>EXP</div>
+				<div>Rank</div>
+			</div>
+			<div class="sheet-weapon-rank-row">
+				<div>Swords</div>
+				<div><input type="number" value="0" name="attr_swordExp" min="0" max="255"></div>
+				<div><span name="attr_swordRank"></span></div>
+			</div>
+			<div class="sheet-weapon-rank-row">
+				<div>Lances</div>
+				<div><input type="number" value="0" name="attr_lanceExp" min="0" max="255"></div>
+				<div><span name="attr_lanceRank"></span></div>
+			</div>
+			<div class="sheet-weapon-rank-row">
+				<div>Axes</div>
+				<div><input type="number" value="0" name="attr_axeExp" min="0" max="255"></div>
+				<div><span name="attr_axeRank"></span></div>
+			</div>
+			<div class="sheet-weapon-rank-row">
+				<div>Bows</div>
+				<div><input type="number" value="0" name="attr_bowExp" min="0" max="255"></div>
+				<div><span name="attr_bowRank"></span></div>
+			</div>
+			<div class="sheet-weapon-rank-row">
+				<div>Staves</div>
+				<div><input type="number" value="0" name="attr_stavesExp" min="0" max="255"></div>
+				<div><span name="attr_stavesRank"></span></div>
+			</div>
+			<div class="sheet-weapon-rank-row">
+				<div>Anima</div>
+				<div><input type="number" value="0" name="attr_animaExp" min="0" max="255"></div>
+				<div><span name="attr_animaRank"></span></div>
+			</div>
+			<div class="sheet-weapon-rank-row">
+				<div>Light</div>
+				<div><input type="number" value="0" name="attr_lightExp" min="0" max="255"></div>
+				<div><span name="attr_lightRank"></span></div>
+			</div>
+			<div class="sheet-weapon-rank-row">
+				<div>Dark</div>
+				<div><input type="number" value="0" name="attr_darkExp" min="0" max="255"></div>
+				<div><span name="attr_darkRank"></span></div>
+			</div>
 		</div>
 	</div>
 

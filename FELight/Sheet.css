@@ -30,6 +30,37 @@
     overflow: auto;
 }
 
+.sheet-ability-info {
+    background-color: #f3f3f3;
+    margin-bottom:10px;
+    border-right: #353535 4px solid;
+}
+
+.sheet-support-info {
+    background-color: #f3f3f3;
+    margin-bottom:10px;
+    border-left: #353535 4px solid;
+}
+
+.sheet-weapon-rank-grid {
+    background-color: #f3f3f3;
+    margin-bottom: 10px;
+    width:50%
+}
+
+.sheet-weapon-rank-row {
+    display:grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 3px;
+    padding-top:10px;
+    text-align: center;
+    font-size: 13px;
+}
+
+.sheet-weapon-rank-header {
+    font-weight: bold;
+}
+
 .sheet-bonuses-grid {
     background-color: #f3f3f3;
     margin-bottom: 10px;
