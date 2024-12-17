@@ -370,12 +370,12 @@ input.sheet-toggle-stats:checked ~ .sheet-hiddenskill {
     display:inline-grid;
 }
 
-.sheet-hiddenskill label {
+.charsheet .sheet-hiddenskill label {
     display:block;
     font-size:13px;
     font-weight:bold;
 }
 
-.sheet-hiddenskill input {
+.charsheet .sheet-hiddenskill input {
     width:100%;
 }

@@ -727,7 +727,7 @@ const repeatingSum = (destinations, section, fields) => {
     getSectionIDs(`repeating_${section}`, idArray => {
         const attrArray = idArray.reduce((m, id) => [...m, ...(fields.map(field => `repeating_${section}_${id}_${field}`))], []);
         getAttrs([...attrArray], v => {
-            const getvalue=(section, id, field) => v[`repeating_${section}_${id}_${field}`] === 'on' ? 1 : parseFloat(v[`repeating_${section}_${id}_${field}`]) || 0;
+            const getValue = (section, id, field) => v[`repeating_${section}_${id}_${field}`] === 'on' ? 1 : parseFloat(v[`repeating_${section}_${id}_${field}`]) || 0;
             const commonMultipliers = (fields.length <= destinations.length) ? [] : fields.splice(destinations.length, fields.length - destinations.length);
             const output = {};
             destinations.forEach((destination, index) => {
@@ -740,7 +740,7 @@ const repeatingSum = (destinations, section, fields) => {
 
 function UpdateStat(stat) {
 	getAttrs(["wepSlot", "spellSlot", "atkType"], function(v) {
-		const repeatname=v.atkType == "Physical" ? "repeating_weapons" : "repeating_spells";
+		const repeatName=v.atkType == "Physical" ? "repeating_weapons" : "repeating_spells";
 		getSectionIDsOrdered(repeatName, function(idarray) {
 			const slotNum = v.atkType == "Physical" ? v.wepSlot : v.spellSlot;
 			fID = idarray[Number(slotNum)-1];
@@ -819,9 +819,9 @@ on("change:flyingCheck change:armorCheck change:cavalryCheck change:dragonCheck 
 on("change:repeating_weapons:wepType change:repeating_weapons:wExp change:repeating_spells:wExp change:repeating_spells:spellType change:atkType change:_reporder:weapons change:_reporder:spells remove:repeating_spells remove:repeating_weapons change:wepSlot change:spellSlot", function() {
 	getAttrs(["wepSlot","spellSlot","atkType"], function(v) {
 		const isPhys = v.atkType == "Physical" ? 1 : 0;
-		const repeatname=isPhys ? "repeating_weapons" : "repeating_spells";
+		const repeatName = isPhys ? "repeating_weapons" : "repeating_spells";
 		const slotNum = isPhys? v.wepSlot : v.spellSlot;
-		const repeattype=isPhys ? "wepType" : "spellType";
+		const repeatType = isPhys ? "wepType" : "spellType";
 
 		getSectionIDsOrdered(repeatName, function(idarray) {
 			fID = idarray[Number(slotNum)-1];
@@ -840,7 +840,7 @@ on("change:repeating_weapons:wepType change:repeating_weapons:wExp change:repeat
 on("change:repeating_weapons:minDistWep change:repeating_weapons:maxDistWep change:repeating_weapons:counterWep change:repeating_weapons:braveWep change:repeating_spells:minDistWep change:repeating_spells:maxDistWep change:repeating_spells:counterWep change:repeating_spells:braveWep change:_reporder:weapons change:_reporder:spells remove:repeating_spells remove:repeating_weapons change:atkType change:wepSlot change:spellSlot", function() {
 	getAttrs(["wepSlot","spellSlot","atkType"], function(v) {
 		const isPhys = v.atkType == "Physical" ? 1 : 0;
-		const repeatname=isPhys ? "repeating_weapons" : "repeating_spells";
+		const repeatName = isPhys ? "repeating_weapons" : "repeating_spells";
 		const slotNum = isPhys? v.wepSlot : v.spellSlot;
 
 		getSectionIDsOrdered("repeating_weapons", function(idarray) {
@@ -893,7 +893,7 @@ weapons.forEach( function(weapon) {
 on("change:repeating_weapons:wepName change:repeating_spells:spellName change:repeating_weapons:effWep change:repeating_spells:effWep change:repeating_weapons:skill1Wep change:repeating_weapons:skill2Wep change:repeating_spells:skill1Wep change:repeating_spells:skill2Wep change:repeating_weapons:descWep change:repeating_spells:descWep change:atkType change:_reporder:weapons change:_reporder:spells remove:repeating_spells remove:repeating_weapons change:wepSlot change:spellSlot", function() {
 	getAttrs(["wepSlot", "spellSlot", "atkType"], function(v) {
 		const isPhys = v.atkType == "Physical" ? 1 : 0;
-		const repeatname=isPhys ? "repeating_weapons" : "repeating_spells";
+		const repeatName = isPhys ? "repeating_weapons" : "repeating_spells";
 		const slotNum = isPhys? v.wepSlot : v.spellSlot;
 		const name=isPhys ? "wepName" : "spellName";
 
@@ -1005,7 +1005,7 @@ on("change:atkSpd change:avoBuff change:lckTotal change:avoBonusTotal", function
 on("change:sklTotal change:lckTotal change:repeating_weapons:hit change:repeating_spells:hit change:_reporder:weapons change:_reporder:spells remove:repeating_weapons remove:repeating_spells change:wepSlot change:spellSlot change:atkType change:hitBonusTotal change:hitBuff", function() {
 	getAttrs(["wepSlot", "spellSlot", "atkType"], function(v) {
 		const isPhys = v.atkType == "Physical" ? 1 : 0;
-		const repeatname=isPhys ? "repeating_weapons" : "repeating_spells";
+		const repeatName = isPhys ? "repeating_weapons" : "repeating_spells";
 		const slotNum = isPhys? v.wepSlot : v.spellSlot;
 
 		getSectionIDsOrdered(repeatName, function(idarray) {
@@ -1024,7 +1024,7 @@ on("change:sklTotal change:lckTotal change:repeating_weapons:hit change:repeatin
 on("change:sklTotal change:lckTotal change:repeating_weapons:crit change:repeating_spells:crit change:_reporder:weapons change:_reporder:spells remove:repeating_weapons remove:repeating_spells change:wepSlot change:spellSlot change:atkType change:critBonusTotal change:critBuff", function() {
 	getAttrs(["wepSlot", "spellSlot", "atkType"], function(v) {
 		const isPhys = v.atkType == "Physical" ? 1 : 0;
-		const repeatname=isPhys ? "repeating_weapons" : "repeating_spells";
+		const repeatName = isPhys ? "repeating_weapons" : "repeating_spells";
 		const slotNum = isPhys? v.wepSlot : v.spellSlot;
 
 		getSectionIDsOrdered(repeatName, function(idarray) {
@@ -1043,7 +1043,7 @@ on("change:sklTotal change:lckTotal change:repeating_weapons:crit change:repeati
 on("change:lckTotal change:repeating_weapons:ddg change:repeating_spells:ddg change:_reporder:weapons change:_reporder:spells remove:repeating_weapons remove:repeating_spells change:wepSlot change:spellSlot change:atkType change:atkSpd change:ddgBuff change:ddgBonusTotal", function() {
 	getAttrs(["wepSlot", "spellSlot", "atkType"], function(v) {
 		const isPhys = v.atkType == "Physical" ? 1 : 0;
-		const repeatname=isPhys ? "repeating_weapons" : "repeating_spells";
+		const repeatName = isPhys ? "repeating_weapons" : "repeating_spells";
 		const slotNum = isPhys? v.wepSlot : v.spellSlot;
 
 		getSectionIDsOrdered(repeatName, function(idarray) {
@@ -1062,7 +1062,7 @@ on("change:lckTotal change:repeating_weapons:ddg change:repeating_spells:ddg cha
 on("change:spdTotal change:All change:conTotal change:repeating_weapons:wt change:repeating_spells:wt change:_reporder:weapons change:_reporder:spells remove:repeating_weapons remove:repeating_spells change:wepSlot change:spellSlot change:atkType change:wgtBonusTotal", function() {
 	getAttrs(["wepSlot", "spellSlot", "atkType"], function(v) {
 		const isPhys = v.atkType == "Physical" ? 1 : 0;
-		const repeatname=isPhys ? "repeating_weapons" : "repeating_spells";
+		const repeatName = isPhys ? "repeating_weapons" : "repeating_spells";
 		const slotNum = isPhys? v.wepSlot : v.spellSlot;
 
 		getSectionIDsOrdered(repeatName, function(idarray) {
