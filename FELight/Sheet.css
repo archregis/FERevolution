@@ -1,112 +1,381 @@
 @font-face {
-  font-family: 'Merriweather';
-  font-style: normal;
-  font-weight: 300;
-  src: local('Merriweather Light'), local('Merriweather-Light'), format('woff2');
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2212, U+2215;
+  font-family:'Merriweather';
+  font-style:normal;
+  font-weight:300;
+  src:local('Merriweather Light'), local('Merriweather-Light'), format('woff2');
+  unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2212, U+2215;
 }
+
+*, *::before, *::after {
+    box-sizing: border-box;
+  }
 
 /*equip the tab buttons*/
 .sheet-character,
 .sheet-equip,
 .sheet-misc {
-	display: none;
+	display:none;
 }
 
 /* show the selected tab */
 .sheet-tabstoggle[value="character"] ~ div.sheet-character,
 .sheet-tabstoggle[value="equip"] ~ div.sheet-equip,
 .sheet-tabstoggle[value="misc"] ~ div.sheet-misc {
-	display: block;
+	display:block;
 }
 
 .charsheet { /*background function*/
-    background-color: #353535;
-    font-family: "Merriweather";
-    font-size: 11px;
-    min-height: 100%;
+    background-color:#353535;
+    font-family:"Merriweather";
+    font-size:11px;
+    min-height:100%;
     min-width:100%;
     clear:both;
-    overflow: auto;
+    overflow:auto;
+}
+
+.sheet-character-grid {
+    display:grid;
+    grid-template-columns:72% 28%;
+    grid-template-rows: 50% 50%;
+    grid-template-areas:"left notes"
+                        "stats derive";
+  }
+
+.sheet-left-col {
+    grid-area:left;
+}
+
+.sheet-info {
+    background-color:#f3f3f3;
+    margin-bottom:10px;
+    border-right:#353535 4px solid;
+    padding:3px;
+}
+
+.sheet-current-vals {
+    background-color:#f3f3f3;
+    margin-bottom:10px;
+    border-right:#353535 4px solid;
+    padding:3px;
+}
+
+.sheet-stats {
+    grid-area:stats;
+    background-color:#f3f3f3;
+    margin-bottom:10px;
+    border-right:#353535 4px solid;
+    padding:3px;
+}
+
+.sheet-derived {
+    grid-area:derive;
+    background-color:#f3f3f3;
+    margin-bottom:10px;
+    border-left:#353535 4px solid;
+    padding:3px;
+}
+
+.sheet-notes {
+    grid-area:notes;
+    background-color:#f3f3f3;
+    margin-bottom:10px;
+    border-left:#353535 4px solid;
+    padding:3px;
+}
+
+.sheet-char-row {
+    background-color:#f3f3f3;
+    width:100%;
+    display:inline-block;
+    padding-left:10px;
+}
+
+.sheet-label-row {
+    font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-weight:bold;
+    background-color:#353535;
+    color:#f3f3f3;
+    text-transform:uppercase;
+    font-size:15px;
+}
+
+.sheet-current-vals-row {
+    display:grid;
+    grid-template-columns:repeat(5, 1fr);
+    padding-top:5px;
+    text-align:center;
+    font-size:13px;
+    margin-bottom:10px;
+}
+
+.sheet-stats-grid {
+    display:grid;
+    background-color:#f3f3f3;
+    padding-bottom:5px;
+    row-gap:10px;
+}
+
+.sheet-stats-row {
+    display:grid;
+    grid-template-columns:repeat(7, 1fr);
+    text-align:center;
+    font-size:13px;
+}
+
+.sheet-info label {
+    display:inline;
+    font-weight:normal;
+}
+
+.charsheet label input,
+.charsheet sheet-info select {
+    margin-right:2px;
+    width:20%;
+    margin-bottom:5px;
+    margin-top:5px;
+}
+
+.charsheet select {
+    display:inline;
+    background-color:#F9F9F9;
+    color:rgb(85, 85, 85);
+    box-shadow:0px 1px 1px rgba(0, 0, 0, 0.075) inset;
+}
+
+.sheet-derived-grid {
+    display:grid;
+    background-color:#f3f3f3;
+    margin-bottom:10px;
+    row-gap:10px;
+}
+
+.sheet-derived-row {
+    display:grid;
+    grid-template-columns:repeat(3, 1fr);
+    text-align:center;
+    font-size:13px;
+}
+
+.sheet-weapons-grid,
+.sheet-spells-grid {
+    display:inline-grid;
+    background-color:#f3f3f3;
+    padding:3px;
+    width:49.83%;
+}
+
+.sheet-weapons-grid {
+    border-right:#353535 4px solid;
+}
+
+.sheet-spells-grid {
+    border-left:#353535 4px solid;
+}
+
+.sheet-weapons-container {
+    border-bottom:#353535 4px solid;
+}
+
+.sheet-weapons-grid-container {
+    display:grid;
+    background-color:#f3f3f3;
+    margin-bottom:10px;
+    row-gap:5px;
+    text-align: center;
+}
+
+.sheet-weapons-grid-row {
+    display:grid;
+    width:100%;
+    grid-template-columns:60% 20% 20%;
+    font-weight:bold;
+    font-size:13px;
+}
+
+.sheet-hidden-grid-container {
+    display:grid;
+    background-color:#f3f3f3;
+    margin-bottom:10px;
+    row-gap:5px;
+    text-align: center;
+}
+
+.sheet-hidden-grid-row {
+    display:grid;
+    width:100%;
+    grid-template-columns:repeat(5, 1fr);
+    font-weight:bold;
+    font-size:13px;
+    margin-left:5px;
 }
 
 .sheet-ability-info {
-    background-color: #f3f3f3;
+    background-color:#f3f3f3;
     margin-bottom:10px;
-    border-right: #353535 4px solid;
+    border-right:#353535 4px solid;
+    padding:3px;
 }
 
 .sheet-support-info {
-    background-color: #f3f3f3;
+    background-color:#f3f3f3;
     margin-bottom:10px;
-    border-left: #353535 4px solid;
+    border-left:#353535 4px solid;
+    padding:3px;
 }
 
 .sheet-weapon-rank-grid {
-    background-color: #f3f3f3;
-    margin-bottom: 10px;
-    width:50%
+    display:grid;
+    background-color:#f3f3f3;
+    margin-bottom:10px;
+    row-gap:10px;
+    width:50%;
+    padding:3px;
+    border-right:#353535 4px solid;
 }
 
 .sheet-weapon-rank-row {
     display:grid;
-    grid-template-columns: repeat(3, 1fr);
-    grid-gap: 3px;
-    padding-top:10px;
-    text-align: center;
-    font-size: 13px;
+    grid-template-columns:repeat(3, 1fr);
+    text-align:center;
+    font-size:13px;
 }
 
-.sheet-weapon-rank-header {
-    font-weight: bold;
-}
-
-.sheet-bonuses-grid {
-    background-color: #f3f3f3;
-    margin-bottom: 10px;
+.sheet-weapon-rank-header,
+.sheet-stat-label {
+    font-weight:bold;
+    font-size:14px;
 }
 
 .sheet-bonus-grid-container {
-    display:grid;
-    width:100%;
-    grid-template-columns: 30px 100px repeat(14, 1fr);
-    grid-gap: 3px;
+    background-color:#f3f3f3;
+    margin-bottom:10px;
+    padding:3px;
 }
 
-.sheet-bonus-grid-container input[type="checkbox"] {
+.sheet-bonus-grid-row {
+    display:grid;
+    width:100%;
+    grid-template-columns:30px 100px repeat(14, 1fr);
+}
+
+.sheet-bonus-grid input[type="checkbox"] {
     width:20px;
-    margin-left: 5px;
+    margin-left:5px;
 }
 
 .sheet-header {
-    text-align: center;
-    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
-    font-size: 15px;
-    padding: 3px;
-    background-color: #353535;
-    color: #f3f3f3;
-    border: #f3f3f3 4px solid;
-    border-bottom-width: 2px;
-    font-weight: bold;
+    text-align:center;
+    font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-size:15px;
+    padding:3px;
+    background-color:#353535;
+    color:#f3f3f3;
+    border-bottom-width:2px;
+    font-weight:bold;
 }
 
 .sheet-bonuses-info {
-    background-color: #f3f3f3;
+    background-color:#f3f3f3;
     margin-bottom:10px;
-    border-right: #353535 4px solid;
+    border-right:#353535 4px solid;
+    padding:3px;
 }
 
 .sheet-equipment-info {
-    background-color: #f3f3f3;
+    background-color:#f3f3f3;
     margin-bottom:10px;
-    border-left: #353535 4px solid;
+    border-left:#353535 4px solid;
+    padding:3px;
 }
 
 .sheet-grid-section {
-    display: grid;
-    grid-template-columns: .5fr .5fr
-  }
+    display:grid;
+    grid-template-columns:.5fr .5fr
+}
 
-  .sheet-grid-section textarea {
+.sheet-notes textarea {
     margin-left:5px;
-  }
+    margin-top:5px;
+    width:95%;
+    height:88%;
+}
+
+.sheet-grid-section textarea {
+    margin-left:5px;
+    margin-top:5px;
+    width:98%;
+    height:450px;
+}
+
+.sheet-info input[type="checkbox"] {
+    width:13px;
+}
+
+input.sheet-toggle-stats {
+    border:none;
+    margin-bottom:2vh;
+    margin-left:1vw;
+    -webkit-appearance:none;
+    -moz-appearance:none;
+    appearance:none;
+    width:16px;
+    height:16px;
+}
+
+.sheet-toggle-label {
+    display:inline-grid;
+    font-size:13px;
+    font-weight:bold;
+}
+
+input.sheet-toggle-stats::after {
+    content:"⏷";
+}
+
+input.sheet-toggle-stats:checked::after {
+    content:"⏶";
+}
+
+.sheet-hiddenstats {
+    display:none;
+}
+
+.sheet-hiddenstats-row {
+    display:grid;
+    grid-template-columns:repeat(6, 1fr);
+    text-align:center;
+    font-weight:bold;
+}
+
+.sheet-hiddenskill {
+    display: none;
+    margin-left: 8px;
+    margin-top: 10px;
+}
+
+.sheet-hidden-grid-container {
+    display:none;
+}
+
+input.sheet-toggle-stats:checked ~ .sheet-hiddenstats {
+    display:grid;
+}
+
+input.sheet-toggle-stats:checked ~ .sheet-hidden-grid-container {
+    display:grid;
+}
+
+input.sheet-toggle-stats:checked ~ .sheet-hiddenskill {
+    display:inline-grid;
+}
+
+.sheet-hiddenskill label {
+    display:block;
+    font-size:13px;
+    font-weight:bold;
+}
+
+.sheet-hiddenskill input {
+    width:100%;
+}
