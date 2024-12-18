@@ -710,7 +710,7 @@
 <script type="text/worker">
 
 // Base total scripts! Unfortunately, this isn't the end of the scripting, and the load times are just gonna get longer and longer.
-var getSectionIDsOrdered = function (sectionName, callback) {
+const getSectionIDsOrdered = function (sectionName, callback) {
 	'use strict';
 	getAttrs([`_reporder_${sectionName}`], function (v) {
 		getSectionIDs(sectionName, function (idArray) {
@@ -745,8 +745,8 @@ function UpdateStat(stat) {
 			const slotNum = v.atkType == "Physical" ? v.wepSlot : v.spellSlot;
 			fID = idarray[Number(slotNum)-1];
 			getAttrs([`${stat}Base`, `${stat}Buff`, `${stat}Total`, `${stat}BonusTotal`, `${repeatName}_${fID}_${stat}Wep`], function(v) {
-				let nindex = Object.keys(v);
-				let wep = parseInt(v[nindex[4]])||0;
+				const nindex = Object.keys(v);
+				const wep = parseInt(v[nindex[4]])||0;
 				setAttrs({
 					[stat+"Total"]: Number(v[stat+"Base"]) + Number(v[stat+"Buff"]) + Number(v[stat+"BonusTotal"]) + wep,
 				});
@@ -800,7 +800,7 @@ on("change:skillList", function() {
 const weak = ['Flying', 'Armor', 'Cavalry', 'Dragon', 'Terror', 'Flammable'];
 on("change:flyingCheck change:armorCheck change:cavalryCheck change:dragonCheck change:terrorCheck change:flammableCheck", function() {
 	getAttrs(["flyingCheck", "armorCheck", "cavalryCheck", "dragonCheck", "terrorCheck", "flammableCheck"], function(values) {
-		var sumWeak = [];
+		let sumWeak = [];
 		for (let i=0; i<weak.length; i++) {
 			if (Object.values(values)[i] == 1) {
 				sumWeak.push(weak[i]);
@@ -823,7 +823,7 @@ on("change:repeating_weapons:wepType change:repeating_weapons:wExp change:repeat
 		getSectionIDsOrdered(repeatName, function(idarray) {
 			fID = idarray[Number(slotNum)-1];
 			getAttrs([repeatName+"_"+fID+"_"+repeatType, repeatName+"_"+fID+"_wExp"], function(v) {
-				let nindex = Object.keys(v);
+				const nindex = Object.keys(v);
 				setAttrs({
 					currWep: v[nindex[0]],
 					currWexp: v[nindex[1]],
@@ -843,7 +843,7 @@ on("change:repeating_weapons:minDistWep change:repeating_weapons:maxDistWep chan
 		getSectionIDsOrdered("repeating_weapons", function(idarray) {
 			fID = idarray[Number(slotNum)-1];
 			getAttrs([repeatName+"_"+fID+"_minDistWep", repeatName+"_"+fID+"_maxDistWep", repeatName+"_"+fID+"_counterWep", repeatName+"_"+fID+"_braveWep"], function(v) {
-				let nindex = Object.keys(v);
+				const nindex = Object.keys(v);
 				setAttrs({
 					currMinDist: parseInt(v[nindex[0]])||0,
 					currMaxDist: parseInt(v[nindex[1]])||0,
@@ -866,7 +866,7 @@ on("change:repeating_weapons:wepName change:repeating_spells:spellName change:re
 		getSectionIDsOrdered(repeatName, function(idarray) {
 			fID = idarray[Number(slotNum)-1];
 			getAttrs([repeatName+"_"+fID+"_descWep", repeatName+"_"+fID+"_effWep", repeatName+"_"+fID+"_"+name, repeatName+"_"+fID+"_skill1Wep", repeatName+"_"+fID+"_skill2Wep"], function(v) {
-				let nindex = Object.keys(v);
+				const nindex = Object.keys(v);
 				setAttrs({
 					currDesc: v[nindex[0]],
 					currEff: v[nindex[1]],
@@ -882,7 +882,7 @@ on("change:repeating_weapons:wepName change:repeating_spells:spellName change:re
 // Broken weapons
 on("change:repeating_weapons:uses", function() {
 	getAttrs(["repeating_weapons_wepName", "repeating_weapons_uses"], function(v){
-		let uses = parseInt(v["repeating_weapons_uses"]);
+		const uses = parseInt(v["repeating_weapons_uses"]);
 		if (uses > 0) { return; }
 		setAttrs({
 			"repeating_weapons_wepName": "Broken " + v["repeating_weapons_wepName"],
@@ -892,7 +892,7 @@ on("change:repeating_weapons:uses", function() {
 
 on("change:repeating_spells:uses", function() {
 	getAttrs(["repeating_spells_spellName", "repeating_spells_uses"], function(v){
-		let uses = parseInt(v["repeating_spells_uses"]);
+		const uses = parseInt(v["repeating_spells_uses"]);
 		if (uses > 0) { return; }
 		setAttrs({
 			"repeating_spells_spellName": "Broken " + v["repeating_spells_spellName"],
@@ -917,8 +917,8 @@ function updateRank(currExp) {
 
 const weapons = ["Sword", "Lance", "Axe", "Bow", "Staves", "Dark", "Anima", "Light"];
 weapons.forEach( function(weapon) {
-	let wepExp = weapon + "Exp";
-	let wepRank = weapon + "Rank";
+	const wepExp = weapon + "Exp";
+	const wepRank = weapon + "Rank";
 	on(`change:${wepExp}`, function() {
 		getAttrs([wepExp], function(values) {
 			currExp = values[wepExp];
@@ -935,12 +935,12 @@ weapons.forEach( function(weapon) {
 on("change:strTotal change:repeating_weapons:mt change:repeating_weapons:wt change:_reporder:weapons remove:repeating_weapons change:wepSlot change:atkType change:physBuff", function() {
 	getAttrs(["wepSlot"], function(v) {
 		getSectionIDsOrdered("repeating_weapons", function(idarray) {
-			slotnum = v.wepSlot
-			fID = idarray[Number(slotnum)-1];
+			const slotNum = v.wepSlot
+			fID = idarray[Number(slotNum)-1];
 			getAttrs(["strTotal", "physBuff", "repeating_weapons_"+fID+"_mt", "repeating_weapons_"+fID+"_wt"], function(v) {
-				let nindex = Object.keys(v);
-				let wepMt = parseInt(v[nindex[2]])||0;
-				let wepWt = parseInt(v[nindex[3]])||0;
+				const nindex = Object.keys(v);
+				const wepMt = parseInt(v[nindex[2]])||0;
+				const wepWt = parseInt(v[nindex[3]])||0;
 				setAttrs({
 					currMt: wepMt,
 					currWt: wepWt,
@@ -955,12 +955,12 @@ on("change:strTotal change:repeating_weapons:mt change:repeating_weapons:wt chan
 on("change:magTotal change:repeating_spells:mt change:repeating_weapons:wt change:_reporder:spells remove:repeating_spells change:spellSlot change:atkType change:mystBuff", function() {
 	getAttrs(["spellSlot"], function(v) {
 		getSectionIDsOrdered("repeating_spells", function(idarray) {
-			slotnum = v.spellSlot
-			fID = idarray[Number(slotnum)-1];
+			const slotNum = v.spellSlot
+			fID = idarray[Number(slotNum)-1];
 			getAttrs(["magTotal", "mystBuff", "repeating_spells_"+fID+"_mt", "repeating_spells_"+fID+"_wt"], function(v) {
-				let nindex = Object.keys(v);
-				let wepMt = parseInt(v[nindex[2]])||0;
-				let wepWt = parseInt(v[nindex[3]])||0;
+				const nindex = Object.keys(v);
+				const wepMt = parseInt(v[nindex[2]])||0;
+				const wepWt = parseInt(v[nindex[3]])||0;
 				setAttrs({
 					currMt: wepMt,
 					currWt: wepWt,
@@ -1008,7 +1008,7 @@ on("change:sklTotal change:lckTotal change:repeating_weapons:hit change:repeatin
 		getSectionIDsOrdered(repeatName, function(idarray) {
 			fID = idarray[Number(slotNum)-1];
 			getAttrs(["sklTotal", "lckTotal", "hitBuff", "hitBonusTotal", repeatName+"_"+fID+"_hit"], function(v) {
-				let nindex = Object.keys(v);
+				const nindex = Object.keys(v);
 				setAttrs({
 					hit: Number(v.sklTotal) * 2 + Math.floor(Number(v.lckTotal) / 2) + Number(v.hitBuff) + Number(v.hitBonusTotal) + Number(v[nindex[4]]),
 				});
@@ -1027,7 +1027,7 @@ on("change:sklTotal change:lckTotal change:repeating_weapons:crit change:repeati
 		getSectionIDsOrdered(repeatName, function(idarray) {
 			fID = idarray[Number(slotNum)-1];
 			getAttrs(["sklTotal", "lckTotal", "critBuff", "critBonusTotal", repeatName+"_"+fID+"_crit"], function(v) {
-				let nindex = Object.keys(v);
+				const nindex = Object.keys(v);
 				setAttrs({
 					crit: Math.floor(Number(v.sklTotal) / 2) + Math.floor(Number(v.lckTotal) / 2) + Number(v.critBuff) + Number(v.critBonusTotal) + Number(v[nindex[4]]),
 				});
@@ -1046,7 +1046,7 @@ on("change:lckTotal change:repeating_weapons:ddg change:repeating_spells:ddg cha
 		getSectionIDsOrdered(repeatName, function(idarray) {
 			fID = idarray[Number(slotNum)-1];
 			getAttrs(["lckTotal", "ddgBuff", "ddgBonusTotal", repeatName+"_"+fID+"_ddg"], function(v) {
-				let nindex = Object.keys(v);
+				const nindex = Object.keys(v);
 				setAttrs({
 					ddg: 100 + Number(v.lckTotal) + Number(v.ddgBuff) + Number(v.ddgBonusTotal) + Number(v[nindex[3]]),
 				});
@@ -1065,11 +1065,11 @@ on("change:spdTotal change:All change:conTotal change:repeating_weapons:wt chang
 		getSectionIDsOrdered(repeatName, function(idarray) {
 			fID = idarray[Number(slotNum)-1];
 			getAttrs(["spdTotal", repeatName+"_"+fID+"_wt", "conTotal", "wgtBonusTotal"], function(v) {
-				let nindex = Object.keys(v)[1];
-				let wWt = parseInt(v[nindex])||0;
-				let SpdS = v.spdTotal;
-				let ConS = v.conTotal;
-				let weight_Q = v.wgtBonusTotal;
+				const nindex = Object.keys(v)[1];
+				const wWt = parseInt(v[nindex])||0;
+				const SpdS = v.spdTotal;
+				const ConS = v.conTotal;
+				const weight_Q = v.wgtBonusTotal;
 				aspd = Math.floor(Number(SpdS) - wWt - weight_Q + Number(ConS));
 				if (aspd > SpdS) { aspd = SpdS; }
 				else if (aspd < 0) { aspd = 0; }
