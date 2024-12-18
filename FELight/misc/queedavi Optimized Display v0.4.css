@@ -141,11 +141,11 @@ html, body {
 .bonus-layout tfoot tr,
 .bonus-layout tfoot td,
 .charsheet .sheet-equip .sheet-prowess .bonus-layout tfoot span[name^="attr_"] {
-    color: #fff !important;
+    color: #070606 !important;
 }
 
 .charsheet .sheet-equip .sheet-prowess .bonus-layout thead th {
-    color: #fff !important;
+    color: #070606 !important;
 }
 
 /* Positioning Columns */
