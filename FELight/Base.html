@@ -755,6 +755,7 @@ function UpdateStat(stat) {
 	});
 }
 
+// Stats
 const stats = ["hp", "str", "mag", "skl", "spd", "lck", "def", "res", "con", "mov"];
 stats.forEach( function(stat) {
 	const changeStat = "change:"+stat+"Base change:"+stat+"Buff change:repeating_weapons:"+stat+"Wep change:repeating_spells:"+stat+"Wep change:"+stat+"BonusTotal ";
@@ -764,6 +765,7 @@ stats.forEach( function(stat) {
 	});
 });
 
+// Growths
 const growths = ["hp", "str", "mag", "skl", "spd", "lck", "def", "res"];
 growths.forEach( function(growth) {
 	on(`change:${growth}Grow`, function() {
@@ -782,6 +784,7 @@ on("change:repeating_bonuses:bonusCheck change:repeating_bonuses:hp change:repea
 	repeatingSum(bonusTotalArr, "bonuses", statArr);
 });
 
+// Skills
 on("change:skillList", function() {
 	getAttrs(["skillList"], function(v) {
 		let skills = v.skillList.split("[").pop().split("]")[0];
@@ -852,37 +855,6 @@ on("change:repeating_weapons:minDistWep change:repeating_weapons:maxDistWep chan
 	});
 });
 
-// Weapon ranks!
-function updateRank(currExp) {
-	let rank = ""
-	if (currExp >= 255) {
-		rank = "S";
-		currExp = 255;
-	}
-	else if (currExp > 180) { rank = "A"; }
-	else if (currExp > 120) { rank = "B"; }
-	else if (currExp > 70) { rank = "C"; }
-	else if (currExp > 30) { rank = "D"; }
-	else { rank = "E"; }
-	return [rank, currExp];
-}
-
-const weapons = ["Sword", "Lance", "Axe", "Bow", "Staves", "Dark", "Anima", "Light"];
-weapons.forEach( function(weapon) {
-	let wepExp = weapon + "Exp";
-	let wepRank = weapon + "Rank";
-	on(`change:${wepExp}`, function() {
-		getAttrs([wepExp], function(values) {
-			currExp = values[wepExp];
-			ranks = updateRank(currExp);
-			setAttrs({
-				[wepRank]: ranks[0],
-				[wepExp]: ranks[1],
-			});
-		});
-	});
-});
-
 // Weapon Description
 on("change:repeating_weapons:wepName change:repeating_spells:spellName change:repeating_weapons:effWep change:repeating_spells:effWep change:repeating_weapons:skill1Wep change:repeating_weapons:skill2Wep change:repeating_spells:skill1Wep change:repeating_spells:skill2Wep change:repeating_weapons:descWep change:repeating_spells:descWep change:atkType change:_reporder:weapons change:_reporder:spells remove:repeating_spells remove:repeating_weapons change:wepSlot change:spellSlot", function() {
 	getAttrs(["wepSlot", "spellSlot", "atkType"], function(v) {
@@ -924,6 +896,37 @@ on("change:repeating_spells:uses", function() {
 		if (uses > 0) { return; }
 		setAttrs({
 			"repeating_spells_spellName": "Broken " + v["repeating_spells_spellName"],
+		});
+	});
+});
+
+// Weapon ranks!
+function updateRank(currExp) {
+	let rank = ""
+	if (currExp >= 255) {
+		rank = "S";
+		currExp = 255;
+	}
+	else if (currExp > 180) { rank = "A"; }
+	else if (currExp > 120) { rank = "B"; }
+	else if (currExp > 70) { rank = "C"; }
+	else if (currExp > 30) { rank = "D"; }
+	else { rank = "E"; }
+	return [rank, currExp];
+}
+
+const weapons = ["Sword", "Lance", "Axe", "Bow", "Staves", "Dark", "Anima", "Light"];
+weapons.forEach( function(weapon) {
+	let wepExp = weapon + "Exp";
+	let wepRank = weapon + "Rank";
+	on(`change:${wepExp}`, function() {
+		getAttrs([wepExp], function(values) {
+			currExp = values[wepExp];
+			ranks = updateRank(currExp);
+			setAttrs({
+				[wepRank]: ranks[0],
+				[wepExp]: ranks[1],
+			});
 		});
 	});
 });

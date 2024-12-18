@@ -250,10 +250,11 @@ function Adept(BattleInput, BattleOutput) {
 }
 
 // Sets enemy ward and prot to 0, skill% activation
-function Luna(BattleInput, BattleOutput) {
+function Luna(BattleInput, BattleOutput, isWep) {
   if (BattleInput.WhoseSkill == 1) { return; }
-  if (BattleInput.IsSim == 1) { BattleOutput.ASkillMsg += outputSkill("Luna", BattleInput.ASkill); }
-  else if (randomInteger(100) <= BattleInput.ASkill) {
+  const odds = isWep == 1 ? 100 : BattleInput.ASkill;
+  if (BattleInput.IsSim == 1) { BattleOutput.ASkillMsg += outputSkill("Luna", odds); }
+  else if (randomInteger(100) <= odds) {
     BattleOutput.ASkillMsg += outputSkill("Luna");
     BattleOutput.DWard = 0;
     BattleOutput.DProt = 0;
@@ -792,6 +793,27 @@ function DoOneCombatStep(selectedId, targetId, initiating, info, isSim, whisper)
       }
     }
   }
+
+  // Weapon Skill Checks
+  const AWepSkills = [getAttr(attacker.id, 'skill1Wep').get('current'), getAttr(attacker.id, 'skill2Wep').get('current')];
+  const DWepSkills = [getAttr(defender.id, 'skill1Wep').get('current'), getAttr(defender.id, 'skill2Wep').get('current')];
+  log("Atk: " + AWepSkills);
+  log("Def: " + DWepSkills);
+  BattleInput.WhoseSkill = 0;
+  for(let i=0; i<AWepSkills.length; i++) {
+    if (AllSkills.has(AWepSkills[i])) {
+      const skillName = AWepSkills[i];
+      eval(skillName + "(BattleInput, BattleOutput, 1)");
+    }
+  }
+  BattleInput.WhoseSkill = 1;
+  for (let i=0; i<DWepSkills.length; i++) {
+    if (AllSkills.has(DWepSkills[i])) {
+      const skillName = DWepSkills[i];
+      eval(skillName + "(BattleInput, BattleOutput, 1)");
+    }
+  }
+
   var AddedDmg = BattleOutput.AddDmg;
   var AddedProt = BattleOutput.AddProt;
   var AddedWard = BattleOutput.AddWard;
