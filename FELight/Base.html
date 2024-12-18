@@ -495,13 +495,13 @@
 	<!-- Second Page -->
 	<div class='sheet-misc'>
 		<div class="sheet-grid-section">
-			<div class="sheet-ability-info">
+			<div class="sheet-skill-info">
 				<div class="sheet-header"> Skills </div>
-				<textarea name="attr_abilitylist" type="text"></textarea>
+				<textarea name="attr_skillList" type="text"></textarea>
 			</div>
 			<div class="sheet-support-info">
 				<div class="sheet-header"> Supports </div>
-				<textarea name="attr_supportlist" type="text"></textarea>
+				<textarea name="attr_supportList" type="text"></textarea>
 			</div>
 		</div>
 		<div class="sheet-weapon-rank-grid">
@@ -670,7 +670,7 @@
 	<input name="attr_avoBonusTotal" value="0" hidden>
 	<input name="attr_wgtBonusTotal" value="0" hidden>
   	<input name="attr_mitBonusTotal" value="0" hidden>
-	<input name="attr_bonusDescConcat" value="" hidden>
+	<input name="attr_activeSkills" value="" hidden>
 	<input name="attr_weakTotal" value="None" hidden>
 	<input name="attr_hpTotal" value="0" hidden>
 	<input name="attr_hpTotalGrow" value="0" hidden>
@@ -782,20 +782,14 @@ on("change:repeating_bonuses:bonusCheck change:repeating_bonuses:hp change:repea
 	repeatingSum(bonusTotalArr, "bonuses", statArr);
 });
 
-on("change:repeating_bonuses:bonusCheck change:repeating_bonuses:bonusDesc remove:repeating_bonuses change:_reporder:bonuses", function() {
-	getSectionIDsOrdered("repeating_bonuses", function(idArray) { 
-		const fields = ["bonusDesc", "bonusCheck"];
-		const attrArray = idArray.reduce((m, id) => [...m, ...(fields.map(field => `repeating_bonuses_${id}_${field}`))], []);
-		getAttrs([...attrArray], v => {
-			const checks = idArray.reduce((m, id) => [...m, v[`repeating_bonuses_${id}_bonusCheck`]], []);
-			const bonusDescSum = idArray.reduce((m, id) => [...m, v[`repeating_bonuses_${id}_bonusDesc`]], []);
-			for (let i=bonusDescSum.length; i>=0; i--) {
-				if (checks[i] == 0) { bonusDescSum.splice(i, 1); }
-			}
-			setAttrs({
-				bonusDescConcat: bonusDescSum.join(","),
-			});
-		});
+on("change:skillList", function() {
+	getAttrs(["skillList"], function(v) {
+		let skills = v.skillList.split("[").pop().split("]")[0];
+		skills = skills.replace(/(^\w|\s\w)/g, m => m.toUpperCase());
+		skills = skills.replace(/ /g,"");
+		setAttrs({
+			activeSkills: skills,
+		})
 	});
 });
 
@@ -1086,7 +1080,7 @@ on("change:spdTotal change:All change:conTotal change:repeating_weapons:wt chang
 
 // Initialize values for API, because ded
 on("sheet:opened", function(){
-	getAttrs(["wepSlot","spellSlot","currWt","currEff","currName","currMt","currDesc","currWexp","currWep","currMinDist","currMaxDist","currCounter","currBrave","atkType","exp","swordExp","lanceExp","axeExp","bowExp","stavesExp","darkExp","animaEXP","lightExp","level","hpBase","strBase","magBase","sklBase","spdBase","lckBase","defBase","resBase","movBase","hpBuff","strBuff","magBuff","sklBuff","spdBuff","lckBuff","defBuff","resBuff","movBuff","swordRank","lanceRank","axeRank","bowRank","stavesRank","darkRank","animaRank","lightRank","physBuff","mystBuff","wardBuff","protBuff","weakTotal","bonusDescConcat","hit","crit","ddg","avo"], function(v){
+	getAttrs(["wepSlot","spellSlot","currWt","currEff","currName","currMt","currDesc","currWexp","currWep","currMinDist","currMaxDist","currCounter","currBrave","atkType","exp","swordExp","lanceExp","axeExp","bowExp","stavesExp","darkExp","animaEXP","lightExp","level","hpBase","strBase","magBase","sklBase","spdBase","lckBase","defBase","resBase","movBase","hpBuff","strBuff","magBuff","sklBuff","spdBuff","lckBuff","defBuff","resBuff","movBuff","swordRank","lanceRank","axeRank","bowRank","stavesRank","darkRank","animaRank","lightRank","physBuff","mystBuff","wardBuff","protBuff","weakTotal","activeSkills","hit","crit","ddg","avo"], function(v){
 		setAttrs({
 			wepSlot: v.wepSlot,
 			spellSlot: v.spellSlot,
@@ -1143,7 +1137,7 @@ on("sheet:opened", function(){
 			wardBuff: v.wardBuff,
 			protBuff: v.protBuff,
 			weakTotal: v.weakTotal,
-			bonusDescConcat: v.bonusDescConcat,
+			activeSkills: v.activeSkills,
 			hit: v.hit,
 			crit: v.crit,
 			avo: v.avo,

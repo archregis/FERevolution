@@ -127,7 +127,7 @@ function Swordbreaker(BattleInput, BattleOutput) {
 }
 
 // +30 hit/30 if enemy is using an axe
-function AxeBreaker(BattleInput, BattleOutput) {
+function Axebreaker(BattleInput, BattleOutput) {
   if (BattleInput.DWType == "Axe" && BattleInput.WhoseSkill == 0) {
     BattleOutput.ASkillMsg += outputSkill("Axebreaker");
     BattleOutput.Hit += 30;
@@ -139,7 +139,7 @@ function AxeBreaker(BattleInput, BattleOutput) {
 }
 
 // +30 hit/30 if enemy is using a lance
-function LanceBreaker(BattleInput, BattleOutput) {
+function Lancebreaker(BattleInput, BattleOutput) {
   if (BattleInput.DWType == "Lance" && BattleInput.WhoseSkill == 0) {
     BattleOutput.ASkillMsg += outputSkill("Lancebreaker");
     BattleOutput.Hit += 30;
@@ -151,7 +151,7 @@ function LanceBreaker(BattleInput, BattleOutput) {
 }
 
 // +30 hit/30 if enemy is using a bow
-function BowBreaker(BattleInput, BattleOutput) {
+function Bowbreaker(BattleInput, BattleOutput) {
   if (BattleInput.DWType == "Bow" && BattleInput.WhoseSkill == 0) {
     BattleOutput.ASkillMsg += outputSkill("Bowbreaker");
     BattleOutput.Hit += 30;
@@ -163,7 +163,7 @@ function BowBreaker(BattleInput, BattleOutput) {
 }
 
 // +30 hit/30 if enemy is using a tome
-function TomeBreaker(BattleInput, BattleOutput) {
+function Tomebreaker(BattleInput, BattleOutput) {
   if ((BattleInput.DWType == "Anima" || BattleInput.DWType == "Dark" || BattleInput.DWType == "Light") && BattleInput.WhoseSkill == 0) {
     BattleOutput.ASkillMsg += outputSkill("Tomebreaker");
     BattleOutput.Hit += 30;
@@ -563,7 +563,7 @@ function Nullify(BattleInput, BattleOutput) {
 function AdaptiveScales(BattleInput, BattleOutput) {
   if (BattleInput.WhoseSkill == 0 || BattleInput.IsInitiating == 0) { return; }
   if (BattleInput.DGreyHP == 0) { 
-    BattleOutput.ASkillMsg += outputSkill("Adaptive Scales");
+    BattleOutput.DSkillMsg += outputSkill("Adaptive Scales");
     BattleOutput.Scales = 1; 
   }
 }
@@ -765,8 +765,8 @@ function DoOneCombatStep(selectedId, targetId, initiating, info, isSim, whisper)
   "Bowbreaker","Tomebreaker","Swordfaire","Lancefaire","Axefaire","Bowfaire","Tomefaire","Reaver","Brave","Wrath","Chivalry","FortressOfWill","DeadlyStrikes","PrideOfSteel","Thunderstorm","Resolve",
   "Trample","Resilience","Dragonblood","Nullify","AdaptiveScales","Bloodlust","Petalstorm"]);
 
-  var ASkills = getAttr(attacker.id,'bonusDescConcat').get('current').split(',');
-  var DSkills = getAttr(defender.id,'bonusDescConcat').get('current').split(',');
+  var ASkills = getAttr(attacker.id,'activeSkills').get('current').split(',');
+  var DSkills = getAttr(defender.id,'activeSkills').get('current').split(',');
 
   if (DSkills.includes('Nihil') == true) {
     BattleOutput.DSkillMsg += outputSkill("Nihil");
