@@ -808,8 +808,8 @@ function DoOneCombatStep(selectedId, targetId, initiating, info, isSim, whisper)
 
   // Effectiveness
   if (battleOutput.nullify == 0) {
-    const aEff = getAttr(attacker.id,'currEff').get('current').split(',');
-    const dWeak = getAttr(defender.id,'weakTotal').get('current').split(',');
+    const aEff = getAttr(attacker.id,'currEff').get('current').split(',').filter(i => i);
+    const dWeak = getAttr(defender.id,'weakTotal').get('current').split(',').filter(i => i);
     let isEffective = 0;
 
     for (let i=0; i<aEff.length; i++) {
