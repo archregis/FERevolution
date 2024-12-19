@@ -35,18 +35,17 @@
 }
 
 .sheet-character-grid {
-    display:grid;
-    grid-template-columns:72% 28%;
-    grid-template-rows: 50% 50%;
-    grid-template-areas:"left notes"
-                        "stats derive";
-  }
-
-.sheet-left-col {
-    grid-area:left;
+    display: grid;
+    grid-template-columns: 72% 28%;
+    grid-template-areas:
+    "info  notes " 
+    "vals  notes " 
+    "stats notes " 
+    "stats derive";
 }
 
 .sheet-info {
+    grid-area:"info";
     background-color:#f3f3f3;
     margin-bottom:10px;
     border-right:#353535 4px solid;
@@ -54,6 +53,7 @@
 }
 
 .sheet-current-vals {
+    grid-area:"vals";
     background-color:#f3f3f3;
     margin-bottom:10px;
     border-right:#353535 4px solid;

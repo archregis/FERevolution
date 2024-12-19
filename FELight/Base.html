@@ -8,103 +8,101 @@
 	<!-- First Sheet -->
 	 <div class="sheet-character">
 		<div class="sheet-character-grid">
-			<div class="sheet-left-col">
-				<div class="sheet-info">
-					<div class="sheet-header">INFO</div>
-					<div class="sheet-char-row">
-						<label> Name:
-							<input type="text" name="attr_name" />
-						</label>
-						<label> Gender:
-							<input type="text" name="attr_gender" />
-						</label>
-						<label> Species:
-							<input type="text" name="attr_species" />
-						</label>
-					</div>
-					<div class="sheet-char-row">
-						<label>
-							<select name="attr_all" style="width: 15%;">
-								<option>Player</option>
-								<option>Ally</option>
-								<option>Enemy</option>
-							</select>
-						</label>
-						<label> Class:
-							<input type="text" name="attr_charClass" />
-						</label>
-						<label>
-							Atk Type:
-							<select name="attr_atkType" value="Physical" style="width: 15%;">
-								<option>Physical</option>
-								<option>Magical</option>
-							</select>
-						</label>
-					</div>
-					<div class="sheet-char-row">
-						<label> Level:
-							<input type="number" name="attr_level" min="1"  max="99" value="1"/>
-						</label>
-						<label> EXP:
-							<input type="number" name="attr_exp" min="0" max="999" value="0"/>
-						</label>
-						<label> Class Power:
-							<input type="number" name="attr_classPower" min="0" max="999" value="0"/>
-						</label>
-						<label>
-						<input type="checkbox" class="sheet-toggle-stats">
-						<span class="sheet-toggle-label">Weaknesses</span>
-						<div class="sheet-hiddenstats">
-							<div class="sheet-hiddenstats-row">
-								<div>Flying</div>
-								<div>Armor</div>
-								<div>Cavalry</div>
-								<div>Dragon</div>
-								<div>Terror</div>
-								<div>Flammable</div>
-							</div>
-							<div class="sheet-hiddenstats-row">
-								<div><input type="checkbox" name="attr_flyingCheck" value="1"></div>
-								<div><input type="checkbox" name="attr_armorCheck" value="1"></div>
-								<div><input type="checkbox" name="attr_cavalryCheck" value="1"></div>
-								<div><input type="checkbox" name="attr_dragonCheck" value="1"></div>
-								<div><input type="checkbox" name="attr_terrorCheck" value="1"></div>
-								<div><input type="checkbox" name="attr_flammableCheck" value="1"></div>
-							</div>
-						</div>
-						</label>
-					</div>
+			<div class="sheet-info">
+				<div class="sheet-header">INFO</div>
+				<div class="sheet-char-row">
+					<label> Name:
+						<input type="text" name="attr_name" />
+					</label>
+					<label> Gender:
+						<input type="text" name="attr_gender" />
+					</label>
+					<label> Species:
+						<input type="text" name="attr_species" />
+					</label>
 				</div>
-				<div class="sheet-current-vals">
-					<div class=sheet-current-vals-grid>
-						<div class="sheet-label-row sheet-current-vals-row">
-							<div>HP</div>
-							<div>Phys</div>
-							<div>Myst</div>
-							<div>Hit</div>
-							<div>Crit</div>
+				<div class="sheet-char-row">
+					<label>
+						<select name="attr_all" style="width: 15%;">
+							<option>Player</option>
+							<option>Ally</option>
+							<option>Enemy</option>
+						</select>
+					</label>
+					<label> Class:
+						<input type="text" name="attr_charClass" />
+					</label>
+					<label>
+						Atk Type:
+						<select name="attr_atkType" value="Physical" style="width: 15%;">
+							<option>Physical</option>
+							<option>Magical</option>
+						</select>
+					</label>
+				</div>
+				<div class="sheet-char-row">
+					<label> Level:
+						<input type="number" name="attr_level" min="1"  max="99" value="1"/>
+					</label>
+					<label> EXP:
+						<input type="number" name="attr_exp" min="0" max="999" value="0"/>
+					</label>
+					<label> Class Power:
+						<input type="number" name="attr_classPower" min="0" max="999" value="0"/>
+					</label>
+					<label>
+					<input type="checkbox" class="sheet-toggle-stats">
+					<span class="sheet-toggle-label">Weaknesses</span>
+					<div class="sheet-hiddenstats">
+						<div class="sheet-hiddenstats-row">
+							<div>Flying</div>
+							<div>Armor</div>
+							<div>Cavalry</div>
+							<div>Dragon</div>
+							<div>Terror</div>
+							<div>Flammable</div>
 						</div>
-						<div class="sheet-current-vals-row">
-							<div><input name="attr_hpCurrent" type="number"></input> / <span name="attr_hpTotal"></span></div>
-							<div><span name="attr_physTotal">0</span></div>
-							<div><span name="attr_mystTotal">0</span></div>
-							<div><span name="attr_hit">0</span></div>
-							<div><span name="attr_crit">0</span></div>
+						<div class="sheet-hiddenstats-row">
+							<div><input type="checkbox" name="attr_flyingCheck" value="1"></div>
+							<div><input type="checkbox" name="attr_armorCheck" value="1"></div>
+							<div><input type="checkbox" name="attr_cavalryCheck" value="1"></div>
+							<div><input type="checkbox" name="attr_dragonCheck" value="1"></div>
+							<div><input type="checkbox" name="attr_terrorCheck" value="1"></div>
+							<div><input type="checkbox" name="attr_flammableCheck" value="1"></div>
 						</div>
-						<div class="sheet-label-row sheet-current-vals-row">
-							<div>AS</div>
-							<div>Prot</div>
-							<div>Ward</div>
-							<div>Avo</div>
-							<div>Ddg</div>
-						</div>
-						<div class="sheet-current-vals-row">
-							<div><span name="attr_atkSpd">0</span></div>
-							<div><span name="attr_protTotal">0</span></div>
-							<div><span name="attr_wardTotal">0</span></div>
-							<div><span name="attr_avo">0</span></div>
-							<div><span name="attr_ddg">0</span></div>
-						</div>
+					</div>
+					</label>
+				</div>
+			</div>
+			<div class="sheet-current-vals">
+				<div class=sheet-current-vals-grid>
+					<div class="sheet-label-row sheet-current-vals-row">
+						<div>HP</div>
+						<div>Phys</div>
+						<div>Myst</div>
+						<div>Hit</div>
+						<div>Crit</div>
+					</div>
+					<div class="sheet-current-vals-row">
+						<div><input name="attr_hpCurrent" type="number"></input> / <span name="attr_hpTotal"></span></div>
+						<div><span name="attr_physTotal">0</span></div>
+						<div><span name="attr_mystTotal">0</span></div>
+						<div><span name="attr_hit">0</span></div>
+						<div><span name="attr_crit">0</span></div>
+					</div>
+					<div class="sheet-label-row sheet-current-vals-row">
+						<div>AS</div>
+						<div>Prot</div>
+						<div>Ward</div>
+						<div>Avo</div>
+						<div>Ddg</div>
+					</div>
+					<div class="sheet-current-vals-row">
+						<div><span name="attr_atkSpd">0</span></div>
+						<div><span name="attr_protTotal">0</span></div>
+						<div><span name="attr_wardTotal">0</span></div>
+						<div><span name="attr_avo">0</span></div>
+						<div><span name="attr_ddg">0</span></div>
 					</div>
 				</div>
 			</div>
