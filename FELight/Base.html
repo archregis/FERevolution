@@ -592,7 +592,7 @@
 					<span name="attr_avoBonusTotal">0</span>
 					<span name="attr_critBonusTotal">0</span>
 					<span name="attr_ddgBonusTotal">0</span>
-					<span name="attr_weightBonusTotal">0</span>
+					<span name="attr_wgtBonusTotal">0</span>
 					<span name="attr_mitBonusTotal">0</span>
 				</div>
 			</div>
@@ -657,7 +657,6 @@
 	<input name="attr_currDesc" value="Attacking @{target|token_name}!" hidden>
 	<input name="attr_atkType" value="Physical" hidden>
 	<input name="attr_hpBonusTotal" value="0" hidden>
-	<input name="attr_conBonusTotal" value="0" hidden>
 	<input name="attr_strBonusTotal" value="0" hidden>
 	<input name="attr_magBonusTotal" value="0" hidden>
 	<input name="attr_sklBonusTotal" value="0" hidden>
@@ -665,9 +664,12 @@
 	<input name="attr_spdBonusTotal" value="0" hidden>
 	<input name="attr_defBonusTotal" value="0" hidden>
 	<input name="attr_resBonusTotal" value="0" hidden>
+	<input name="attr_conBonusTotal" value="0" hidden>
 	<input name="attr_movBonusTotal" value="0" hidden>
 	<input name="attr_hitBonusTotal" value="0" hidden>
 	<input name="attr_avoBonusTotal" value="0" hidden>
+	<input name="attr_critBonusTotal" value="0" hidden>
+	<input name="attr_ddgBonusTotal" value="0" hidden>
 	<input name="attr_wgtBonusTotal" value="0" hidden>
   	<input name="attr_mitBonusTotal" value="0" hidden>
 	<input name="attr_activeSkills" value="" hidden>
@@ -746,9 +748,9 @@ function UpdateStat(stat) {
 			fID = idarray[Number(slotNum)-1];
 			getAttrs([`${stat}Base`, `${stat}Buff`, `${stat}Total`, `${stat}BonusTotal`, `${repeatName}_${fID}_${stat}Wep`], function(v) {
 				const nindex = Object.keys(v);
-				const wep = parseInt(v[nindex[4]])||0;
+				const wepStat = parseInt(v[nindex[4]])||0;
 				setAttrs({
-					[stat+"Total"]: Number(v[stat+"Base"]) + Number(v[stat+"Buff"]) + Number(v[stat+"BonusTotal"]) + wep,
+					[stat+"Total"]: Number(v[stat+"Base"]) + Number(v[stat+"Buff"]) + Number(v[stat+"BonusTotal"]) + wepStat,
 				});
 			});
 		});
@@ -900,7 +902,7 @@ on("change:repeating_spells:uses", function() {
 	});
 });
 
-// Weapon ranks!
+// Weapon ranks
 function updateRank(currExp) {
 	let rank = ""
 	if (currExp >= 255) {
@@ -1009,8 +1011,9 @@ on("change:sklTotal change:lckTotal change:repeating_weapons:hit change:repeatin
 			fID = idarray[Number(slotNum)-1];
 			getAttrs(["sklTotal", "lckTotal", "hitBuff", "hitBonusTotal", repeatName+"_"+fID+"_hit"], function(v) {
 				const nindex = Object.keys(v);
+				const wepHit = parseInt(v[nindex[4]])||0;
 				setAttrs({
-					hit: Number(v.sklTotal) * 2 + Math.floor(Number(v.lckTotal) / 2) + Number(v.hitBuff) + Number(v.hitBonusTotal) + Number(v[nindex[4]]),
+					hit: Number(v.sklTotal) * 2 + Math.floor(Number(v.lckTotal) / 2) + Number(v.hitBuff) + Number(v.hitBonusTotal) + wepHit,
 				});
 			});
 		});
@@ -1028,8 +1031,9 @@ on("change:sklTotal change:lckTotal change:repeating_weapons:crit change:repeati
 			fID = idarray[Number(slotNum)-1];
 			getAttrs(["sklTotal", "lckTotal", "critBuff", "critBonusTotal", repeatName+"_"+fID+"_crit"], function(v) {
 				const nindex = Object.keys(v);
+				const wepCrit = parseInt(v[nindex[4]])||0;
 				setAttrs({
-					crit: Math.floor(Number(v.sklTotal) / 2) + Math.floor(Number(v.lckTotal) / 2) + Number(v.critBuff) + Number(v.critBonusTotal) + Number(v[nindex[4]]),
+					crit: Math.floor(Number(v.sklTotal) / 2) + Math.floor(Number(v.lckTotal) / 2) + Number(v.critBuff) + Number(v.critBonusTotal) + wepCrit,
 				});
 			});
 		});
@@ -1047,8 +1051,9 @@ on("change:lckTotal change:repeating_weapons:ddg change:repeating_spells:ddg cha
 			fID = idarray[Number(slotNum)-1];
 			getAttrs(["lckTotal", "ddgBuff", "ddgBonusTotal", repeatName+"_"+fID+"_ddg"], function(v) {
 				const nindex = Object.keys(v);
+				const wepDdg = parseInt(v[nindex[3]])||0;
 				setAttrs({
-					ddg: 100 + Number(v.lckTotal) + Number(v.ddgBuff) + Number(v.ddgBonusTotal) + Number(v[nindex[3]]),
+					ddg: 100 + Number(v.lckTotal) + Number(v.ddgBuff) + Number(v.ddgBonusTotal) + wepDdg,
 				});
 			});
 		});
