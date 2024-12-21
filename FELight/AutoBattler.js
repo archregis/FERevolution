@@ -694,7 +694,7 @@ function DoOneCombatStep(selectedId, targetId, initiating, info, isSim, whisper)
   const attr = attributes[prefix+"_"+id+"_"+suffix];
   const currUses = attr ? attr.get('current') : 0;
   if (currUses == 0) { 
-    sendChat('SYSTEM', 'YOUR WEAPON IS BROKEN!');
+    if (isSim != 1) { sendChat('System', "No weapon equipped or no uses remaining."); }
     return; }
 
 

@@ -817,7 +817,7 @@ on("change:repeating_weapons:wepType change:repeating_weapons:wExp change:repeat
 	getAttrs(["wepSlot","spellSlot","atkType"], function(v) {
 		const isPhys = v.atkType == "Physical" ? 1 : 0;
 		const repeatName = isPhys ? "repeating_weapons" : "repeating_spells";
-		const slotNum = isPhys? v.wepSlot : v.spellSlot;
+		const slotNum = isPhys ? v.wepSlot : v.spellSlot;
 		const repeatType = isPhys ? "wepType" : "spellType";
 
 		getSectionIDsOrdered(repeatName, function(idarray) {
@@ -838,9 +838,9 @@ on("change:repeating_weapons:minDistWep change:repeating_weapons:maxDistWep chan
 	getAttrs(["wepSlot","spellSlot","atkType"], function(v) {
 		const isPhys = v.atkType == "Physical" ? 1 : 0;
 		const repeatName = isPhys ? "repeating_weapons" : "repeating_spells";
-		const slotNum = isPhys? v.wepSlot : v.spellSlot;
+		const slotNum = isPhys ? v.wepSlot : v.spellSlot;
 
-		getSectionIDsOrdered("repeating_weapons", function(idarray) {
+		getSectionIDsOrdered(repeatName, function(idarray) {
 			fID = idarray[Number(slotNum)-1];
 			getAttrs([repeatName+"_"+fID+"_minDistWep", repeatName+"_"+fID+"_maxDistWep", repeatName+"_"+fID+"_counterWep", repeatName+"_"+fID+"_braveWep"], function(v) {
 				const nindex = Object.keys(v);
@@ -1086,7 +1086,7 @@ on("change:spdTotal change:All change:conTotal change:repeating_weapons:wt chang
 
 // Initialize values for API, because ded
 on("sheet:opened", function(){
-	getAttrs(["wepSlot","spellSlot","currWt","currEff","currName","currMt","currDesc","currWexp","currWep","currMinDist","currMaxDist","currCounter","currBrave","atkType","exp","swordExp","lanceExp","axeExp","bowExp","stavesExp","darkExp","animaEXP","lightExp","level","hpBase","strBase","magBase","sklBase","spdBase","lckBase","defBase","resBase","movBase","hpBuff","strBuff","magBuff","sklBuff","spdBuff","lckBuff","defBuff","resBuff","movBuff","swordRank","lanceRank","axeRank","bowRank","stavesRank","darkRank","animaRank","lightRank","physBuff","mystBuff","wardBuff","protBuff","weakTotal","activeSkills","hit","crit","ddg","avo"], function(v){
+	getAttrs(["wepSlot","spellSlot","currWt","currEff","currName","currMt","currDesc","currWexp","currWep","currMinDist","currMaxDist","currCounter","currBrave","atkType","exp","swordExp","lanceExp","axeExp","bowExp","stavesExp","darkExp","animaExp","lightExp","level","hpBase","strBase","magBase","sklBase","spdBase","lckBase","defBase","resBase","movBase","hpBuff","strBuff","magBuff","sklBuff","spdBuff","lckBuff","defBuff","resBuff","movBuff","swordRank","lanceRank","axeRank","bowRank","stavesRank","darkRank","animaRank","lightRank","physBuff","mystBuff","wardBuff","protBuff","weakTotal","activeSkills","hit","crit","ddg","avo"], function(v){
 		setAttrs({
 			wepSlot: v.wepSlot,
 			spellSlot: v.spellSlot,
@@ -1109,7 +1109,7 @@ on("sheet:opened", function(){
 			bowExp: v.bowExp,
 			stavesExp: v.stavesExp,
 			darkExp: v.darkExp,
-			animaEXP: v.animaEXP,
+			animaExp: v.animaExp,
 			lightExp: v.lightExp,
 			swordRank: v.swordRank,
 			lanceRank: v.lanceRank,
