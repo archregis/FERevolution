@@ -13,7 +13,8 @@ const weaponMap = {
 const allSkills = new Set(["SureShot","Adept","Luna","Sol","Glacias","Flare","Impale","Colossus","Ignis","Armsthrift","QuickDraw","DartingBlow",
   "GoodBet","DuelistBlow","DeathBlow","Prescience","StrongRiposte","Sturdy","Brawler","Patience","Swordbreaker","Lancebreaker","Axebreaker",
   "Bowbreaker","Tomebreaker","Swordfaire","Lancefaire","Axefaire","Bowfaire","Tomefaire","Reaver","Brave","Wrath","Chivalry","FortressOfWill","DeadlyStrikes","PrideOfSteel","Thunderstorm","Resolve",
-  "Trample","Resilience","Dragonblood","Nullify","AdaptiveScales","Bloodlust","Petalstorm"]);
+  "Trample","Resilience","Dragonblood","Nullify","AdaptiveScales","Bloodlust","Petalstorm","Perfectionist","Arrogance","Illusionist","Scavenger","GreatShield","Pragmatic","WaryFighter","Dazzle",
+  "TriangleAdept","Cursed"]);
 
 
 // Helpers
@@ -229,6 +230,13 @@ function Reaver(battleInput, battleOutput) {
   battleOutput.reaver ^= 1; // XOR to handle double reaver
 }
 
+// Doubles weapon triangle effects
+function TriangleAdept(battleInput, battleOutput) {
+  if (battleInput.whoseSkill == 0) { battleOutput.aSkillMsg += outputSkill("Triangle Adept"); }
+  else if (battleInput.whoseSkill == 1) { battleOutput.dSkillMsg += outputSkill("Triangle Adept"); }
+  battleOutput.triangleAdept = 1;
+}
+
 
 //Activation Skills
 
@@ -334,6 +342,36 @@ function Armsthrift(battleInput, battleOutput) {
   }
 }
 
+// Obtains a red gem when defeating an enemy, luck% activation
+function Scavenger(battleInput, battleOutput) {
+  if (battleInput.whoseSkill == 1) { return; }
+  if (battleInput.isSim == 1) { battleOutput.aSkillMsg += outputSkill("Scavenger", battleInput.aLck); }
+  else if (randomInteger(100) <= battleInput.aLck) {
+    battleOutput.scavenger = 1;
+  }
+}
+
+// Negate all damage, defense% activation
+function GreatShield(battleInput, battleOutput) {
+  if (battleInput.whoseSkill == 0) { return; }
+  if (battleInput.isSim == 1) { battleOutput.dSkillMsg += outputSkill("Great Shield", battleInput.dDef); }
+  else if (randomInteger(100) <= battleInput.dDef) {
+    battleOutput.dSkillMsg += outputSkill("Great Shield");
+    battleOutput.greatShield = 1;
+  }
+}
+
+// Causes a devil weapon to hit the user, 31-luck% activation
+function Cursed(battleInput, battleOutput) {
+  if (battleInput.whoseSkill == 1) { return; }
+  let odds = Math.max(0, 31 - battleInput.aLck);
+  if (battleInput.isSim == 1) { battleOutput.aSkillMsg += outputSkill("Devil's Reversal", odds); }
+  else if (randomInteger(100) <= odds) {
+    battleOutput.aSkillMsg += outputSkill("Devil's Reversal");
+    battleOutput.cursed = 1;
+  }
+}
+
 
 // Initiate Skills
 
@@ -426,6 +464,14 @@ function Patience(battleInput, battleOutput) {
   if (battleInput.whoseSkill == 0 || battleInput.isInitiating == 0) { return; }
   battleOutput.dSkillMsg += outputSkill("Patience");
   battleOutput.avoid += 10;
+}
+
+// +20 avoid on counter
+function Illusionist(battleInput, battleOutput) {
+  if (battleInput.whoseSkill == 1 && battleInput.isInitiating == 1) {
+    battleOutput.dSkillMsg += outputSkill("Illusionist");
+    battleOutput.avoid += 20;
+  }
 }
 
 
@@ -580,6 +626,60 @@ function Bloodlust(battleInput, battleOutput) {
   }
 }
 
+// +15 hit and +15 avoid when at max hp
+function Perfectionist(battleInput, battleOutput) {
+  if (battleInput.whoseSkill == 0 && battleInput.aCurrHP == battleInput.aMaxHP) {
+    battleOutput.aSkillMsg += outputSkill("Perfectionist");
+    battleOutput.hit += 15;
+  }
+  else if (battleInput.whoseSkill == 1 && battleInput.dCurrHP == battleInput.dMaxHP) {
+    battleOutput.dSkillMsg += outputSkill("Perfectionist");
+    battleOutput.avoid += 15;
+  }
+}
+
+// +20 avoid and +5 damage done when above 75% hp
+function Arrogance(battleInput, battleOutput) {
+  if (battleInput.whoseSkill == 0 && battleInput.aCurrHP > Math.floor(3 * battleInput.aMaxHP / 4)) {
+    battleOutput.aSkillMsg += outputSkill("Arrogance");
+    battleOutput.addDmg += 5;
+  }
+  else if (battleInput.whoseSkill == 1 && battleInput.dCurrHP > Math.floor(3 * battleInput.dMaxHP / 4)) {
+    battleOutput.dSkillMsg += outputSkill("Arrogance");
+    battleOutput.avoid += 20;
+  }
+}
+
+// +5 damage done and -5 damage received if foe is missing hp
+function Pragmatic(battleInput, battleOutput) {
+  if (battleInput.whoseSkill == 0 && battleInput.dCurrHP < battleInput.dMaxHP) {
+    battleOutput.aSkillMsg += outputSkill("Pragmatic");
+    battleOutput.addDmg += 5;
+  }
+  else if (battleInput.whoseSkill == 1 && battleInput.aCurrHP < battleInput.aMaxHP) {
+    battleOutput.dSkillMsg += outputSkill("Pragmatic");
+    battleOutput.addProt += 5;
+  }
+}
+
+// Cannot be doubled or double enemies
+function WaryFighter(battleInput, battleOutput) {
+  if (battleInput.whoseSkill == 0) {
+    battleOutput.aSkillMsg += outputSkill("Wary Fighter");
+  }
+  if (battleInput.whoseSkill == 1) {
+    battleOutput.dSkillMsg += outputSkill("Wary Fighter");
+  }
+  battleOutput.waryFighter = 1;
+}
+
+// Cannot be counter-attacked
+function Dazzle(battleInput, battleOutput) {
+  if (battleInput.whoseSkill == 1) { return; }
+  battleOutput.aSkillMsg += outputSkill("Dazzle");
+  battleOutput.dazzle = 1;
+}
+
 
 on('chat:message', function(msg) {
   if (msg.type != 'api') return;
@@ -722,6 +822,7 @@ function DoOneCombatStep(selectedId, targetId, initiating, info, isSim, whisper)
     "aSpd": getAttrValue(attacker.id, "spdTotal"),
     "aLck": getAttrValue(attacker.id, "lckTotal"),
     "dSpd": getAttrValue(defender.id, "spdTotal"),
+    "dDef": getAttrValue(defender.id, "defTotal"),
     "dWard": getAttrValue(defender.id, "wardTotal"),
     "dProt": getAttrValue(defender.id, "protTotal"),
     "atkCount": info.atkCount,
@@ -749,6 +850,12 @@ function DoOneCombatStep(selectedId, targetId, initiating, info, isSim, whisper)
     "resilience": 0,
     "sol": 0,
     "scales": 0,
+    "scavenger": 0,
+    "greatShield": 0,
+    "waryFighter": 0,
+    "dazzle": 0,
+    "triangleAdept": 0,
+    "cursed": 0,
   };
 
 
@@ -842,7 +949,10 @@ function DoOneCombatStep(selectedId, targetId, initiating, info, isSim, whisper)
   if (battleOutput.reaver == 1) {
     if (triangle == "Adv") { triangle = "Disadv"; }
     else if (triangle == "Disadv") { triangle = "Adv"; }
-    mult = 2;
+    mult *= 2;
+  }
+  if (battleOutput.triangleAdept == 1) {
+    mult *= 2;
   }
 
   var triangleMsg = "";
@@ -892,6 +1002,9 @@ function DoOneCombatStep(selectedId, targetId, initiating, info, isSim, whisper)
     if (battleOutput.impale == 1) {
       dmgTaken *= 3;
     }
+    if (battleOutput.greatShield == 1) {
+      dmgTaken = 0;
+    }
 
     content += '<div>' + //--
     triangleMsg +
@@ -908,11 +1021,13 @@ function DoOneCombatStep(selectedId, targetId, initiating, info, isSim, whisper)
       if (crit > dodge) {
         dmgTaken *= 3;
         if (battleOutput.resilience == 1) { dmgTaken /= 2; }
-        trueDamage = UpdateHealth(targetObj, dmgTaken, battleInput.dCurrHP);
+        if (battleOutput.cursed == 1) { trueDamage = UpdateHealth(selectObj, dmgTaken, battleInput.aCurrHP); }
+        else { trueDamage = UpdateHealth(targetObj, dmgTaken, battleInput.dCurrHP); }
         content += 'You crit and deal '+ dmgTaken + ' damage!'; // Intentionally not capping damage numbers put in chat. Hitting low hp enemies for ludicrous damage numbers is fun
       }
       else {
-        trueDamage = UpdateHealth(targetObj, dmgTaken, battleInput.dCurrHP);
+        if (battleOutput.cursed == 1) { trueDamage = UpdateHealth(selectObj, dmgTaken, battleInput.aCurrHP); }
+        else { trueDamage = UpdateHealth(targetObj, dmgTaken, battleInput.dCurrHP); }
         content += 'You hit and deal '+ dmgTaken + ' damage!'; // See above
       }
       if (battleOutput.sol == 1) {
@@ -930,13 +1045,16 @@ function DoOneCombatStep(selectedId, targetId, initiating, info, isSim, whisper)
     // Gather info for future battle steps
     Object.assign(info, {
       brave: battleOutput.brave || getAttrValue(attacker.id, 'currBrave'),
-      counter: CanCounter(defender.id, Led.from(selectedToken).to(targetToken).byManhattan().inSquares()),
-      double: atkSpdDiff >= 4 ? 1 : 0,
+      counter: battleOutput.dazzle == 1 ? 0 : CanCounter(defender.id, Led.from(selectedToken).to(targetToken).byManhattan().inSquares()),
+      double: battleOutput.waryFighter == 1 ? 0 : atkSpdDiff >= 4,
       killed: targetObj.get("bar3_value") == 0 ? 1 : 0,
       addGreyHP: battleOutput.scales,
       atkTotDmg: info.atkTotDmg + trueDamage * initiating,
       atkCount: info.atkCount + 1 * initiating,
     });
+
+    if (info.killed == 1 && battleOutput.scavenger == 1) { content += "<br> You find a Red Gem!" }
+
   }
 
   sendChat(selected, `${battleOutput.combatMsg} ${battleOutput.dSkillMsg} ${battleOutput.aSkillMsg} ${content} <br> === End Combat ===`);
