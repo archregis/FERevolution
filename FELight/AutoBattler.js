@@ -83,8 +83,8 @@ function updateWeaponEXP(attackerId, wepType, wepGain) {
 
 // Displays skill activation
 function outputSkill(skill, odds) {
-  if (odds > 0) { return skill + " : " + odds + "% chance <br>"; }
-  else { return skill + " is active. <br>"; }
+  if (odds > 0) { return "<li> " + skill + " : " + odds + "% chance </li>"; }
+  else { return "<li> " + skill + " is active. </li>"; }
 }
 
 // Updates a given token's health. Inputting negative damage can be used to heal
@@ -830,8 +830,8 @@ function DoOneCombatStep(selectedId, targetId, initiating, info, isSim, whisper)
 
   let battleOutput = {
     "combatMsg": `${selected} ${isSim == 1 ? "simulates attacking " : "attacks "} ${target} with ${wepName}! <br>`,
-    "aSkillMsg": "Attacker Skills: <br>",
-    "dSkillMsg": "Defender Skills: <br>",
+    "aSkillMsg": "Attacker Skills: <ul>",
+    "dSkillMsg": "Defender Skills: <ul>",
     "dWard": getAttrValue(defender.id, "wardTotal"),
     "dProt": getAttrValue(defender.id, "protTotal"),
     "hit": getAttrValue(attacker.id, "hit"),
@@ -983,10 +983,7 @@ function DoOneCombatStep(selectedId, targetId, initiating, info, isSim, whisper)
 
   if (isSim == 1) { // Simulate battle outcome
     const init = battleInput.isInitiating == 1 ? "Initiating" : "Countering"
-    content += `${selected} is ${init} <br> Atk Spd: ${atkSpdDiff} <br> Dmg: ${AtkDmg} <br> Mit: ${DefMit} <br> Hit Rate: ${101+hit-avoid} <br> Crit Rate: ${(101+crit-dodge)}`;
-    if (whisper) {
-      battleOutput.combatMsg = `/w "${whisper}" ${battleOutput.combatMsg}`;
-    }
+    content += `${selected} is ${init} <br> Atk Spd: ${atkSpdDiff} <br> Dmg Done: ${dmgTaken} <br> Hit Rate: ${101+hit-avoid} <br> Crit Rate: ${(101+crit-dodge)}`;
   }
   else { // Output battle outcome
 
@@ -1006,12 +1003,11 @@ function DoOneCombatStep(selectedId, targetId, initiating, info, isSim, whisper)
       dmgTaken = 0;
     }
 
-    content += '<div>' + //--
-    triangleMsg +
-    '<div style = "margin: 0 auto; width: 80%; margin-top: 4px;">' + //--
-    '<p style = "margin-bottom: 0px;">' + hit + ' hit vs ' + avoid + ' avoid!</p>' +//--
-    '<p style = "margin-bottom: 0px;">' + crit + ' crit vs ' + dodge + ' dodge!</p>' +//--
-    '</div>' + //--
+    content += '<div>' + triangleMsg +
+    '<div style = "margin: 0 auto; width: 80%;">' +
+    '<p style = "margin-bottom: 0px;">' + hit + ' hit vs ' + avoid + ' avoid!</p>' +
+    '<p>' + crit + ' crit vs ' + dodge + ' dodge!</p>' +
+    '</div>' +
     '</div>';
     content += '<p style = "margin-bottom: 0px;">' + AtkDmg + ' damage vs ' + DefMit + ' mitigation!</p>';
 
@@ -1057,5 +1053,8 @@ function DoOneCombatStep(selectedId, targetId, initiating, info, isSim, whisper)
 
   }
 
-  sendChat(selected, `${battleOutput.combatMsg} ${battleOutput.dSkillMsg} ${battleOutput.aSkillMsg} ${content} <br> === End Combat ===`);
+  battleOutput.aSkillMsg += "</ul>";
+  battleOutput.dSkillMsg += "</ul>";
+  if (whisper) { sendChat(selected, `/w ${whisper} <br> <b>=== Start Combat ===</b> <br> ${battleOutput.combatMsg} ${battleOutput.aSkillMsg} ${battleOutput.dSkillMsg} ${content} <br> <b>=== End Combat ===</b>`); }
+  else { sendChat(selected, `<br> <b>=== Start Combat ===</b> <br> ${battleOutput.combatMsg} ${battleOutput.aSkillMsg} ${battleOutput.dSkillMsg} ${content} <br> <b>=== End Combat ===</b>`); }
 }
