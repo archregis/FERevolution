@@ -937,35 +937,47 @@ on("change:strTotal change:repeating_weapons:mt change:repeating_weapons:wt chan
 		getSectionIDsOrdered("repeating_weapons", function(idarray) {
 			const slotNum = v.wepSlot
 			fID = idarray[Number(slotNum)-1];
-			getAttrs(["strTotal", "physBuff", "repeating_weapons_"+fID+"_mt", "repeating_weapons_"+fID+"_wt"], function(v) {
+			getAttrs(["strTotal", "physBuff", "atkType", "repeating_weapons_"+fID+"_mt", "repeating_weapons_"+fID+"_wt"], function(v) {
 				const nindex = Object.keys(v);
-				const wepMt = parseInt(v[nindex[2]])||0;
-				const wepWt = parseInt(v[nindex[3]])||0;
+				const wepMt = parseInt(v[nindex[3]])||0;
+				const wepWt = parseInt(v[nindex[4]])||0;
+				if (v.atkType == "Physical") {
+					setAttrs({
+						currMt: wepMt,
+						currWt: wepWt,
+						physTotal: Number(v.strTotal) + Number(v.physBuff) + Number(wepMt),
+					});
+				}
 				setAttrs({
-					currMt: wepMt,
-					currWt: wepWt,
 					physTotal: Number(v.strTotal) + Number(v.physBuff) + Number(wepMt),
-				})
+				});
 			});
 		});
 	});
 });
 
 // MagDmg
-on("change:magTotal change:repeating_spells:mt change:repeating_weapons:wt change:_reporder:spells remove:repeating_spells change:spellSlot change:atkType change:mystBuff", function() {
+on("change:magTotal change:repeating_spells:mt change:repeating_spells:wt change:_reporder:spells remove:repeating_spells change:spellSlot change:atkType change:mystBuff", function() {
 	getAttrs(["spellSlot"], function(v) {
 		getSectionIDsOrdered("repeating_spells", function(idarray) {
 			const slotNum = v.spellSlot
 			fID = idarray[Number(slotNum)-1];
-			getAttrs(["magTotal", "mystBuff", "repeating_spells_"+fID+"_mt", "repeating_spells_"+fID+"_wt"], function(v) {
+			getAttrs(["magTotal", "mystBuff", "atkType", "repeating_spells_"+fID+"_mt", "repeating_spells_"+fID+"_wt"], function(v) {
 				const nindex = Object.keys(v);
-				const wepMt = parseInt(v[nindex[2]])||0;
-				const wepWt = parseInt(v[nindex[3]])||0;
-				setAttrs({
-					currMt: wepMt,
-					currWt: wepWt,
-					mystTotal: Number(v.magTotal) + Number(v.mystBuff) + Number(wepMt),
-				})
+				const wepMt = parseInt(v[nindex[3]])||0;
+				const wepWt = parseInt(v[nindex[4]])||0;
+				if (v.atkType == "Magical") {
+					setAttrs({
+						currMt: wepMt,
+						currWt: wepWt,
+						mystTotal: Number(v.magTotal) + Number(v.mystBuff) + Number(wepMt),
+					});
+				}
+				else {
+					setAttrs({
+						mystTotal: Number(v.magTotal) + Number(v.mystBuff) + Number(wepMt),
+					});
+				}
 			});
 		});
 	});
