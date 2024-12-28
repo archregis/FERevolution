@@ -10,7 +10,7 @@ const weaponMap = {
   "Light": "lightExp"
 };
 
-const allSkills = new Set(["SureShot","Adept","Luna","Sol","Glacias","Flare","Impale","Colossus","Ignis","Armsthrift","QuickDraw","DartingBlow",
+const allSkills = new Set(["SureShot","Adept","Luna","LunaPlus","Sol","Glacias","Flare","Impale","Colossus","Ignis","Armsthrift","QuickDraw","DartingBlow",
   "GoodBet","DuelistBlow","DeathBlow","Prescience","StrongRiposte","Sturdy","Brawler","Patience","Swordbreaker","Lancebreaker","Axebreaker",
   "Bowbreaker","Tomebreaker","Swordfaire","Lancefaire","Axefaire","Bowfaire","Tomefaire","Reaver","Brave","Wrath","Chivalry","FortressOfWill","DeadlyStrikes","PrideOfSteel","Thunderstorm","Resolve",
   "Trample","Resilience","Dragonblood","Nullify","AdaptiveScales","Bloodlust","Petalstorm","Perfectionist","Arrogance","Illusionist","Scavenger","GreatShield","Pragmatic","WaryFighter","Dazzle",
@@ -261,11 +261,21 @@ function Adept(battleInput, battleOutput) {
 }
 
 // Sets enemy ward and prot to 0, skill% activation
-function Luna(battleInput, battleOutput, isWep) {
+function Luna(battleInput, battleOutput) {
   if (battleInput.whoseSkill == 1) { return; }
-  const odds = isWep == 1 ? 100 : battleInput.aSkl;
-  if (battleInput.isSim == 1) { battleOutput.aSkillMsg += outputSkill("Luna", odds); }
-  else if (randomInteger(100) <= odds) {
+  if (battleInput.isSim == 1) { battleOutput.aSkillMsg += outputSkill("Luna", battleInput.aSkl); }
+  else if (randomInteger(100) <= battleInput.aSkl) {
+    battleOutput.aSkillMsg += outputSkill("Luna");
+    battleOutput.dWard = 0;
+    battleOutput.dProt = 0;
+  }
+}
+
+// Sets enemy ward and prot to 0, 100% activation
+function LunaPlus(battleInput, battleOutput) {
+  if (battleInput.whoseSkill == 1) { return; }
+  if (battleInput.isSim == 1) { battleOutput.aSkillMsg += outputSkill("Luna", 100); }
+  else {
     battleOutput.aSkillMsg += outputSkill("Luna");
     battleOutput.dWard = 0;
     battleOutput.dProt = 0;
