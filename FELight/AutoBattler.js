@@ -14,7 +14,7 @@ const allSkills = new Set(["SureShot","Adept","Luna","Sol","Glacias","Flare","Im
   "GoodBet","DuelistBlow","DeathBlow","Prescience","StrongRiposte","Sturdy","Brawler","Patience","Swordbreaker","Lancebreaker","Axebreaker",
   "Bowbreaker","Tomebreaker","Swordfaire","Lancefaire","Axefaire","Bowfaire","Tomefaire","Reaver","Brave","Wrath","Chivalry","FortressOfWill","DeadlyStrikes","PrideOfSteel","Thunderstorm","Resolve",
   "Trample","Resilience","Dragonblood","Nullify","AdaptiveScales","Bloodlust","Petalstorm","Perfectionist","Arrogance","Illusionist","Scavenger","GreatShield","Pragmatic","WaryFighter","Dazzle",
-  "TriangleAdept","Cursed"]);
+  "TriangleAdept","Cursed","Fortune"]);
 
 
 // Helpers
@@ -680,6 +680,13 @@ function Dazzle(battleInput, battleOutput) {
   battleOutput.dazzle = 1;
 }
 
+// Cannot be crit
+function Fortune(battleInput, battleOutput) {
+  if (battleInput.whoseSkill == 0) { return; }
+  battleOutput.dSkillMsg += outputSkill("Fortune");
+  battleOutput.fortune = 1;
+}
+
 
 on('chat:message', function(msg) {
   if (msg.type != 'api') return;
@@ -856,6 +863,7 @@ function DoOneCombatStep(selectedId, targetId, initiating, info, isSim, whisper)
     "dazzle": 0,
     "triangleAdept": 0,
     "cursed": 0,
+    "fortune": 0,
   };
 
 
@@ -1014,7 +1022,7 @@ function DoOneCombatStep(selectedId, targetId, initiating, info, isSim, whisper)
     // Update token values
     let trueDamage = 0;
     if (hit >= avoid) {
-      if (crit > dodge) {
+      if (crit > dodge && battleOutput.fortune == 0) {
         dmgTaken *= 3;
         if (battleOutput.resilience == 1) { dmgTaken /= 2; }
         if (battleOutput.cursed == 1) { trueDamage = UpdateHealth(selectObj, dmgTaken, battleInput.aCurrHP); }
