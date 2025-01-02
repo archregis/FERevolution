@@ -12,26 +12,36 @@
 
 /*equip the tab buttons*/
 .sheet-character,
-.sheet-equip,
-.sheet-misc {
+.sheet-misc,
+.sheet-bonuses {
 	display:none;
 }
 
 /* show the selected tab */
 .sheet-tabstoggle[value="character"] ~ div.sheet-character,
-.sheet-tabstoggle[value="equip"] ~ div.sheet-equip,
-.sheet-tabstoggle[value="misc"] ~ div.sheet-misc {
+.sheet-tabstoggle[value="misc"] ~ div.sheet-misc,
+.sheet-tabstoggle[value="bonuses"] ~ div.sheet-bonuses {
 	display:block;
 }
 
 .charsheet { /*background function*/
     background-color:#353535;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
     font-family:"Merriweather";
     font-size:11px;
     min-height:100%;
     min-width:100%;
     clear:both;
     overflow:auto;
+}
+
+.sheet-maindiv {
+	margin: 0px;
+	padding: 0px;
+	width: 100%;
+    height: 100%;
 }
 
 .sheet-character-grid {
@@ -48,7 +58,7 @@
     grid-area:"info";
     background-color:#f3f3f3;
     margin-bottom:10px;
-    border-right:#353535 4px solid;
+    margin-right:4px;
     padding:3px;
 }
 
@@ -56,7 +66,7 @@
     grid-area:"vals";
     background-color:#f3f3f3;
     margin-bottom:10px;
-    border-right:#353535 4px solid;
+    margin-right:4px;
     padding:3px;
 }
 
@@ -64,7 +74,7 @@
     grid-area:stats;
     background-color:#f3f3f3;
     margin-bottom:10px;
-    border-right:#353535 4px solid;
+    margin-right:4px;
     padding:3px;
 }
 
@@ -72,7 +82,7 @@
     grid-area:derive;
     background-color:#f3f3f3;
     margin-bottom:10px;
-    border-left:#353535 4px solid;
+    margin-left:4px;
     padding:3px;
 }
 
@@ -80,7 +90,7 @@
     grid-area:notes;
     background-color:#f3f3f3;
     margin-bottom:10px;
-    border-left:#353535 4px solid;
+    margin-left:4px;
     padding:3px;
 }
 
@@ -104,6 +114,7 @@
     display:grid;
     grid-template-columns:repeat(5, 1fr);
     padding-top:5px;
+    align-items: center;
     text-align:center;
     font-size:13px;
     margin-bottom:10px;
@@ -116,9 +127,33 @@
     row-gap:10px;
 }
 
+.sheet-attributes-header {
+    grid-template-columns: repeat(7, 1fr);
+    display:grid;
+}
+
+.sheet-attributes-header .empty-col {
+    grid-column: 1 / 2;
+}
+
+.sheet-attributes-header .stats-col{
+    grid-column: 2 / 4;
+    text-align: center;
+}
+
+.sheet-attributes-header .mid-col {
+    grid-column: 4 / 6;
+}
+
+.sheet-attributes-header .growths-col{
+    grid-column: 6 / 8;
+    text-align: center;
+}
+
 .sheet-stats-row {
     display:grid;
     grid-template-columns:repeat(7, 1fr);
+    align-items: center;
     text-align:center;
     font-size:13px;
 }
@@ -153,6 +188,7 @@
 .sheet-derived-row {
     display:grid;
     grid-template-columns:repeat(3, 1fr);
+    align-items: center;
     text-align:center;
     font-size:13px;
 }
@@ -162,15 +198,16 @@
     display:inline-grid;
     background-color:#f3f3f3;
     padding:3px;
-    width:49.83%;
+    width:49.33%;
+    margin-bottom:10px;
 }
 
 .sheet-weapons-grid {
-    border-right:#353535 4px solid;
+    margin-right:4px;
 }
 
 .sheet-spells-grid {
-    border-left:#353535 4px solid;
+    margin-left:4px;
 }
 
 .sheet-weapons-container {
@@ -180,7 +217,6 @@
 .sheet-weapons-grid-container {
     display:grid;
     background-color:#f3f3f3;
-    margin-bottom:10px;
     row-gap:5px;
     text-align: center;
 }
@@ -196,7 +232,6 @@
 .sheet-hidden-grid-container {
     display:grid;
     background-color:#f3f3f3;
-    margin-bottom:10px;
     row-gap:5px;
     text-align: center;
 }
@@ -213,25 +248,25 @@
 .sheet-skill-info {
     background-color:#f3f3f3;
     margin-bottom:10px;
-    border-right:#353535 4px solid;
+    margin-right:4px;
     padding:3px;
+    
 }
 
 .sheet-support-info {
     background-color:#f3f3f3;
     margin-bottom:10px;
-    border-left:#353535 4px solid;
+    margin-left:4px;
     padding:3px;
 }
 
 .sheet-weapon-rank-grid {
     display:grid;
     background-color:#f3f3f3;
-    margin-bottom:10px;
     row-gap:10px;
-    width:50%;
+    margin-right:4px;
+    margin-bottom:10px;
     padding:3px;
-    border-right:#353535 4px solid;
 }
 
 .sheet-weapon-rank-row {
@@ -278,14 +313,14 @@
 .sheet-bonuses-info {
     background-color:#f3f3f3;
     margin-bottom:10px;
-    border-right:#353535 4px solid;
+    margin-right:4px;
     padding:3px;
 }
 
 .sheet-equipment-info {
     background-color:#f3f3f3;
     margin-bottom:10px;
-    border-left:#353535 4px solid;
+    margin-left:4px;
     padding:3px;
 }
 
@@ -313,9 +348,10 @@
 }
 
 input.sheet-toggle-stats {
+    background-color:transparent;
     border:none;
-    margin-bottom:2vh;
-    margin-left:1vw;
+    margin-bottom:10px;
+    margin-left:10px;
     -webkit-appearance:none;
     -moz-appearance:none;
     appearance:none;
@@ -378,4 +414,73 @@ input.sheet-toggle-stats:checked ~ .sheet-hiddenskill {
 
 .charsheet .sheet-hiddenskill input {
     width:100%;
+}
+
+.sheet-useBackground input[value="2"]:checked ~ *.sheet-background {
+	background-image: url("https://mrwallpaper.com/images/hd/download-fire-wallpaper-hifs64j4zn4uhbe7.jpg");
+	background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-origin: content-box;
+}
+
+.sheet-useBackground input[value="3"]:checked ~ *.sheet-background {
+	background-image: url("https://i.pinimg.com/736x/d0/88/6b/d0886bec60c9e94909e7f5e802e49b62.jpg");
+	background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-origin: content-box;
+}
+
+.sheet-useBackground input[value="4"]:checked ~ *.sheet-background {
+	background-image: url("https://bargainmama.com/wp-content/uploads/2024/09/Two-Tropical-Threats-Show-Up-in-the-Atlantic-as-the-Hurricane-Season-Coming-to-an-End.webp");
+	background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-origin: content-box;
+}
+
+.sheet-useBackground input[value="5"]:checked ~ *.sheet-background {
+	background-image: url("https://img.freepik.com/free-photo/summer-background-sea-water_64049-163.jpg");
+	background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-origin: content-box;
+}
+
+.sheet-useBackground input[value="6"]:checked ~ *.sheet-background {
+	background-image: url("https://c1.wallpaperflare.com/preview/589/986/568/rock-red-rock-red-vertical.jpg");
+	background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-origin: content-box;
+}
+
+.sheet-useBackground input[value="7"]:checked ~ *.sheet-background {
+	background-image: url("https://i.pinimg.com/736x/15/e8/08/15e8080d7752ee271e57edb7fa42bdb8.jpg");
+	background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-origin: content-box;
+}
+
+.sheet-useBackground input[value="8"]:checked ~ *.sheet-background {
+	background-image: url("https://i.pinimg.com/736x/5a/2b/3b/5a2b3baee1db4d3e27376c2b07ba1edb.jpg");
+	background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-origin: content-box;
+}
+
+.sheet-useBackground input[value="9"]:checked ~ *.sheet-background {
+	background-image: url("https://i.pinimg.com/736x/95/c1/1f/95c11f3fe0113b2ad683a2fd7d511370.jpg");
+	background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-origin: content-box;
+}
+
+.sheet-holder {
+    margin-left:10px;
+    margin-right:10px;
 }
