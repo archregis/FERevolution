@@ -16,105 +16,21 @@ const allSkills = new Set(["SureShot","Adept","Luna","LunaPlus","Sol","Glacias",
   "Trample","Resilience","Dragonblood","Nullify","AdaptiveScales","Bloodlust","Petalstorm","Perfectionist","Arrogance","Illusionist","Scavenger","GreatShield","Pragmatic","WaryFighter","Dazzle",
   "TriangleAdept","Cursed","Fortune"]);
 
+const staffSkills = new Set(["Armsthrift","Resolve"]);
 
-// Helpers
-
-// Gets an attribute object by name for a given character.
-function getAttr(characterId, attrName) {
-  return findObjs({ characterid: characterId, name: attrName, type: "attribute" })[0];
-} 
-
-// Safely gets a numeric attribute value. Returns 0 if the attribute doesn't exist.
-function getAttrValue(characterId, attrName) {
-  const attr = getAttr(characterId, attrName);
-  return attr ? Number(attr.get("current")) : 0;
-}
-
-// Gets all section IDs and corresponding attributes for a given repeating section
-function getRepeatingSectionAttrs(charid, prefix, suffix) {
-	// Input
-	//  charid: character id
-	//  prefix: repeating section name, e.g. 'repeating_weapons'
-  //  suffix: optional attribute name, e.g. 'uses'
-	// Output
-	//  repRowIds: array containing all repeating section IDs for the given prefix, ordered in the same way that the rows appear on the sheet
-	//  repeatingAttrs: object containing all repeating attributes that exist for this section
-	const repeatingAttrs = {},
-	regExp = new RegExp(`^${prefix}_(-[-A-Za-z0-9]+?|\\d+)_${suffix}`);
-	let repOrder;
-	// Get attributes
-	findObjs({
-		_type: 'attribute',
-		_characterid: charid
-	}).forEach(o => {
-		const attrName = o.get('name');
-		if (attrName.search(regExp) === 0) repeatingAttrs[attrName] = o;
-		else if (attrName === `_reporder_${prefix}`) repOrder = o.get('current').split(',');
-	});
-	if (!repOrder) repOrder = [];
-	// Get list of repeating row ids by prefix from repeatingAttrs
-	const unorderedIds = [...new Set(Object.keys(repeatingAttrs)
-		.map(n => n.match(regExp))
-		.filter(x => !!x)
-		.map(a => a[1]))];
-	const repRowIds = [...new Set(repOrder.filter(x => unorderedIds.includes(x)).concat(unorderedIds))];
-	return [repRowIds, repeatingAttrs];
-}
-
-// Process inline rolls more simply without Lodash
-function processInlinerolls(msg) {
-  if (!msg.inlinerolls) return msg.content;
-  let newContent = msg.content;
-  msg.inlinerolls.forEach((roll, i) => {
-    const total = roll.results?.total || 0;
-    newContent = newContent.replace(`$[[${i}]]`, total);
-  });
-  return newContent;
-}
-
-// Update weapon EXP based on wtype and wepGain
-function updateWeaponEXP(attackerId, wepType, wepGain) {
-  if (!weaponMap[wepType]) return;
-  const attr = getAttr(attackerId, weaponMap[wepType]);
-  if (!attr) return;
-  const currentVal = Number(attr.get("current")) || 0;
-  attr.setWithWorker("current", currentVal + wepGain);
-}
-
-// Displays skill activation
-function outputSkill(skill, odds) {
-  if (odds > 0) { return "<li> " + skill + " : " + odds + "% chance </li>"; }
-  else { return "<li> " + skill + " is active. </li>"; }
-}
-
-// Updates a given token's health. Inputting negative damage can be used to heal
-// Returns damage taken for use in adapative scales
-function UpdateHealth(token, damage, health, maxHP) {
-  const shield = token.get("bar2_value")||0;
-
-  if (damage < 0) { // Healing only affects health
-    token.set("bar3_value", Math.min(maxHP, health - damage));
-  }
-  else if (damage > 0) {// Deplete shield first, then health
-    token.set("bar2_value", Math.max(0, shield - damage));
-    if (damage > shield) {
-      damage -= shield;
-      token.set("bar3_value", Math.max(0, health - damage));
-    }
-  }
-  if (shield == 0 && damage > 0) { return damage; }
-  return 0;
-}
-
-// returns 1 if the given token identifier is using a weapon that is within range to counter-attack
-function CanCounter(defId, dist) {
-  const counter = getAttrValue(defId, 'currCounter');
-  const minDist = getAttrValue(defId, 'currMinDist');
-  const maxDist = getAttrValue(defId, 'currMaxDist');
-  if (counter == 0 || dist < minDist || dist > maxDist) { return 0; }
-  return 1;
-}
-
+const staffInfo = {
+  Heal: { exp: 11, wexp: 2, textFunc: function(magic) { return `All adjacent allies heal ${10 + magic} HP.`}, },
+  Mend: { exp: 12, wexp: 3, textFunc: function(magic) { return `All adjacent allies heal ${20 + magic} HP.`}},
+  Recover: { exp: 17, wexp: 3, textFunc: function() { return `All adjacent allies heal all HP.`}},
+  Physic: { exp: 22, wexp: 3, textFunc: function(magic) { return `An ally within ${Math.floor(magic / 2)} tiles heals ${10 + magic} HP.`}},
+  Restore: { exp: 20, wexp: 3, textFunc: function(magic) { return `An ally within ${Math.floor(magic / 2)} tiles is returned to normal condition.`}},
+  Matrona: { exp: 50, wexp: 5, textFunc: function(magic) { return `All allies within ${Math.floor(magic / 4)} tiles are returned to normal condition.`}},
+  Rescue: { exp: 40, wexp: 7, textFunc: function(magic) { return `An ally within ${Math.floor(magic / 2)} tiles is moved to an adjacent tile.`}},
+  Illuminate: { exp: 15, wexp: 5, textFunc: function(magic) { return `An area within ${Math.floor(magic / 2)} tiles is lit up.`}},
+  Hammerne: { exp: 100, wexp: 8, textFunc: function() { return `An adjacent ally's weapon is restored to full durability. Stand proud, you are durable.`}},
+  Unlock: { exp: 17, wexp: 5, textFunc: function(magic) { return `A door within ${Math.floor(magic / 2)} tiles is unlocked.`}},
+  Barrier: { exp: 17, wexp: 4, textFunc: function() { return `An adjacent ally's resistance is increased by 7, decreasing by 1 each turn.`}},
+};
 
 // Weapon Specific Skills
 
@@ -575,9 +491,11 @@ function Resolve(battleInput, battleOutput) {
 
      if (battleInput.dmgType == 'Physical') {
       battleOutput.addDmg += Math.floor(battleInput.aStr / 10 * 3);
+      battleInput.aStr += Math.floor(battleInput.aStr / 10 * 3);
      }
-     else if (battleInput.dmgType == 'Mystical') {
+     else if (battleInput.dmgType == 'Magical') {
       battleOutput.addDmg += Math.floor(battleInput.aMag / 10 * 3);
+      battleInput.aMag += Math.floor(battleInput.aMag / 10 * 3);
      }
    }
    else if (battleInput.whoseSkill == 1 && battleInput.dCurrHP < battleInput.dMaxHP / 2) {
@@ -698,6 +616,117 @@ function Fortune(battleInput, battleOutput) {
 }
 
 
+// Helpers
+
+// Gets an attribute object by name for a given character.
+function getAttr(characterId, attrName) {
+  return findObjs({ characterid: characterId, name: attrName, type: "attribute" })[0];
+} 
+
+// Safely gets a numeric attribute value. Returns 0 if the attribute doesn't exist.
+function getAttrValue(characterId, attrName) {
+  const attr = getAttr(characterId, attrName);
+  return attr ? Number(attr.get("current")) : 0;
+}
+
+// Gets all section IDs and corresponding attributes for a given repeating section
+function getRepeatingSectionAttrs(charid, prefix, suffix) {
+	// Input
+	//  charid: character id
+	//  prefix: repeating section name, e.g. 'repeating_weapons'
+  //  suffix: optional attribute name, e.g. 'uses'
+	// Output
+	//  repRowIds: array containing all repeating section IDs for the given prefix, ordered in the same way that the rows appear on the sheet
+	//  repeatingAttrs: object containing all repeating attributes that exist for this section
+	const repeatingAttrs = {},
+	regExp = new RegExp(`^${prefix}_(-[-A-Za-z0-9]+?|\\d+)_${suffix}`);
+	let repOrder;
+	// Get attributes
+	findObjs({
+		_type: 'attribute',
+		_characterid: charid
+	}).forEach(o => {
+		const attrName = o.get('name');
+		if (attrName.search(regExp) === 0) repeatingAttrs[attrName] = o;
+		else if (attrName === `_reporder_${prefix}`) repOrder = o.get('current').split(',');
+	});
+	if (!repOrder) repOrder = [];
+	// Get list of repeating row ids by prefix from repeatingAttrs
+	const unorderedIds = [...new Set(Object.keys(repeatingAttrs)
+		.map(n => n.match(regExp))
+		.filter(x => !!x)
+		.map(a => a[1]))];
+	const repRowIds = [...new Set(repOrder.filter(x => unorderedIds.includes(x)).concat(unorderedIds))];
+	return [repRowIds, repeatingAttrs];
+}
+
+// Process inline rolls more simply without Lodash
+function processInlinerolls(msg) {
+  if (!msg.inlinerolls) return msg.content;
+  let newContent = msg.content;
+  msg.inlinerolls.forEach((roll, i) => {
+    const total = roll.results?.total || 0;
+    newContent = newContent.replace(`$[[${i}]]`, total);
+  });
+  return newContent;
+}
+
+// Update weapon EXP based on wtype and wepGain
+function updateWeaponEXP(attackerId, wepType, wepGain) {
+  if (!weaponMap[wepType]) return;
+  const attr = getAttr(attackerId, weaponMap[wepType]);
+  if (!attr) return;
+  const currentVal = Number(attr.get("current")) || 0;
+  attr.setWithWorker("current", currentVal + wepGain);
+}
+
+// Displays skill activation
+function outputSkill(skill, odds) {
+  if (odds > 0) { return "<li> " + skill + " : " + odds + "% chance </li>"; }
+  else { return "<li> " + skill + " is active. </li>"; }
+}
+
+// Updates a given token's health. Inputting negative damage can be used to heal
+// Returns damage taken for use in adapative scales
+function UpdateHealth(token, damage, health, maxHP) {
+  const shield = token.get("bar2_value")||0;
+
+  if (damage < 0) { // Healing only affects health
+    token.set("bar3_value", Math.min(maxHP, health - damage));
+  }
+  else if (damage > 0) {// Deplete shield first, then health
+    token.set("bar2_value", Math.max(0, shield - damage));
+    if (damage > shield) {
+      damage -= shield;
+      token.set("bar3_value", Math.max(0, health - damage));
+    }
+  }
+  if (shield == 0 && damage > 0) { return damage; }
+  return 0;
+}
+
+// returns 1 if the given token identifier is using a weapon that is within range to counter-attack
+function CanCounter(defId, dist) {
+  const counter = getAttrValue(defId, 'currCounter');
+  const minDist = getAttrValue(defId, 'currMinDist');
+  const maxDist = getAttrValue(defId, 'currMaxDist');
+  if (counter == 0 || dist < minDist || dist > maxDist) { return 0; }
+  return 1;
+}
+
+function GetWeaponStats(attackerId, dmgType, prefix) {
+  const slot = dmgType == "Physical" ? getAttrValue(attackerId, 'wepSlot') : getAttrValue(attackerId, 'spellSlot');
+  const [ids, attributes] = getRepeatingSectionAttrs(attackerId, prefix, "uses");
+  const id = ids[slot-1];
+  const attr = attributes[prefix+"_"+id+"_uses"];
+  const currUses = attr ? attr.get('current') : 0;
+  if (currUses == 0) { 
+    sendChat('System', "No weapon equipped or no uses remaining.");
+  }
+  return [currUses, attr];
+}
+
+
 on('chat:message', function(msg) {
   if (msg.type != 'api') return;
   var parts = processInlinerolls(msg).split(' ');
@@ -705,10 +734,6 @@ on('chat:message', function(msg) {
 
   if (parts.length < 1) {
     sendChat('SYSTEM', 'You must provide a selected token id');
-    return;
-  }
-  if (parts.length < 2) {
-    sendChat('SYSTEM', 'You must provide a target token id');
     return;
   }
 
@@ -778,10 +803,16 @@ on('chat:message', function(msg) {
       token.set("bar2_value", info.atkTotDmg);
     }
 }
+else if (command == "staff") {
+  DoOneStaffStep(selectedId)
+}
 else if (command == "sim") {
   const whisper = parts[2] == 1 ? (getObj('player',('API'===msg.playerid ? lastPlayerId : msg.playerid))||{get:()=>'API'}).get('_displayname') : 0;
   DoOneCombatStep(selectedId, targetId, 1, info, 1, whisper);
   DoOneCombatStep(targetId, selectedId, 0, info, 1, whisper);
+}
+else if (command == "staffSim") {
+  DoOneStaffStep(selectedId, 1)
 }
 });
 
@@ -801,18 +832,14 @@ function DoOneCombatStep(selectedId, targetId, initiating, info, isSim, whisper)
   const dmgType = getAttr(attacker.id, 'atkType').get('current');
   const wepName = getAttr(attacker.id, 'currName').get('current');
 
+  // Staves cannot attack
+  aWepType = getAttr(attacker.id, "currWep").get('current');
+  if (aWepType == "Staff") { return; }
 
   // Check for broken weapon
-  const slot = dmgType == "Physical" ? getAttrValue(attacker.id, 'wepSlot') : getAttrValue(attacker.id, 'spellSlot');
   const prefix = dmgType == "Physical" ? "repeating_weapons" : "repeating_spells";
-  const suffix = "uses";
-  const [ids, attributes] = getRepeatingSectionAttrs(attacker.id, prefix, suffix);
-  const id = ids[slot-1];
-  const attr = attributes[prefix+"_"+id+"_"+suffix];
-  const currUses = attr ? attr.get('current') : 0;
-  if (currUses == 0) { 
-    if (isSim != 1) { sendChat('System', "No weapon equipped or no uses remaining."); }
-    return; }
+  const [currUses, attr] = GetWeaponStats(attacker.id, dmgType, prefix);
+  if (currUses == 0) { return; }
 
 
   // Initialize skill function I/O
@@ -822,7 +849,7 @@ function DoOneCombatStep(selectedId, targetId, initiating, info, isSim, whisper)
     "isInitiating": initiating, // Determine if you are intiating the attack or counter-attacking. 0 = initiating, 1 = countering
     "dWeakness": getAttr(defender.id,'weakTotal').get('current').split(','),
     "dmgType": dmgType,
-    "aWepType": getAttr(attacker.id, "currWep").get('current'),
+    "aWepType": aWepType,
     "dWepType": getAttr(defender.id, "currWep").get('current'),
     "aWepWeight" : getAttrValue(attacker.id,'currWt'),
     "dWepWeight" : getAttrValue(defender.id,'currWt'),
@@ -878,8 +905,8 @@ function DoOneCombatStep(selectedId, targetId, initiating, info, isSim, whisper)
 
 
   // Skill checks
-  const aSkills = getAttr(attacker.id,'activeSkills').get('current').split(',');
-  const dSkills = getAttr(defender.id,'activeSkills').get('current').split(',');
+  const aSkills = getAttr(attacker.id, 'activeSkills').get('current').split(',');
+  const dSkills = getAttr(defender.id, 'activeSkills').get('current').split(',');
 
   if (dSkills.includes('Nihil') == true) {
     battleOutput.dSkillMsg += outputSkill("Nihil");
@@ -1048,7 +1075,7 @@ function DoOneCombatStep(selectedId, targetId, initiating, info, isSim, whisper)
         UpdateHealth(selectObj, -Math.min(battleInput.dCurrHP, dmgTaken), battleInput.aCurrHP, battleInput.aMaxHP);
       }
       if (battleOutput.armsthrift == 0) { 
-        attributes[prefix+"_"+id+"_"+suffix].setWithWorker("current", currUses - 1);
+        attr.setWithWorker("current", currUses - 1);
       }
       updateWeaponEXP(attacker.id, battleInput.aWepType, wepGain);
     }
@@ -1075,4 +1102,83 @@ function DoOneCombatStep(selectedId, targetId, initiating, info, isSim, whisper)
   battleOutput.dSkillMsg += "</ul>";
   if (whisper) { sendChat(selected, `/w ${whisper} <br> <b>=== Start Combat ===</b> <br> ${battleOutput.combatMsg} ${battleOutput.aSkillMsg} ${battleOutput.dSkillMsg} ${content} <br> <b>=== End Combat ===</b>`); }
   else { sendChat(selected, `<br> <b>=== Start Combat ===</b> <br> ${battleOutput.combatMsg} ${battleOutput.aSkillMsg} ${battleOutput.dSkillMsg} ${content} <br> <b>=== End Combat ===</b>`); }
+}
+
+function DoOneStaffStep(selectedId, isSim) {
+  const selectedToken = getObj('graphic', selectedId);
+  const attacker = getObj('character', selectedToken.get('represents'));
+  const selected = selectedToken.get('name');
+  const selectObj = findObjs({_type: "graphic", _id: selectedId})[0];
+
+  const dmgType = getAttr(attacker.id, 'atkType').get('current');
+  const wepName = getAttr(attacker.id, 'currName').get('current');
+
+  // Sanity check
+  if (staffInfo[wepName] == undefined) {
+    sendChat(selected, "This stave's name is not found in our records. Are you sure that you've spelled it correctly?");
+    return;
+  }
+
+  // Check for broken weapon
+  const prefix = dmgType == "Physical" ? "repeating_weapons" : "repeating_spells";
+  const [currUses, attr] = GetWeaponStats(attacker.id, dmgType, prefix);
+  if (currUses == 0) { return; }
+
+
+  // Initialize skill function I/O
+  let battleInput = {
+    "isSim": isSim,
+    "whoseSkill": -1, // To ensure we don't activate a defender's skill when we shouldn't. 0 = attacker, 1 = defender
+    "aWepType": getAttr(attacker.id, "currWep").get('current'),
+    "dmgType": dmgType,
+    "aMaxHP": selectObj.get("bar3_max"),
+    "aCurrHP": selectObj.get("bar3_value"),
+    "aStr": getAttrValue(attacker.id, "strTotal"),
+    "aMag": getAttrValue(attacker.id, "magTotal"),
+    "aSkl": getAttrValue(attacker.id, "sklTotal"),
+    "aSpd": getAttrValue(attacker.id, "spdTotal"),
+    "aLck": getAttrValue(attacker.id, "lckTotal"),
+  };
+  
+  let battleOutput = {
+    "combatMsg": `${selected} ${isSim == 1 ? "simulates using " : "uses "} ${wepName}! <br>`,
+    "aSkillMsg": "Attacker Skills: <ul>",
+    "hit": getAttrValue(attacker.id, "hit"),
+    "crit": getAttrValue(attacker.id, "crit"),
+    "atkSpd": getAttrValue(attacker.id, 'atkSpd'),
+    "addDmg": 0,
+    "armsthrift": 0,
+  };
+
+
+  // Skill checks
+  const aSkills = getAttr(attacker.id, 'activeSkills').get('current').split(',');
+  battleInput.whoseSkill = 0;
+  for(let i=0; i<aSkills.length; i++) {
+    if (staffSkills.has(aSkills[i])) {
+      eval(aSkills[i] + "(battleInput, battleOutput)");
+    }
+  }
+
+
+  // Weapon Skill Checks
+  const aWepSkills = [getAttr(attacker.id, 'skill1Wep').get('current'), getAttr(attacker.id, 'skill2Wep').get('current')];
+  battleInput.whoseSkill = 0;
+  for(let i=0; i<aWepSkills.length; i++) {
+    if (staffSkills.has(aWepSkills[i])) {
+      eval(aWepSkills[i] + "(battleInput, battleOutput)");
+    }
+  }
+
+  // End of staff updates
+  if (isSim != 1) {
+    if (battleOutput.armsthrift == 0) { 
+      attr.setWithWorker("current", currUses - 1);
+    }
+    updateWeaponEXP(attacker.id, battleInput.aWepType, staffInfo[wepName].wexp);
+    expHandler.expIncrease(selectedId, staffInfo[wepName].exp);
+  }
+
+  battleOutput.aSkillMsg += "</ul>";
+  sendChat(selected, `<br> <b>=== Start Combat ===</b> <br> ${battleOutput.combatMsg} ${battleOutput.aSkillMsg} ${staffInfo[wepName].textFunc(battleInput.aMag)} <br> <b>=== End Combat ===</b>`);
 }

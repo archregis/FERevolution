@@ -75,26 +75,9 @@ function handleLevelUp(attackerId, CurrEXP, LvA, who) {
   }
 }
 
-// Main command handler
-on('chat:message', function(msg) {
-  if (msg.type !== 'api') return;
-
-  const content = processInlinerolls(msg);
-  const parts = content.split(' ');
-  const command = parts.shift().substring(1);
-
-  if (command === 'exp') {
-    if (parts.length < 1) {
-      sendChat('SYSTEM', 'You must provide a selected token id');
-      return;
-    }
-    if (parts.length < 2) {
-      sendChat('SYSTEM', 'You must provide an EXP value');
-      return;
-    }
-
-    const selectedId = parts[0];
-    const EXPAmod = parseInt(parts[1], 10) || 0;
+// Handles incrementing EXP and the level up if necessary
+const expHandler = {
+    expIncrease: function(selectedId, addedExp) {
     const selectedToken = getObj('graphic', selectedId);
     if (!selectedToken) {
       sendChat('SYSTEM', 'Invalid token id.');
@@ -117,12 +100,37 @@ on('chat:message', function(msg) {
 
 
     // Update character EXP
-    CurrEXP.set("current", EXPA + EXPAmod);
+    CurrEXP.set("current", EXPA + addedExp);
 
     // Send EXP message
-    sendChat(who, `${EXPAmod} EXP added!`);
+    sendChat(who, `${addedExp} EXP added!`);
 
     // Handle level ups if EXP >= 100
     handleLevelUp(attacker.id, CurrEXP, LvA, who);
+    }
+}
+
+// Main command handler
+on('chat:message', function(msg) {
+  if (msg.type !== 'api') return;
+
+  const content = processInlinerolls(msg);
+  const parts = content.split(' ');
+  const command = parts.shift().substring(1);
+
+  if (command === 'exp') {
+    if (parts.length < 1) {
+      sendChat('SYSTEM', 'You must provide a selected token id');
+      return;
+    }
+    if (parts.length < 2) {
+      sendChat('SYSTEM', 'You must provide an EXP value');
+      return;
+    }
+
+    const selectedId = parts[0];
+    const addedExp = parseInt(parts[1], 10) || 0;
+    expHandler.expIncrease(selectedId, addedExp);
+    return;
   }
 });
