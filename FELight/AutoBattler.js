@@ -190,12 +190,9 @@ function Luna(battleInput, battleOutput) {
 // Sets enemy ward and prot to 0, 100% activation
 function LunaPlus(battleInput, battleOutput) {
   if (battleInput.whoseSkill == 1) { return; }
-  if (battleInput.isSim == 1) { battleOutput.aSkillMsg += outputSkill("Luna", 100); }
-  else {
     battleOutput.aSkillMsg += outputSkill("Luna");
     battleOutput.dWard = 0;
     battleOutput.dProt = 0;
-  }
 }
 
 // Restores damage dealt as HP, skill% activation
