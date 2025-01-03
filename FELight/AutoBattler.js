@@ -19,9 +19,9 @@ const allSkills = new Set(["SureShot","Adept","Luna","LunaPlus","Sol","Glacias",
 const staffSkills = new Set(["Armsthrift","Resolve"]);
 
 const staffInfo = {
-  Heal: { exp: 11, wexp: 2, textFunc: function(magic) { return `All adjacent allies heal ${10 + magic} HP.`}, },
-  Mend: { exp: 12, wexp: 3, textFunc: function(magic) { return `All adjacent allies heal ${20 + magic} HP.`}},
-  Recover: { exp: 17, wexp: 3, textFunc: function() { return `All adjacent allies heal all HP.`}},
+  Heal: { exp: 11, wexp: 2, textFunc: function(magic) { return `An adjacent ally heals ${10 + magic} HP.`}, },
+  Mend: { exp: 12, wexp: 3, textFunc: function(magic) { return `An adjacent ally heals ${20 + magic} HP.`}},
+  Recover: { exp: 17, wexp: 3, textFunc: function() { return `An adjacent ally heals all HP.`}},
   Physic: { exp: 22, wexp: 3, textFunc: function(magic) { return `An ally within ${Math.floor(magic / 2)} tiles heals ${10 + magic} HP.`}},
   Restore: { exp: 20, wexp: 3, textFunc: function(magic) { return `An ally within ${Math.floor(magic / 2)} tiles is returned to normal condition.`}},
   Matrona: { exp: 50, wexp: 5, textFunc: function(magic) { return `All allies within ${Math.floor(magic / 4)} tiles are returned to normal condition.`}},
