@@ -505,7 +505,7 @@ function Resolve(battleInput, battleOutput) {
 
 // +5 damage to unmounted units
 function Trample(battleInput, battleOutput) {
-  if (battleInput.whoseSkill == 1 || battleInput.dWeakness.includes("Flying") || battleInput.dWeakness.includes("Cavalry")) { return; }
+  if (battleInput.whoseSkill == 1 || battleInput.dWeakness.includes("Flying") || battleInput.dWeakness.includes("Cavalry") || battleInput.dWeakness.includes("Dragon")) { return; }
   battleOutput.aSkillMsg += outputSkill("Trample");
   battleOutput.addDmg += 5;
 }
