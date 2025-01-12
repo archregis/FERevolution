@@ -120,7 +120,7 @@
 									<div>Crit</div>
 								</div>
 								<div class="sheet-current-vals-row">
-									<div><input name="attr_hpCurrent" type="number"></input> / <span name="attr_hpTotal"></span></div>
+									<div><input name="attr_hpCurrent" type="number"></input> / <span name="attr_hpCurrent_max"></span></div>
 									<div><span name="attr_physTotal">0</span></div>
 									<div><span name="attr_mystTotal">0</span></div>
 									<div><span name="attr_hit">0</span></div>
@@ -710,6 +710,7 @@
   	<input name="attr_mitBonusTotal" value="0" hidden>
 	<input name="attr_activeSkills" value="" hidden>
 	<input name="attr_weakTotal" value="None" hidden>
+	<input name="attr_hpCurrent_max" value="0" hidden>
 	<input name="attr_hpTotal" value="0" hidden>
 	<input name="attr_hpTotalGrow" value="0" hidden>
 	<input name="attr_strTotal" value="0" hidden>
@@ -788,6 +789,11 @@ function UpdateStat(stat) {
 				setAttrs({
 					[stat+"Total"]: Number(v[stat+"Base"]) + Number(v[stat+"Buff"]) + Number(v[stat+"BonusTotal"]) + wepStat,
 				});
+				if (stat == "hp") {
+					setAttrs({
+						[stat+"Current_max"]: Number(v[stat+"Base"]) + Number(v[stat+"Buff"]) + Number(v[stat+"BonusTotal"]) + wepStat,
+					});
+				}
 			});
 		});
 	});
