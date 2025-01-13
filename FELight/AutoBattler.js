@@ -205,6 +205,13 @@ function Sol(battleInput, battleOutput) {
   }
 }
 
+// Restores damage dealt as HP, 100% activation
+function Nosferatu(battleInput, battleOutput) {
+  if (battleInput.whoseSkill == 1) { return; }
+  battleOutput.aSkillMsg += outputSkill("Nosferatu");
+  battleOutput.sol = 1;
+}
+
 // Add res to damage, skill% activation
 function Glacies(battleInput, battleOutput) {
   if (battleInput.whoseSkill == 1) { return; }
