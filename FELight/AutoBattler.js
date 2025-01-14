@@ -14,7 +14,7 @@ const allSkills = new Set(["SureShot","Adept","Luna","LunaPlus","Sol","Glacias",
   "GoodBet","DuelistBlow","DeathBlow","Prescience","StrongRiposte","Sturdy","Brawler","Patience","Swordbreaker","Lancebreaker","Axebreaker",
   "Bowbreaker","Tomebreaker","Swordfaire","Lancefaire","Axefaire","Bowfaire","Tomefaire","Reaver","Brave","Wrath","Chivalry","FortressOfWill","DeadlyStrikes","PrideOfSteel","Thunderstorm","Resolve",
   "Trample","Resilience","Dragonblood","Nullify","AdaptiveScales","Bloodlust","Petalstorm","Perfectionist","Arrogance","Illusionist","Scavenger","GreatShield","Pragmatic","WaryFighter","Dazzle",
-  "TriangleAdept","Cursed","Fortune"]);
+  "TriangleAdept","Cursed","Fortune","Nosferatu","Reverse"]);
 
 const staffSkills = new Set(["Armsthrift","Resolve"]);
 
@@ -209,7 +209,7 @@ function Sol(battleInput, battleOutput) {
 function Nosferatu(battleInput, battleOutput) {
   if (battleInput.whoseSkill == 1) { return; }
   battleOutput.aSkillMsg += outputSkill("Nosferatu");
-  battleOutput.sol = 1;
+  battleOutput.nosferatu = 1;
 }
 
 // Add res to damage, skill% activation
@@ -619,6 +619,12 @@ function Fortune(battleInput, battleOutput) {
   battleOutput.fortune = 1;
 }
 
+// Switches stat that weapons target. Physical > Magical, Magical > Physical
+function Reverse(battleInput, battleOutput) {
+  if (battleInput.whoseSkill == 1) { return; }
+  battleOutput.aSkillMsg += outputSkill("Reverse");
+  battleOutput.reverse = 1;
+}
 
 // Helpers
 
@@ -897,6 +903,7 @@ function DoOneCombatStep(selectedId, targetId, initiating, info, isSim, whisper)
     "reaver": 0,
     "resilience": 0,
     "sol": 0,
+    "nosferatu": 0,
     "scales": 0,
     "scavenger": 0,
     "greatShield": 0,
@@ -905,6 +912,7 @@ function DoOneCombatStep(selectedId, targetId, initiating, info, isSim, whisper)
     "triangleAdept": 0,
     "cursed": 0,
     "fortune": 0,
+    "reverse": 0,
   };
 
 
@@ -1022,11 +1030,14 @@ function DoOneCombatStep(selectedId, targetId, initiating, info, isSim, whisper)
   let AtkDmg = 0;
   if (battleInput.dmgType == 'Physical') {
     AtkDmg = getAttrValue(attacker.id, "physTotal") + addedDmg;
-    DefMit = battleOutput.dProt + getAttrValue(defender.id, "mitBonusTotal") + battleOutput.addProt;
+    if (battleOutput.reverse == 0) { DefMit = battleOutput.dProt + battleOutput.addProt + getAttrValue(defender.id, "mitBonusTotal"); }
+    else { DefMit = battleOutput.dWard + battleOutput.addWard + getAttrValue(defender.id, "mitBonusTotal"); }
   }
   else if (battleInput.dmgType == 'Magical') {
     AtkDmg = getAttrValue(attacker.id, "mystTotal") + addedDmg;
-    DefMit = battleOutput.dWard + getAttrValue(defender.id, "mitBonusTotal") + battleOutput.addWard;  }
+    if (battleOutput.reverse == 0) { DefMit = battleOutput.dWard + battleOutput.addWard + getAttrValue(defender.id, "mitBonusTotal"); }
+    else { DefMit = battleOutput.dProt + battleOutput.addProt + getAttrValue(defender.id, "mitBonusTotal"); }
+  }
   let dmgTaken = Math.max(0, AtkDmg - DefMit);
 
 
@@ -1076,6 +1087,9 @@ function DoOneCombatStep(selectedId, targetId, initiating, info, isSim, whisper)
         content += 'You hit and deal '+ dmgTaken + ' damage!'; // See above
       }
       if (battleOutput.sol == 1) {
+        UpdateHealth(selectObj, -Math.min(battleInput.dCurrHP, dmgTaken), battleInput.aCurrHP, battleInput.aMaxHP);
+      }
+      if (battleOutput.nosferatu == 1) {
         UpdateHealth(selectObj, -Math.min(battleInput.dCurrHP, dmgTaken), battleInput.aCurrHP, battleInput.aMaxHP);
       }
       if (battleOutput.armsthrift == 0) { 
