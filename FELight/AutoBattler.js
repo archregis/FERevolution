@@ -10,7 +10,7 @@ const weaponMap = {
   "Light": "lightExp"
 };
 
-const allSkills = new Set(["SureShot","Adept","Luna","LunaPlus","Sol","Glacias","Flare","Impale","Colossus","Ignis","Armsthrift","QuickDraw","DartingBlow",
+const allSkills = new Set(["SureShot","Adept","Luna","LunaPlus","Sol","Glacies","Flare","Impale","Colossus","Ignis","Armsthrift","QuickDraw","DartingBlow",
   "GoodBet","DuelistBlow","DeathBlow","Prescience","StrongRiposte","Sturdy","Brawler","Patience","Swordbreaker","Lancebreaker","Axebreaker",
   "Bowbreaker","Tomebreaker","Swordfaire","Lancefaire","Axefaire","Bowfaire","Tomefaire","Reaver","Brave","Wrath","Chivalry","FortressOfWill","DeadlyStrikes","PrideOfSteel","Thunderstorm","Resolve",
   "Trample","Resilience","Dragonblood","Nullify","AdaptiveScales","Bloodlust","Petalstorm","Perfectionist","Arrogance","Illusionist","Scavenger","GreatShield","Pragmatic","WaryFighter","Dazzle",
