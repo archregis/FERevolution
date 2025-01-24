@@ -14,7 +14,7 @@ const allSkills = new Set(["SureShot","Adept","Luna","LunaPlus","Sol","Glacies",
   "GoodBet","DuelistBlow","DeathBlow","Prescience","StrongRiposte","Sturdy","Brawler","Patience","Swordbreaker","Lancebreaker","Axebreaker",
   "Bowbreaker","Tomebreaker","Swordfaire","Lancefaire","Axefaire","Bowfaire","Tomefaire","Reaver","Brave","Wrath","Chivalry","FortressOfWill","DeadlyStrikes","PrideOfSteel","Thunderstorm","Resolve",
   "Trample","Resilience","Dragonblood","Nullify","AdaptiveScales","Bloodlust","Petalstorm","Perfectionist","Arrogance","Illusionist","Scavenger","GreatShield","Pragmatic","WaryFighter","Dazzle",
-  "TriangleAdept","Cursed","Fortune","Nosferatu","Reverse"]);
+  "TriangleAdept","Cursed","Fortune","Nosferatu","Reverse","Aegis","Pavise","Sanctuary","Templar","Vantage","Desperation","RightfulLord","RightfulGod","Determination"]);
 
 const staffSkills = new Set(["Armsthrift","Resolve"]);
 
@@ -159,8 +159,9 @@ function TriangleAdept(battleInput, battleOutput) {
 // Guaranteed hit and 150% damage, skill% activation
 function SureShot(battleInput, battleOutput) {  
   if (battleInput.whoseSkill == 1) { return; }
-  if (battleInput.isSim == 1) { battleOutput.aSkillMsg += outputSkill("Sure Shot", battleInput.aSkl); }
-  else if (randomInteger(100) <= battleInput.aSkl) {
+  const odds = battleInput.aSkl + battleInput.aSkillBonus
+  if (battleInput.isSim == 1) { battleOutput.aSkillMsg += outputSkill("Sure Shot", odds); }
+  else if (randomInteger(100) <= odds) {
     battleOutput.aSkillMsg += outputSkill("Sure Shot");
     battleOutput.sureShot = 1;
   }
@@ -169,8 +170,9 @@ function SureShot(battleInput, battleOutput) {
 // Gives brave effect for this hit
 function Adept(battleInput, battleOutput) {
   if (battleInput.whoseSkill == 1) { return; }
-  if (battleInput.isSim == 1) { battleOutput.aSkillMsg += outputSkill("Adept", battleInput.aSpd); }
-  else if (randomInteger(100) <= battleInput.aSpd) {
+  const odds = battleInput.aSpd + battleInput.aSkillBonus
+  if (battleInput.isSim == 1) { battleOutput.aSkillMsg += outputSkill("Adept", odds); }
+  else if (randomInteger(100) <= odds) {
     battleOutput.aSkillMsg += outputSkill("Adept");
     battleOutput.brave = 1;
   }
@@ -179,8 +181,9 @@ function Adept(battleInput, battleOutput) {
 // Sets enemy ward and prot to 0, skill% activation
 function Luna(battleInput, battleOutput) {
   if (battleInput.whoseSkill == 1) { return; }
-  if (battleInput.isSim == 1) { battleOutput.aSkillMsg += outputSkill("Luna", battleInput.aSkl); }
-  else if (randomInteger(100) <= battleInput.aSkl) {
+  const odds = battleInput.aSkl + battleInput.aSkillBonus
+  if (battleInput.isSim == 1) { battleOutput.aSkillMsg += outputSkill("Luna", odds); }
+  else if (randomInteger(100) <= odds) {
     battleOutput.aSkillMsg += outputSkill("Luna");
     battleOutput.dWard = 0;
     battleOutput.dProt = 0;
@@ -198,8 +201,9 @@ function LunaPlus(battleInput, battleOutput) {
 // Restores damage dealt as HP, skill% activation
 function Sol(battleInput, battleOutput) {
   if (battleInput.whoseSkill == 1) { return; }
-  if (battleInput.isSim == 1) { battleOutput.aSkillMsg += outputSkill("Sol", battleInput.aSkl); }
-  else if (randomInteger(100) <= battleInput.aSkl) {
+  const odds = battleInput.aSkl + battleInput.aSkillBonus
+  if (battleInput.isSim == 1) { battleOutput.aSkillMsg += outputSkill("Sol", odds); }
+  else if (randomInteger(100) <= odds) {
     battleOutput.aSkillMsg += outputSkill("Sol");
     battleOutput.sol = 1;
   }
@@ -215,8 +219,9 @@ function Nosferatu(battleInput, battleOutput) {
 // Add res to damage, skill% activation
 function Glacies(battleInput, battleOutput) {
   if (battleInput.whoseSkill == 1) { return; }
-  if (battleInput.isSim == 1) { battleOutput.aSkillMsg += outputSkill("Glacies", battleInput.aSkl); }
-  else if (randomInteger(100) <= battleInput.aSkl) {
+  const odds = battleInput.aSkl + battleInput.aSkillBonus
+  if (battleInput.isSim == 1) { battleOutput.aSkillMsg += outputSkill("Glacies", odds); }
+  else if (randomInteger(100) <= odds) {
     battleOutput.aSkillMsg += outputSkill("Glacies");
     battleOutput.addDmg += battleInput.aRes;
   }
@@ -225,8 +230,9 @@ function Glacies(battleInput, battleOutput) {
 // Halve enemy res, skill% activation
 function Flare(battleInput, battleOutput) {
   if (battleInput.whoseSkill == 1) { return; }
-  if (battleInput.isSim == 1) { battleOutput.aSkillMsg += outputSkill("Flare", battleInput.aSkl); }
-  else if (randomInteger(100) <= battleInput.aSkl) {
+  const odds = battleInput.aSkl + battleInput.aSkillBonus
+  if (battleInput.isSim == 1) { battleOutput.aSkillMsg += outputSkill("Flare", odds); }
+  else if (randomInteger(100) <= odds) {
     battleOutput.aSkillMsg += outputSkill("Flare");
     battleOutput.dWard = Math.floor(battleInput.dWard/2);
   }
@@ -235,8 +241,9 @@ function Flare(battleInput, battleOutput) {
 // Deal 3x damage, skill% activation
 function Impale(battleInput, battleOutput) {
   if (battleInput.whoseSkill == 1) { return; }
-  if (battleInput.isSim == 1) { battleOutput.aSkillMsg += outputSkill("Impale", battleInput.aSkl); }
-  else if (randomInteger(100) <= battleInput.aSkl) {
+  const odds = battleInput.aSkl + battleInput.aSkillBonus
+  if (battleInput.isSim == 1) { battleOutput.aSkillMsg += outputSkill("Impale", odds); }
+  else if (randomInteger(100) <= odds) {
     battleOutput.aSkillMsg += outputSkill("Impale");
     battleOutput.impale = 1;
   }
@@ -245,8 +252,9 @@ function Impale(battleInput, battleOutput) {
 // Double str, skill% activation
 function Colossus(battleInput, battleOutput) {
   if (battleInput.whoseSkill == 1) { return; }
-  if (battleInput.isSim == 1) { battleOutput.aSkillMsg += outputSkill("Colossus", battleInput.aSkl); }
-  else if (randomInteger(100) <= battleInput.aSkl) {
+  const odds = battleInput.aSkl + battleInput.aSkillBonus
+  if (battleInput.isSim == 1) { battleOutput.aSkillMsg += outputSkill("Colossus", odds); }
+  else if (randomInteger(100) <= odds) {
     battleOutput.aSkillMsg += outputSkill("Colossus");
     battleOutput.addDmg += battleInput.aStr;
   }
@@ -255,8 +263,9 @@ function Colossus(battleInput, battleOutput) {
 // Add half res and def to damage, skill% activation
 function Ignis(battleInput, battleOutput) {
   if (battleInput.whoseSkill == 1) { return; }
-  if (battleInput.isSim == 1) { battleOutput.aSkillMsg += outputSkill("Ignis", battleInput.aSkl); }
-  else if (randomInteger(100) <= battleInput.aSkl) {
+  const odds = battleInput.aSkl + battleInput.aSkillBonus
+  if (battleInput.isSim == 1) { battleOutput.aSkillMsg += outputSkill("Ignis", odds); }
+  else if (randomInteger(100) <= odds) {
     battleOutput.aSkillMsg += outputSkill("Ignis");
     battleOutput.addDmg += Math.floor(battleInput.aRes / 2) + Math.floor(battleInput.aDef/ 2);
   }
@@ -265,8 +274,9 @@ function Ignis(battleInput, battleOutput) {
 // Do not use weapon durability, luck% activation
 function Armsthrift(battleInput, battleOutput) {
   if (battleInput.whoseSkill == 1) { return; }
-  if (battleInput.isSim == 1) { battleOutput.aSkillMsg += outputSkill("Armsthrift", battleInput.aLck); }
-  else if (randomInteger(100) <= battleInput.aLck) {
+  const odds = battleInput.aLck + battleInput.aSkillBonus
+  if (battleInput.isSim == 1) { battleOutput.aSkillMsg += outputSkill("Armsthrift", odds); }
+  else if (randomInteger(100) <= odds) {
     battleOutput.aSkillMsg += outputSkill("Armsthrift");
     battleOutput.armsthrift = 1;
   }
@@ -275,8 +285,9 @@ function Armsthrift(battleInput, battleOutput) {
 // Obtains a red gem when defeating an enemy, luck% activation
 function Scavenger(battleInput, battleOutput) {
   if (battleInput.whoseSkill == 1) { return; }
-  if (battleInput.isSim == 1) { battleOutput.aSkillMsg += outputSkill("Scavenger", battleInput.aLck); }
-  else if (randomInteger(100) <= battleInput.aLck) {
+  const odds = battleInput.aLck + battleInput.aSkillBonus
+  if (battleInput.isSim == 1) { battleOutput.aSkillMsg += outputSkill("Scavenger", odds); }
+  else if (randomInteger(100) <= odds) {
     battleOutput.scavenger = 1;
   }
 }
@@ -284,8 +295,9 @@ function Scavenger(battleInput, battleOutput) {
 // Negate all damage, defense% activation
 function GreatShield(battleInput, battleOutput) {
   if (battleInput.whoseSkill == 0) { return; }
-  if (battleInput.isSim == 1) { battleOutput.dSkillMsg += outputSkill("Great Shield", battleInput.dDef); }
-  else if (randomInteger(100) <= battleInput.dDef) {
+  const odds = battleInput.dDef + battleInput.dSkillBonus
+  if (battleInput.isSim == 1) { battleOutput.dSkillMsg += outputSkill("Great Shield", odds); }
+  else if (randomInteger(100) <= odds) {
     battleOutput.dSkillMsg += outputSkill("Great Shield");
     battleOutput.greatShield = 1;
   }
@@ -301,6 +313,29 @@ function Cursed(battleInput, battleOutput) {
     battleOutput.cursed = 1;
   }
 }
+
+// Negate magical damage, skill% activation
+function Aegis(battleInput, battleOutput) {
+  if (battleInput.whoseSkill == 0) { return; }
+  const odds = battleInput.dSkl + battleInput.dSkillBonus
+  if (battleInput.isSim == 1) { battleOutput.dSkillMsg += outputSkill("Aegis", odds); }
+  else if (randomInteger(100) <= odds) {
+    battleOutput.dSkillMsg += outputSkill("Aegis");
+    battleOutput.aegis = 1;
+  }
+}
+
+// Negate physical damage, skill% activation
+function Pavise(battleInput, battleOutput) {
+  if (battleInput.whoseSkill == 0) { return; }
+  const odds = battleInput.dSkl + battleInput.dSkillBonus
+  if (battleInput.isSim == 1) { battleOutput.dSkillMsg += outputSkill("Pavise", odds); }
+  else if (randomInteger(100) <= odds) {
+    battleOutput.dSkillMsg += outputSkill("Pavise");
+    battleOutput.pavise = 1;
+  }
+}
+
 
 
 // Initiate Skills
@@ -626,6 +661,58 @@ function Reverse(battleInput, battleOutput) {
   battleOutput.reverse = 1;
 }
 
+// 6 less damage received from magical attacks
+function Sanctuary(battleInput, battleOutput) {
+  if (battleInput.whoseSkill == 0) { return; }
+  battleOutput.dSkillMsg += outputSkill("Sanctuary");
+  battleOutput.addWard += 6;
+}
+
+// Deal effective damage to enemies using magical weapons
+function Templar(battleInput, battleOutput) {
+  if (battleInput.whoseSkill == 1) { return; }
+  battleOutput.aSkillMsg += outputSkill("Templar");
+  battleOutput.templar = 1;
+}
+
+// Add 10% to skill activation rate
+function RightFulLord(battleInput, battleOutput) {
+  if (battleInput.whoseSkill == 0) {
+    battleOutput.aSkillMsg += outputSkill("Rightful Lord");
+    battleInput.aSkillBonus += 10;
+  }
+  else if (battleInput.whoseSkill == 1) {
+    battleOutput.dSkillMsg += outputSkill("Rightful Lord");
+    battleInput.dSkillBonus += 10;
+  }
+}
+
+// Add 30% to skill activation rate
+function RightFulGod(battleInput, battleOutput) {
+  if (battleInput.whoseSkill == 0) {
+    battleOutput.aSkillMsg += outputSkill("Rightful God");
+    battleInput.aSkillBonus += 30;
+  }
+  else if (battleInput.whoseSkill == 1) {
+    battleOutput.dSkillMsg += outputSkill("Rightful God");
+    battleInput.dSkillBonus += 30;
+  }
+}
+
+// Add 30% to skill activation rate when below half hp
+function Determination(battleInput, battleOutput) {
+  if (battleInput.whoseSkill == 0 && battleInput.aCurrHP < battleInput.aMaxHP/2) {
+    battleOutput.aSkillMsg += outputSkill("Determination");
+    battleInput.aSkillBonus += 30;
+  }
+  else if (battleInput.whoseSkill == 1 && battleInput.dCurrHP < battleInput.dMaxHP/2) {
+    battleOutput.dSkillMsg += outputSkill("Determination");
+    battleInput.dSkillBonus += 30;
+  }
+}
+
+
+
 // Helpers
 
 // Gets an attribute object by name for a given character.
@@ -880,6 +967,8 @@ function DoOneCombatStep(selectedId, targetId, initiating, info, isSim, whisper)
     "dWard": getAttrValue(defender.id, "wardTotal"),
     "dProt": getAttrValue(defender.id, "protTotal"),
     "atkCount": info.atkCount,
+    "aSkillBonus": 0,
+    "dSkillBonus": 0,
   };
 
   let battleOutput = {
@@ -907,6 +996,8 @@ function DoOneCombatStep(selectedId, targetId, initiating, info, isSim, whisper)
     "scales": 0,
     "scavenger": 0,
     "greatShield": 0,
+    "aegis": 0,
+    "pavise": 0,
     "waryFighter": 0,
     "dazzle": 0,
     "triangleAdept": 0,
@@ -982,7 +1073,7 @@ function DoOneCombatStep(selectedId, targetId, initiating, info, isSim, whisper)
       }
     }
 
-    if (isEffective == 1) {
+    if (isEffective == 1 || (battleOutput.templar && getAttr(defender.id, 'atkType').get('current') == "Magical")) {
       content += '<p style = "margin-bottom: 0px;"> You deal Effective Damage!</p> <br>';
       addedDmg += 2 * getAttrValue(attacker.id, 'currMt');
     }
@@ -1060,6 +1151,12 @@ function DoOneCombatStep(selectedId, targetId, initiating, info, isSim, whisper)
       dmgTaken *= 3;
     }
     if (battleOutput.greatShield == 1) {
+      dmgTaken = 0;
+    }
+    if (battleOutput.pavise == 1 && battleInput.dmgType == "Physical") {
+      dmgTaken = 0;
+    }
+    if (battleOutput.aegis == 1 && battleInput.dmgType == "Magical") {
       dmgTaken = 0;
     }
 
