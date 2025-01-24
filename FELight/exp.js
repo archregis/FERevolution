@@ -95,9 +95,25 @@ const expHandler = {
     const LvA = getAttr(attacker.id, "level");
 
     let who = getObj('character', selectedToken.get('represents'));
-
     who = selectedToken.get('name');
 
+    // Paragon check
+    const aSkills = getAttr(attacker.id, 'activeSkills').get('current').split(',');
+
+    for(let i=0; i<aSkills.length; i++) {
+      if (aSkills[i] == "Paragon") {
+        addedExp *= 2;
+      }
+    }
+
+    // Weapon Paragon check
+    const aWepSkills = [getAttr(attacker.id, 'skill1Wep').get('current'), getAttr(attacker.id, 'skill2Wep').get('current')];
+
+    for(let i=0; i<aWepSkills.length; i++) {
+      if (aWepSkills[i] == "Paragon") {
+        addedExp *= 2;
+      }
+    }
 
     // Update character EXP
     CurrEXP.set("current", EXPA + addedExp);
