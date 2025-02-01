@@ -14,7 +14,7 @@ const allSkills = new Set(["SureShot","Adept","Luna","LunaPlus","Sol","Glacies",
   "GoodBet","DuelistBlow","DeathBlow","Prescience","StrongRiposte","Sturdy","Brawler","Patience","Swordbreaker","Lancebreaker","Axebreaker",
   "Bowbreaker","Tomebreaker","Swordfaire","Lancefaire","Axefaire","Bowfaire","Tomefaire","Reaver","Brave","Wrath","Chivalry","FortressOfWill","DeadlyStrikes","PrideOfSteel","Thunderstorm","Resolve",
   "Trample","Resilience","Dragonblood","Nullify","AdaptiveScales","Bloodlust","Petalstorm","Perfectionist","Arrogance","Illusionist","Scavenger","GreatShield","Pragmatic","WaryFighter","Dazzle",
-  "TriangleAdept","Cursed","Fortune","Nosferatu","Reverse","Aegis","Pavise","Sanctuary","Templar","Vantage","Desperation","RightfulLord","RightfulGod","Determination","Slayer"]);
+  "TriangleAdept","Cursed","Fortune","Nosferatu","Reverse","Aegis","Pavise","Sanctuary","Templar","Vantage","Desperation","RightfulLord","RightfulGod","Determination","Slayer","Peerless"]);
 
 const staffSkills = new Set(["Armsthrift","Resolve"]);
 
@@ -718,6 +718,20 @@ function Slayer(battleInput, battleOutput) {
   battleOutput.slayer = 1;
 }
 
+// +20 avoid, +5 str/mag/def/res when level is higher than opponents
+function Peerless(battleInput, battleOutput) {
+  if (battleInput.whoseSkill == 0 && battleInput.aLevel > battleInput.dLevel) {
+    battleOutput.aSkillMsg += outputSkill("Peerless");
+    battleOutput.addDmg += 5;
+  }
+  else if (battleInput.whoseSkill == 1 && battleInput.dLevel > battleInput.aLevel) {
+    battleOutput.dSkillMsg += outputSkill("Peerless");
+    battleOutput.avoid += 20;
+    battleOutput.addProt += 5;
+    battleOutput.addWard += 5;
+  }
+}
+
 
 
 // Helpers
@@ -953,6 +967,8 @@ function DoOneCombatStep(selectedId, targetId, initiating, info, isSim, whisper)
     "isInitiating": initiating, // Determine if you are intiating the attack or counter-attacking. 0 = initiating, 1 = countering
     "dWeakness": getAttr(defender.id,'weakTotal').get('current').split(','),
     "dmgType": dmgType,
+    "aLevel": getAttrValue(attacker.id, "level"),
+    "dLevel": getAttrValue(defender.id, "level"),
     "aWepType": aWepType,
     "dWepType": getAttr(defender.id, "currWep").get('current'),
     "aWepWeight" : getAttrValue(attacker.id,'currWt'),
