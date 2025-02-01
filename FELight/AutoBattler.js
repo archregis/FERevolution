@@ -94,48 +94,48 @@ function Tomebreaker(battleInput, battleOutput) {
   }
 }
 
-// +5 damage when using a sword
+// +4 damage when using a sword
 function Swordfaire(battleInput, battleOutput) {
   if (battleInput.whoseSkill == 1) { return; }
   if (battleInput.aWepType == "Sword") {
     battleOutput.aSkillMsg += outputSkill("Swordfaire");
-    battleOutput.addDmg += 5
+    battleOutput.addDmg += 4;
   }
 }
 
-// +5 damage when using an axe
+// +4 damage when using an axe
 function Axefaire(battleInput, battleOutput) {
   if (battleInput.whoseSkill == 1) { return; }
   if (battleInput.aWepType == "Axe") {
     battleOutput.aSkillMsg += outputSkill("Axefaire");
-    battleOutput.addDmg += 5;
+    battleOutput.addDmg += 4;
   }
 }
 
-// +5 damage when using a lance
+// +4 damage when using a lance
 function Lancefaire(battleInput, battleOutput) {
   if (battleInput.whoseSkill == 1) { return; }
   if (battleInput.aWepType == "Lance") {
     battleOutput.aSkillMsg += outputSkill("Lancefaire");
-    battleOutput.addDmg += 5;
+    battleOutput.addDmg += 4;
   }
 }
 
-// +5 damage when using a bow
+// +4 damage when using a bow
 function Bowfaire(battleInput, battleOutput) {
   if (battleInput.whoseSkill == 1) { return; }
   if (battleInput.aWepType == "Bow") {
     battleOutput.aSkillMsg += outputSkill("Bowfaire");
-    battleOutput.addDmg += 5;
+    battleOutput.addDmg += 4;
   }
 }
 
-// +5 damage when using a tome
+// +4 damage when using a tome
 function Tomefaire(battleInput, battleOutput) {
   if (battleInput.whoseSkill == 1) { return; }
   if (battleInput.aWepType == "Anima" || battleInput.aWepType == "Dark" || battleInput.aWepType == "Light") {
     battleOutput.aSkillMsg += outputSkill("Tomefaire");
-    battleOutput.addDmg += 5;
+    battleOutput.addDmg += 4;
   }
 }
 
