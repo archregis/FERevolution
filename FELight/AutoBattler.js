@@ -14,7 +14,7 @@ const allSkills = new Set(["SureShot","Adept","Luna","LunaPlus","Sol","Glacies",
   "GoodBet","DuelistBlow","DeathBlow","Prescience","StrongRiposte","Sturdy","Brawler","Patience","Swordbreaker","Lancebreaker","Axebreaker",
   "Bowbreaker","Tomebreaker","Swordfaire","Lancefaire","Axefaire","Bowfaire","Tomefaire","Reaver","Brave","Wrath","Chivalry","FortressOfWill","DeadlyStrikes","PrideOfSteel","Thunderstorm","Resolve",
   "Trample","Resilience","Dragonblood","Nullify","AdaptiveScales","Bloodlust","Petalstorm","Perfectionist","Arrogance","Illusionist","Scavenger","GreatShield","Pragmatic","WaryFighter","Dazzle",
-  "TriangleAdept","Cursed","Fortune","Nosferatu","Reverse","Aegis","Pavise","Sanctuary","Templar","Vantage","Desperation","RightfulLord","RightfulGod","Determination"]);
+  "TriangleAdept","Cursed","Fortune","Nosferatu","Reverse","Aegis","Pavise","Sanctuary","Templar","Vantage","Desperation","RightfulLord","RightfulGod","Determination","Slayer"]);
 
 const staffSkills = new Set(["Armsthrift","Resolve"]);
 
@@ -711,6 +711,13 @@ function Determination(battleInput, battleOutput) {
   }
 }
 
+// Makes weapon effective if the attack is at advantage
+function Slayer(battleInput, battleOutput) {
+  if (battleInput.whoseSkill == 1) { return; }
+  battleOutput.aSkillMsg += outputSkill("Slayer");
+  battleOutput.slayer = 1;
+}
+
 
 
 // Helpers
@@ -1004,6 +1011,7 @@ function DoOneCombatStep(selectedId, targetId, initiating, info, isSim, whisper)
     "cursed": 0,
     "fortune": 0,
     "reverse": 0,
+    "slayer": 0,
   };
 
 
@@ -1061,6 +1069,42 @@ function DoOneCombatStep(selectedId, targetId, initiating, info, isSim, whisper)
   let content = "";
 
 
+    // Weapon triangle
+    let triangle = 'Neutral';
+    let mult = 1;
+    const weaponTriangle = { 'Sword': 1, 'Axe':2, 'Lance':3, 'Anima':4, 'Light':5, 'Dark':6 };
+    const atkTriMap = weaponTriangle[battleInput.aWepType];
+    const defTriMap = weaponTriangle[battleInput.dWepType];
+    if ((atkTriMap < 4 && defTriMap < 4) || (atkTriMap >= 4 && defTriMap >= 4)) {
+      if ((atkTriMap+1)%3 == defTriMap%3) {
+        triangle = 'Adv';
+      }
+      else if ((atkTriMap-1)%3 == defTriMap%3) {
+        triangle = 'Disadv';
+      }
+    }
+    if (battleOutput.reaver == 1) {
+      if (triangle == "Adv") { triangle = "Disadv"; }
+      else if (triangle == "Disadv") { triangle = "Adv"; }
+      mult *= 2;
+    }
+    if (battleOutput.triangleAdept == 1) {
+      mult *= 2;
+    }
+  
+    var triangleMsg = "";
+    if (triangle == 'Adv') {
+      hit += 15 * mult;
+      addedDmg += 1 * mult;
+      triangleMsg = '<div>Attacking with advantage!</div>';
+    }
+    else if (triangle == 'Disadv') {
+      hit += -15 * mult;
+      addedDmg += -1 * mult;
+      triangleMsg = '<div>Attacking with disadvantage!</div>';
+    }
+
+    
   // Effectiveness
   if (battleOutput.nullify == 0) {
     const aEff = getAttr(attacker.id,'currEff').get('current').split(',').filter(i => i);
@@ -1073,46 +1117,13 @@ function DoOneCombatStep(selectedId, targetId, initiating, info, isSim, whisper)
       }
     }
 
-    if (isEffective == 1 || (battleOutput.templar && getAttr(defender.id, 'atkType').get('current') == "Magical")) {
+    if (battleOutput.templar && getAttr(defender.id, 'atkType').get('current') == "Magical") { isEffective = 1; }
+    if (battleOutput.slayer == 1 && triangle == 'Adv') { isEffective = 1; }
+
+    if (isEffective == 1) {
       content += '<p style = "margin-bottom: 0px;"> You deal Effective Damage!</p> <br>';
       addedDmg += 2 * getAttrValue(attacker.id, 'currMt');
     }
-  }
-
-
-  // Weapon triangle
-  let triangle = 'Neutral';
-  let mult = 1;
-  const weaponTriangle = { 'Sword': 1, 'Axe':2, 'Lance':3, 'Anima':4, 'Light':5, 'Dark':6 };
-  const atkTriMap = weaponTriangle[battleInput.aWepType];
-  const defTriMap = weaponTriangle[battleInput.dWepType];
-  if ((atkTriMap < 4 && defTriMap < 4) || (atkTriMap >= 4 && defTriMap >= 4)) {
-    if ((atkTriMap+1)%3 == defTriMap%3) {
-      triangle = 'Adv';
-    }
-    else if ((atkTriMap-1)%3 == defTriMap%3) {
-      triangle = 'Disadv';
-    }
-  }
-  if (battleOutput.reaver == 1) {
-    if (triangle == "Adv") { triangle = "Disadv"; }
-    else if (triangle == "Disadv") { triangle = "Adv"; }
-    mult *= 2;
-  }
-  if (battleOutput.triangleAdept == 1) {
-    mult *= 2;
-  }
-
-  var triangleMsg = "";
-  if (triangle == 'Adv') {
-    hit += 15 * mult;
-    addedDmg += 1 * mult;
-    triangleMsg = '<div>Attacking with advantage!</div>';
-  }
-  else if (triangle == 'Disadv') {
-    hit += -15 * mult;
-    addedDmg += -1 * mult;
-    triangleMsg = '<div>Attacking with disadvantage!</div>';
   }
 
 
