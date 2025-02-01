@@ -598,6 +598,8 @@
 								<h5>HP</h5>
 								<h5>STR</h5>
 								<h5>MAG</h5>
+								<h5>SKL</h5>
+								<h5>LCK</h5>
 								<h5>SPD</h5>
 								<h5>DEF</h5>
 								<h5>RES</h5>
@@ -606,8 +608,6 @@
 								<h5>HIT</h5>
 								<h5>AVO</h5>
 								<h5>CRIT</h5>
-								<h5>DDG</h5>
-								<h5>WGT</h5>
 								<h5>MIT</h5>
 							</div>
 							<div class="sheet-bonus-grid-row">
@@ -616,6 +616,8 @@
 								<span name="attr_hpBonusTotal">0</span>
 								<span name="attr_strBonusTotal">0</span>
 								<span name="attr_magBonusTotal">0</span>
+								<span name="attr_sklBonusTotal">0</span>
+								<span name="attr_lckBonusTotal">0</span>
 								<span name="attr_spdBonusTotal">0</span>
 								<span name="attr_defBonusTotal">0</span>
 								<span name="attr_resBonusTotal">0</span>
@@ -624,8 +626,6 @@
 								<span name="attr_hitBonusTotal">0</span>
 								<span name="attr_avoBonusTotal">0</span>
 								<span name="attr_critBonusTotal">0</span>
-								<span name="attr_ddgBonusTotal">0</span>
-								<span name="attr_wgtBonusTotal">0</span>
 								<span name="attr_mitBonusTotal">0</span>
 							</div>
 						</div>
@@ -637,6 +637,8 @@
 									<input class="bonus-field" type="number" name="attr_hp" value="0" />
 									<input class="bonus-field" type="number" name="attr_str" value="0" />
 									<input class="bonus-field" type="number" name="attr_mag" value="0" />
+									<input class="bonus-field" type="number" name="attr_skl" value="0" />
+									<input class="bonus-field" type="number" name="attr_lck" value="0" />
 									<input class="bonus-field" type="number" name="attr_spd" value="0" />
 									<input class="bonus-field" type="number" name="attr_def" value="0" />
 									<input class="bonus-field" type="number" name="attr_res" value="0" />
@@ -645,8 +647,6 @@
 									<input class="bonus-field" type="number" name="attr_hit" value="0" />
 									<input class="bonus-field" type="number" name="attr_avo" value="0" />
 									<input class="bonus-field" type="number" name="attr_crit" value="0" />
-									<input class="bonus-field" type="number" name="attr_ddg" value="0" />
-									<input class="bonus-field" type="number" name="attr_weight" value="0" />
 									<input class="bonus-field" type="number" name="attr_mit" value="0" />
 								</div>
 							</div>
@@ -705,8 +705,6 @@
 	<input name="attr_hitBonusTotal" value="0" hidden>
 	<input name="attr_avoBonusTotal" value="0" hidden>
 	<input name="attr_critBonusTotal" value="0" hidden>
-	<input name="attr_ddgBonusTotal" value="0" hidden>
-	<input name="attr_wgtBonusTotal" value="0" hidden>
   	<input name="attr_mitBonusTotal" value="0" hidden>
 	<input name="attr_activeSkills" value="" hidden>
 	<input name="attr_weakTotal" value="None" hidden>
@@ -822,9 +820,9 @@ growths.forEach( function(growth) {
 });
 
 // Bonus checks
-on("change:repeating_bonuses:bonusCheck change:repeating_bonuses:hp change:repeating_bonuses:str change:repeating_bonuses:mag change:repeating_bonuses:spd change:repeating_bonuses:def change:repeating_bonuses:res change:repeating_bonuses:con change:repeating_bonuses:mov change:repeating_bonuses:hit change:repeating_bonuses:avo change:repeating_bonuses:crit change:repeating_bonuses:ddg change:repeating_bonuses:weight change:repeating_bonuses:mit remove:repeating_bonuses", function() {
-	const bonusTotalArr = ["hpBonusTotal", "strBonusTotal", "magBonusTotal", "spdBonusTotal", "defBonusTotal", "resBonusTotal", "conBonusTotal", "movBonusTotal", "hitBonusTotal", "avoBonusTotal", "critBonusTotal", "ddgBonusTotal", "wgtBonusTotal", "mitBonusTotal"];
-	const statArr = ["hp", "str", "mag", "spd", "def", "res", "con", "mov", "hit", "avo", "crit", "ddg", "weight", "mit", "bonusCheck"];
+on("change:repeating_bonuses:bonusCheck change:repeating_bonuses:hp change:repeating_bonuses:str change:repeating_bonuses:mag change:repeating_bonuses:skl change:repeating_bonuses:lck change:repeating_bonuses:spd change:repeating_bonuses:def change:repeating_bonuses:res change:repeating_bonuses:con change:repeating_bonuses:mov change:repeating_bonuses:hit change:repeating_bonuses:avo change:repeating_bonuses:crit change:repeating_bonuses:mit remove:repeating_bonuses", function() {
+	const bonusTotalArr = ["hpBonusTotal", "strBonusTotal", "magBonusTotal", "sklBonusTotal", "lckBonusTotal", "spdBonusTotal", "defBonusTotal", "resBonusTotal", "conBonusTotal", "movBonusTotal", "hitBonusTotal", "avoBonusTotal", "critBonusTotal", "mitBonusTotal"];
+	const statArr = ["hp", "str", "mag", "skl", "lck", "spd", "def", "res", "con", "mov", "hit", "avo", "crit", "mit", "bonusCheck"];
 	repeatingSum(bonusTotalArr, "bonuses", statArr);
 });
 
@@ -1095,7 +1093,7 @@ on("change:sklTotal change:lckTotal change:repeating_weapons:crit change:repeati
 });
 
 // Crit Avoid
-on("change:lckTotal change:repeating_weapons:ddg change:repeating_spells:ddg change:_reporder:weapons change:_reporder:spells remove:repeating_weapons remove:repeating_spells change:wepSlot change:spellSlot change:atkType change:atkSpd change:ddgBuff change:ddgBonusTotal", function() {
+on("change:lckTotal change:repeating_weapons:ddg change:repeating_spells:ddg change:_reporder:weapons change:_reporder:spells remove:repeating_weapons remove:repeating_spells change:wepSlot change:spellSlot change:atkType change:atkSpd change:ddgBuff", function() {
 	getAttrs(["wepSlot", "spellSlot", "atkType"], function(v) {
 		const isPhys = v.atkType == "Physical" ? 1 : 0;
 		const repeatName = isPhys ? "repeating_weapons" : "repeating_spells";
@@ -1103,11 +1101,11 @@ on("change:lckTotal change:repeating_weapons:ddg change:repeating_spells:ddg cha
 
 		getSectionIDsOrdered(repeatName, function(idarray) {
 			fID = idarray[Number(slotNum)-1];
-			getAttrs(["lckTotal", "ddgBuff", "ddgBonusTotal", repeatName+"_"+fID+"_ddg"], function(v) {
+			getAttrs(["lckTotal", "ddgBuff", repeatName+"_"+fID+"_ddg"], function(v) {
 				const nindex = Object.keys(v);
 				const wepDdg = parseInt(v[nindex[3]])||0;
 				setAttrs({
-					ddg: 100 + Number(v.lckTotal) + Number(v.ddgBuff) + Number(v.ddgBonusTotal) + wepDdg,
+					ddg: 100 + Number(v.lckTotal) + Number(v.ddgBuff) + wepDdg,
 				});
 			});
 		});
@@ -1115,7 +1113,7 @@ on("change:lckTotal change:repeating_weapons:ddg change:repeating_spells:ddg cha
 });
 
 // AtkSpd
-on("change:spdTotal change:All change:conTotal change:repeating_weapons:wt change:repeating_spells:wt change:_reporder:weapons change:_reporder:spells remove:repeating_weapons remove:repeating_spells change:wepSlot change:spellSlot change:atkType change:wgtBonusTotal", function() {
+on("change:spdTotal change:All change:conTotal change:repeating_weapons:wt change:repeating_spells:wt change:_reporder:weapons change:_reporder:spells remove:repeating_weapons remove:repeating_spells change:wepSlot change:spellSlot change:atkType", function() {
 	getAttrs(["wepSlot", "spellSlot", "atkType"], function(v) {
 		const isPhys = v.atkType == "Physical" ? 1 : 0;
 		const repeatName = isPhys ? "repeating_weapons" : "repeating_spells";
@@ -1123,13 +1121,12 @@ on("change:spdTotal change:All change:conTotal change:repeating_weapons:wt chang
 
 		getSectionIDsOrdered(repeatName, function(idarray) {
 			fID = idarray[Number(slotNum)-1];
-			getAttrs(["spdTotal", repeatName+"_"+fID+"_wt", "conTotal", "wgtBonusTotal"], function(v) {
+			getAttrs(["spdTotal", repeatName+"_"+fID+"_wt", "conTotal"], function(v) {
 				const nindex = Object.keys(v)[1];
 				const wWt = parseInt(v[nindex])||0;
 				const SpdS = v.spdTotal;
 				const ConS = v.conTotal;
-				const weight_Q = v.wgtBonusTotal;
-				aspd = Math.floor(Number(SpdS) - wWt - weight_Q + Number(ConS));
+				aspd = Math.floor(Number(SpdS) - wWt + Number(ConS));
 				if (aspd > SpdS) { aspd = SpdS; }
 				else if (aspd < 0) { aspd = 0; }
 				setAttrs({
