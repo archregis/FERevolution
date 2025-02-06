@@ -14,7 +14,8 @@ const allSkills = new Set(["SureShot","Adept","Luna","LunaPlus","Sol","Glacies",
   "GoodBet","DuelistBlow","DeathBlow","Prescience","StrongRiposte","Sturdy","Brawler","Patience","Swordbreaker","Lancebreaker","Axebreaker",
   "Bowbreaker","Tomebreaker","Swordfaire","Lancefaire","Axefaire","Bowfaire","Tomefaire","Reaver","Brave","Wrath","Chivalry","FortressOfWill","DeadlyStrikes","PrideOfSteel","Thunderstorm","Resolve",
   "Trample","Resilience","Dragonblood","Nullify","AdaptiveScales","Bloodlust","Petalstorm","Perfectionist","Arrogance","Illusionist","Scavenger","GreatShield","Pragmatic","WaryFighter","Dazzle",
-  "TriangleAdept","Cursed","Fortune","Nosferatu","Reverse","Aegis","Pavise","Sanctuary","Templar","Vantage","Desperation","RightfulLord","RightfulGod","Determination","Slayer","Peerless"]);
+  "TriangleAdept","Cursed","Fortune","Nosferatu","Reverse","Aegis","Pavise","Sanctuary","Templar","Vantage","Desperation","RightfulLord","RightfulGod","Determination","Slayer","Peerless",
+  "Vantage","Desperation"]);
 
 const staffSkills = new Set(["Armsthrift","Resolve"]);
 
@@ -732,6 +733,20 @@ function Peerless(battleInput, battleOutput) {
   }
 }
 
+// Counter first when below 50% hp
+function Vantage(battleInput, battleOutput) {
+  if (battleInput.whoseSkill == 1 || battleInput.isInitiating == 1) { return; }
+  if (battleInput.aCurrHP >= Math.floor(battleInput.aMaxHP / 2)) { return; }
+  battleOutput.aSkillMsg += outputSkill("Vantage");
+}
+
+// Follow-up attack before counter when below 50% hp
+function Desperation(battleInput, battleOutput) {
+  if (battleInput.whoseSkill == 1 || battleInput.isInitiating == 0) { return; }
+  if (battleInput.aCurrHP >= Math.floor(battleInput.aMaxHP / 2)) { return; }
+  battleOutput.aSkillMsg += outputSkill("Desperation");
+}
+
 
 
 // Helpers
@@ -844,6 +859,52 @@ function GetWeaponStats(attackerId, dmgType, prefix) {
   return [currUses, attr];
 }
 
+// Returns 1 if a token has activated Vantage, 0 otherwise
+function CheckVantage(selectedId, targetId) {
+  const selectedToken = getObj('graphic', selectedId);
+  const attacker = getObj('character', selectedToken.get('represents'));
+  const targetToken = getObj('graphic', targetId);
+  const defender = getObj('character', targetToken.get('represents'));
+
+  const maxHP = targetToken.get("bar3_max");
+  const currHP = targetToken.get("bar3_value");
+  if (currHP >= maxHP / 2) { return 0; }
+
+  // Skill checks
+  const aSkills = getAttr(attacker.id, 'activeSkills').get('current').split(',');
+  const dSkills = getAttr(defender.id, 'activeSkills').get('current').split(',');
+  if (aSkills.includes("Nihil")  == false && dSkills.includes("Vantage")) { return 1; }
+
+  // Weapon Skill Checks
+  const dWepSkills = [getAttr(defender.id, 'skill1Wep').get('current'), getAttr(defender.id, 'skill2Wep').get('current')];
+  if (dWepSkills.includes("Vantage")) { return 1; }
+
+  return 0;
+}
+
+// Returns 1 if a token has activated Desperation, 0 otherwise
+function CheckDesperation(selectedId, targetId) {
+  const selectedToken = getObj('graphic', selectedId);
+  const attacker = getObj('character', selectedToken.get('represents'));
+  const targetToken = getObj('graphic', targetId);
+  const defender = getObj('character', targetToken.get('represents'));
+
+  const maxHP = selectedToken.get("bar3_max");
+  const currHP = selectedToken.get("bar3_value");
+  if (currHP >= maxHP / 2) { return 0; }
+
+  // Skill checks
+  const aSkills = getAttr(attacker.id, 'activeSkills').get('current').split(',');
+  const dSkills = getAttr(defender.id, 'activeSkills').get('current').split(',');
+  if (dSkills.includes("Nihil")  == false && aSkills.includes("Desperation")) { return 1; }
+
+  // Weapon Skill Checks
+  const aWepSkills = [getAttr(attacker.id, 'skill1Wep').get('current'), getAttr(attacker.id, 'skill2Wep').get('current')];
+  if (aWepSkills.includes("Desperation")) { return 1; }
+
+  return 0;
+}
+
 
 on('chat:message', function(msg) {
   if (msg.type != 'api') return;
@@ -867,50 +928,76 @@ on('chat:message', function(msg) {
     atkTotDmg: 0,
     atkCount: 0,
   }
+  var addGreyHP = 0;
+  var attackerDoubled = 0;
 
   if (command == "hit") {
-    combatBlock: {
-      // Attacker initial combat
-      DoOneCombatStep(selectedId, targetId, 1, info);
-
-      if (info.killed == 1) { break combatBlock; }
-      var attackerDoubled = info.double; // Necessary to save off here due to info being overwritten
-      var addGreyHP = info.addGreyHP; // Same logic here
-      // Attacker goes again if brave active
-      if (info.brave == 1) {
-        DoOneCombatStep(selectedId, targetId, 1, info);
-        if (info.killed == 1) { break combatBlock; }
-      }
-
-      // Can the enemy counter?
-      if (info.counter == 1) {
-        // Counter initial combat
-        DoOneCombatStep(targetId, selectedId, 0, info);
-        if (info.killed == 1) { break combatBlock; }
-        // Counter goes again if brave active
-        if (info.brave == 1) {
-          DoOneCombatStep(targetId, selectedId, 0, info);
-          if (info.killed == 1) { break combatBlock; }
+    if (CheckVantage(selectedId, targetId)) {
+      combatBlock: {
+        const selectedToken = getObj('graphic', selectedId);
+        const targetToken = getObj('graphic', targetId);
+        const defender = getObj('character', targetToken.get('represents'));
+        // Can the enemy counter?
+        if (CanCounter(defender.id, Led.from(selectedToken).to(targetToken).byManhattan().inSquares()) == 1) {
+          if (CombatBlock(targetId, selectedId, 0, info) == -1) { break combatBlock; }
+          // Counterer doubled, go again
+          if (info.double == 1) {
+            if (CombatBlock(targetId, selectedId, 0, info) == -1) { break combatBlock; }
+          }
         }
-        // Counterer doubled, go again
-        if (info.double == 1) {
-          DoOneCombatStep(targetId, selectedId, 0, info);
-          if (info.killed == 1) { break combatBlock; }
-          // Counter goes again if brave active
-          if (info.brave == 1) { 
-            DoOneCombatStep(targetId, selectedId, 0, info);
-            if (info.killed == 1) { break combatBlock; }
+
+        // Attacker initial combat
+        if (CombatBlock(selectedId, targetId, 1, info) == -1) { break combatBlock; }
+        attackerDoubled = info.double; // Necessary to save off here due to info being overwritten
+        addGreyHP = info.addGreyHP; // Same logic here
+
+        // Attacker doubled, go again
+        if (attackerDoubled == 1) {
+          if (CombatBlock(selectedId, targetId, 1, info) == -1) { break combatBlock; }
+        }
+      }
+    }
+    else if (CheckDesperation(selectedId, targetId)) {
+      combatBlock: {
+        // Attacker initial combat
+        if (CombatBlock(selectedId, targetId, 1, info) == -1) { break combatBlock; }
+        attackerDoubled = info.double; // Necessary to save off here due to info being overwritten
+        addGreyHP = info.addGreyHP; // Same logic here
+
+        // Attacker doubled, go again
+        if (attackerDoubled == 1) {
+          if (CombatBlock(selectedId, targetId, 1, info) == -1) { break combatBlock; }
+        }
+
+        // Can the enemy counter?
+        if (info.counter == 1) {
+          if (CombatBlock(targetId, selectedId, 0, info) == -1) { break combatBlock; }
+          // Counterer doubled, go again
+          if (info.double == 1) {
+            if (CombatBlock(targetId, selectedId, 0, info) == -1) { break combatBlock; }
           }
         }
       }
+    }
+    else {
+      combatBlock: {
+        // Attacker initial combat
+        if (CombatBlock(selectedId, targetId, 1, info) == -1) { break combatBlock; }
+        attackerDoubled = info.double; // Necessary to save off here due to info being overwritten
+        addGreyHP = info.addGreyHP; // Same logic here
 
-      // Attacker doubled, go again
-      if (attackerDoubled == 1) {
-        DoOneCombatStep(selectedId, targetId, 1, info);
-        if (info.killed == 1) { break combatBlock; }
-        // Attacker goes again if brave active
-        if (info.brave) {
-          DoOneCombatStep(selectedId, targetId, 1, info);
+        // Can the enemy counter?
+        if (info.counter == 1) {
+          if (CombatBlock(targetId, selectedId, 0, info) == -1) { break combatBlock; }
+          // Counterer doubled, go again
+          if (info.double == 1) {
+            if (CombatBlock(targetId, selectedId, 0, info) == -1) { break combatBlock; }
+          }
+        }
+
+        // Attacker doubled, go again
+        if (attackerDoubled == 1) {
+          if (CombatBlock(selectedId, targetId, 1, info) == -1) { break combatBlock; }
         }
       }
     }
@@ -933,6 +1020,17 @@ else if (command == "staffSim") {
   DoOneStaffStep(selectedId, 1)
 }
 });
+
+// Basic combat block for a single token, returns -1 if enemy killed
+function CombatBlock(firstId, secondId, initiating, info) {
+  DoOneCombatStep(firstId, secondId, initiating, info);
+  if (info.killed == 1) { return -1; }
+  if (info.brave) {
+    DoOneCombatStep(firstId, secondId, initiating, info);
+    if (info.killed == 1) { return -1; }
+  }
+  return 0;
+}
 
 
 function DoOneCombatStep(selectedId, targetId, initiating, info, isSim, whisper) {
