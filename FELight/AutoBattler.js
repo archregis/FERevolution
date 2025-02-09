@@ -15,7 +15,7 @@ const allSkills = new Set(["SureShot","Adept","Luna","LunaPlus","Sol","Glacies",
   "Bowbreaker","Tomebreaker","Swordfaire","Lancefaire","Axefaire","Bowfaire","Tomefaire","Reaver","Brave","Wrath","Chivalry","FortressOfWill","DeadlyStrikes","PrideOfSteel","Thunderstorm","Resolve",
   "Trample","Resilience","Dragonblood","Nullify","AdaptiveScales","Bloodlust","Petalstorm","Perfectionist","Arrogance","Illusionist","Scavenger","GreatShield","Pragmatic","WaryFighter","Dazzle",
   "TriangleAdept","Cursed","Fortune","Nosferatu","Reverse","Aegis","Pavise","Sanctuary","Templar","Vantage","Desperation","RightfulLord","RightfulGod","Determination","Slayer","Peerless",
-  "Vantage","Desperation","ArcaneBlade","RendHeaven"]);
+  "Vantage","Desperation","ArcaneBlade","RendHeaven","Underdog"]);
 
 const staffSkills = new Set(["Armsthrift","Resolve"]);
 
@@ -719,7 +719,7 @@ function Slayer(battleInput, battleOutput) {
   battleOutput.slayer = 1;
 }
 
-// +20 avoid, +5 str/mag/def/res when level is higher than opponents
+// +20 avoid, +5 str/mag/def/res when level is higher than opponent
 function Peerless(battleInput, battleOutput) {
   if (battleInput.whoseSkill == 0 && battleInput.aLevel > battleInput.dLevel) {
     battleOutput.aSkillMsg += outputSkill("Peerless");
@@ -761,6 +761,21 @@ function RendHeaven(battleInput, battleOutput) {
   battleOutput.aSkillMsg += outputSkill("Rend Heaven");
   if (battleInput.dmgType == "Physical") { battleOutput.addDmg += Math.floor(battleInput.dMag / 2); }
   else { battleOutput.addDmg += Math.floor(battleInput.dStr / 2); }
+}
+
+// +15 hit and avoid, +2 str/mag/def/res when level is lower than opponent
+function Underdog(battleInput, battleOutput) {
+  if (battleInput.whoseSkill == 0 && battleInput.aLevel < battleInput.dLevel) {
+    battleOutput.aSkillMsg += outputSkill("Underdog");
+    battleOutput.hit += 15;
+    battleOutput.addDmg += 2;
+  }
+  else if (battleInput.whoseSkill == 1 && battleInput.dLevel < battleInput.aLevel) {
+    battleOutput.dSkillMsg += outputSkill("Underdog");
+    battleOutput.avoid += 15;
+    battleOutput.addProt += 2;
+    battleOutput.addWard += 2;
+  }
 }
 
 
