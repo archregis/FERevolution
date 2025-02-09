@@ -15,7 +15,7 @@ const allSkills = new Set(["SureShot","Adept","Luna","LunaPlus","Sol","Glacies",
   "Bowbreaker","Tomebreaker","Swordfaire","Lancefaire","Axefaire","Bowfaire","Tomefaire","Reaver","Brave","Wrath","Chivalry","FortressOfWill","DeadlyStrikes","PrideOfSteel","Thunderstorm","Resolve",
   "Trample","Resilience","Dragonblood","Nullify","AdaptiveScales","Bloodlust","Petalstorm","Perfectionist","Arrogance","Illusionist","Scavenger","GreatShield","Pragmatic","WaryFighter","Dazzle",
   "TriangleAdept","Cursed","Fortune","Nosferatu","Reverse","Aegis","Pavise","Sanctuary","Templar","Vantage","Desperation","RightfulLord","RightfulGod","Determination","Slayer","Peerless",
-  "Vantage","Desperation"]);
+  "Vantage","Desperation","ArcaneBlade"]);
 
 const staffSkills = new Set(["Armsthrift","Resolve"]);
 
@@ -745,6 +745,14 @@ function Desperation(battleInput, battleOutput) {
   if (battleInput.whoseSkill == 1 || battleInput.isInitiating == 0) { return; }
   if (battleInput.aCurrHP >= Math.floor(battleInput.aMaxHP / 2)) { return; }
   battleOutput.aSkillMsg += outputSkill("Desperation");
+}
+
+// Add Mag/2 to physical dmg and Str/2 to mystical dmg
+function ArcaneBlade(battleInput, battleOutput) {
+  if (battleInput.whoseSkill == 1) { return; }
+  battleOutput.aSkillMsg += outputSkill("Arcane Blade");
+  if (battleInput.dmgType == "Physical") { battleOutput.addDmg += Math.floor(battleInput.aMag / 2); }
+  else { battleOutput.addDmg += Math.floor(battleInput.aStr / 2); }
 }
 
 
