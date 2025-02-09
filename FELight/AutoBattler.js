@@ -15,7 +15,7 @@ const allSkills = new Set(["SureShot","Adept","Luna","LunaPlus","Sol","Glacies",
   "Bowbreaker","Tomebreaker","Swordfaire","Lancefaire","Axefaire","Bowfaire","Tomefaire","Reaver","Brave","Wrath","Chivalry","FortressOfWill","DeadlyStrikes","PrideOfSteel","Thunderstorm","Resolve",
   "Trample","Resilience","Dragonblood","Nullify","AdaptiveScales","Bloodlust","Petalstorm","Perfectionist","Arrogance","Illusionist","Scavenger","GreatShield","Pragmatic","WaryFighter","Dazzle",
   "TriangleAdept","Cursed","Fortune","Nosferatu","Reverse","Aegis","Pavise","Sanctuary","Templar","Vantage","Desperation","RightfulLord","RightfulGod","Determination","Slayer","Peerless",
-  "Vantage","Desperation","ArcaneBlade"]);
+  "Vantage","Desperation","ArcaneBlade","RendHeaven"]);
 
 const staffSkills = new Set(["Armsthrift","Resolve"]);
 
@@ -755,6 +755,14 @@ function ArcaneBlade(battleInput, battleOutput) {
   else { battleOutput.addDmg += Math.floor(battleInput.aStr / 2); }
 }
 
+// Add enemy Mag/2 to physical dmg and enemy Str/2 to mystical dmg
+function RendHeaven(battleInput, battleOutput) {
+  if (battleInput.whoseSkill == 1) { return; }
+  battleOutput.aSkillMsg += outputSkill("Rend Heaven");
+  if (battleInput.dmgType == "Physical") { battleOutput.addDmg += Math.floor(battleInput.dMag / 2); }
+  else { battleOutput.addDmg += Math.floor(battleInput.dStr / 2); }
+}
+
 
 
 // Helpers
@@ -1091,6 +1099,8 @@ function DoOneCombatStep(selectedId, targetId, initiating, info, isSim, whisper)
     "aSkl": getAttrValue(attacker.id, "sklTotal"),
     "aSpd": getAttrValue(attacker.id, "spdTotal"),
     "aLck": getAttrValue(attacker.id, "lckTotal"),
+    "dStr": getAttrValue(defender.id, "strTotal"),
+    "dMag": getAttrValue(defender.id, "magTotal"),
     "dSpd": getAttrValue(defender.id, "spdTotal"),
     "dDef": getAttrValue(defender.id, "defTotal"),
     "dWard": getAttrValue(defender.id, "wardTotal"),
