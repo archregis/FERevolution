@@ -15,7 +15,7 @@ const allSkills = new Set(["SureShot","Adept","Luna","LunaPlus","Sol","Glacies",
   "Bowbreaker","Tomebreaker","Swordfaire","Lancefaire","Axefaire","Bowfaire","Tomefaire","Reaver","Brave","Wrath","Chivalry","FortressOfWill","DeadlyStrikes","PrideOfSteel","Thunderstorm","Resolve",
   "Trample","Resilience","Dragonblood","Nullify","AdaptiveScales","Bloodlust","Petalstorm","Perfectionist","Arrogance","Illusionist","Scavenger","GreatShield","Pragmatic","WaryFighter","Dazzle",
   "TriangleAdept","Cursed","Fortune","Nosferatu","Reverse","Aegis","Pavise","Sanctuary","Templar","Vantage","Desperation","RightfulLord","RightfulGod","Determination","Slayer","Peerless",
-  "Vantage","Desperation","ArcaneBlade","RendHeaven","Underdog","Quixotic"]);
+  "Vantage","Desperation","ArcaneBlade","RendHeaven","Underdog","Quixotic","DevilsWhim"]);
 
 const staffSkills = new Set(["Armsthrift","Resolve"]);
 
@@ -308,6 +308,18 @@ function GreatShield(battleInput, battleOutput) {
 function Cursed(battleInput, battleOutput) {
   if (battleInput.whoseSkill == 1) { return; }
   let odds = Math.max(0, 31 - battleInput.aLck);
+  if (battleInput.isSim == 1) { battleOutput.aSkillMsg += outputSkill("Devil's Reversal", odds); }
+  else if (randomInteger(100) <= odds) {
+    battleOutput.aSkillMsg += outputSkill("Devil's Reversal");
+    battleOutput.cursed = 1;
+  }
+}
+
+// Gives enemy unit the Cursed skill
+function DevilsWhim(battleInput, battleOutput) {
+  if (battleInput.whoseSkill == 0) { return; }
+  let odds = Math.max(0, 31 - battleInput.aLck);
+  battleOutput.dSkillMsg += outputSkill("Devil's Whim");
   if (battleInput.isSim == 1) { battleOutput.aSkillMsg += outputSkill("Devil's Reversal", odds); }
   else if (randomInteger(100) <= odds) {
     battleOutput.aSkillMsg += outputSkill("Devil's Reversal");
