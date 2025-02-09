@@ -15,7 +15,7 @@ const allSkills = new Set(["SureShot","Adept","Luna","LunaPlus","Sol","Glacies",
   "Bowbreaker","Tomebreaker","Swordfaire","Lancefaire","Axefaire","Bowfaire","Tomefaire","Reaver","Brave","Wrath","Chivalry","FortressOfWill","DeadlyStrikes","PrideOfSteel","Thunderstorm","Resolve",
   "Trample","Resilience","Dragonblood","Nullify","AdaptiveScales","Bloodlust","Petalstorm","Perfectionist","Arrogance","Illusionist","Scavenger","GreatShield","Pragmatic","WaryFighter","Dazzle",
   "TriangleAdept","Cursed","Fortune","Nosferatu","Reverse","Aegis","Pavise","Sanctuary","Templar","Vantage","Desperation","RightfulLord","RightfulGod","Determination","Slayer","Peerless",
-  "Vantage","Desperation","ArcaneBlade","RendHeaven","Underdog","Quixotic","DevilsWhim"]);
+  "Vantage","Desperation","ArcaneBlade","RendHeaven","Underdog","Quixotic","DevilsWhim","Monstrous"]);
 
 const staffSkills = new Set(["Armsthrift","Resolve"]);
 
@@ -799,6 +799,13 @@ function Quixotic(battleInput, battleOutput) {
     battleInput.dSkillBonus += 25;
 }
 
+// Halve damage taken
+function Monstrous(battleInput, battleOutput) {
+  if (battleInput.whoseSkill == 0) { return; }
+  battleOutput.dSkillMsg += outputSkill("Monstrous");
+  battleOutput.monstrous = 1;
+}
+
 
 
 // Helpers
@@ -979,6 +986,7 @@ on('chat:message', function(msg) {
     addGreyHP: 0,
     atkTotDmg: 0,
     atkCount: 0,
+    monstrous: 0,
   }
   var addGreyHP = 0;
   var attackerDoubled = 0;
@@ -1180,6 +1188,7 @@ function DoOneCombatStep(selectedId, targetId, initiating, info, isSim, whisper)
     "fortune": 0,
     "reverse": 0,
     "slayer": 0,
+    "monstrous": 0,
   };
 
 
@@ -1337,6 +1346,11 @@ function DoOneCombatStep(selectedId, targetId, initiating, info, isSim, whisper)
     }
     if (battleOutput.aegis == 1 && battleInput.dmgType == "Magical") {
       dmgTaken = 0;
+    }
+    if (battleOutput.monstrous == 1) {
+      if (info.monstrous == 1) { dmgTaken = Math.floor(dmgTaken / 4); }
+      else { dmgTaken = Math.floor(dmgTaken / 2); }
+      info.monstrous = 1;
     }
 
     content += '<div>' + triangleMsg +
