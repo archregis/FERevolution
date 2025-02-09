@@ -15,7 +15,7 @@ const allSkills = new Set(["SureShot","Adept","Luna","LunaPlus","Sol","Glacies",
   "Bowbreaker","Tomebreaker","Swordfaire","Lancefaire","Axefaire","Bowfaire","Tomefaire","Reaver","Brave","Wrath","Chivalry","FortressOfWill","DeadlyStrikes","PrideOfSteel","Thunderstorm","Resolve",
   "Trample","Resilience","Dragonblood","Nullify","AdaptiveScales","Bloodlust","Petalstorm","Perfectionist","Arrogance","Illusionist","Scavenger","GreatShield","Pragmatic","WaryFighter","Dazzle",
   "TriangleAdept","Cursed","Fortune","Nosferatu","Reverse","Aegis","Pavise","Sanctuary","Templar","Vantage","Desperation","RightfulLord","RightfulGod","Determination","Slayer","Peerless",
-  "Vantage","Desperation","ArcaneBlade","RendHeaven","Underdog"]);
+  "Vantage","Desperation","ArcaneBlade","RendHeaven","Underdog","Quixotic"]);
 
 const staffSkills = new Set(["Armsthrift","Resolve"]);
 
@@ -776,6 +776,15 @@ function Underdog(battleInput, battleOutput) {
     battleOutput.addProt += 2;
     battleOutput.addWard += 2;
   }
+}
+
+// Add 30 hit and 25% to skill activation rate to both units
+function Quixotic(battleInput, battleOutput) {
+  if (battleInput.whoseSkill == 0) { battleOutput.aSkillMsg += outputSkill("Quixotic"); }
+  else { battleOutput.dSkillMsg += outputSkill("Quixotic"); }
+    battleOutput.hit += 30;
+    battleInput.aSkillBonus += 25;
+    battleInput.dSkillBonus += 25;
 }
 
 
