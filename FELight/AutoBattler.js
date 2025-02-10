@@ -15,7 +15,7 @@ const allSkills = new Set(["SureShot","Adept","Luna","LunaPlus","Sol","Glacies",
   "Bowbreaker","Tomebreaker","Swordfaire","Lancefaire","Axefaire","Bowfaire","Tomefaire","Reaver","Brave","Wrath","Chivalry","FortressOfWill","DeadlyStrikes","PrideOfSteel","Thunderstorm","Resolve",
   "Trample","Resilience","Dragonblood","Nullify","AdaptiveScales","Bloodlust","Petalstorm","Perfectionist","Arrogance","Illusionist","Scavenger","GreatShield","Pragmatic","WaryFighter","Dazzle",
   "TriangleAdept","Cursed","Fortune","Nosferatu","Reverse","Aegis","Pavise","Sanctuary","Templar","Vantage","Desperation","RightfulLord","RightfulGod","Determination","Slayer","Peerless",
-  "Vantage","Desperation","ArcaneBlade","RendHeaven","Underdog","Quixotic","DevilsWhim","Monstrous"]);
+  "Vantage","Desperation","ArcaneBlade","RendHeaven","Underdog","Quixotic","DevilsWhim","Monstrous","Miracle"]);
 
 const staffSkills = new Set(["Armsthrift","Resolve"]);
 
@@ -806,6 +806,14 @@ function Monstrous(battleInput, battleOutput) {
   battleOutput.monstrous = 1;
 }
 
+// Unit survives lethal attack with 1 hp if current hp is above 50%
+function Miracle(battleInput, battleOutput) {
+  if (battleInput.whoseSkill == 0) { return; }
+  if (battleInput.dCurrHP <= Math.floor(battleInput.dMaxHP / 2)) { return; }
+  battleOutput.dSkillMsg += outputSkill("Miracle");
+  battleOutput.miracle = 1;
+}
+
 
 
 // Helpers
@@ -880,7 +888,7 @@ function outputSkill(skill, odds) {
 
 // Updates a given token's health. Inputting negative damage can be used to heal
 // Returns damage taken for use in adapative scales
-function UpdateHealth(token, damage, health, maxHP) {
+function UpdateHealth(token, damage, health, maxHP, miracle) {
   const shield = token.get("bar2_value")||0;
 
   if (damage < 0) { // Healing only affects health
@@ -890,7 +898,9 @@ function UpdateHealth(token, damage, health, maxHP) {
     token.set("bar2_value", Math.max(0, shield - damage));
     if (damage > shield) {
       damage -= shield;
-      token.set("bar3_value", Math.max(0, health - damage));
+      let hpLeft = Math.max(0, health - damage);
+      if (miracle == 1 && hpLeft == 0) { hpLeft = 1; }
+      token.set("bar3_value", hpLeft);
     }
   }
   if (shield == 0 && damage > 0) { return damage; }
@@ -1189,6 +1199,7 @@ function DoOneCombatStep(selectedId, targetId, initiating, info, isSim, whisper)
     "reverse": 0,
     "slayer": 0,
     "monstrous": 0,
+    "miracle": 0,
   };
 
 
@@ -1368,12 +1379,12 @@ function DoOneCombatStep(selectedId, targetId, initiating, info, isSim, whisper)
         dmgTaken *= 3;
         if (battleOutput.resilience == 1) { dmgTaken /= 2; }
         if (battleOutput.cursed == 1) { trueDamage = UpdateHealth(selectObj, dmgTaken, battleInput.aCurrHP); }
-        else { trueDamage = UpdateHealth(targetObj, dmgTaken, battleInput.dCurrHP); }
+        else { trueDamage = UpdateHealth(targetObj, dmgTaken, battleInput.dCurrHP, "", battleOutput.miracle); }
         content += 'You crit and deal '+ dmgTaken + ' damage!'; // Intentionally not capping damage numbers put in chat. Hitting low hp enemies for ludicrous damage numbers is fun
       }
       else {
         if (battleOutput.cursed == 1) { trueDamage = UpdateHealth(selectObj, dmgTaken, battleInput.aCurrHP); }
-        else { trueDamage = UpdateHealth(targetObj, dmgTaken, battleInput.dCurrHP); }
+        else { trueDamage = UpdateHealth(targetObj, dmgTaken, battleInput.dCurrHP, "", battleOutput.miracle); }
         content += 'You hit and deal '+ dmgTaken + ' damage!'; // See above
       }
       if (battleOutput.sol == 1) {
