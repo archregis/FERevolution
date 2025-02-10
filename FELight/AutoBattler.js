@@ -15,7 +15,7 @@ const allSkills = new Set(["SureShot","Adept","Luna","LunaPlus","Sol","Glacies",
   "Bowbreaker","Tomebreaker","Swordfaire","Lancefaire","Axefaire","Bowfaire","Tomefaire","Reaver","Brave","Wrath","Chivalry","FortressOfWill","DeadlyStrikes","PrideOfSteel","Thunderstorm","Resolve",
   "Trample","Resilience","Dragonblood","Nullify","AdaptiveScales","Bloodlust","Petalstorm","Perfectionist","Arrogance","Illusionist","Scavenger","GreatShield","Pragmatic","WaryFighter","Dazzle",
   "TriangleAdept","Cursed","Fortune","Nosferatu","Reverse","Aegis","Pavise","Sanctuary","Templar","Vantage","Desperation","RightfulLord","RightfulGod","Determination","Slayer","Peerless",
-  "Vantage","Desperation","ArcaneBlade","RendHeaven","Underdog","Quixotic","DevilsWhim","Monstrous","Miracle"]);
+  "Vantage","Desperation","ArcaneBlade","RendHeaven","Underdog","Quixotic","DevilsWhim","Monstrous","Miracle","Spiteful"]);
 
 const staffSkills = new Set(["Armsthrift","Resolve"]);
 
@@ -814,6 +814,13 @@ function Miracle(battleInput, battleOutput) {
   battleOutput.miracle = 1;
 }
 
+// Deal damage equal to luck to attacker when killed
+function Spiteful(battleInput, battleOutput) {
+  if (battleInput.whoseSkill == 0) { return; }
+  battleOutput.dSkillMsg += outputSkill("Spiteful");
+  battleOutput.spiteful = 1;
+}
+
 
 
 // Helpers
@@ -1148,13 +1155,14 @@ function DoOneCombatStep(selectedId, targetId, initiating, info, isSim, whisper)
     "dGreyHP": targetObj.get("bar2_value"),
     "aStr": getAttrValue(attacker.id, "strTotal"),
     "aMag": getAttrValue(attacker.id, "magTotal"),
-    "aRes": getAttrValue(attacker.id, "resTotal"),
-    "aDef": getAttrValue(attacker.id, "defTotal"),
     "aSkl": getAttrValue(attacker.id, "sklTotal"),
-    "aSpd": getAttrValue(attacker.id, "spdTotal"),
     "aLck": getAttrValue(attacker.id, "lckTotal"),
+    "aSpd": getAttrValue(attacker.id, "spdTotal"),
+    "aDef": getAttrValue(attacker.id, "defTotal"),
+    "aRes": getAttrValue(attacker.id, "resTotal"),
     "dStr": getAttrValue(defender.id, "strTotal"),
     "dMag": getAttrValue(defender.id, "magTotal"),
+    "dLck": getAttrValue(defender.id, "lckTotal"),
     "dSpd": getAttrValue(defender.id, "spdTotal"),
     "dDef": getAttrValue(defender.id, "defTotal"),
     "dWard": getAttrValue(defender.id, "wardTotal"),
@@ -1200,6 +1208,7 @@ function DoOneCombatStep(selectedId, targetId, initiating, info, isSim, whisper)
     "slayer": 0,
     "monstrous": 0,
     "miracle": 0,
+    "spiteful": 0,
   };
 
 
@@ -1414,6 +1423,7 @@ function DoOneCombatStep(selectedId, targetId, initiating, info, isSim, whisper)
     });
 
     if (info.killed == 1 && battleOutput.scavenger == 1) { content += "<br> You find a Red Gem!" }
+    if (info.killed == 1 && battleOutput.spiteful == 1) { UpdateHealth(selectObj, battleInput.dLck, battleInput.aCurrHP); }
 
   }
 
