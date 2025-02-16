@@ -15,7 +15,7 @@ const allSkills = new Set(["SureShot","Adept","Luna","LunaPlus","Sol","Glacies",
   "Bowbreaker","Tomebreaker","Swordfaire","Lancefaire","Axefaire","Bowfaire","Tomefaire","Reaver","Brave","Wrath","Chivalry","FortressOfWill","DeadlyStrikes","PrideOfSteel","Thunderstorm","Resolve",
   "Trample","Resilience","Dragonblood","Nullify","AdaptiveScales","Bloodlust","Petalstorm","Perfectionist","Arrogance","Illusionist","Scavenger","GreatShield","Pragmatic","WaryFighter","Dazzle",
   "TriangleAdept","Cursed","Fortune","Nosferatu","Reverse","Aegis","Pavise","Sanctuary","Templar","Vantage","Desperation","RightfulLord","RightfulGod","Determination","Slayer","Peerless",
-  "Vantage","Desperation","ArcaneBlade","RendHeaven","Underdog","Quixotic","DevilsWhim","Monstrous","Miracle","Spiteful"]);
+  "Vantage","Desperation","ArcaneBlade","RendHeaven","Underdog","Quixotic","DevilsWhim","Monstrous","Miracle","Spiteful","Bloodfeud"]);
 
 const staffSkills = new Set(["Armsthrift","Resolve"]);
 
@@ -603,6 +603,21 @@ function Bloodlust(battleInput, battleOutput) {
   if (battleInput.aCurrHP <= battleInput.aMaxHP - 4) {
     battleOutput.aSkillMsg += outputSkill("Bloodlust");
     battleOutput.addDmg = Math.floor((battleInput.aMaxHP - battleInput.aCurrHP) / 4); 
+  }
+}
+
+// Adds 1 damage and 1 speed for every 4 hp missing
+function Bloodfeud(battleInput, battleOutput) {
+  if (battleInput.whoseSkill == 0 && battleInput.aCurrHP <= battleInput.aMaxHP - 4) {
+    battleOutput.aSkillMsg += outputSkill("Bloodfeud");
+    battleOutput.addDmg = Math.floor((battleInput.aMaxHP - battleInput.aCurrHP) / 4);
+    battleOutput.aSpd = Math.floor((battleInput.aMaxHP - battleInput.aCurrHP) / 4);
+    battleOutput.atkSpd += Math.floor((battleInput.aMaxHP - battleInput.aCurrHP) / 4);
+  }
+  else if (battleInput.whoseSkill == 1 && battleInput.dCurrHP <= battleInput.dMaxHP - 4) {
+    battleOutput.dSkillMsg += outputSkill("Bloodfeud");
+    battleOutput.avoid += 2 * Math.floor((battleInput.dMaxHP - battleInput.dCurrHP) / 4);
+    battleOutput.atkSpd -= Math.floor((battleInput.dMaxHP - battleInput.dCurrHP) / 4);
   }
 }
 
