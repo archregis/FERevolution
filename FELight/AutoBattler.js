@@ -15,7 +15,7 @@ const allSkills = new Set(["SureShot","Adept","Luna","LunaPlus","Sol","Glacies",
   "Bowbreaker","Tomebreaker","Swordfaire","Lancefaire","Axefaire","Bowfaire","Tomefaire","Reaver","Brave","Wrath","Chivalry","FortressOfWill","DeadlyStrikes","PrideOfSteel","Thunderstorm","Resolve",
   "Trample","Resilience","Dragonblood","Nullify","AdaptiveScales","Bloodlust","Petalstorm","Perfectionist","Arrogance","Illusionist","Scavenger","GreatShield","Pragmatic","WaryFighter","Dazzle",
   "TriangleAdept","Cursed","Fortune","Nosferatu","Reverse","Aegis","Pavise","Sanctuary","Templar","Vantage","Desperation","RightfulLord","RightfulGod","Determination","Slayer","Peerless",
-  "Vantage","Desperation","ArcaneBlade","RendHeaven","Underdog","Quixotic","DevilsWhim","Monstrous","Miracle","Spiteful","Bloodfeud"]);
+  "Vantage","Desperation","ArcaneBlade","RendHeaven","Underdog","Quixotic","DevilsWhim","Monstrous","Miracle","Spiteful","Bloodfeud","Astra"]);
 
 const staffSkills = new Set(["Armsthrift","Resolve"]);
 
@@ -346,6 +346,17 @@ function Pavise(battleInput, battleOutput) {
   else if (randomInteger(100) <= odds) {
     battleOutput.dSkillMsg += outputSkill("Pavise");
     battleOutput.pavise = 1;
+  }
+}
+
+// Attack 5 times at half damage, skl% activation
+function Astra(battleInput, battleOutput) {
+  if (battleInput.whoseSkill == 1) { return; }
+  const odds = battleInput.aSkl + battleInput.aSkillBonus;
+  if (battleInput.isSim == 1) { battleOutput.aSkillMsg += outputSkill("Astra", odds); }
+  else if (randomInteger(100) <= odds || battleOutput.astra == 1) {
+    battleOutput.aSkillMsg += outputSkill("Astra");
+    battleOutput.astra = 1;
   }
 }
 
@@ -704,7 +715,7 @@ function Templar(battleInput, battleOutput) {
 }
 
 // Add 10% to skill activation rate
-function RightFulLord(battleInput, battleOutput) {
+function RightfulLord(battleInput, battleOutput) {
   if (battleInput.whoseSkill == 0) {
     battleOutput.aSkillMsg += outputSkill("Rightful Lord");
     battleInput.aSkillBonus += 10;
@@ -716,7 +727,7 @@ function RightFulLord(battleInput, battleOutput) {
 }
 
 // Add 30% to skill activation rate
-function RightFulGod(battleInput, battleOutput) {
+function RightfulGod(battleInput, battleOutput) {
   if (battleInput.whoseSkill == 0) {
     battleOutput.aSkillMsg += outputSkill("Rightful God");
     battleInput.aSkillBonus += 30;
@@ -1019,6 +1030,7 @@ on('chat:message', function(msg) {
     atkTotDmg: 0,
     atkCount: 0,
     monstrous: 0,
+    astra: 0,
   }
   var addGreyHP = 0;
   var attackerDoubled = 0;
@@ -1117,9 +1129,24 @@ else if (command == "staffSim") {
 function CombatBlock(firstId, secondId, initiating, info) {
   DoOneCombatStep(firstId, secondId, initiating, info);
   if (info.killed == 1) { return -1; }
+  if (info.astra == 1) {
+    for (let i=0; i<4; i++) {
+      DoOneCombatStep(firstId, secondId, initiating, info);
+      if (info.killed == 1) { return -1; }
+    }
+  }
+  info.astra = 0;
+
   if (info.brave) {
     DoOneCombatStep(firstId, secondId, initiating, info);
     if (info.killed == 1) { return -1; }
+    if (info.astra == 1) {
+      for (let i=0; i<4; i++) {
+        DoOneCombatStep(firstId, secondId, initiating, info);
+        if (info.killed == 1) { return -1; }
+      }
+    }
+    info.astra = 0;
   }
   return 0;
 }
@@ -1225,6 +1252,7 @@ function DoOneCombatStep(selectedId, targetId, initiating, info, isSim, whisper)
     "monstrous": 0,
     "miracle": 0,
     "spiteful": 0,
+    "astra": info.astra,
   };
 
 
@@ -1348,16 +1376,16 @@ function DoOneCombatStep(selectedId, targetId, initiating, info, isSim, whisper)
   let DefMit = 0;
   let AtkDmg = 0;
   if (battleInput.dmgType == 'Physical') {
-    AtkDmg = getAttrValue(attacker.id, "physTotal") + addedDmg;
+    AtkDmg = getAttrValue(attacker.id, "physTotal");
     if (battleOutput.reverse == 0) { DefMit = battleOutput.dProt + battleOutput.addProt + getAttrValue(defender.id, "mitBonusTotal"); }
     else { DefMit = battleOutput.dWard + battleOutput.addWard + getAttrValue(defender.id, "mitBonusTotal"); }
   }
   else if (battleInput.dmgType == 'Magical') {
-    AtkDmg = getAttrValue(attacker.id, "mystTotal") + addedDmg;
+    AtkDmg = getAttrValue(attacker.id, "mystTotal");
     if (battleOutput.reverse == 0) { DefMit = battleOutput.dWard + battleOutput.addWard + getAttrValue(defender.id, "mitBonusTotal"); }
     else { DefMit = battleOutput.dProt + battleOutput.addProt + getAttrValue(defender.id, "mitBonusTotal"); }
   }
-  let dmgTaken = Math.max(0, AtkDmg - DefMit);
+  let dmgTaken = Math.max(0, (AtkDmg - DefMit) / (1 + info.astra) + addedDmg);
 
 
   if (isSim == 1) { // Simulate battle outcome
@@ -1440,6 +1468,7 @@ function DoOneCombatStep(selectedId, targetId, initiating, info, isSim, whisper)
       addGreyHP: battleOutput.scales,
       atkTotDmg: info.atkTotDmg + trueDamage * initiating,
       atkCount: info.atkCount + 1 * initiating,
+      astra: battleOutput.astra,
     });
 
     if (info.killed == 1 && battleOutput.scavenger == 1) { content += "<br> You find a Red Gem!" }
