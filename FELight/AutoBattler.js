@@ -1431,6 +1431,7 @@ function DoOneCombatStep(selectedId, targetId, initiating, info, isSim, whisper)
 
     // Update token values
     let trueDamage = 0;
+    dmgTaken = Math.floor(dmgTaken); // Remove any fractions
     if (hit >= avoid) {
       if (crit > dodge && battleOutput.fortune == 0) {
         dmgTaken *= 3;
