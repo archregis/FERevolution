@@ -840,7 +840,7 @@ function Miracle(battleInput, battleOutput) {
   battleOutput.miracle = 1;
 }
 
-// Deal damage equal to luck to attacker when killed
+// Deal damage equal to level/2 to attacker when killed
 function Spiteful(battleInput, battleOutput) {
   if (battleInput.whoseSkill == 0) { return; }
   battleOutput.dSkillMsg += outputSkill("Spiteful");
@@ -1473,7 +1473,7 @@ function DoOneCombatStep(selectedId, targetId, initiating, info, isSim, whisper)
     });
 
     if (info.killed == 1 && battleOutput.scavenger == 1) { content += "<br> You find a Red Gem!" }
-    if (info.killed == 1 && battleOutput.spiteful == 1) { UpdateHealth(selectObj, battleInput.dLck, battleInput.aCurrHP); }
+    if (info.killed == 1 && battleOutput.spiteful == 1) { UpdateHealth(selectObj, Math.floor(battleInput.dLevel / 2), battleInput.aCurrHP); }
 
   }
 
