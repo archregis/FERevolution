@@ -1260,7 +1260,10 @@ function DoOneCombatStep(selectedId, targetId, initiating, info, isSim, whisper)
   const aSkills = getAttr(attacker.id, 'activeSkills').get('current').split(',');
   const dSkills = getAttr(defender.id, 'activeSkills').get('current').split(',');
 
-  if (dSkills.includes('Nihil') == true) {
+  const aWepSkills = [getAttr(attacker.id, 'skill1Wep').get('current'), getAttr(attacker.id, 'skill2Wep').get('current')];
+  const dWepSkills = [getAttr(defender.id, 'skill1Wep').get('current'), getAttr(defender.id, 'skill2Wep').get('current')];
+
+  if (dSkills.includes('Nihil') == true || dWepSkills.includes('Nihil') == true) {
     battleOutput.dSkillMsg += outputSkill("Nihil");
   }
   else {
@@ -1275,7 +1278,7 @@ function DoOneCombatStep(selectedId, targetId, initiating, info, isSim, whisper)
       }
     }
   }
-  if (aSkills.includes("Nihil") == true) {
+  if (aSkills.includes("Nihil") == true || aWepSkills.includes('Nihil') == true) {
     battleOutput.aSkillMsg += outputSkill("Nihil");
   }
   else {
@@ -1289,8 +1292,6 @@ function DoOneCombatStep(selectedId, targetId, initiating, info, isSim, whisper)
 
 
   // Weapon Skill Checks
-  const aWepSkills = [getAttr(attacker.id, 'skill1Wep').get('current'), getAttr(attacker.id, 'skill2Wep').get('current')];
-  const dWepSkills = [getAttr(defender.id, 'skill1Wep').get('current'), getAttr(defender.id, 'skill2Wep').get('current')];
 
   battleInput.whoseSkill = 0;
   for(let i=0; i<aWepSkills.length; i++) {
