@@ -15,7 +15,7 @@ const allSkills = new Set(["SureShot","Adept","Luna","LunaPlus","Sol","Glacies",
   "Bowbreaker","Tomebreaker","Swordfaire","Lancefaire","Axefaire","Bowfaire","Tomefaire","Reaver","Brave","Wrath","Chivalry","FortressOfWill","DeadlyStrikes","PrideOfSteel","Thunderstorm","Resolve",
   "Trample","Resilience","Dragonblood","Nullify","AdaptiveScales","Bloodlust","Petalstorm","Perfectionist","Arrogance","Illusionist","Scavenger","GreatShield","Pragmatic","WaryFighter","Dazzle",
   "TriangleAdept","Cursed","Fortune","Nosferatu","Reverse","Aegis","Pavise","Sanctuary","Templar","Vantage","Desperation","RightfulLord","RightfulGod","Determination","Slayer","Peerless",
-  "Vantage","Desperation","ArcaneBlade","RendHeaven","Underdog","Quixotic","DevilsWhim","Monstrous","Miracle","Spiteful","Bloodfeud","Astra"]);
+  "Vantage","Desperation","ArcaneBlade","RendHeaven","Underdog","Quixotic","DevilsWhim","Monstrous","Miracle","Spiteful","Bloodfeud","Astra","Pierce"]);
 
 const staffSkills = new Set(["Armsthrift","Resolve"]);
 
@@ -847,6 +847,13 @@ function Spiteful(battleInput, battleOutput) {
   battleOutput.spiteful = 1;
 }
 
+// Ignore Nullify on enemies
+function Pierce(battleInput, battleOutput) {
+  if (battleInput.whoseSkill == 1) { return; }
+  battleOutput.aSkillMsg += outputSkill("Pierce");
+  battleOutput.pierce = 1;
+}
+
 
 
 // Helpers
@@ -1253,6 +1260,7 @@ function DoOneCombatStep(selectedId, targetId, initiating, info, isSim, whisper)
     "miracle": 0,
     "spiteful": 0,
     "astra": info.astra,
+    "pierce": 0,
   };
 
 
@@ -1352,7 +1360,7 @@ function DoOneCombatStep(selectedId, targetId, initiating, info, isSim, whisper)
 
     
   // Effectiveness
-  if (battleOutput.nullify == 0) {
+  if (battleOutput.nullify == 0 || battleOutput.pierce == 1) {
     const aEff = getAttr(attacker.id,'currEff').get('current').split(',').filter(i => i);
     const dWeak = getAttr(defender.id,'weakTotal').get('current').split(',').filter(i => i);
     let isEffective = 0;
