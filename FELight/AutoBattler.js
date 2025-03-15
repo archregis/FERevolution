@@ -707,7 +707,7 @@ function Sanctuary(battleInput, battleOutput) {
   battleOutput.addWard += 6;
 }
 
-// Deal effective damage to enemies using magical weapons
+// Deal effective damage to enemies who have a magical rank
 function Templar(battleInput, battleOutput) {
   if (battleInput.whoseSkill == 1) { return; }
   battleOutput.aSkillMsg += outputSkill("Templar");
@@ -1363,7 +1363,7 @@ function DoOneCombatStep(selectedId, targetId, initiating, info, isSim, whisper)
       }
     }
 
-    if (battleOutput.templar && getAttr(defender.id, 'atkType').get('current') == "Magical") { isEffective = 1; }
+    if (battleOutput.templar && (getAttrValue(defender.id, weaponMap["Staff"]) != 0 || getAttrValue(defender.id, weaponMap["Dark"]) != 0 || getAttrValue(defender.id, weaponMap["Anima"]) != 0 || getAttrValue(defender.id, weaponMap["Light"]) != 0)) { isEffective = 1; }
     if (battleOutput.slayer == 1 && triangle == 'Adv') { isEffective = 1; }
 
     if (isEffective == 1) {
