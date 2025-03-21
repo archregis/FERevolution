@@ -1394,6 +1394,9 @@ function DoOneCombatStep(selectedId, targetId, initiating, info, isSim, whisper)
     if (battleOutput.reverse == 0) { DefMit = battleOutput.dWard + battleOutput.addWard + getAttrValue(defender.id, "mitBonusTotal"); }
     else { DefMit = battleOutput.dProt + battleOutput.addProt + getAttrValue(defender.id, "mitBonusTotal"); }
   }
+  if (battleOutput.impale == 1) {
+    AtkDmg *= 3;
+  }
   let dmgTaken = Math.max(0, (AtkDmg - DefMit) / (1 + info.astra) + addedDmg);
 
 
@@ -1411,9 +1414,6 @@ function DoOneCombatStep(selectedId, targetId, initiating, info, isSim, whisper)
     if (battleOutput.sureShot == 1) {
       hit = 999;
       dmgTaken *= 1.5;
-    }
-    if (battleOutput.impale == 1) {
-      dmgTaken *= 3;
     }
     if (battleOutput.greatShield == 1) {
       dmgTaken = 0;
