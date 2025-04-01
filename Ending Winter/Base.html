@@ -1044,7 +1044,7 @@ on("change:resTotal change:wardBuff", function() {
 on("change:atkSpd change:avoBuff change:lckTotal change:avoBonusTotal", function() {
 	getAttrs(["atkSpd", "avoBuff", "lckTotal", "avoBonusTotal"], function(v) {
 		setAttrs({
-			avo: Number(v.atkSpd) * 2 + Math.floor(Number(v.lckTotal) / 2) + Number(v.avoBuff) + Number(v.avoBonusTotal),
+			avo: Number(v.atkSpd) * 2 + Number(v.lckTotal) + Number(v.avoBuff) + Number(v.avoBonusTotal),
 		});
 	});
 });
