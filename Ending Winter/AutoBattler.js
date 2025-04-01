@@ -133,7 +133,7 @@ function CheckVantage(selectedId, targetId) {
   if (aSkills.includes("Nihil")  == false && dSkills.includes("Vantage")) { return 1; }
 
   // Weapon Skill Checks
-  const dWepSkills = [getAttr(defender.id, 'skill1Wep').get('current'), getAttr(defender.id, 'skill2Wep').get('current')];
+  const dWepSkills = getAttr(defender.id, 'activeSkills').get('current').split(',');
   if (dWepSkills.includes("Vantage")) { return 1; }
 
   return 0;
@@ -156,7 +156,7 @@ function CheckDesperation(selectedId, targetId) {
   if (dSkills.includes("Nihil")  == false && aSkills.includes("Desperation")) { return 1; }
 
   // Weapon Skill Checks
-  const aWepSkills = [getAttr(attacker.id, 'skill1Wep').get('current'), getAttr(attacker.id, 'skill2Wep').get('current')];
+  const aWepSkills = getAttr(attacker.id, 'activeSkills').get('current').split(',');
   if (aWepSkills.includes("Desperation")) { return 1; }
 
   return 0;
@@ -348,8 +348,8 @@ function DoOneCombatStep(selectedId, targetId, initiating, info, isSim, whisper)
   const aSkills = getAttr(attacker.id, 'activeSkills').get('current').split(',');
   const dSkills = getAttr(defender.id, 'activeSkills').get('current').split(',');
 
-  const aWepSkills = [getAttr(attacker.id, 'skill1Wep').get('current'), getAttr(attacker.id, 'skill2Wep').get('current')];
-  const dWepSkills = [getAttr(defender.id, 'skill1Wep').get('current'), getAttr(defender.id, 'skill2Wep').get('current')];
+  const aWepSkills = getAttr(attacker.id, 'activeWepSkills').get('current').split(',');
+  const dWepSkills = getAttr(defender.id, 'activeWepSkills').get('current').split(',');
 
   if (dSkills.includes('Nihil') == true || dWepSkills.includes('Nihil') == true) {
     battleOutput.dSkillMsg += outputSkill("Nihil");
@@ -561,7 +561,7 @@ function DoOneStaffStep(selectedId, isSim) {
 
 
   // Weapon Skill Checks
-  const aWepSkills = [getAttr(attacker.id, 'skill1Wep').get('current'), getAttr(attacker.id, 'skill2Wep').get('current')];
+  const aWepSkills = getAttr(attacker.id, 'activeSkills').get('current').split(',');
   battleInput.whoseSkill = 0;
   for(let i=0; i<aWepSkills.length; i++) {
     if (staffSkills.has(aWepSkills[i])) {

@@ -107,7 +107,7 @@ const expHandler = {
     }
 
     // Weapon Paragon check
-    const aWepSkills = [getAttr(attacker.id, 'skill1Wep').get('current'), getAttr(attacker.id, 'skill2Wep').get('current')];
+    const aWepSkills = getAttr(attacker.id, 'activeSkills').get('current').split(',');
 
     for(let i=0; i<aWepSkills.length; i++) {
       if (aWepSkills[i] == "Paragon") {

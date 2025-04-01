@@ -404,11 +404,8 @@
 									<label> Effective Damage
 										<input name="attr_effWep" type="text"></input>
 									</label>
-									<label> 1st Effect
-										<input name="attr_skill1Wep" type="text"></input>
-									</label>
-									<label> 2nd Effect
-										<input name="attr_skill2Wep" type="text"></input>
+									<label> Skills
+										<input name="attr_wepSkills" type="text"></input>
 									</label>
 								</div>
 							</div>
@@ -511,11 +508,8 @@
 									<label> Effective Damage
 										<input name="attr_effWep" type="text"></input>
 									</label>
-									<label> 1st Effect
-										<input name="attr_skill1Wep" type="text"></input>
-									</label>
-									<label> 2nd Effect
-										<input name="attr_skill2Wep" type="text"></input>
+									<label> Skills
+										<input name="attr_wepSkills" type="text"></input>
 									</label>
 								</div>
 							</div>
@@ -707,6 +701,7 @@
 	<input name="attr_critBonusTotal" value="0" hidden>
   	<input name="attr_mitBonusTotal" value="0" hidden>
 	<input name="attr_activeSkills" value="" hidden>
+	<input name="attr_activeWepSkills" value="" hidden>
 	<input name="attr_weakTotal" value="None" hidden>
 	<input name="attr_hpCurrent_max" value="0" hidden>
 	<input name="attr_hpTotal" value="0" hidden>
@@ -898,7 +893,7 @@ on("change:repeating_weapons:minDistWep change:repeating_weapons:maxDistWep chan
 });
 
 // Weapon Description
-on("change:repeating_weapons:wepName change:repeating_spells:spellName change:repeating_weapons:effWep change:repeating_spells:effWep change:repeating_weapons:skill1Wep change:repeating_weapons:skill2Wep change:repeating_spells:skill1Wep change:repeating_spells:skill2Wep change:repeating_weapons:descWep change:repeating_spells:descWep change:atkType change:_reporder:weapons change:_reporder:spells remove:repeating_spells remove:repeating_weapons change:wepSlot change:spellSlot", function() {
+on("change:repeating_weapons:wepName change:repeating_spells:spellName change:repeating_weapons:effWep change:repeating_spells:effWep change:repeating_weapons:wepSkills change:repeating_spells:wepSkills change:repeating_weapons:descWep change:repeating_spells:descWep change:atkType change:_reporder:weapons change:_reporder:spells remove:repeating_spells remove:repeating_weapons change:wepSlot change:spellSlot", function() {
 	getAttrs(["wepSlot", "spellSlot", "atkType"], function(v) {
 		const isPhys = v.atkType == "Physical" ? 1 : 0;
 		const repeatName = isPhys ? "repeating_weapons" : "repeating_spells";
@@ -907,14 +902,16 @@ on("change:repeating_weapons:wepName change:repeating_spells:spellName change:re
 
 		getSectionIDsOrdered(repeatName, function(idarray) {
 			fID = idarray[Number(slotNum)-1];
-			getAttrs([repeatName+"_"+fID+"_descWep", repeatName+"_"+fID+"_effWep", repeatName+"_"+fID+"_"+name, repeatName+"_"+fID+"_skill1Wep", repeatName+"_"+fID+"_skill2Wep"], function(v) {
+			getAttrs([repeatName+"_"+fID+"_descWep", repeatName+"_"+fID+"_effWep", repeatName+"_"+fID+"_"+name, repeatName+"_"+fID+"_wepSkills"], function(v) {
 				const nindex = Object.keys(v);
+				let skills = v[nindex[3]];
+				skills = skills.replace(/(^\w|\s\w)/g, m => m.toUpperCase());
+				skills = skills.replace(/ /g,"");
 				setAttrs({
 					currDesc: v[nindex[0]],
 					currEff: v[nindex[1]],
 					currName: v[nindex[2]],
-					skill1Wep: v[nindex[3]],
-					skill2Wep: v[nindex[4]],
+					activeWepSkills: skills,
 				});
 			});
 		});
@@ -1139,7 +1136,7 @@ on("change:spdTotal change:All change:conTotal change:repeating_weapons:wt chang
 
 // Initialize values for API, because ded
 on("sheet:opened", function(){
-	getAttrs(["wepSlot","spellSlot","currWt","currEff","currName","currMt","currDesc","currWexp","currWep","currMinDist","currMaxDist","currCounter","currSingle","atkType","exp","swordExp","lanceExp","axeExp","bowExp","stavesExp","darkExp","animaExp","lightExp","level","hpBase","strBase","magBase","sklBase","spdBase","lckBase","defBase","resBase","movBase","hpBuff","strBuff","magBuff","sklBuff","spdBuff","lckBuff","defBuff","resBuff","movBuff","swordRank","lanceRank","axeRank","bowRank","stavesRank","darkRank","animaRank","lightRank","physBuff","mystBuff","wardBuff","protBuff","weakTotal","activeSkills","hit","crit","ddg","avo"], function(v){
+	getAttrs(["wepSlot","spellSlot","currWt","currEff","currName","currMt","currDesc","currWexp","currWep","currMinDist","currMaxDist","currCounter","currSingle","atkType","exp","swordExp","lanceExp","axeExp","bowExp","stavesExp","darkExp","animaExp","lightExp","level","hpBase","strBase","magBase","sklBase","spdBase","lckBase","defBase","resBase","movBase","hpBuff","strBuff","magBuff","sklBuff","spdBuff","lckBuff","defBuff","resBuff","movBuff","swordRank","lanceRank","axeRank","bowRank","stavesRank","darkRank","animaRank","lightRank","physBuff","mystBuff","wardBuff","protBuff","weakTotal","activeSkills","activeWepSkills","hit","crit","ddg","avo"], function(v){
 		setAttrs({
 			wepSlot: v.wepSlot,
 			spellSlot: v.spellSlot,
@@ -1197,6 +1194,7 @@ on("sheet:opened", function(){
 			protBuff: v.protBuff,
 			weakTotal: v.weakTotal,
 			activeSkills: v.activeSkills,
+			activeWepSkills: v.activeWepSkills,
 			hit: v.hit,
 			crit: v.crit,
 			avo: v.avo,
