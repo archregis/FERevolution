@@ -444,8 +444,8 @@
 								<span class="sheet-toggle-label">Attributes</span>
 								<div class="sheet-hidden-grid-container">
 									<div class="sheet-hidden-grid-row">
-										<div>Weight</div>
 										<div>Might</div>
+										<div>Weight</div>
 										<div>Hit</div>
 										<div>Crit</div>
 										<div>Exp</div>
@@ -1062,7 +1062,7 @@ on("change:sklTotal change:lckTotal change:repeating_weapons:hit change:repeatin
 				const nindex = Object.keys(v);
 				const wepHit = parseInt(v[nindex[4]])||0;
 				setAttrs({
-					hit: Number(v.sklTotal) * 2 + Math.floor(Number(v.lckTotal) / 2) + Number(v.hitBuff) + Number(v.hitBonusTotal) + wepHit,
+					hit: Number(v.sklTotal) * 2 + Math.floor(Number(v.lckTotal) / 2) + Number(v.hitBuff) + Number(v.hitBonusTotal) + wepHit - 100,
 				});
 			});
 		});
