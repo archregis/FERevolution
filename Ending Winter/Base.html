@@ -340,32 +340,32 @@
 								<span class="sheet-toggle-label">Attributes</span>
 								<div class="sheet-hidden-grid-container">
 									<div class="sheet-hidden-grid-row">
-										<div>Weight</div>
 										<div>Might</div>
+										<div>Weight</div>
 										<div>Hit</div>
 										<div>Crit</div>
-										<div>Ddg</div>
+										<div>Exp</div>
 									</div>
 									<div class="sheet-hidden-grid-row">
-										<div><input type="number" name="attr_wt" value="0"/></div>
 										<div><input type="number" name="attr_mt" value="0"/></div>
+										<div><input type="number" name="attr_wt" value="0"/></div>
 										<div><input type="number" name="attr_hit" value="0"/></div>
 										<div><input type="number" name="attr_crit" value="0"/></div>
-										<div><input type="number" name="attr_ddg" value="0"/></div>
+										<div><input type="number" name="attr_wExp" value="0"></div>
 									</div>
 									<div class="sheet-hidden-grid-row">
 										<div>HP</div>
 										<div>Str</div>
 										<div>Mag</div>
 										<div>Skl</div>
-										<div>EXP</div>
+										<div>Ddg</div>
 									</div>
 									<div class="sheet-hidden-grid-row">
 										<div><input name="attr_hpWep" type="number" value="0"></div>
 										<div><input name="attr_strWep" type="number" value="0"></div>
 										<div><input name="attr_magWep" type="number" value="0"></div>
 										<div><input name="attr_sklWep" type="number" value="0"></div>
-										<div><input name="attr_wExp" type="number" value="0"></div>
+										<div><input name="attr_ddg" type="number" value="0"/></div>
 				
 									</div>
 									<div class="sheet-hidden-grid-row">
@@ -385,15 +385,15 @@
 									<div class="sheet-hidden-grid-row">
 										<div>Min</div>
 										<div>Max</div>
-										<div>Ctr</div>
-										<div>Brv</div>
+										<div>Counter</div>
+										<div>Single</div>
 										<div></div>
 									</div>
 									<div class="sheet-hidden-grid-row">
 										<div><input name="attr_minDistWep" type="number" value="0"></div>
 										<div><input name="attr_maxDistWep" type="number" value="0"></div>
 										<div><input name="attr_counterWep" type="checkbox" value="1"></div>
-										<div><input name="attr_braveWep" type="checkbox" value="1"></div>
+										<div><input name="attr_singleWep" type="checkbox" value="1"></div>
 										<div></div>
 									</div>
 								</div>
@@ -451,28 +451,28 @@
 										<div>Might</div>
 										<div>Hit</div>
 										<div>Crit</div>
-										<div>Ddg</div>
+										<div>Exp</div>
 									</div>
 									<div class="sheet-hidden-grid-row">
 										<div><input type="number" name="attr_wt" value="0"/></div>
 										<div><input type="number" name="attr_mt" value="0"/></div>
 										<div><input type="number" name="attr_hit" value="0"/></div>
 										<div><input type="number" name="attr_crit" value="0"/></div>
-										<div><input type="number" name="attr_ddg" value="0"/></div>
+										<div><input type="number" name="attr_wExp" value="0"></div>
 									</div>
 									<div class="sheet-hidden-grid-row">
 										<div>HP</div>
 										<div>Str</div>
 										<div>Mag</div>
 										<div>Skl</div>
-										<div>EXP</div>
+										<div>Ddg</div>
 									</div>
 									<div class="sheet-hidden-grid-row">
 										<div><input name="attr_hpWep" type="number" value="0"></div>
 										<div><input name="attr_strWep" type="number" value="0"></div>
 										<div><input name="attr_magWep" type="number" value="0"></div>
 										<div><input name="attr_sklWep" type="number" value="0"></div>
-										<div><input name="attr_wExp" type="number" value="0"></div>
+										<div><input name="attr_ddg" type="number" value="0"/></div>
 				
 									</div>
 									<div class="sheet-hidden-grid-row">
@@ -492,15 +492,15 @@
 									<div class="sheet-hidden-grid-row">
 										<div>Min</div>
 										<div>Max</div>
-										<div>Ctr</div>
-										<div>Brv</div>
+										<div>Counter</div>
+										<div>Single</div>
 										<div></div>
 									</div>
 									<div class="sheet-hidden-grid-row">
 										<div><input name="attr_minDistWep" type="number" value="0"></div>
 										<div><input name="attr_maxDistWep" type="number" value="0"></div>
 										<div><input name="attr_counterWep" type="checkbox" value="1"></div>
-										<div><input name="attr_braveWep" type="checkbox" value="1"></div>
+										<div><input name="attr_singleWep" type="checkbox" value="1"></div>
 										<div></div>
 									</div>
 								</div>
@@ -689,7 +689,7 @@
 	<input name="attr_currMinDist" value="0" hidden>
 	<input name="attr_currMaxDist" value="0" hidden>
 	<input name="attr_currCounter" value="0" hidden>
-	<input name="attr_currBrave" value="0" hidden>
+	<input name="attr_currSingle" value="0" hidden>
 	<input name="attr_currDesc" value="Attacking @{target|token_name}!" hidden>
 	<input name="attr_atkType" value="Physical" hidden>
 	<input name="attr_hpBonusTotal" value="0" hidden>
@@ -876,7 +876,7 @@ on("change:repeating_weapons:wepType change:repeating_weapons:wExp change:repeat
 });
 
 // Weapon Info
-on("change:repeating_weapons:minDistWep change:repeating_weapons:maxDistWep change:repeating_weapons:counterWep change:repeating_weapons:braveWep change:repeating_spells:minDistWep change:repeating_spells:maxDistWep change:repeating_spells:counterWep change:repeating_spells:braveWep change:_reporder:weapons change:_reporder:spells remove:repeating_spells remove:repeating_weapons change:atkType change:wepSlot change:spellSlot", function() {
+on("change:repeating_weapons:minDistWep change:repeating_weapons:maxDistWep change:repeating_weapons:counterWep change:repeating_weapons:singleWep change:repeating_spells:minDistWep change:repeating_spells:maxDistWep change:repeating_spells:counterWep change:repeating_spells:singleWep change:_reporder:weapons change:_reporder:spells remove:repeating_spells remove:repeating_weapons change:atkType change:wepSlot change:spellSlot", function() {
 	getAttrs(["wepSlot","spellSlot","atkType"], function(v) {
 		const isPhys = v.atkType == "Physical" ? 1 : 0;
 		const repeatName = isPhys ? "repeating_weapons" : "repeating_spells";
@@ -884,13 +884,13 @@ on("change:repeating_weapons:minDistWep change:repeating_weapons:maxDistWep chan
 
 		getSectionIDsOrdered(repeatName, function(idarray) {
 			fID = idarray[Number(slotNum)-1];
-			getAttrs([repeatName+"_"+fID+"_minDistWep", repeatName+"_"+fID+"_maxDistWep", repeatName+"_"+fID+"_counterWep", repeatName+"_"+fID+"_braveWep"], function(v) {
+			getAttrs([repeatName+"_"+fID+"_minDistWep", repeatName+"_"+fID+"_maxDistWep", repeatName+"_"+fID+"_counterWep", repeatName+"_"+fID+"_singleWep"], function(v) {
 				const nindex = Object.keys(v);
 				setAttrs({
 					currMinDist: parseInt(v[nindex[0]])||0,
 					currMaxDist: parseInt(v[nindex[1]])||0,
 					currCounter: parseInt(v[nindex[2]])||0,
-					currBrave: parseInt(v[nindex[3]])||0,
+					currSingle: parseInt(v[nindex[3]])||0,
 				});
 			});
 		});
@@ -1139,7 +1139,7 @@ on("change:spdTotal change:All change:conTotal change:repeating_weapons:wt chang
 
 // Initialize values for API, because ded
 on("sheet:opened", function(){
-	getAttrs(["wepSlot","spellSlot","currWt","currEff","currName","currMt","currDesc","currWexp","currWep","currMinDist","currMaxDist","currCounter","currBrave","atkType","exp","swordExp","lanceExp","axeExp","bowExp","stavesExp","darkExp","animaExp","lightExp","level","hpBase","strBase","magBase","sklBase","spdBase","lckBase","defBase","resBase","movBase","hpBuff","strBuff","magBuff","sklBuff","spdBuff","lckBuff","defBuff","resBuff","movBuff","swordRank","lanceRank","axeRank","bowRank","stavesRank","darkRank","animaRank","lightRank","physBuff","mystBuff","wardBuff","protBuff","weakTotal","activeSkills","hit","crit","ddg","avo"], function(v){
+	getAttrs(["wepSlot","spellSlot","currWt","currEff","currName","currMt","currDesc","currWexp","currWep","currMinDist","currMaxDist","currCounter","currSingle","atkType","exp","swordExp","lanceExp","axeExp","bowExp","stavesExp","darkExp","animaExp","lightExp","level","hpBase","strBase","magBase","sklBase","spdBase","lckBase","defBase","resBase","movBase","hpBuff","strBuff","magBuff","sklBuff","spdBuff","lckBuff","defBuff","resBuff","movBuff","swordRank","lanceRank","axeRank","bowRank","stavesRank","darkRank","animaRank","lightRank","physBuff","mystBuff","wardBuff","protBuff","weakTotal","activeSkills","hit","crit","ddg","avo"], function(v){
 		setAttrs({
 			wepSlot: v.wepSlot,
 			spellSlot: v.spellSlot,
@@ -1154,7 +1154,7 @@ on("sheet:opened", function(){
 			currMinDist: v.currMinDist,
 			currMaxDist: v.currMaxDist,
 			currCounter: v.currCounter,
-			currBrave: v.currBrave,
+			currSingle: v.currSingle,
 			atkType: v.atkType,
 			swordExp: v.swordExp,
 			lanceExp: v.lanceExp,
