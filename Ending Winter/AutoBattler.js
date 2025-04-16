@@ -74,20 +74,15 @@ function updateWeaponEXP(attackerId, wepType, wepGain) {
   attr.setWithWorker("current", currentVal + wepGain);
 }
 
-// Displays skill activation
-function outputSkill(skill, odds) {
-  if (odds > 0) { return "<li> " + skill + " : " + odds + "% chance </li>"; }
-  else { return "<li> " + skill + " is active. </li>"; }
-}
-
 // Updates a given token's health. Inputting negative damage can be used to heal
-function UpdateHealth(token, damage, health, maxHP) {
+function UpdateHealth(defender, damage) {
   if (damage < 0) { // Healing
-    token.set("bar3_value", Math.min(maxHP, health - damage));
+    defender.obj.set("bar3_value", Math.min(defender.maxHP, defender.currHP - damage));
   }
   else if (damage > 0) {
-    let hpLeft = Math.max(0, health - damage);
-    token.set("bar3_value", hpLeft);
+    let hpLeft = Math.max(0, defender.currHP - damage);
+    if (hpLeft == 0 && defender.miracle == 1) { hpLeft = 1; }
+    defender.obj.set("bar3_value", hpLeft);
   }
 }
 
@@ -103,32 +98,46 @@ function GetWeaponStats(attackerId, dmgType, prefix) {
   const id = ids[slot-1];
   const attr = attributes[prefix+"_"+id+"_uses"];
   const currUses = attr ? attr.get('current') : 0;
-  if (currUses == 0) { 
-    sendChat('System', "No weapon equipped or no uses remaining.");
-  }
   return [currUses, attr];
 }
 
 // Sets up all the info an attacker needs to complete a round of combat
-function initializeAtkInfo(unitId) {
+function initializeAtkInfo(unitId, info) {
   let output = {};
+  // Token info
   output.token = getObj('graphic', unitId);
   output.unit = getObj('character', output.token.get('represents'));
   output.name = output.token.get('name');
   output.obj = findObjs({_type: "graphic", _id: unitId})[0];
 
+  // Weapon info
   output.single = getAttrValue(output.unit.id, 'currSingle');
   output.wepGain = getAttrValue(output.unit.id, "currWexp");
+  output.currMt = getAttrValue(output.unit.id, 'currMt')
+  output.currEff = getAttr(output.unit.id,'currEff').get('current');
   output.dmgType = getAttr(output.unit.id, 'atkType').get('current');
   output.wepName = getAttr(output.unit.id, 'currName').get('current');
   output.wepType = getAttr(output.unit.id, "currWep").get('current');
 
+  // Stat info
+  output.currHP = output.obj.get("bar3_value");
+  output.maxHP = output.obj.get("bar3_max");
+  output.str = getAttrValue(output.unit.id, "strTotal");
+  output.mag = getAttrValue(output.unit.id, "magTotal");
+  output.res = getAttrValue(output.unit.id, "resTotal");
   output.hit = getAttrValue(output.unit.id, "hit");
   output.crit = getAttrValue(output.unit.id, "crit");
   output.atkSpd = getAttrValue(output.unit.id, 'atkSpd');
   output.addDmg = 0;
 
-  output.skillMsg = "Attacker Skills: <ul>"
+  // Skill info
+  output.skillMsg = "Attacker Skills: <ul>";
+  output.aether = info.aether;
+  output.astra = 0;
+  output.sol = 0;
+  output.numAttacks = 1;
+  output.dmgMult = 1;
+  output.duraCost = 1;
 
   return output;
 }
@@ -146,12 +155,13 @@ function initializeDefInfo(unitId) {
   output.maxDist = getAttrValue(output.unit.id, 'currMaxDist');
   output.wepType = getAttr(output.unit.id, "currWep").get('current');
 
-  output.currHP = output.obj.get("bar3_value")
+  output.currHP = output.obj.get("bar3_value");
+  output.maxHP = output.obj.get("bar3_max");
   output.ward = getAttrValue(output.unit.id, "wardTotal");
-  output.prot = getAttrValue(output.unit.id, "protTotal")
+  output.prot = getAttrValue(output.unit.id, "protTotal");
   output.addWard = 0;
   output.addProt = 0;
-  output.avoid = getAttrValue(output.unit.id, "avo")
+  output.avoid = getAttrValue(output.unit.id, "avo");
   output.dodge = getAttrValue(output.unit.id, "ddg");
   output.atkSpd = getAttrValue(output.unit.id, 'atkSpd');
 
@@ -174,51 +184,59 @@ on('chat:message', function(msg) {
   // Initialize Attacker and Defender
   const selectedId = parts[0];
   const targetId = parts[1];
+  const artName = parts[2];
 
   let info = {
-    brave: 0,
     counter: 0,
     double: 0,
     killed: 0,
+    whisper: parts[3] == 1 ? (getObj('player',('API'===msg.playerid ? lastPlayerId : msg.playerid))||{get:()=>'API'}).get('_displayname') : 0,
+    numAttacks: 1,
+    aether: 0,
   }
   let attackerDoubled = 0;
+  let extraAttack = 0;
 
   if (command == "hit") {
       combatBlock: {
         // Attacker initial combat
-        if (CombatBlock(selectedId, targetId, 1, info) == -1) { break combatBlock; }
+        if (CombatBlock(selectedId, targetId, info, 1, artName) == -1) { break combatBlock; }
         attackerDoubled = info.double; // Necessary to save off here due to info being overwritten
+        extraAttack = info.extraAttack; // See above
 
         // Can the enemy counter?
         if (info.counter == 1) {
-          if (CombatBlock(targetId, selectedId, 0, info) == -1) { break combatBlock; }
+          if (CombatBlock(targetId, selectedId, info, 0, "None") == -1) { break combatBlock; }
           // Counterer doubled, go again
           if (info.double == 1) {
-            if (CombatBlock(targetId, selectedId, 0, info) == -1) { break combatBlock; }
+            if (CombatBlock(targetId, selectedId, info, 0, "None") == -1) { break combatBlock; }
           }
         }
 
         // Attacker doubled, go again
         if (attackerDoubled == 1) {
-          if (CombatBlock(selectedId, targetId, 1, info) == -1) { break combatBlock; }
+          if (CombatBlock(selectedId, targetId, info, 1, artName) == -1) { break combatBlock; }
+        }
+
+        // Extra attack from some source, always at end of combat.
+        if (extraAttack == 1) {
+          if (CombatBlock(selectedId, targetId, info, 1, artName) == -1) { break combatBlock; }
         }
       }
     }
   else if (command == "sim") {
-    const whisper = parts[2] == 1 ? (getObj('player',('API'===msg.playerid ? lastPlayerId : msg.playerid))||{get:()=>'API'}).get('_displayname') : 0;
-    DoOneCombatStep(selectedId, targetId, 1, info, 1, whisper);
-    DoOneCombatStep(targetId, selectedId, 0, info, 1, whisper);
+    DoOneCombatStep(selectedId, targetId, info, 1, artName, 1);
+    DoOneCombatStep(targetId, selectedId, info, 0, "None", 1);
   }
 });
 
 // Basic combat block for a single token, returns -1 if enemy killed
-function CombatBlock(firstId, secondId, initiating, info) {
+function CombatBlock(firstId, secondId, info, initiating, artName) {
 
-  DoOneCombatStep(firstId, secondId, initiating, info);
+  DoOneCombatStep(firstId, secondId, info, initiating, artName);
   if (info.killed == 1) { return -1; }
-
-  if (info.brave) {
-    DoOneCombatStep(firstId, secondId, initiating, info);
+  for (let i=1; i<info.numAttacks; i++) {
+    DoOneCombatStep(firstId, secondId, info, initiating, artName);
     if (info.killed == 1) { return -1; }
   }
 
@@ -226,11 +244,17 @@ function CombatBlock(firstId, secondId, initiating, info) {
 }
 
 
-function DoOneCombatStep(selectedId, targetId, initiating, info, isSim, whisper) {
+function DoOneCombatStep(selectedId, targetId, info, initiating, artName, isSim) {
   // Set up attacker/defender info
-  let attacker = initializeAtkInfo(selectedId);
+  let attacker = initializeAtkInfo(selectedId, info);
   let defender = initializeDefInfo(targetId);
   let combatMsg = `${attacker.name} ${isSim == 1 ? "simulates attacking " : "attacks "} ${defender.name} with ${attacker.wepName}! <br>`
+
+  // Add Combat Art if using
+  if (artName != "None") {
+    if (initiating == 1) { CombatArt.useArt(artName, attacker, defender); }
+    else if (initiating == 0) { CombatArt.useArt(artName, attacker, defender); }
+  }
 
 
   // Staves cannot attack
@@ -240,7 +264,10 @@ function DoOneCombatStep(selectedId, targetId, initiating, info, isSim, whisper)
   // Check for broken weapon
   const prefix = attacker.dmgType == "Physical" ? "repeating_weapons" : "repeating_spells";
   const [currUses, attr] = GetWeaponStats(attacker.unit.id, attacker.dmgType, prefix);
-  if (currUses == 0) { return; }
+  if (currUses < attacker.duraCost) {
+    sendChat('System', "Durability cost is higher than uses remaining.");
+    return;
+  }
 
 
 /*   // Skill checks
@@ -323,7 +350,7 @@ function DoOneCombatStep(selectedId, targetId, initiating, info, isSim, whisper)
 
     
   // Effectiveness
-  const aEff = getAttr(attacker.unit.id,'currEff').get('current').split(',').filter(i => i);
+  const aEff = attacker.currEff.split(',').filter(i => i);
   const dWeak = getAttr(defender.unit.id,'weakTotal').get('current').split(',').filter(i => i);
   let isEffective = 0;
 
@@ -333,24 +360,36 @@ function DoOneCombatStep(selectedId, targetId, initiating, info, isSim, whisper)
     }
   }
 
+  if (attacker.effAll == 1) { isEffective = 1; }
+
   if (isEffective == 1) {
     content += '<p style = "margin-bottom: 0px;"> You deal Effective Damage!</p> <br>';
-    addedDmg += 2 * getAttrValue(attacker.unit.id, 'currMt');
+    addedDmg += 2 * attacker.currMt;
+    if (attacker.doubleEff == 1) { addedDmg += 3 * attacker.currMt; }
   }
 
 
   // Damage Typing
-  let defMit = 0;
   let atkDmg = 0;
+  let defMit = 0;
+  let protDef = defender.prot + defender.addProt + getAttrValue(defender.unit.id, "mitBonusTotal");
+  let wardDef = defMit = defender.ward + defender.addWard + getAttrValue(defender.unit.id, "mitBonusTotal");
   if (attacker.dmgType == 'Physical') {
     atkDmg = getAttrValue(attacker.unit.id, "physTotal");
-    defMit = defender.prot + defender.addProt + getAttrValue(defender.unit.id, "mitBonusTotal");
+    defMit = protDef;
   }
   else if (attacker.dmgType == 'Magical') {
     atkDmg = getAttrValue(attacker.unit.id, "mystTotal");
-    defMit = defender.ward + defender.addWard + getAttrValue(defender.unit.id, "mitBonusTotal");
+    defMit = wardDef;
   }
-  let dmgTaken = Math.max(0, atkDmg - defMit + addedDmg);
+
+  if (attacker.fallenStar == 1) { atkDmg = attacker.currMt + getAttrValue(attacker.unit.id, "spdTotal") * 1.5; }
+  if (attacker.sandstorm == 1) { atkDmg = attacker.currMt + getAttrValue(attacker.unit.id, "defTotal") * 1.5; }
+  if (attacker.eviscerate == 1) { defMit = Math.min(protDef, wardDef); }
+
+  let dmgTaken = Math.max(0, (atkDmg - defMit + addedDmg) / (1 + attacker.astra));
+  dmgTaken *= attacker.dmgMult;
+  dmgTaken = Math.floor(dmgTaken); // Remove any fractions
 
 
   if (isSim == 1) { // Simulate battle outcome
@@ -362,27 +401,33 @@ function DoOneCombatStep(selectedId, targetId, initiating, info, isSim, whisper)
     hit += randomInteger(100);
     crit += randomInteger(100);
 
+    // End of calculation stuff
+    if (attacker.aim == 1) { crit = dodge + 1; }
+    if (attacker.sureShot == 1) { hit = avoid + 1; }
+
     content += '<div>' + triangleMsg +
     '<div style = "margin: 0 auto; width: 80%;">' +
     '<p style = "margin-bottom: 0px;">' + hit + ' hit vs ' + avoid + ' avoid!</p>' +
     '<p>' + crit + ' crit vs ' + dodge + ' dodge!</p>' +
     '</div>' +
     '</div>';
-    content += '<p style = "margin-bottom: 0px;">' + atkDmg + ' damage vs ' + defMit + ' mitigation!</p>';
+    content += '<p style = "margin-bottom: 0px;">' + (atkDmg + addedDmg) + ' damage vs ' + defMit + ' mitigation!</p>';
 
     // Update token values
-    dmgTaken = Math.floor(dmgTaken); // Remove any fractions
     if (hit >= avoid) {
       if (crit > dodge) {
         dmgTaken *= 3;
-        UpdateHealth(defender.obj, dmgTaken, defender.currHP);
+        UpdateHealth(defender, dmgTaken);
         content += 'You crit and deal '+ dmgTaken + ' damage!'; // Intentionally not capping damage numbers put in chat. Hitting low hp enemies for ludicrous damage numbers is fun
       }
       else {
-        UpdateHealth(defender.obj, dmgTaken, defender.currHP);
+        UpdateHealth(defender, dmgTaken);
         content += 'You hit and deal '+ dmgTaken + ' damage!'; // See above
       }
-      attr.setWithWorker("current", currUses - 1);
+      if (attacker.sol == 1) {
+        UpdateHealth(attacker, -Math.min(defender.currHP, dmgTaken));
+      }
+      attr.setWithWorker("current", currUses - attacker.duraCost);
       updateWeaponEXP(attacker.unit.id, attacker.wepType, attacker.wepGain);
     }
     else {
@@ -392,14 +437,16 @@ function DoOneCombatStep(selectedId, targetId, initiating, info, isSim, whisper)
 
     // Gather info for future battle steps
     Object.assign(info, {
-      brave: attacker.brave,
       counter: attacker.dazzle == 1 ? 0 : CanCounter(defender, Led.from(attacker.token).to(defender.token).byManhattan().inSquares()),
       double: attacker.single == 1 ? 0 : atkSpdDiff >= 4,
       killed: defender.obj.get("bar3_value") == 0 ? 1 : 0,
+      numAttacks: attacker.numAttacks,
+      extraAttack: attacker.extraAttack,
+      aether: artName == "Aether" ? 1 : 0,
     });
 
   attacker.skillMsg += "</ul>";
   defender.skillMsg += "</ul>";
-  if (whisper) { sendChat(attacker.name, `/w ${whisper} <br> <b>=== Start Combat ===</b> <br> ${combatMsg} ${attacker.skillMsg} ${defender.skillMsg} ${content} <br> <b>=== End Combat ===</b>`); }
+  if (info.whisper) { sendChat(attacker.name, `/w ${info.whisper} <br> <b>=== Start Combat ===</b> <br> ${combatMsg} ${attacker.skillMsg} ${defender.skillMsg} ${content} <br> <b>=== End Combat ===</b>`); }
   else { sendChat(attacker.name, `<br> <b>=== Start Combat ===</b> <br> ${combatMsg} ${attacker.skillMsg} ${defender.skillMsg} ${content} <br> <b>=== End Combat ===</b>`); }
 }
