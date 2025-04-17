@@ -10,6 +10,44 @@ const weaponMap = {
   "Light": "lightExp"
 };
 
+const staffInfo = {
+  Glass: { exp: 50, wexp: 10, textFunc: function(magic) { return `An ally within ${Math.floor(magic / 2)} heals to full HP.`}, },
+  Haste: { exp: 40, wexp: 5, textFunc: function(magic) { return `An adjacent ally's weapon becomes brave for a turn!`}, },
+  Heal: { exp: 20, wexp: 3, textFunc: function(magic) { return `An adjacent ally heals ${10 + magic} HP.`}, },
+  Scythe: { exp: 20, wexp: 3, textFunc: function(magic) { return `An adjacent ally heals ${10 + magic} HP.`}, },
+
+  BlackScythe: { exp: 22, wexp: 4, textFunc: function(magic) { return `An adjacent ally heals ${20 + magic} HP.`}, },
+  Illuminate: { exp: 30, wexp: 5, textFunc: function(magic) { return `An area within ${Math.floor(magic / 2)} tiles is lit up.`}, },
+  Mend: { exp: 22, wexp: 4, textFunc: function(magic) { return `An adjacent ally heals ${20 + magic} HP.`}, },
+  Rescue: { exp: 70, wexp: 7, textFunc: function(magic) { return `An ally within ${Math.floor(magic / 2)} tiles is moved to an adjacent tile.`}, },
+  Unlock: { exp: 35, wexp: 5, textFunc: function(magic) { return `A door within ${Math.floor(magic / 2)} tiles is unlocked.`}, },
+
+  Barrier: { exp: 35, wexp: 5, textFunc: function(magic) { return `An adjacent ally's resistance is increased by 7, decreasing by 1 each turn.`}, },
+  Bulwark: { exp: 35, wexp: 5, textFunc: function(magic) { return `An adjacent ally's defense  is increased by 7, decreasing by 1 each turn.`}, },
+  Knowledge: { exp: 35, wexp: 5, textFunc: function(magic) { return `An adjacent ally's magic is increased by 10, decreasing by 1 each turn.`}, },
+  Recover: { exp: 30, wexp: 5, textFunc: function(magic) { return `An adjacent ally heals all HP.`}, },
+  Restore: { exp: 40, wexp: 3, textFunc: function(magic) { return `An ally within ${Math.floor(magic / 2)} tiles is returned to normal condition.`}, },
+  Strength: { exp: 35, wexp: 5, textFunc: function(magic) { return `An adjacent ally's strength is increased by 10, decreasing by 1 each turn.`}, },
+  ShineBind: { exp: 35, wexp: 4, textFunc: function(magic) { return `A light rune is summoned on a tile within ${Math.floor(magic / 2)} tiles.`}, },
+
+  Resonate: { exp: 40, wexp: 8, textFunc: function(magic) { return `An adjacent ally is given the Distant Counter skill.`}, },
+  Physic: { exp: 35, wexp: 5, textFunc: function(magic) { return `An ally within ${Math.floor(magic / 2)} tiles heals ${10 + magic} HP.`}, },
+  Sanctify: { exp: 40, wexp: 8, textFunc: function(magic) { return `An adjacent ally is given the Tower Shield skill.`}, },
+  SpiritScythe: { exp: 40, wexp: 6, textFunc: function(magic) { return `An ally within ${Math.floor(magic / 4)} tiles heals ${10 + magic} HP.`}, },
+  Stride: { exp: 50, wexp: 10, textFunc: function(magic) { return `Allies centered around the user are given +5 movement.`}, },
+
+  Anew: { exp: 50, wexp: 10, textFunc: function(magic) { return `An adjacent ally's movement and action are restored.`}, },
+  Hammerne: { exp: 100, wexp: 8, textFunc: function(magic) { return `An adjacent ally's weapon is restored to full durability. Stand proud, you are durable.`}, },
+  Matrona: { exp: 80, wexp: 5, textFunc: function(magic) { return `All allies within ${Math.floor(magic / 4)} tiles are returned to normal condition.`}, },
+  Preserve: { exp: 50, wexp: 10, textFunc: function(magic) { return `An adjacent ally is given the Stillness skill and cannot be defeated while their HP is above 1.`}, },
+  Psychopomp: { exp: 50, wexp: 10, textFunc: function(magic) { return `An ally within 2 tiles heals ${20 + magic} HP.`}, },
+  Zeal: { exp: 30, wexp: 5, textFunc: function(magic) { return `An adjacent enemy is convinced of the righteousness of our cause for 1 turn!`}, },
+
+  Harpe: { exp: 50, wexp: 0, textFunc: function(magic) { return `An adjacent ally heals ${30 + magic} HP and a phantom copy is summoned!`}, },
+  Helarn: { exp: 50, wexp: 0, textFunc: function(magic) { return `An adjacent ally's weapon no longer decreases in durability for one turn.`}, },
+  Sanctuary: { exp: 100, wexp: 0, textFunc: function(magic) { return `All allies heal ${30 + magic} HP and are returned to normal condition.`}, },
+};
+
 // Helpers
 
 // Gets an attribute object by name for a given character.
@@ -371,6 +409,12 @@ on('chat:message', function(msg) {
     DoOneCombatStep(selectedId, targetId, info, 1, artName, 1);
     DoOneCombatStep(targetId, selectedId, info, 0, "None", 1);
   }
+  else if (command == "staff") {
+    DoOneStaffStep(selectedId)
+  }
+  else if (command == "staffSim") {
+    DoOneStaffStep(selectedId, 1)
+  }
 });
 
 // Basic combat block for a single token, returns -1 if enemy killed
@@ -592,4 +636,41 @@ function DoOneCombatStep(selectedId, targetId, info, initiating, artName, isSim)
   defender.skillMsg += "</ul>";
   if (info.whisper) { sendChat(attacker.name, `/w ${info.whisper} <br> <b>=== Start Combat ===</b> <br> ${combatMsg} ${attacker.skillMsg} ${defender.skillMsg} ${content} <br> <b>=== End Combat ===</b>`); }
   else { sendChat(attacker.name, `<br> <b>=== Start Combat ===</b> <br> ${combatMsg} ${attacker.skillMsg} ${defender.skillMsg} ${content} <br> <b>=== End Combat ===</b>`); }
+}
+
+
+function DoOneStaffStep(selectedId, isSim) {
+  // Set up attacker/defender info
+  let info = {};
+  let attacker = initializeAtkInfo(selectedId, info);
+  let combatMsg = `${attacker.name} ${isSim == 1 ? "simulates using " : "uses "} ${attacker.wepName}! <br>`;
+
+
+  // Sanity check
+  if (staffInfo[attacker.wepName] == undefined) {
+    sendChat(attacker.name, "This stave's name is not found in our records. Are you sure that you've spelled it correctly?");
+    return;
+  }
+
+  // Check for broken weapon
+  const prefix = attacker.dmgType == "Physical" ? "repeating_weapons" : "repeating_spells";
+  const [currUses, attr] = GetWeaponStats(attacker.unit.id, attacker.dmgType, prefix);
+  if (currUses == 0) { return; }
+
+
+  // Skill checks
+  SkillHandler.CheckStaffSkills(attacker, isSim);
+
+
+  // End of staff updates
+  if (isSim != 1) {
+    if (attacker.armsthrift != 1) { 
+      attr.setWithWorker("current", currUses - 1);
+    }
+    updateWeaponEXP(attacker.unit.id, attacker.wepType, staffInfo[attacker.wepName].wexp);
+    expHandler.expIncrease(selectedId, staffInfo[attacker.wepName].exp);
+  }
+
+  attacker.skillMsg += "</ul>";
+  sendChat(attacker.name, `<br> <b>=== Start Combat ===</b> <br> ${combatMsg} ${attacker.skillMsg} ${staffInfo[attacker.wepName].textFunc(attacker.mag)} <br> <b>=== End Combat ===</b>`);
 }

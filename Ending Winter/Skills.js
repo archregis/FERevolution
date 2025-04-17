@@ -162,6 +162,11 @@ const skillMap = {
     "Wrath": Wrath,
 }
 
+const staffSkillMap = {
+    "Armsthrift": Armsthrift,
+    "TwilightSeraph": TwilightSeraph,
+}
+
 // Skills
 
 // Skl% chance to nullify a magical attack
@@ -1543,6 +1548,17 @@ function TwilightSeraph(attacker, defender, info) {
     return; // Do later
 }
 
+// Mag% chance to use no staff durability
+function TwilightSeraph(attacker, defender, info) {
+    if (info.whoseSkill == 1 || attacker.wepType != "Staff") { return; }
+    const odds = attacker.mag + attacker.activationBonus;
+    if (info.isSim == 1 && odds > 0) { attacker.skillMsg += outputSkill("Twilight Seraph", odds); }
+    else if (randomInteger(100) <= odds) {
+        attacker.skillMsg += outputSkill("Twilight Seraph");
+        attacker.armsthrift = 1;
+    }
+}
+
 // Heal for 50% of damage dealt
 function Vampiric(attacker, defender, info) {
     if (info.whoseSkill == 1) { return; }
@@ -1754,6 +1770,29 @@ const SkillHandler = {
         if ((aWepSkills.includes("Desperation") && belowHalf == 1) || (aWepSkills.includes("Assassinate") && Led.from(attacker.token).to(defender.token).byManhattan().inSquares() == 1)) { return 1; }
 
         return 0;
+    },
+
+    // Checks staff specific skills
+    CheckStaffSkills: function(attacker, isSim) {
+        let info = {
+            isSim: isSim,
+        }
+
+        const aSkills = getAttr(attacker.unit.id, 'activeSkills').get('current').split(',');
+        for(let i=0; i<aSkills.length; i++) {
+            if (staffSkillMap[aSkills[i]]) {
+                staffSkillMap[aSkills[i]](attacker, "", info);
+            }
+        }
+      
+      
+        // Weapon Skill Checks
+        const aWepSkills = getAttr(attacker.unit.id, 'activeWepSkills').get('current').split(',');
+        for(let i=0; i<aWepSkills.length; i++) {
+            if (staffSkillMap[aWepSkills[i]]) {
+                staffSkillMap[aWepSkills[i]](attacker, "", info);
+            }
+        }
     },
 }
 
