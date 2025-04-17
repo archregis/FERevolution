@@ -21,32 +21,32 @@ function processInlinerolls(msg) {
 }
 
 // Handle leveling up and stat growth
-function handleLevelUp(attackerId, CurrEXP, LvA, who) {
+function handleLevelUp(attackerId, CurrEXP, LvA, who, growthMult) {
   while (CurrEXP.get("current") >= 100) {
     CurrEXP.set("current", CurrEXP.get("current") - 100);
     LvA.set("current", Number(LvA.get("current")) + 1);
 
-    const HPG = getAttrValue(attackerId, 'hpTotalGrow');
-    const StrG = getAttrValue(attackerId, 'strTotalGrow');
-    const MagG = getAttrValue(attackerId, 'magTotalGrow');
-    const SklG = getAttrValue(attackerId, 'sklTotalGrow');
-    const LckG = getAttrValue(attackerId, 'lckTotalGrow');
-    const SpdG = getAttrValue(attackerId, 'spdTotalGrow');
-    const DefG = getAttrValue(attackerId, 'defTotalGrow');
-    const ResG = getAttrValue(attackerId, 'resTotalGrow');
+    const HPG = getAttrValue(attackerId, 'hpTotalGrow') * growthMult;
+    const StrG = getAttrValue(attackerId, 'strTotalGrow') * growthMult;
+    const MagG = getAttrValue(attackerId, 'magTotalGrow') * growthMult;
+    const SklG = getAttrValue(attackerId, 'sklTotalGrow') * growthMult;
+    const SpdG = getAttrValue(attackerId, 'spdTotalGrow') * growthMult;
+    const LckG = getAttrValue(attackerId, 'lckTotalGrow') * growthMult;
+    const DefG = getAttrValue(attackerId, 'defTotalGrow') * growthMult;
+    const ResG = getAttrValue(attackerId, 'resTotalGrow') * growthMult;
 
     const HPSG = getAttr(attackerId, "hpBase");
     const StrSG = getAttr(attackerId, "strBase");
     const MagSG = getAttr(attackerId, "magBase");
     const SklSG = getAttr(attackerId, "sklBase");
-    const LckSG = getAttr(attackerId, "lckBase");
     const SpdSG = getAttr(attackerId, "spdBase");
+    const LckSG = getAttr(attackerId, "lckBase");
     const DefSG = getAttr(attackerId, "defBase");
     const ResSG = getAttr(attackerId, "resBase");
 
-    const growthslist = [HPG, StrG, MagG, SklG, LckG, SpdG, DefG, ResG];
-    const statslist = [HPSG, StrSG, MagSG, SklSG, LckSG, SpdSG, DefSG, ResSG];
-    const slist = ["HP", "Str", "Mag", "Skl", "Lck", "Spd", "Def", "Res"];
+    const growthslist = [HPG, StrG, MagG, SklG, SpdG, LckG, DefG, ResG];
+    const statslist = [HPSG, StrSG, MagSG, SklSG, SpdSG, LckSG, DefSG, ResSG];
+    const slist = ["HP", "Str", "Mag", "Skl", "Spd", "Lck", "Def", "Res"];
     let lvlStr = "";
     
     // Build inline roll msg
@@ -97,21 +97,30 @@ const expHandler = {
     let who = getObj('character', selectedToken.get('represents'));
     who = selectedToken.get('name');
 
-    // Paragon check
+    // Paragon and Blossom check
+    let growthMult = 1;
     const aSkills = getAttr(attacker.id, 'activeSkills').get('current').split(',');
 
     for(let i=0; i<aSkills.length; i++) {
       if (aSkills[i] == "Paragon") {
         addedExp *= 2;
       }
+      if (aSkills[i] == "Blossom") {
+        addedExp = Math.floor(addedExp / 2);
+        growthMult *= 2;
+      }
     }
 
-    // Weapon Paragon check
-    const aWepSkills = getAttr(attacker.id, 'activeSkills').get('current').split(',');
+    // Weapon Paragon and Blossom check
+    const aWepSkills = getAttr(attacker.id, 'activeWepSkills').get('current').split(',');
 
     for(let i=0; i<aWepSkills.length; i++) {
       if (aWepSkills[i] == "Paragon") {
         addedExp *= 2;
+      }
+      if (aWepSkills[i] == "Blossom") {
+        addedExp = Math.floor(addedExp / 2);
+        growthMult *= 2;
       }
     }
 
@@ -122,7 +131,7 @@ const expHandler = {
     sendChat(who, `${addedExp} EXP added!`);
 
     // Handle level ups if EXP >= 100
-    handleLevelUp(attacker.id, CurrEXP, LvA, who);
+    handleLevelUp(attacker.id, CurrEXP, LvA, who, growthMult);
     }
 }
 
