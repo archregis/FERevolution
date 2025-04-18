@@ -11,42 +11,55 @@ const weaponMap = {
 };
 
 const staffInfo = {
-  Glass: { exp: 50, wexp: 10, textFunc: function(magic) { return `An ally within ${Math.floor(magic / 2)} heals to full HP.`}, },
-  Haste: { exp: 40, wexp: 5, textFunc: function(magic) { return `An adjacent ally's weapon becomes brave for a turn!`}, },
-  Heal: { exp: 20, wexp: 3, textFunc: function(magic) { return `An adjacent ally heals ${10 + magic} HP.`}, },
-  Scythe: { exp: 20, wexp: 3, textFunc: function(magic) { return `An adjacent ally heals ${10 + magic} HP.`}, },
+  "Glass": { exp: 50, wexp: 10, textFunc: function(magic) { return `An ally within ${Math.floor(magic / 2)} heals to full HP.`}, },
+  "Haste": { exp: 40, wexp: 5, textFunc: function(magic) { return `An adjacent ally's weapon becomes brave for a turn!`}, },
+  "Heal": { exp: 20, wexp: 3, textFunc: function(magic) { return `An adjacent ally heals ${10 + magic} HP.`}, },
+  "Scythe": { exp: 20, wexp: 3, textFunc: function(magic) { return `An adjacent ally heals ${10 + magic} HP.`}, },
 
-  BlackScythe: { exp: 22, wexp: 4, textFunc: function(magic) { return `An adjacent ally heals ${20 + magic} HP.`}, },
-  Illuminate: { exp: 30, wexp: 5, textFunc: function(magic) { return `An area within ${Math.floor(magic / 2)} tiles is lit up.`}, },
-  Mend: { exp: 22, wexp: 4, textFunc: function(magic) { return `An adjacent ally heals ${20 + magic} HP.`}, },
-  Rescue: { exp: 70, wexp: 7, textFunc: function(magic) { return `An ally within ${Math.floor(magic / 2)} tiles is moved to an adjacent tile.`}, },
-  Unlock: { exp: 35, wexp: 5, textFunc: function(magic) { return `A door within ${Math.floor(magic / 2)} tiles is unlocked.`}, },
+  "Black Scythe": { exp: 22, wexp: 4, textFunc: function(magic) { return `An adjacent ally heals ${20 + magic} HP.`}, },
+  "Illuminate": { exp: 30, wexp: 5, textFunc: function(magic) { return `An area within ${Math.floor(magic / 2)} tiles is lit up.`}, },
+  "Mend": { exp: 22, wexp: 4, textFunc: function(magic) { return `An adjacent ally heals ${20 + magic} HP.`}, },
+  "Rescue": { exp: 70, wexp: 7, textFunc: function(magic) { return `An ally within ${Math.floor(magic / 2)} tiles is moved to an adjacent tile.`}, },
+  "Unlock": { exp: 35, wexp: 5, textFunc: function(magic) { return `A door within ${Math.floor(magic / 2)} tiles is unlocked.`}, },
 
-  Barrier: { exp: 35, wexp: 5, textFunc: function(magic) { return `An adjacent ally's resistance is increased by 7, decreasing by 1 each turn.`}, },
-  Bulwark: { exp: 35, wexp: 5, textFunc: function(magic) { return `An adjacent ally's defense  is increased by 7, decreasing by 1 each turn.`}, },
-  Knowledge: { exp: 35, wexp: 5, textFunc: function(magic) { return `An adjacent ally's magic is increased by 10, decreasing by 1 each turn.`}, },
-  Recover: { exp: 30, wexp: 5, textFunc: function(magic) { return `An adjacent ally heals all HP.`}, },
-  Restore: { exp: 40, wexp: 3, textFunc: function(magic) { return `An ally within ${Math.floor(magic / 2)} tiles is returned to normal condition.`}, },
-  Strength: { exp: 35, wexp: 5, textFunc: function(magic) { return `An adjacent ally's strength is increased by 10, decreasing by 1 each turn.`}, },
-  ShineBind: { exp: 35, wexp: 4, textFunc: function(magic) { return `A light rune is summoned on a tile within ${Math.floor(magic / 2)} tiles.`}, },
+  "Barrier": { exp: 35, wexp: 5, textFunc: function(magic) { return `An adjacent ally's resistance is increased by 7, decreasing by 1 each turn.`}, },
+  "Bulwark": { exp: 35, wexp: 5, textFunc: function(magic) { return `An adjacent ally's defense  is increased by 7, decreasing by 1 each turn.`}, },
+  "Knowledge": { exp: 35, wexp: 5, textFunc: function(magic) { return `An adjacent ally's magic is increased by 10, decreasing by 1 each turn.`}, },
+  "Recover": { exp: 30, wexp: 5, textFunc: function(magic) { return `An adjacent ally heals all HP.`}, },
+  "Restore": { exp: 40, wexp: 3, textFunc: function(magic) { return `An ally within ${Math.floor(magic / 2)} tiles is returned to normal condition.`}, },
+  "Strength": { exp: 35, wexp: 5, textFunc: function(magic) { return `An adjacent ally's strength is increased by 10, decreasing by 1 each turn.`}, },
+  "Shine Bind": { exp: 35, wexp: 4, textFunc: function(magic) { return `A light rune is summoned on a tile within ${Math.floor(magic / 2)} tiles.`}, },
 
-  Resonate: { exp: 40, wexp: 8, textFunc: function(magic) { return `An adjacent ally is given the Distant Counter skill.`}, },
-  Physic: { exp: 35, wexp: 5, textFunc: function(magic) { return `An ally within ${Math.floor(magic / 2)} tiles heals ${10 + magic} HP.`}, },
-  Sanctify: { exp: 40, wexp: 8, textFunc: function(magic) { return `An adjacent ally is given the Tower Shield skill.`}, },
-  SpiritScythe: { exp: 40, wexp: 6, textFunc: function(magic) { return `An ally within ${Math.floor(magic / 4)} tiles heals ${10 + magic} HP.`}, },
-  Stride: { exp: 50, wexp: 10, textFunc: function(magic) { return `Allies centered around the user are given +5 movement.`}, },
+  "Resonate": { exp: 40, wexp: 8, textFunc: function(magic) { return `An adjacent ally is given the Distant Counter skill.`}, },
+  "Physic": { exp: 35, wexp: 5, textFunc: function(magic) { return `An ally within ${Math.floor(magic / 2)} tiles heals ${10 + magic} HP.`}, },
+  "Sanctify": { exp: 40, wexp: 8, textFunc: function(magic) { return `An adjacent ally is given the Tower Shield skill.`}, },
+  "Spirit Scythe": { exp: 40, wexp: 6, textFunc: function(magic) { return `An ally within ${Math.floor(magic / 4)} tiles heals ${10 + magic} HP.`}, },
+  "Stride": { exp: 50, wexp: 10, textFunc: function(magic) { return `Allies centered around the user are given +5 movement.`}, },
 
-  Anew: { exp: 50, wexp: 10, textFunc: function(magic) { return `An adjacent ally's movement and action are restored.`}, },
-  Hammerne: { exp: 100, wexp: 8, textFunc: function(magic) { return `An adjacent ally's weapon is restored to full durability. Stand proud, you are durable.`}, },
-  Matrona: { exp: 80, wexp: 5, textFunc: function(magic) { return `All allies within ${Math.floor(magic / 4)} tiles are returned to normal condition.`}, },
-  Preserve: { exp: 50, wexp: 10, textFunc: function(magic) { return `An adjacent ally is given the Stillness skill and cannot be defeated while their HP is above 1.`}, },
-  Psychopomp: { exp: 50, wexp: 10, textFunc: function(magic) { return `An ally within 2 tiles heals ${20 + magic} HP.`}, },
-  Zeal: { exp: 30, wexp: 5, textFunc: function(magic) { return `An adjacent enemy is convinced of the righteousness of our cause for 1 turn!`}, },
+  "Anew": { exp: 50, wexp: 10, textFunc: function(magic) { return `An adjacent ally's movement and action are restored.`}, },
+  "Hammerne": { exp: 100, wexp: 8, textFunc: function(magic) { return `An adjacent ally's weapon is restored to full durability. Stand proud, you are durable.`}, },
+  "Matrona": { exp: 80, wexp: 5, textFunc: function(magic) { return `All allies within ${Math.floor(magic / 4)} tiles are returned to normal condition.`}, },
+  "Preserve": { exp: 50, wexp: 10, textFunc: function(magic) { return `An adjacent ally is given the Stillness skill and cannot be defeated while their HP is above 1.`}, },
+  "Psychopomp": { exp: 50, wexp: 10, textFunc: function(magic) { return `An ally within 2 tiles heals ${20 + magic} HP.`}, },
+  "Zeal": { exp: 30, wexp: 5, textFunc: function(magic) { return `An adjacent enemy is convinced of the righteousness of our cause for 1 turn!`}, },
 
-  Harpe: { exp: 50, wexp: 0, textFunc: function(magic) { return `An adjacent ally heals ${30 + magic} HP and a phantom copy is summoned!`}, },
-  Helarn: { exp: 50, wexp: 0, textFunc: function(magic) { return `An adjacent ally's weapon no longer decreases in durability for one turn.`}, },
-  Sanctuary: { exp: 100, wexp: 0, textFunc: function(magic) { return `All allies heal ${30 + magic} HP and are returned to normal condition.`}, },
+  "Harpe": { exp: 50, wexp: 0, textFunc: function(magic) { return `An adjacent ally heals ${30 + magic} HP and a phantom copy is summoned!`}, },
+  "Helarn": { exp: 50, wexp: 0, textFunc: function(magic) { return `An adjacent ally's weapon no longer decreases in durability for one turn.`}, },
+  "Sanctuary": { exp: 100, wexp: 0, textFunc: function(magic) { return `All allies heal ${30 + magic} HP and are returned to normal condition.`}, },
+
+  "Reaper Scythe": { exp: 25, wexp: 4, },
+  "Holy Maiden's Poleaxe": { exp: 30, wexp: 2, },
 };
+
+const scytheInfo = {
+  "Scythe": 10,
+  "Reaper Scythe": 20,
+  "Black Scythe": 20,
+  "Holy Maiden's Poleaxe": 15,
+  "Spirit Scythe": 10,
+  "Psychopomp": 20,
+  "Harpe": 30,
+}
 
 // Helpers
 
@@ -441,10 +454,6 @@ function DoOneCombatStep(selectedId, targetId, info, initiating, artName, isSim)
  CombatArt.UseArt(artName, attacker, defender);
 
 
-  // Staves cannot attack
-  if (attacker.wepType == "Staff") { return; }
-
-
   // Check for broken weapon
   let prefix = attacker.dmgType == "Physical" ? "repeating_weapons" : "repeating_spells";
   let [currUses, attr] = GetWeaponStats(attacker.unit.id, attacker.dmgType, prefix);
@@ -453,9 +462,26 @@ function DoOneCombatStep(selectedId, targetId, info, initiating, artName, isSim)
     return;
   }
 
-
   // Skill checks
   SkillHandler.CheckSkills(attacker, defender, initiating, isSim);
+
+
+  // Specific staves can do flat damage
+  if (attacker.wepType == "Staff") {
+    if (isSim != 1) {
+      if (scytheInfo[attacker.wepName] != undefined) {
+        UpdateHealth(defender, scytheInfo[attacker.wepName]);
+        if (attacker.armsthrift != 1) { 
+          attr.setWithWorker("current", currUses - 1);
+        }
+        updateWeaponEXP(attacker.unit.id, attacker.wepType, staffInfo[attacker.wepName].wexp);
+        expHandler.expIncrease(selectedId, staffInfo[attacker.wepName].exp);
+        sendChat(attacker.name, `<br> <b>=== Start Combat ===</b> <br> ${combatMsg} ${attacker.skillMsg} <br> <b>=== End Combat ===</b>`);
+      }
+    }
+    return;
+  }
+  
 
 
   // Grab Stats
