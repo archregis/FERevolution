@@ -495,7 +495,7 @@ function DoOneCombatStep(selectedId, targetId, info, initiating, artName, isSim)
 
       // Gather info for future battle steps
       Object.assign(info, {
-        counter: CanCounter(defender, Led.from(attacker.token).to(defender.token).byManhattan().inSquares()),
+        counter: 0,
         killed: defender.obj.get("bar3_value") == 0 ? 1 : 0,
         postDamageAtk: attacker.postDamage,
       });
