@@ -825,6 +825,8 @@ on("change:repeating_bonuses:bonusCheck change:repeating_bonuses:hp change:repea
 on("change:skillList", function() {
 	getAttrs(["skillList"], function(v) {
 		let skills = v.skillList.split("[").pop().split("]")[0];
+		skills = skills.replace(/(^\w|\s\w)/g, m => m.toUpperCase());
+		skills = skills.replace(/ /g,"");
 		setAttrs({
 			activeSkills: skills,
 		})
@@ -903,6 +905,8 @@ on("change:repeating_weapons:wepName change:repeating_spells:spellName change:re
 			getAttrs([repeatName+"_"+fID+"_descWep", repeatName+"_"+fID+"_effWep", repeatName+"_"+fID+"_"+name, repeatName+"_"+fID+"_wepSkills"], function(v) {
 				const nindex = Object.keys(v);
 				let skills = v[nindex[3]];
+				skills = skills.replace(/(^\w|\s\w)/g, m => m.toUpperCase());
+				skills = skills.replace(/ /g,"");
 				setAttrs({
 					currDesc: v[nindex[0]],
 					currEff: v[nindex[1]],
