@@ -466,24 +466,6 @@ function DoOneCombatStep(selectedId, targetId, info, initiating, artName, isSim)
   SkillHandler.CheckSkills(attacker, defender, initiating, isSim);
 
 
-  // Specific staves can do flat damage
-  if (attacker.wepType == "Staff") {
-    if (isSim != 1) {
-      if (scytheInfo[attacker.wepName] != undefined) {
-        UpdateHealth(defender, scytheInfo[attacker.wepName]);
-        if (attacker.armsthrift != 1) { 
-          attr.setWithWorker("current", currUses - 1);
-        }
-        updateWeaponEXP(attacker.unit.id, attacker.wepType, staffInfo[attacker.wepName].wexp);
-        expHandler.expIncrease(selectedId, staffInfo[attacker.wepName].exp);
-        sendChat(attacker.name, `<br> <b>=== Start Combat ===</b> <br> ${combatMsg} ${attacker.skillMsg} <br> <b>=== End Combat ===</b>`);
-      }
-    }
-    return;
-  }
-  
-
-
   // Grab Stats
   const avoid = defender.avoid;
   const dodge = defender.dodge
@@ -492,6 +474,37 @@ function DoOneCombatStep(selectedId, targetId, info, initiating, artName, isSim)
   let hit = attacker.hit;
   let crit = attacker.crit;
   let content = "";
+
+
+  // Specific staves can do flat damage
+  if (attacker.wepType == "Staff") {
+    if (scytheInfo[attacker.wepName] == undefined) { return; }
+    content = `${attacker.name} scythes through the enemy and deals ${scytheInfo[attacker.wepName]} damage!`;
+    if (isSim != 1) {
+      // Reset attacker skills and then check only staff skills
+      attacker.armsthrift = 0;
+      attacker.skillMsg = "Attacker Skills: <ul>";
+      SkillHandler.CheckStaffSkills(attacker, isSim);
+
+      UpdateHealth(defender, scytheInfo[attacker.wepName]);
+      if (attacker.armsthrift != 1) { 
+        attr.setWithWorker("current", currUses - 1);
+      }
+      updateWeaponEXP(attacker.unit.id, attacker.wepType, staffInfo[attacker.wepName].wexp);
+      expHandler.expIncrease(selectedId, staffInfo[attacker.wepName].exp);
+
+      // Gather info for future battle steps
+      Object.assign(info, {
+        counter: CanCounter(defender, Led.from(attacker.token).to(defender.token).byManhattan().inSquares()),
+        killed: defender.obj.get("bar3_value") == 0 ? 1 : 0,
+        postDamageAtk: attacker.postDamage,
+      });
+    }
+    attacker.skillMsg += "</ul>";
+    defender.skillMsg += "</ul>";
+    sendChat(attacker.name, `<br> <b>=== Start Combat ===</b> <br> ${combatMsg} ${attacker.skillMsg} ${defender.skillMsg} ${content} <br> <b>=== End Combat ===</b>`);
+    return;
+  }
 
 
   // Weapon triangle
