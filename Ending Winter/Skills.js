@@ -28,7 +28,7 @@ const skillMap = {
     "Conquest": Conquest,
     "Corrosion": Corrosion,
     "Counter": Counter,
-    "CounterMagic": CounterMagic,
+    "Counter-Magic": CounterMagic,
     "CoupDeGrace": CoupDeGrace,
     "Cowardice": Cowardice,
     "CritBoost": CritBoost,
@@ -71,6 +71,8 @@ const skillMap = {
     "Hawkeye": Hawkeye,
     "HeavenlyBeast": HeavenlyBeast,
     "HeavyStrikes": HeavyStrikes,
+    "HeroOfTheFrozenNorth": HeroOfTheFrozenNorth,
+    "HeroOfTheFrozenNorth+": HeroOfTheFrozenNorthPlus,
     "HolyAura": HolyAura,
     "HuntingHound": HuntingHound,
     "Iaido": Iaido,
@@ -95,8 +97,10 @@ const skillMap = {
     "MidnightRaven": MidnightRaven,
     "Miracle": Miracle,
     "MirrorStance": MirrorStance,
+    "Monstrous": Monstrous,
     "Nullify": Nullify,
     "Opportunist": Opportunist,
+    "Parry": Parry,
     "Patience": Patience,
     "Pavise": Pavise,
     "Perfectionist": Perfectionist,
@@ -124,6 +128,9 @@ const skillMap = {
     "RightfulLord": RightfulLord,
     "Riptide": Riptide,
     "SeraphOfRuin": SeraphOfRuin,
+    "SilverNoble": SilverNoble,
+    "SkyQueen": SkyQueen,
+    "SkyQueen+": SkyQueenPlus,
     "Skybreaker": Skybreaker,
     "Slayer": Slayer,
     "Sol": Sol,
@@ -131,15 +138,18 @@ const skillMap = {
     "SpectrumStance": SpectrumStance,
     "SteadyStance": SteadyStance,
     "StoneBody": StoneBody,
+    "StrangerInAStrangeLand": StrangerInAStrangeLand,
     "StrongRiposte": StrongRiposte,
     "SturdyStance": SturdyStance,
     "SwiftStance": SwiftStance,
     "SwordRange+1": SwordRangePlusOne,
+    "SwordVassal": SwordVassal,
     "Swordbreaker": Swordbreaker,
     "Swordfaire": Swordfaire,
     "Templar": Templar,
     "ThreeLeggedCrow": ThreeLeggedCrow,
     "Thunderstorm": Thunderstorm,
+    "TitanicBlow": TitanicBlow,
     "TomeRange+1": TomeRangePlusOne,
     "TomeRange+2": TomeRangePlusTwo,
     "Tomebreaker": Tomebreaker,
@@ -444,12 +454,16 @@ function Corrosion(attacker, defender, info) {
 
 // Physical damage taken at 1-2 range is reflected. Can't kill. Does not trigger on lethal blows.
 function Counter(attacker, defender, info) {
-    // Do later
+    if (info.whoseSkill == 0 || attacker.dmgType == "Magical" || Led.from(attacker.token).to(defender.token).byManhattan().inSquares() > 2) { return; }
+    defender.skillMsg += outputSkill("Counter");
+    if (info.isSim != 1) { defender.counterDmg = 1; }
 }
 
 // Magical damage taken at 1-2 range is reflected. Can't kill. Does not trigger on lethal blows.
 function CounterMagic(attacker, defender, info) {
-    // Do later
+    if (info.whoseSkill == 0 || attacker.dmgType == "Physical" || Led.from(attacker.token).to(defender.token).byManhattan().inSquares() > 2) { return; }
+    defender.skillMsg += outputSkill("Counter-Magic");
+    if (info.isSim != 1) { defender.counterDmg = 1; }
 }
 
 // +7 damage when initiating combat on a foe who is missing hp
@@ -795,7 +809,7 @@ function Glacies(attacker, defender, info) {
     }
 }
 
-// %Def chance to negate all damage
+// Def% chance to negate all damage
 function GreatShield(attacker, defender, info) {
     if (info.whoseSkill == 0) { return; }
     const odds = defender.def + defender.activationBonus;
@@ -837,6 +851,40 @@ function HeavyStrikes(attacker, defender, info) {
     if (info.whoseSkill == 1) { return; }
     attacker.skillMsg += outputSkill("Heavy Strikes");
     attacker.crit += attacker.currWt;
+}
+
+// Skl% chance to ignore enemy defense when above 50% hp, Skl% chance to regain hp equal to damage done when below 50% hp
+function HeroOfTheFrozenNorth(attacker, defender, info) {
+    if (info.whoseSkill == 1) { return; }
+    const odds = attacker.skl + attacker.activationBonus;
+    if (info.isSim == 1 && odds > 0) { attacker.skillMsg += outputSkill("Hero of the Frozen North", odds); }
+    else if (randomInteger(100) <= odds && attacker.currHP * 2 != attacker.maxHP) {
+        defender.skillMsg += outputSkill("Hero of the Frozen North");
+        if (attacker.currHP * 2 < attacker.maxHP) {
+            attacker.sol = 1;
+        }
+        else if (attacker.currHP * 2 > attacker.maxHP) {
+            defender.prot = 0;
+            defender.ward = 0;
+        }
+    }
+}
+
+// Skl*2% chance to ignore enemy defense when above 50% hp, Skl*2% chance to regain hp equal to damage done when below 50% hp
+function HeroOfTheFrozenNorthPlus(attacker, defender, info) {
+    if (info.whoseSkill == 1) { return; }
+    const odds = attacker.skl * 2 + attacker.activationBonus;
+    if (info.isSim == 1 && odds > 0) { attacker.skillMsg += outputSkill("Hero of the Frozen North+", odds); }
+    else if (randomInteger(100) <= odds && attacker.currHP * 2 != attacker.maxHP) {
+        defender.skillMsg += outputSkill("Hero of the Frozen North+");
+        if (attacker.currHP * 2 < attacker.maxHP) {
+            attacker.sol = 1;
+        }
+        else if (attacker.currHP * 2 > attacker.maxHP) {
+            defender.prot = 0;
+            defender.ward = 0;
+        }
+    }
 }
 
 // +1 damage, +5 hit, +5 crit, +5 avo when using Light magic
@@ -1065,6 +1113,13 @@ function MirrorStance(attacker, defender, info) {
     }
 }
 
+// Take half damage from the first attack in combat and fourth damage from any further attacks
+function Monstrous(attacker, defender, info) {
+    if (info.whoseSkill == 0) { return; }
+    defender.skillMsg += outputSkill("Monstrous");
+    defender.monstrous = 1;
+}
+
 // Unit is protected from all effective attacks
 function Nullify(attacker, defender, info) {
     if (info.whoseSkill == 0) { return; }
@@ -1077,6 +1132,18 @@ function Opportunist(attacker, defender, info) {
     if (info.whoseSkill == 1 || CanCounter(defender, Led.from(attacker.token).to(defender.token).byManhattan().inSquares())) { return; }
         attacker.skillMsg += outputSkill("Opportunist");
         attacker.addDmg += 4;
+}
+
+// Spd% chance to reduce damage by skl
+function Parry(attacker, defender, info) {
+    if (info.whoseSkill == 0) { return; }
+    const odds = defender.spd + defender.activationBonus;
+    if (info.isSim == 1 && odds > 0) { defender.skillMsg += outputSkill("Parry", odds); }
+    else if (randomInteger(100) <= odds) {
+        defender.skillMsg += outputSkill("Parry");
+        defender.addProt += defender.skl;
+        defender.addWard += defender.skl;
+    }
 }
 
 // +10 avoid when foe initiates
@@ -1340,6 +1407,39 @@ function SeraphOfRuin(attacker, defender, info) {
     }
 }
 
+// Add mag/2 to physical attacks and str/2 to magical attacks
+function SilverNoble(attacker, defender, info) {
+    if (info.whoseSkill == 1) { return; }
+    attacker.skillMsg += outputSkill("Silver Noble");
+    if (attacker.dmgType == "Physical") {
+        attacker.addDmg += Math.floor(attacker.mag / 2);
+    }
+    else if (attacker.dmgType == "Magical") {
+        attacker.addDmg += Math.floor(attacker.str / 2);
+    }
+}
+
+// Adds 1 damage for every 4 hp missing
+function SkyQueen(attacker, defender, info) {
+    if (info.whoseSkill == 1 || (attacker.currHP > attacker.maxHP - 4)) { return; }
+    attacker.skillMsg += outputSkill("Sky Queen");
+    attacker.addDmg += Math.floor((attacker.maxHP - attacker.currHP) / 4);
+}
+
+// Adds 1 damage and atk spd for every 4 hp missing
+function SkyQueenPlus(attacker, defender, info) {
+    if (info.whoseSkill == 0 && attacker.currHP <= attacker.maxHP - 4) {
+        attacker.skillMsg += outputSkill("Sky Queen+");
+        attacker.addDmg += Math.floor((attacker.maxHP - attacker.currHP) / 4);
+        attacker.atkSpd += Math.floor((attacker.maxHP - attacker.currHP) / 4);
+    }
+    else if (info.whoseSkill == 1 && defender.currHP <= defender.maxHP - 4) {
+        defender.skillMsg += outputSkill("Sky Queen+");
+        defender.atkSpd += Math.floor((attacker.maxHP - attacker.currHP) / 4);
+        defender.avoid += 2 * Math.floor((attacker.maxHP - attacker.currHP) / 4);
+    }
+}
+
 // Deal effective damage to Flying units
 function Skybreaker(attacker, defender, info) {
     if (info.whoseSkill == 1) { return; }
@@ -1402,6 +1502,17 @@ function StoneBody(attacker, defender, info) {
     defender.addProt += Math.max(0, defender.con - attacker.con);
 }
 
+// Lck*2% chance to use no durability
+function StrangerInAStrangeLand(attacker, defender, info) {
+    if (info.whoseSkill == 1) { return; }
+    const odds = attacker.lck * 2 + attacker.activationBonus;
+    if (info.isSim == 1 && odds > 0) { attacker.skillMsg += outputSkill("Stranger in a Strange Land", odds); }
+    else if (randomInteger(100) <= odds) {
+        attacker.skillMsg += outputSkill("Stranger in a Strange Land");
+        attacker.armsthrift = 1;
+    }
+}
+
 // +3 damage when foe initiates
 function StrongRiposte(attacker, defender, info) {
     if (info.whoseSkill == 1 || info.initiating == 1) { return; }
@@ -1440,6 +1551,12 @@ function SwordRangePlusOne(attacker, defender, info) {
     if (info.whoseSkill == 0 || defender.wepType != "Sword") { return; }
     defender.skillMsg += outputSkill("Sword Range +1");
     defender.maxDist += 1;
+}
+
+// Restore hp to full and remove all status effects when critting on initiate
+function SwordVassal(atacker, defender, info) {
+    if (info.whoseSkill == 1) { return; }
+    attacker.swordVassal = 1;
 }
 
 // +30 hit/avo when enemy has a sword equipped
@@ -1485,6 +1602,14 @@ function Thunderstorm(attacker, defender, info) {
     attacker.addDmg += 2;
     attacker.hit += 15;
     attacker.crit += 5;
+}
+
+// +30 hit and +4 str when initiating
+function TitanicBlow(attacker, defender, info) {
+    if (info.whoseSkill == 1 || info.initiating == 0) { return; }
+    attacker.skillMsg += outputSkill("Titanic Blow");
+    attacker.hit += 30;
+    attacker.addDmg += 4;
 }
 
 // Maximum range of equipped tomes is increased by 1
@@ -1541,11 +1666,6 @@ function TriangleAdept(attacker, defender, info) {
     if (info.whoseSkill == 0) { attacker.skillMsg += outputSkill("Triangle Adept"); }
     else if (info.whoseSkill == 1) { defender.skillMsg += outputSkill("Triangle Adept"); }
     attacker.triangleAdept = 1;
-}
-
-// Mag% chance to not use durability of a staff
-function TwilightSeraph(attacker, defender, info) {
-    return; // Do later
 }
 
 // Mag% chance to use no staff durability
@@ -1846,6 +1966,18 @@ const CombatArt = {
                 attacker.skillMsg += outputSkill("Blowback");
                 attacker.duraCost = 3;
                 break;
+            case "BrokenHeaven":
+                attacker.skillMsg += outputSkill("Broken Heaven");
+                attacker.duraCost = 3;
+                attacker.addDmg += Math.floor(attacker.def / 2);
+                attacker.currMt += Math.floor(attacker.def / 2);
+                break;
+            case "CarveHeaven":
+                attacker.skillMsg += outputSkill("Carve Heaven");
+                attacker.duraCost = 3;
+                attacker.addDmg += Math.floor(attacker.skl / 2);
+                attacker.currMt += Math.floor(attacker.skl / 2);
+                break;
             case "Colossus":
                 attacker.skillMsg += outputSkill("Colossus");
                 attacker.duraCost = 2;
@@ -1948,10 +2080,29 @@ const CombatArt = {
                 attacker.skillMsg += outputSkill("Perforate");
                 attacker.duraCost = 3;
                 attacker.dmgMult *= 4;
+            case "PerpetualGuardian":
+                attacker.skillMsg += outputSkill("Perpetual Guardian");
+                attacker.duraCost = 3;
+                attacker.numAttacks = 1;
+                attacker.addDmg += attacker.def;
+                attacker.futureDef += attacker.currMt;
+                break;
+            case "PerpetualGuardianPlus":
+                attacker.skillMsg += outputSkill("Perpetual Guardian+");
+                attacker.duraCost = 4;
+                attacker.addDmg += attacker.def * 2;
+                attacker.futureDef += attacker.currMt * 2;
+                break;
             case "Pierce": // Needs to work with targeted skills
                 attacker.skillMsg += outputSkill("Pierce");
                 attacker.duraCost = 2;
                 attacker.pierce = 1;
+                break;
+            case "ProfaneHeaven":
+                attacker.skillMsg += outputSkill("Profane Heaven");
+                attacker.duraCost = 3;
+                attacker.addDmg += Math.floor(attacker.res / 2);
+                attacker.currMt += Math.floor(attacker.res / 2);
                 break;
             case "Purity":
                 attacker.skillMsg += outputSkill("Purity");
@@ -1988,6 +2139,18 @@ const CombatArt = {
                 attacker.skillMsg += outputSkill("Sandstorm");
                 attacker.duraCost = 2;
                 attacker.sandstorm = 1;
+                break;
+            case "Stolen Heaven":
+                attacker.skillMsg += outputSkill("Stolen Heaven");
+                attacker.duraCost = 3;
+                attacker.addDmg += Math.floor(attacker.lck / 2);
+                attacker.currMt += Math.floor(attacker.lck / 2);
+                break;
+            case "Sublime Heaven":
+                attacker.skillMsg += outputSkill("Sublime Heaven");
+                attacker.duraCost = 3;
+                attacker.addDmg += Math.floor(attacker.spd / 2);
+                attacker.currMt += Math.floor(attacker.spd / 2);
                 break;
             case "SureShot":
                 attacker.skillMsg += outputSkill("Sure Shot");

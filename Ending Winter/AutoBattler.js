@@ -608,9 +608,14 @@ function DoOneCombatStep(selectedId, targetId, info, initiating, artName, isSim)
       if (info.barricade == 1) { dmgTaken = Math.floor(dmgTaken  / 2); }
       info.barricade = 1;
     }
+    if (defender.monstrous == 1) {
+      if (info.monstrous == 1) { dmgTaken = Math.floor(dmgTaken / 4); }
+      else { dmgTaken = Math.floor(dmgTaken / 2); }
+      info.monstrous = 1;
+    }
     if (attacker.corrode > 0) {
       prefix = defender.dmgType == "Physical" ? "repeating_weapons" : "repeating_spells";
-      [currUses2, attr2] = GetWeaponStats(defender.unit.id, defender.dmgType, prefix);
+      let [currUses2, attr2] = GetWeaponStats(defender.unit.id, defender.dmgType, prefix);
       attr2.setWithWorker("current", currUses2 - attacker.corrode);
     }
 
@@ -628,6 +633,10 @@ function DoOneCombatStep(selectedId, targetId, info, initiating, artName, isSim)
         dmgTaken *= 3;
         if (defender.resilience == 1) { dmgTaken = Math.floor(dmgTaken / 2); }
         UpdateHealth(defender, dmgTaken);
+        if (attacker.swordVassal == 1) {
+          attacker.skillMsg += outputSkill("Sword Vassal");
+          attacker.postDamage = -999;
+        }
         content += 'You crit and deal '+ dmgTaken + ' damage!'; // Intentionally not capping damage numbers put in chat. Hitting low hp enemies for ludicrous damage numbers is fun
       }
       else {
@@ -657,20 +666,21 @@ function DoOneCombatStep(selectedId, targetId, info, initiating, artName, isSim)
     }
   }
 
-    // Gather info for future battle steps
-    Object.assign(info, {
-      counter: attacker.dazzle == 1 ? 0 : CanCounter(defender, Led.from(attacker.token).to(defender.token).byManhattan().inSquares()),
-      double: attacker.single == 1 ? 0 : atkSpdDiff >= 4,
-      killed: defender.obj.get("bar3_value") == 0 ? 1 : 0,
-      numAttacks: attacker.numAttacks,
-      extraAttack: attacker.extraAttack,
-      extraAttackRoll: attacker.extraAttackRoll,
-      postDamageAtk: attacker.postDamage,
-      postDamageDef: defender.postDamage,
-      aether: artName == "Aether" ? 1 : 0,
-    });
+  // Gather info for future battle steps
+  Object.assign(info, {
+    counter: attacker.dazzle == 1 ? 0 : CanCounter(defender, Led.from(attacker.token).to(defender.token).byManhattan().inSquares()),
+    double: attacker.single == 1 ? 0 : atkSpdDiff >= 4,
+    killed: defender.obj.get("bar3_value") == 0 ? 1 : 0,
+    numAttacks: attacker.numAttacks,
+    extraAttack: attacker.extraAttack,
+    extraAttackRoll: attacker.extraAttackRoll,
+    postDamageAtk: attacker.postDamage,
+    postDamageDef: defender.postDamage,
+    aether: artName == "Aether" ? 1 : 0,
+  });
 
-    if (info.killed == 1 && attacker.profiteer == 1) { content += "<br> You find 500 gold on the ground!" }
+  if (info.killed != 1 && defender.counterDmg == 1) { attacker.miracle = 1; UpdateHealth(attacker, dmgTaken); }
+  if (info.killed == 1 && attacker.profiteer == 1) { content += "<br> You find 500 gold on the ground!" }
 
   attacker.skillMsg += "</ul>";
   defender.skillMsg += "</ul>";
