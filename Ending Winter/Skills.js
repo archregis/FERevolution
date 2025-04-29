@@ -146,6 +146,7 @@ const skillMap = {
     "SwordVassal": SwordVassal,
     "Swordbreaker": Swordbreaker,
     "Swordfaire": Swordfaire,
+    "Swordslayer": Swordslayer,
     "Templar": Templar,
     "ThreeLeggedCrow": ThreeLeggedCrow,
     "Thunderstorm": Thunderstorm,
@@ -544,7 +545,7 @@ function DeadlyStrikes(attacker, defender, info) {
     attacker.crit += attacker.skl;
 }
 
-// Adds 1.5 crit per skl instead of 0.5
+// Adds 2 crit per skl instead of 0.5
 function DeadlyStrikesPlus(attacker, defender, info) {
     if (info.whoseSkill == 1) { return; }
     attacker.skillMsg += outputSkill("Deadly Strikes+");
@@ -1576,6 +1577,13 @@ function Swordfaire(attacker, defender, info) {
     if (info.whoseSkill == 1 || attacker.wepType != "Sword") { return; }
     attacker.skillMsg += outputSkill("Swordfaire");
     attacker.addDmg += 4;
+}
+
+// Deal effective damage to foes with a sword rank
+function Swordslayer(attacker, defender, info) {
+    if (info.whoseSkill == 1 || defender.swordExp == 0) { return; }
+    attacker.skillMsg += outputSkill("Swordslayer");
+    attacker.effAll = 1
 }
 
 // Deal effective damage to magical units
