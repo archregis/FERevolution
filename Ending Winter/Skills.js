@@ -1450,7 +1450,7 @@ function Skybreaker(attacker, defender, info) {
 // Deal effective damage to Terror units
 function Slayer(attacker, defender, info) {
     if (info.whoseSkill == 1) { return; }
-    attacker.skillMsg += outputSkill("Skybreaker");
+    attacker.skillMsg += outputSkill("Slayer");
     attacker.currEff += ",Terror";
 }
 
