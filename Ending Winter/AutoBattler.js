@@ -579,6 +579,12 @@ function DoOneCombatStep(selectedId, targetId, info, initiating, artName, isSim)
   let dmgTaken = Math.max(0, (atkDmg - defMit + addedDmg) / (1 + attacker.astra));
   dmgTaken *= attacker.dmgMult;
   if (info.extraAttackMult > 0) { dmgTaken *= info.extraAttackMult; }
+  if (defender.monstrous == 1) {
+    if (info.monstrous == 1) { dmgTaken = dmgTaken / 4; }
+    else { dmgTaken = dmgTaken / 2; }
+    info.monstrous = 1;
+  }
+
   dmgTaken = Math.floor(dmgTaken); // Remove any fractions
 
 
@@ -607,11 +613,6 @@ function DoOneCombatStep(selectedId, targetId, info, initiating, artName, isSim)
     if (defender.barricade == 1) {
       if (info.barricade == 1) { dmgTaken = Math.floor(dmgTaken  / 2); }
       info.barricade = 1;
-    }
-    if (defender.monstrous == 1) {
-      if (info.monstrous == 1) { dmgTaken = Math.floor(dmgTaken / 4); }
-      else { dmgTaken = Math.floor(dmgTaken / 2); }
-      info.monstrous = 1;
     }
     if (attacker.corrode > 0) {
       prefix = defender.dmgType == "Physical" ? "repeating_weapons" : "repeating_spells";
