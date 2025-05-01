@@ -204,6 +204,8 @@ function initializeAtkInfo(unitId, info) {
   output.def = getAttrValue(output.unit.id, "defTotal");
   output.res = getAttrValue(output.unit.id, "resTotal");
   output.con = getAttrValue(output.unit.id, "conTotal");
+  output.phys = getAttrValue(output.unit.id, "physTotal");
+  output.myst = getAttrValue(output.unit.id, "mystTotal");
   output.hit = getAttrValue(output.unit.id, "hit");
   output.crit = getAttrValue(output.unit.id, "crit");
   output.atkSpd = getAttrValue(output.unit.id, 'atkSpd');
@@ -231,7 +233,7 @@ function initializeAtkInfo(unitId, info) {
 }
 
 // Sets up all the info a defender needs to complete a round of combat
-function initializeDefInfo(unitId) {
+function initializeDefInfo(unitId, info) {
   let output = {};
   // Token info
   output.token = getObj('graphic', unitId);
@@ -252,9 +254,12 @@ function initializeDefInfo(unitId) {
   output.currHP = output.obj.get("bar3_value");
   output.maxHP = output.obj.get("bar3_max");
   output.str = getAttrValue(output.unit.id, "strTotal");
+  output.mag = getAttrValue(output.unit.id, "magTotal");
   output.skl = getAttrValue(output.unit.id, "sklTotal"),
   output.spd = getAttrValue(output.unit.id, "spdTotal"),
+  output.lck = getAttrValue(output.unit.id, "lckTotal");
   output.def = getAttrValue(output.unit.id, "defTotal"),
+  output.res = getAttrValue(output.unit.id, "resTotal"),
   output.con = getAttrValue(output.unit.id, "conTotal");
   output.ward = getAttrValue(output.unit.id, "wardTotal");
   output.prot = getAttrValue(output.unit.id, "protTotal");
@@ -291,7 +296,7 @@ on('chat:message', function(msg) {
   // Initialize Attacker and Defender
   const selectedId = parts[0];
   const targetId = parts[1];
-  const artName = parts[2];
+  const artName = parts[2] || "None";
 
   let info = {
     counter: 0,
@@ -301,6 +306,7 @@ on('chat:message', function(msg) {
     numAttacks: 1,
     aether: 0,
     extraAttackMult: 0,
+    postHealAtk: 0,
   }
   let attackerDoubled = 0;
   let extraAttack = 0;
@@ -310,7 +316,7 @@ on('chat:message', function(msg) {
 
   if (command == "hit") {
     const attacker = initializeAtkInfo(selectedId, info)
-    const defender = initializeDefInfo(targetId)
+    const defender = initializeDefInfo(targetId, info)
     if (SkillHandler.CheckVantage(attacker, defender) == 1) {
       combatBlock: {
         // Can the enemy counter?
@@ -325,10 +331,10 @@ on('chat:message', function(msg) {
         // Attacker initial combat
         if (CombatBlock(selectedId, targetId, info, 1, artName) == -1) { break combatBlock; }
         attackerDoubled = info.double; // Necessary to save off here due to info being overwritten
-        extraAttack = info.extraAttack; // See above
-        extraAttackRoll = info.extraAttackRoll; // See above
-        postDamageAtk = info.postDamageAtk; // See above
-        postDamageDef = info.postDamageDef; // See above
+        extraAttack = info.extraAttack; 
+        extraAttackRoll = info.extraAttackRoll;
+        postDamageAtk = info.postDamageAtk; 
+        postDamageDef = info.postDamageDef; 
 
         // Attacker doubled, go again
         if (attackerDoubled == 1) {
@@ -350,10 +356,10 @@ on('chat:message', function(msg) {
         // Attacker initial combat
         if (CombatBlock(selectedId, targetId, info, 1, artName) == -1) { break combatBlock; }
         attackerDoubled = info.double; // Necessary to save off here due to info being overwritten
-        extraAttack = info.extraAttack; // See above
-        extraAttackRoll = info.extraAttackRoll; // See above
-        postDamageAtk = info.postDamageAtk; // See above
-        postDamageDef = info.postDamageDef; // See above
+        extraAttack = info.extraAttack; 
+        extraAttackRoll = info.extraAttackRoll; 
+        postDamageAtk = info.postDamageAtk; 
+        postDamageDef = info.postDamageDef; 
 
         // Attacker doubled, go again
         if (attackerDoubled == 1) {
@@ -384,10 +390,10 @@ on('chat:message', function(msg) {
         // Attacker initial combat
         if (CombatBlock(selectedId, targetId, info, 1, artName) == -1) { break combatBlock; }
         attackerDoubled = info.double; // Necessary to save off here due to info being overwritten
-        extraAttack = info.extraAttack; // See above
-        extraAttackRoll = info.extraAttackRoll; // See above
-        postDamageAtk = info.postDamageAtk; // See above
-        postDamageDef = info.postDamageDef; // See above
+        extraAttack = info.extraAttack; 
+        extraAttackRoll = info.extraAttackRoll;
+        postDamageAtk = info.postDamageAtk; 
+        postDamageDef = info.postDamageDef;
 
         // Can the enemy counter?
         if (info.counter == 1) {
@@ -417,6 +423,7 @@ on('chat:message', function(msg) {
     // Post battle damage
     if (postDamageAtk > 0) { UpdateHealth(attacker, postDamageAtk); }
     if (postDamageDef > 0) { UpdateHealth(defender, postDamageDef); }
+    if (info.postHealAtk > 0 && attacker.obj.get("bar3_value") != 0) { UpdateHealth(attacker, -info.postHealAtk); }
 
   }
   else if (command == "sim") {
@@ -448,9 +455,15 @@ function CombatBlock(firstId, secondId, info, initiating, artName) {
 function DoOneCombatStep(selectedId, targetId, info, initiating, artName, isSim) {
   // Set up attacker/defender info
   let attacker = initializeAtkInfo(selectedId, info);
-  let defender = initializeDefInfo(targetId);
+  attacker.artName = artName == "None" ? 0 : 1;
+  let defender = initializeDefInfo(targetId, info);
   let combatMsg = `${attacker.name} ${isSim == 1 ? "simulates attacking " : "attacks "} ${defender.name} with ${attacker.wepName}! <br>`
 
+
+ // Skill checks
+ SkillHandler.CheckSkills(attacker, defender, initiating, isSim);
+
+ 
   // Add Combat Art if using
  CombatArt.UseArt(artName, attacker, defender);
 
@@ -462,9 +475,6 @@ function DoOneCombatStep(selectedId, targetId, info, initiating, artName, isSim)
     sendChat('System', "Durability cost is higher than uses remaining.");
     return;
   }
-
-  // Skill checks
-  SkillHandler.CheckSkills(attacker, defender, initiating, isSim);
 
 
   // Grab Stats
@@ -565,16 +575,16 @@ function DoOneCombatStep(selectedId, targetId, info, initiating, artName, isSim)
   let protDef = defender.prot + defender.addProt + getAttrValue(defender.unit.id, "mitBonusTotal");
   let wardDef = defMit = defender.ward + defender.addWard + getAttrValue(defender.unit.id, "mitBonusTotal");
   if (attacker.dmgType == 'Physical') {
-    atkDmg = getAttrValue(attacker.unit.id, "physTotal");
+    atkDmg = attacker.phys;
     defMit = protDef;
   }
   else if (attacker.dmgType == 'Magical') {
-    atkDmg = getAttrValue(attacker.unit.id, "mystTotal");
+    atkDmg = attacker.myst;
     defMit = wardDef;
   }
 
-  if (attacker.fallenStar == 1) { atkDmg = attacker.currMt + getAttrValue(attacker.unit.id, "spdTotal") * 1.5; }
-  if (attacker.sandstorm == 1) { atkDmg = attacker.currMt + getAttrValue(attacker.unit.id, "defTotal") * 1.5; }
+  if (attacker.fallenStar == 1) { atkDmg = attacker.currMt + attacker.spd * 1.5; }
+  if (attacker.sandstorm == 1) { atkDmg = attacker.currMt + attacker.def * 1.5; }
   if (attacker.eviscerate == 1) { defMit = Math.min(protDef, wardDef); }
 
   let dmgTaken = Math.max(0, (atkDmg - defMit + addedDmg) / (1 + attacker.astra));
@@ -592,6 +602,7 @@ function DoOneCombatStep(selectedId, targetId, info, initiating, artName, isSim)
   // Actual Combat
   if (isSim == 1) { // Simulate battle outcome
     const init = initiating == 1 ? "Initiating" : "Countering"
+    if (defender.monstrous == 1 || defender.barricade == 1) { dmgTaken += " / " + dmgTaken / 2; }
     content += `${attacker.name} is ${init} <br> Atk Spd: ${atkSpdDiff} <br> Dmg Done: ${dmgTaken} <br> Hit Rate: ${101+hit-avoid} <br> Crit Rate: ${(101+crit-dodge)}`;
   }
   else { // Output battle outcome
@@ -637,7 +648,7 @@ function DoOneCombatStep(selectedId, targetId, info, initiating, artName, isSim)
         UpdateHealth(defender, dmgTaken);
         if (attacker.swordVassal == 1) {
           attacker.skillMsg += outputSkill("Sword Vassal");
-          attacker.postDamage = -999;
+          attacker.postHeal = attacker.maxHP;
         }
         content += 'You crit and deal '+ dmgTaken + ' damage!'; // Intentionally not capping damage numbers put in chat. Hitting low hp enemies for ludicrous damage numbers is fun
       }
@@ -668,16 +679,22 @@ function DoOneCombatStep(selectedId, targetId, info, initiating, artName, isSim)
     }
   }
 
+  const killed = defender.obj.get("bar3_value") == 0;
+  if (attacker.lifetaker == 1 && killed == 1) {
+    attacker.skillMsg += outputSkill("Lifetaker");
+    attacker.postHeal = Math.floor(attacker.maxHP / 2); }
+
   // Gather info for future battle steps
   Object.assign(info, {
     counter: attacker.dazzle == 1 ? 0 : CanCounter(defender, Led.from(attacker.token).to(defender.token).byManhattan().inSquares()),
     double: attacker.single == 1 ? 0 : atkSpdDiff >= 4,
-    killed: defender.obj.get("bar3_value") == 0 ? 1 : 0,
+    killed: killed,
     numAttacks: attacker.numAttacks,
     extraAttack: attacker.extraAttack,
     extraAttackRoll: attacker.extraAttackRoll,
     postDamageAtk: attacker.postDamage,
     postDamageDef: defender.postDamage,
+    postHealAtk: initiating == 1 ? Math.max(info.postHealAtk, attacker.postHeal) : info.postHealAtk,
     aether: artName == "Aether" ? 1 : 0,
   });
 

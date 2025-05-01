@@ -89,6 +89,7 @@ const skillMap = {
     "LaughingWolf": LaughingWolf,
     "Lethality": Lethality,
     "LifeAndDeath": LifeAndDeath,
+    "Lifetaker": Lifetaker,
     "Lightning": Lightning,
     "LiquidOoze": LiquidOoze,
     "LunarBrace": LunarBrace,
@@ -247,9 +248,9 @@ function ArchsagesInsight(attacker, defender, info) {
 
 // +10 def when initiating battle
 function ArmoredBlow(attacker, defender, info) {
-    if (info.whoseSkill == 0 || info.initiating) { return; }
+    if (info.whoseSkill == 0 || info.initiating == 1) { return; }
     defender.skillMsg += outputSkill("Armored Blow");
-    defender.addProt += 10
+    defender.prot += 10
 }
 
 // Lck% chance to use no durability
@@ -296,12 +297,12 @@ function Aurelian(attacker, defender, info) {
 
 // When below 50% hp, gain +30 hit, avo, and crit
 function Awakening(attacker, defender, info) {
-    if (info.whoseSkill == 0 && attacker.currHP < Math.floor(attacker.maxHP / 2)) {
+    if (info.whoseSkill == 0 && attacker.currHP * 2 < attacker.maxHP) {
         attacker.skillMsg += outputSkill("Awakening");
         attacker.hit += 30;
         attacker.crit += 30;
     }
-    else if (info.whoseSkill == 1 && defender.currHP < Math.floor(defender.maxHP / 2)) {
+    else if (info.whoseSkill == 1 && defender.currHP * 2 < defender.maxHP) {
         defender.skillMsg += outputSkill("Awakening");
         defender.avoid += 30;
     }
@@ -430,7 +431,7 @@ function Chivalry(attacker, defender, info) {
       }
 }
 
-// Negates enemy effective damage and increases atk by 6
+// Negates enemy effective damage and increases dmg by 6
 function Conquest(attacker, defender, info) {
     if (info.whoseSkill == 0) {
         attacker.skillMsg += outputSkill("Conquest");
@@ -561,27 +562,30 @@ function DeathBlow(attacker, defender, info) {
 
 // +30 avo when below 25% hp
 function DefiantAvoid(attacker, defender, info) {
-    if (info.whoseSkill == 0 || defender.currHP >= Math.floor(defender.maxHP / 4)) { return; }
+    if (info.whoseSkill == 0 || defender.currHP * 4 >= defender.maxHP) { return; }
     defender.skillMsg += outputSkill("Defiant Avoid");
     defender.avoid += 30;
 }
 
 // +4 def when below 50% hp
 function DefiantDefense(attacker, defender, info) {
-    if (info.whoseSkill == 0 || defender.currHP >= Math.floor(defender.maxHP / 2)) { return; }
+    if (info.whoseSkill == 0 || defender.currHP * 2 >= defender.maxHP) { return; }
     defender.skillMsg += outputSkill("Defiant Defense");
-    defender.addProt += 4;
+    defender.def += 4;
+    defender.prot += 4;
 }
 
 // +10 lck when below 50% hp
 function DefiantLuck(attacker, defender, info) {
-    if (info.whoseSkill == 0 && attacker.currHP < Math.floor(attacker.maxHP / 2)) {
+    if (info.whoseSkill == 0 && attacker.currHP * 2 < attacker.maxHP) {
         attacker.skillMsg += outputSkill("Defiant Luck");
+        attacker.lck += 10;
         attacker.hit += 5;
         attacker.crit += 5;
     }
-    else if (info.whoseSkill == 1 && defender.currHP < Math.floor(defender.maxHP / 2)) {
+    else if (info.whoseSkill == 1 && defender.currHP * 2 < defender.maxHP) {
         defender.skillMsg += outputSkill("Defiant Luck");
+        defender.lck += 10;
         defender.avoid += 10;
         defender.dodge += 10;
     }
@@ -589,36 +593,41 @@ function DefiantLuck(attacker, defender, info) {
 
 // +6 mag when below 50% hp
 function DefiantMagic(attacker, defender, info) {
-    if (info.whoseSkill == 1 || attacker.currHP >= Math.floor(attacker.maxHP / 2)) { return; }
+    if (info.whoseSkill == 1 || attacker.currHP * 2 >= attacker.maxHP) { return; }
     if (attacker.dmgType == "Magical") {
         attacker.skillMsg += outputSkill("Defiant Magic");
-        attacker.addDmg += 6;
+        attacker.mag += 6;
+        attacker.myst += 6;
     }
 }
 
 // +6 res when below 50% hp
 function DefiantResistance(attacker, defender, info) {
-    if (info.whoseSkill == 0 || defender.currHP >= Math.floor(defender.maxHP / 2)) { return; }
+    if (info.whoseSkill == 0 || defender.currHP * 2 >= defender.maxHP) { return; }
     defender.skillMsg += outputSkill("Defiant Resistance");
-    defender.addWard += 6;
+    defender.res += 6;
+    defender.ward += 6;
 }
 
 // +8 skl when below 50% hp
 function DefiantSkill(attacker, defender, info) {
-    if (info.whoseSkill == 1 || attacker.currHP >= Math.floor(attacker.maxHP / 2)) { return; }
+    if (info.whoseSkill == 1 || attacker.currHP * 2 >= attacker.maxHP) { return; }
     attacker.skillMsg += outputSkill("Defiant Skill");
+    attacker.skl += 8;
     attacker.hit += 16;
     attacker.crit += 8;
 }
 
 // +4 spd when below 50% hp
 function DefiantSpeed(attacker, defender, info) {
-    if (info.whoseSkill == 0 && attacker.currHP < Math.floor(attacker.maxHP / 2)) {
+    if (info.whoseSkill == 0 && attacker.currHP * 2 < attacker.maxHP) {
         attacker.skillMsg += outputSkill("Defiant Speed");
+        attacker.spd += 4;
         attacker.atkSpd += 4
     }
-    else if (info.whoseSkill == 1 && defender.currHP < Math.floor(defender.maxHP / 2)) {
+    else if (info.whoseSkill == 1 && defender.currHP * 2 < defender.maxHP) {
         defender.skillMsg += outputSkill("Defiant Speed");
+        defender.spd += 4;
         defender.atkSpd += 4;
         defender.avoid += 8;
     }
@@ -626,10 +635,11 @@ function DefiantSpeed(attacker, defender, info) {
 
 // +6 str when below 50% hp
 function DefiantStrength(attacker, defender, info) {
-    if (info.whoseSkill == 1 || attacker.currHP >= Math.floor(attacker.maxHP / 2)) { return; }
+    if (info.whoseSkill == 1 || attacker.currHP * 2 >= attacker.maxHP) { return; }
     if (attacker.dmgType == "Physical") {
         attacker.skillMsg += outputSkill("Defiant Strength");
-        attacker.addDmg += 6;
+        attacker.str += 6;
+        attacker.phys += 6;
     }
 }
 
@@ -649,19 +659,19 @@ function Desperation(attacker, defender, info) {
 
 // Reduces the cost of Combat Arts by 1 when below 50% hp
 function Determination(attacker, defender, info) {
-    if (info.whoseSkill == 1 || attacker.currHP >= Math.floor(attacker.maxHP / 2)) { return; }
+    if (info.whoseSkill == 1 || attacker.currHP * 2 >= attacker.maxHP) { return; }
     attacker.skillMsg += outputSkill("Determination");
     attacker.duraCost = Math.max(1, attacker.duraCost - 1);
 }
 
 // Reduces the cost of Combat Arts by 1 and increase skill activation by 20% when below 50% hp
 function DeterminationPlus(attacker, defender, info) {
-    if (info.whoseSkill == 0 && attacker.currHP < Math.floor(attacker.maxHP / 2)) {
+    if (info.whoseSkill == 0 && attacker.currHP * 2 < attacker.maxHP) {
         attacker.skillMsg += outputSkill("Determination+");
         attacker.duraCost = Math.max(1, attacker.duraCost - 1);
         attacker.activationBonus += 20;
     }
-    else if (info.whoseSkill == 1 && defender.currHP < Math.floor(defender.maxHP / 2)) {
+    else if (info.whoseSkill == 1 && defender.currHP * 2 < defender.maxHP) {
         defender.skillMsg += outputSkill("Determination+");
         defender.activationBonus += 20;
     }
@@ -671,11 +681,15 @@ function DeterminationPlus(attacker, defender, info) {
 function DivineBlow(attacker, defender, info) {
     if (info.whoseSkill == 0 && info.initiating == 1) {
         attacker.skillMsg += outputSkill("Divine Blow");
-        attacker.addDmg += 6;
+        attacker.str += 6;
+        attacker.spd += 6;
+        attacker.phys += 6;
         attacker.atkSpd += 6;
     }
     else if (info.whoseSkill == 1 && info.initiating == 0) {
         defender.skillMsg += outputSkill("Divine Blow");
+        defender.str += 6;
+        defender.spd += 6;
         defender.atkSpd += 6;
         defender.avoid += 12;
     }
@@ -750,11 +764,18 @@ function Foresight(attacker, defender, info) {
 function FortressDefense(attacker, defender, info) {
     if (info.whoseSkill == 0) {
         attacker.skillMsg += outputSkill("Fortress Defense");
-        attacker.addDmg += -3;
+        attacker.str += -3;
+        attacker.mag += -3;
+        attacker.def += 5;
+        attacker.phys += -3;
+        attacker.myst += -3
     }
     else if (info.whoseSkill == 1) {
         defender.skillMsg += outputSkill("Fortress Defense");
-        defender.addProt += 5;
+        defender.str += -3;
+        defender.mag += -3;
+        defender.def += 5;
+        defender.prot += 5;
     }
 }
 
@@ -762,11 +783,18 @@ function FortressDefense(attacker, defender, info) {
 function FortressResistance(attacker, defender, info) {
     if (info.whoseSkill == 0) {
         attacker.skillMsg += outputSkill("Fortress Resistance");
-        attacker.addDmg += -3;
+        attacker.str += -3;
+        attacker.mag += -3;
+        attacker.res += 5;
+        attacker.phys += -3;
+        attacker.myst += -3;
     }
     else if (info.whoseSkill == 1) {
         defender.skillMsg += outputSkill("Fortress Resistance");
-        defender.addWard += 5;
+        defender.str += -3;
+        defender.mag += -3;
+        defender.res += 5;
+        defender.ward += 5;
     }
 }
 
@@ -785,16 +813,27 @@ function FrostlingDove(attacker, defender, info) {
 function Fury(attacker, defender, info) {
     if (info.whoseSkill == 0) {
         attacker.skillMsg += outputSkill("Fury");
-        attacker.addDmg += 2;
+        attacker.str += 2;
+        attacker.mag += 2;
+        attacker.spd += 2;
+        attacker.def += 2;
+        attacker.res += 2;
+        attacker.phys += 2;
+        attacker.myst += 2;
         attacker.atkSpd += 2;
         attacker.postDamage += 6;
     }
     else if (info.whoseSkill == 1) {
         defender.skillMsg += outputSkill("Fury");
+        defender.str += 2;
+        defender.mag += 2;
+        defender.spd += 2;
+        defender.def += 2;
+        defender.res += 2;
         defender.avoid += 4;
         defender.atkSpd += 2;
-        defender.addProt += 2;
-        defender.addWard += 2;
+        defender.prot += 2;
+        defender.ward += 2;
         defender.postDamage += 6;
     }
 }
@@ -910,7 +949,7 @@ function HuntingHound(attacker, defender, info) {
     attacker.unbreaking = 1;
 }
 
-// %Spd chance to deal damage equal to str when targeted at range
+// Spd% chance to deal damage equal to str when targeted at range
 function Iaido(attacker, defender, info) {
     if (info.whoseSkill == 0) { return; }
     const odds = defender.spd + defender.activationBonus;
@@ -944,8 +983,8 @@ function Imperturbable(attacker, defender, info) {
     if (info.whoseSkill == 0) { return; }
     let stacks = 4 - Math.ceil(4 * defender.currHP / defender.maxHP);
     if (stacks > 0) { defender.skillMsg += outputSkill("Imperturbable"); }
-    defender.addProt += 3 * stacks;
-    defender.addWard += 3 * stacks;
+    defender.prot += 3 * stacks;
+    defender.ward += 3 * stacks;
 }
 
 // +20 hit
@@ -966,11 +1005,13 @@ function JadeTiger(attacker, defender, info) {
 function KestrelStance(attacker, defender, info) {
     if (info.whoseSkill == 0 && info.initiating == 0) {
         attacker.skillMsg += outputSkill("Kestrel Stance");
+        attacker.spd += 4;
         attacker.addDmg += 4;
         attacker.atkSpd += 4;
     }
     else if (info.whoseSkill == 1 && info.initiating == 1) {
         defender.skillMsg += outputSkill("Kestrel Stance");
+        defender.spd += 4;
         defender.avoid += 8;
         defender.atkSpd += 4;
     }
@@ -987,12 +1028,18 @@ function KillingMachine(attacker, defender, info) {
 function KingsBlow(attacker, defender, info) {
     if (info.whoseSkill == 0 && info.initiating == 1) {
         attacker.skillMsg += outputSkill("King's Blow");
-        attacker.addDmg += 6;
+        attacker.str += 6;
+        attacker.def += 6;
+        attacker.res += 6;
+        attacker.phys += 6;
     }
     else if (info.whoseSkill == 1 && info.initiating == 0) {
         defender.skillMsg += outputSkill("King's Blow");
-        defender.addProt += 6;
-        defender.addWard += 6;
+        defender.str += 6;
+        defender.def += 6;
+        defender.res += 6;
+        defender.prot += 6;
+        defender.ward += 6;
     }
 }
 
@@ -1043,6 +1090,12 @@ function LifeAndDeath(attacker, defender, info) {
         defender.skillMsg += outputSkill("Life and Death");
         attacker.addDmg += 10;
     }
+}
+
+// Heal 50% of max hp after initiating and killing an enemy
+function Lifetaker(attacker, defender, info) {
+    if (info.whoseSkill == 1) { return; }
+    attacker.lifetaker = 1;
 }
 
 // +3 damage, +20 hit, +10 crit when weapon weighs less than enemy's
@@ -1106,11 +1159,13 @@ function Miracle(attacker, defender, info) {
 function MirrorStance(attacker, defender, info) {
     if (info.whoseSkill == 0 && info.initiating == 0) {
         attacker.skillMsg += outputSkill("Mirror Stance");
+        attacker.res += 4;
         attacker.addDmg += 4;
     }
     else if (info.whoseSkill == 1 && info.initiating == 1) {
         defender.skillMsg += outputSkill("Mirror Stance");
-        defender.addWard += 4;
+        defender.res += 4;
+        defender.ward += 4;
     }
 }
 
@@ -1234,7 +1289,8 @@ function Pursuit(attacker, defender, info) {
 function PushDefense(attacker, defender, info) {
     if (info.whoseSkill == 0 || defender.currHP < defender.maxHP) { return; }
     defender.skillMsg += outputSkill("Push Defense");
-    defender.addProt += 5;
+    defender.def += 5;
+    defender.prot += 5;
 }
 
 // +5 mag when full hp
@@ -1242,7 +1298,8 @@ function PushMagic(attacker, defender, info) {
     if (info.whoseSkill == 1 || attacker.currHP < attacker.maxHP) { return; }
     if (attacker.dmgType == "Magical") {
         attacker.skillMsg += outputSkill("Push Magic");
-        attacker.addDmg += 5;
+        attacker.mag += 5;
+        attacker.myst += 5;
     }
 }
 
@@ -1250,13 +1307,15 @@ function PushMagic(attacker, defender, info) {
 function PushResistance(attacker, defender, info) {
     if (info.whoseSkill == 0 || defender.currHP < defender.maxHP) { return; }
     defender.skillMsg += outputSkill("Push Resistance");
-    defender.addWard += 5;
+    defender.res += 5;
+    defender.ward += 5;
 }
 
 // +5 skl when full hp
 function PushSkill(attacker, defender, info) {
     if (info.whoseSkill == 1 || attacker.currHP < attacker.maxHP) { return; }
     attacker.skillMsg += outputSkill("Push Skill");
+    attacker.skl += 5;
     attacker.hit += 10;
     attacker.crit += 3;
 }
@@ -1265,10 +1324,12 @@ function PushSkill(attacker, defender, info) {
 function PushSpeed(attacker, defender, info) {
     if (info.whoseSkill == 0 && attacker.currHP >= attacker.maxHP) {
         attacker.skillMsg += outputSkill("Push Speed");
+        attacker.spd += 5;
         attacker.atkSpd += 5;
     }
     else if (info.whoseSkill == 1 && defender.currHP >= defender.maxHP) {
         defender.skillMsg += outputSkill("Push Speed");
+        defender.spd += 5;
         defender.atkSpd += 5;
         defender.avoid += 10;
     }
@@ -1279,7 +1340,8 @@ function PushStrength(attacker, defender, info) {
     if (info.whoseSkill == 1 || attacker.currHP < attacker.maxHP) { return; }
     if (attacker.dmgType == "Physical") {
         attacker.skillMsg += outputSkill("Push Strength");
-        attacker.addDmg += 5;
+        attacker.str += 5;
+        attacker.phys += 5;
     }
 }
 
@@ -1301,13 +1363,17 @@ function RadiantBlazar(attacker, defender, info) {
 function ReadyStance(attacker, defender, info) {
     if (info.whoseSkill == 0 && info.initiating == 0) {
         attacker.skillMsg += outputSkill("Ready Stance");
+        attacker.spd += 4;
+        attacker.def += 4;
         attacker.atkSpd += 4;
     }
     else if (info.whoseSkill == 1 && info.initiating == 1) {
         defender.skillMsg += outputSkill("Ready Stance");
+        defender.spd += 4;
+        defender.def += 4;
         defender.atkSpd += 4;
         defender.avoid += 8;
-        defender.addProt += 4;
+        defender.prot += 4;
     }
 }
 
@@ -1343,26 +1409,33 @@ function Resilience(attacker, defender, info) {
 function Resolve(attacker, defender, info) {
     if (info.whoseSkill == 0 && attacker.currHP < attacker.maxHP / 2) {
         attacker.skillMsg += outputSkill("Resolve");
+
         attacker.hit += Math.floor((attacker.skl / 10 * 3) * 2);
         attacker.crit += Math.floor((attacker.skl / 10 * 3) / 2);
-        attacker.skl += Math.floor(attacker.skl / 10 * 3);
-   
         attacker.atkSpd += Math.floor(attacker.spd / 10 * 3);
-        attacker.spd += Math.floor(attacker.spd / 10 * 3);
    
         if (attacker.dmgType == 'Physical') {
-            attacker.addDmg += Math.floor(attacker.str / 10 * 3);
-            attacker.str += Math.floor(attacker.str/ 10 * 3);
+            attacker.phys += Math.floor(attacker.str / 10 * 3);  
         }
         else if (attacker.dmgType == 'Magical') {
-         attacker.addDmg += Math.floor(attacker.mag / 10 * 3);
-         attacker.mag += Math.floor(attacker.mag / 10 * 3);
+         attacker.myst += Math.floor(attacker.mag / 10 * 3);
         }
+
+        attacker.str += Math.floor(attacker.str / 10 * 3);
+        attacker.mag += Math.floor(attacker.mag / 10 * 3);
+        attacker.spd += Math.floor(attacker.spd / 10 * 3);
+        attacker.skl += Math.floor(attacker.skl / 10 * 3);
       }
       else if (info.whoseSkill == 1 && defender.currHP < defender.maxHP / 2) {
         defender.skillMsg += outputSkill("Resolve");
+
         defender.avoid += 2 * Math.floor(defender.spd / 10 * 3);
         defender.atkSpd += Math.floor(defender.spd / 10 * 3);
+
+        defender.str += Math.floor(defender.str / 10 * 3);
+        defender.mag += Math.floor(defender.mag / 10 * 3);
+        defender.spd += Math.floor(defender.spd / 10 * 3);
+        defender.skl += Math.floor(defender.skl / 10 * 3);
       }
 }
 
@@ -1436,8 +1509,8 @@ function SkyQueenPlus(attacker, defender, info) {
     }
     else if (info.whoseSkill == 1 && defender.currHP <= defender.maxHP - 4) {
         defender.skillMsg += outputSkill("Sky Queen+");
-        defender.atkSpd += Math.floor((attacker.maxHP - attacker.currHP) / 4);
-        defender.avoid += 2 * Math.floor((attacker.maxHP - attacker.currHP) / 4);
+        defender.atkSpd += Math.floor((defender.maxHP - defender.currHP) / 4);
+        defender.avoid += 2 * Math.floor((defender.maxHP - defender.currHP) / 4);
     }
 }
 
@@ -1477,15 +1550,26 @@ function SolarBrace(attacker, defender, info) {
 function SpectrumStance(attacker, defender, info) {
     if (info.whoseSkill == 0 && info.initiating == 0) {
         attacker.skillMsg += outputSkill("Spectrum Stance");
-        attacker.addDmg += 2;
+        attacker.mag += 2;
+        attacker.str += 2;
+        attacker.spd += 2;
+        attacker.def += 2;
+        attacker.res += 2;
+        attacker.phys += 2;
+        attacker.myst += 2;
         attacker.atkSpd += 2;
     }
     else if (info.whoseSkill == 1 && info.initiating == 1) {
         defender.skillMsg += outputSkill("Spectrum Stance");
+        defender.mag += 2;
+        defender.str += 2;
+        defender.spd += 2;
+        defender.def += 2;
+        defender.res += 2;
         defender.atkSpd += 2;
         defender.avoid += 4;
-        defender.addProt += 2;
-        defender.addWard += 2;
+        defender.prot += 2;
+        defender.ward += 2;
     }
 }
 
@@ -1493,7 +1577,8 @@ function SpectrumStance(attacker, defender, info) {
 function SteadyStance(attacker, defender, info) {
     if (info.whoseSkill == 0 || info.initiating == 0)  { return; }
     defender.skillMsg += outputSkill("Steady Stance");
-    defender.addProt += 6;
+    defender.def += 6;
+    defender.prot += 6;
 }
 
 // Reduce damage by the difference between your con and your foe
@@ -1525,11 +1610,13 @@ function StrongRiposte(attacker, defender, info) {
 function SturdyStance(attacker, defender, info) {
     if (info.whoseSkill == 0 && info.initiating == 0) {
         attacker.skillMsg += outputSkill("Sturdy Stance");
+        attacker.def += 4;
         attacker.addDmg += 4;
     }
     else if (info.whoseSkill == 1 && info.initiating == 1) {
         defender.skillMsg += outputSkill("Sturdy Stance");
-        defender.addProt += 4;
+        defender.def += 4;
+        defender.prot += 4;
     }
 }
 
@@ -1537,13 +1624,17 @@ function SturdyStance(attacker, defender, info) {
 function SwiftStance(attacker, defender, info) {
     if (info.whoseSkill == 0 && info.initiating == 0) {
         attacker.skillMsg += outputSkill("Swift Stance");
+        attacker.spd += 4;
+        attacker.res += 4;
         attacker.atkSpd += 4;
     }
     else if (info.whoseSkill == 1 && info.initiating == 1) {
         defender.skillMsg += outputSkill("Swift Stance");
+        defender.spd += 4;
+        defender.res += 4;
         defender.atkSpd += 4;
         defender.avoid += 8;
-        defender.addWard += 4;
+        defender.ward += 4;
     }
 }
 
@@ -1555,7 +1646,7 @@ function SwordRangePlusOne(attacker, defender, info) {
 }
 
 // Restore hp to full and remove all status effects when critting on initiate
-function SwordVassal(atacker, defender, info) {
+function SwordVassal(attacker, defender, info) {
     if (info.whoseSkill == 1) { return; }
     attacker.swordVassal = 1;
 }
@@ -1616,8 +1707,9 @@ function Thunderstorm(attacker, defender, info) {
 function TitanicBlow(attacker, defender, info) {
     if (info.whoseSkill == 1 || info.initiating == 0) { return; }
     attacker.skillMsg += outputSkill("Titanic Blow");
+    attacker.str += 4;
     attacker.hit += 30;
-    attacker.addDmg += 4;
+    attacker.phys += 4;
 }
 
 // Maximum range of equipped tomes is increased by 1
@@ -1697,7 +1789,7 @@ function Vampiric(attacker, defender, info) {
 // Counter first when below 50% hp
 function Vantage(attacker, defender, info) {
   if (info.whoseSkill == 1 || info.initiating == 1) { return; }
-  if (attacker.currHP >= Math.floor(attacker.maxHP / 2)) { return; }
+  if (attacker.currHP * 2 >= attacker.maxHP / 2) { return; }
   attacker.skillMsg += outputSkill("Vantage");
 }
 
@@ -1709,7 +1801,7 @@ function VantagePlus(attacker, defender, info) {
 
 // +30 avo when below 25% hp
 function Vigilance(attacker, defender, info) {
-    if (info.whoseSkill == 0 || defender.currHP >= Math.floor(defender.maxHP / 4)) { return; }
+    if (info.whoseSkill == 0 || defender.currHP * 4 >= defender.maxHP) { return; }
     defender.skillMsg += outputSkill("Vigilance");
     defender.avoid += 30;
 }
@@ -1729,14 +1821,16 @@ function WarProfiteer(attacker, defender, info) {
 function WardingBlow(attacker, defender, info) {
     if (info.whoseSkill == 0 || info.initiating == 1) { return; }
     defender.skillMsg += outputSkill("Warding Blow");
-    defender.addWard += 20;
+    defender.res += 20;
+    defender.ward += 20;
 }
 
 // +6 res when foe initiates
 function WardingStance(attacker, defender, info) {
     if (info.whoseSkill == 0 || info.initiating == 0)  { return; }
     defender.skillMsg += outputSkill("Warding Stance");
-    defender.addWard += 6;
+    defender.res += 6;
+    defender.ward += 6;
 }
 
 // Cannot double or be doubled
@@ -1754,12 +1848,18 @@ function WaryFighter(attacker, defender, info) {
 function WatchfulMantis(attacker, defender, info) {
     if (info.whoseSkill == 0 && info.initiating == 0) {
         attacker.skillMsg += outputSkill("Watchful Mantis");
-        attacker.addDmg += 4;
+        attacker.mag += 4;
+        attacker.def += 4;
+        attacker.res += 4;
+        attacker.myst += 4;
     }
     else if (info.whoseSkill == 1 && info.initiating == 1) {
         defender.skillMsg += outputSkill("Watchful Mantis");
-        defender.addProt += 4;
-        defender.addWard += 4;
+        defender.mag += 4;
+        defender.def += 4;
+        defender.res += 4;
+        defender.prot += 4;
+        defender.ward += 4;
     }
 }
 
@@ -1812,7 +1912,7 @@ const SkillHandler = {
         const aWepSkills = getAttr(attacker.unit.id, 'activeWepSkills').get('current').split(',');
         const dWepSkills = getAttr(defender.unit.id, 'activeWepSkills').get('current').split(',');
       
-        // Defender skills first for foresight
+        // Defender skills first to handle things like foresight or luna
         info.whoseSkill = 1;
         if (aSkills.includes("Nihil") == true || aWepSkills.includes('Nihil') == true) {
           attacker.skillMsg += outputSkill("Nihil");
@@ -1927,8 +2027,6 @@ const SkillHandler = {
 // Handles combat art skills
 const CombatArt = {
     UseArt: function(artName, attacker, defender) {
-        attacker.combatArt = 1;
-
         switch(artName) {
             case "Adept":
                 attacker.skillMsg += outputSkill("Adept");
@@ -1969,6 +2067,7 @@ const CombatArt = {
                 attacker.skillMsg += outputSkill("Blade of Honor");
                 attacker.duraCost = 3;
                 attacker.addDmg += attacker.res;
+                attacker.postHeal = attacker.res;
                 break;
             case "Blowback":
                 attacker.skillMsg += outputSkill("Blowback");
@@ -2093,13 +2192,11 @@ const CombatArt = {
                 attacker.duraCost = 3;
                 attacker.numAttacks = 1;
                 attacker.addDmg += attacker.def;
-                attacker.futureDef += attacker.currMt;
                 break;
             case "PerpetualGuardianPlus":
                 attacker.skillMsg += outputSkill("Perpetual Guardian+");
                 attacker.duraCost = 4;
                 attacker.addDmg += attacker.def * 2;
-                attacker.futureDef += attacker.currMt * 2;
                 break;
             case "Pierce": // Needs to work with targeted skills
                 attacker.skillMsg += outputSkill("Pierce");
@@ -2148,13 +2245,13 @@ const CombatArt = {
                 attacker.duraCost = 2;
                 attacker.sandstorm = 1;
                 break;
-            case "Stolen Heaven":
+            case "StolenHeaven":
                 attacker.skillMsg += outputSkill("Stolen Heaven");
                 attacker.duraCost = 3;
                 attacker.addDmg += Math.floor(attacker.lck / 2);
                 attacker.currMt += Math.floor(attacker.lck / 2);
                 break;
-            case "Sublime Heaven":
+            case "SublimeHeaven":
                 attacker.skillMsg += outputSkill("Sublime Heaven");
                 attacker.duraCost = 3;
                 attacker.addDmg += Math.floor(attacker.spd / 2);
