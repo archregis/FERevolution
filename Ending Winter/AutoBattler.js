@@ -24,10 +24,10 @@ const staffInfo = {
 
   "Barrier": { exp: 35, wexp: 5, textFunc: function(magic) { return `An adjacent ally's resistance is increased by 7, decreasing by 1 each turn.`}, },
   "Bulwark": { exp: 35, wexp: 5, textFunc: function(magic) { return `An adjacent ally's defense  is increased by 7, decreasing by 1 each turn.`}, },
-  "Knowledge": { exp: 35, wexp: 5, textFunc: function(magic) { return `An adjacent ally's magic is increased by 10, decreasing by 1 each turn.`}, },
+  "Knowledge": { exp: 35, wexp: 5, textFunc: function(magic) { return `An adjacent ally's magic is increased by 10, decreasing by 2 each turn.`}, },
   "Recover": { exp: 30, wexp: 5, textFunc: function(magic) { return `An adjacent ally heals all HP.`}, },
   "Restore": { exp: 40, wexp: 3, textFunc: function(magic) { return `An ally within ${Math.floor(magic / 2)} tiles is returned to normal condition.`}, },
-  "Strength": { exp: 35, wexp: 5, textFunc: function(magic) { return `An adjacent ally's strength is increased by 10, decreasing by 1 each turn.`}, },
+  "Strength": { exp: 35, wexp: 5, textFunc: function(magic) { return `An adjacent ally's strength is increased by 10, decreasing by 2 each turn.`}, },
   "Shine Bind": { exp: 35, wexp: 4, textFunc: function(magic) { return `A light rune is summoned on a tile within ${Math.floor(magic / 2)} tiles.`}, },
 
   "Resonate": { exp: 40, wexp: 8, textFunc: function(magic) { return `An adjacent ally is given the Distant Counter skill.`}, },
@@ -573,7 +573,7 @@ function DoOneCombatStep(selectedId, targetId, info, initiating, artName, isSim)
   let atkDmg = 0;
   let defMit = 0;
   let protDef = defender.prot + defender.addProt + getAttrValue(defender.unit.id, "mitBonusTotal");
-  let wardDef = defMit = defender.ward + defender.addWard + getAttrValue(defender.unit.id, "mitBonusTotal");
+  let wardDef = defender.ward + defender.addWard + getAttrValue(defender.unit.id, "mitBonusTotal");
   if (attacker.dmgType == 'Physical') {
     atkDmg = attacker.phys;
     defMit = protDef;
@@ -602,7 +602,7 @@ function DoOneCombatStep(selectedId, targetId, info, initiating, artName, isSim)
   // Actual Combat
   if (isSim == 1) { // Simulate battle outcome
     const init = initiating == 1 ? "Initiating" : "Countering"
-    if (defender.monstrous == 1 || defender.barricade == 1) { dmgTaken += " / " + dmgTaken / 2; }
+    if (defender.monstrous == 1 || defender.barricade == 1) { dmgTaken += " / " + Math.floor(dmgTaken / 2); }
     content += `${attacker.name} is ${init} <br> Atk Spd: ${atkSpdDiff} <br> Dmg Done: ${dmgTaken} <br> Hit Rate: ${101+hit-avoid} <br> Crit Rate: ${(101+crit-dodge)}`;
   }
   else { // Output battle outcome
