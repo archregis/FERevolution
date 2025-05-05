@@ -52,6 +52,7 @@ const skillMap = {
     "Desperation": Desperation,
     "Determination": Determination,
     "Determination+": DeterminationPlus,
+    "DistantCounter": DistantCounter,
     "DivineBlow": DivineBlow,
     "DivineSpeed": DivineSpeed,
     "Brave": Brave,
@@ -675,6 +676,14 @@ function DeterminationPlus(attacker, defender, info) {
         defender.skillMsg += outputSkill("Determination+");
         defender.activationBonus += 20;
     }
+}
+
+// Can counter from any distance
+function DistantCounter(attacker, defender, info) {
+    if (info.whoseSkill == 0) { return; }
+    defender.skillMsg += outputSkill("Distant Counter");
+    defender.minDist = 0;
+    defender.maxDist = 99;
 }
 
 // +6 str and +6 spd when initiating combat
