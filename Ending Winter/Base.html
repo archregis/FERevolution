@@ -398,8 +398,18 @@
 									</div>
 								</div>
 								<div class="sheet-hiddenskill">
-									<label> Weapon Description
-										<input name="attr_descWep" type="text"></input>
+									<label> Weapon Triangle
+										<div><select name="attr_wepTriangle" style="width:25%;">
+											<option>Sword</option>
+											<option>Axe</option>
+											<option>Lance</option>
+											<option>Bow</option>
+											<option>Anima</option>
+											<option>Light</option>
+											<option>Dark</option>
+											<option>Staff</option>
+											<option>Other</option>
+										</select></div>
 									</label>
 									<label> Effective Damage
 										<input name="attr_effWep" type="text"></input>
@@ -502,8 +512,18 @@
 									</div>
 								</div>
 								<div class="sheet-hiddenskill">
-									<label> Weapon Description
-										<input name="attr_descWep" type="text"></input>
+									<label> Weapon Triangle
+										<div><select name="attr_spellTriangle" style="width:25%;">
+											<option>Sword</option>
+											<option>Axe</option>
+											<option>Lance</option>
+											<option>Bow</option>
+											<option>Anima</option>
+											<option>Light</option>
+											<option>Dark</option>
+											<option>Staff</option>
+											<option>Other</option>
+										</select></div>
 									</label>
 									<label> Effective Damage
 										<input name="attr_effWep" type="text"></input>
@@ -679,12 +699,12 @@
 	<input name="attr_currWt" value="0" hidden>
 	<input name="attr_currHit" value="0" hidden>
 	<input name="attr_currWep" value="Sword" hidden>
+	<input name="attr_currTri" value="Sword" hidden>
 	<input name="attr_currWexp" value="1" hidden>
 	<input name="attr_currMinDist" value="0" hidden>
 	<input name="attr_currMaxDist" value="0" hidden>
 	<input name="attr_currCounter" value="0" hidden>
 	<input name="attr_currSingle" value="0" hidden>
-	<input name="attr_currDesc" value="Attacking @{target|token_name}!" hidden>
 	<input name="attr_atkType" value="Physical" hidden>
 	<input name="attr_hpBonusTotal" value="0" hidden>
 	<input name="attr_strBonusTotal" value="0" hidden>
@@ -850,20 +870,22 @@ on("change:flyingCheck change:armorCheck change:cavalryCheck change:dragonCheck 
 });
 
 // Weapon Type
-on("change:repeating_weapons:wepType change:repeating_weapons:wExp change:repeating_spells:wExp change:repeating_spells:spellType change:atkType change:_reporder:weapons change:_reporder:spells remove:repeating_spells remove:repeating_weapons change:wepSlot change:spellSlot", function() {
+on("change:repeating_weapons:wepType change:repeating_spells:spellType change:repeating_weapons:wepTriangle change:repeating_spells:spellTriangle change:repeating_weapons:wExp change:repeating_spells:wExp change:atkType change:_reporder:weapons change:_reporder:spells remove:repeating_spells remove:repeating_weapons change:wepSlot change:spellSlot", function() {
 	getAttrs(["wepSlot","spellSlot","atkType"], function(v) {
 		const isPhys = v.atkType == "Physical" ? 1 : 0;
 		const repeatName = isPhys ? "repeating_weapons" : "repeating_spells";
 		const slotNum = isPhys ? v.wepSlot : v.spellSlot;
 		const repeatType = isPhys ? "wepType" : "spellType";
+		const repeatTri = isPhys ? "wepTriangle" : "spellTriangle";
 
 		getSectionIDsOrdered(repeatName, function(idarray) {
 			fID = idarray[Number(slotNum)-1];
-			getAttrs([repeatName+"_"+fID+"_"+repeatType, repeatName+"_"+fID+"_wExp"], function(v) {
+			getAttrs([repeatName+"_"+fID+"_"+repeatType, repeatName+"_"+fID+"_"+repeatTri, repeatName+"_"+fID+"_wExp"], function(v) {
 				const nindex = Object.keys(v);
 				setAttrs({
 					currWep: v[nindex[0]],
-					currWexp: v[nindex[1]],
+					currTri: v[nindex[1]],
+					currWexp: v[nindex[2]],
 				});
 			});
 		});
@@ -893,24 +915,23 @@ on("change:repeating_weapons:minDistWep change:repeating_weapons:maxDistWep chan
 });
 
 // Weapon Description
-on("change:repeating_weapons:wepName change:repeating_spells:spellName change:repeating_weapons:effWep change:repeating_spells:effWep change:repeating_weapons:wepSkills change:repeating_spells:wepSkills change:repeating_weapons:descWep change:repeating_spells:descWep change:atkType change:_reporder:weapons change:_reporder:spells remove:repeating_spells remove:repeating_weapons change:wepSlot change:spellSlot", function() {
+on("change:repeating_weapons:wepName change:repeating_spells:spellName change:repeating_weapons:effWep change:repeating_spells:effWep change:repeating_weapons:wepSkills change:repeating_spells:wepSkills change:atkType change:_reporder:weapons change:_reporder:spells remove:repeating_spells remove:repeating_weapons change:wepSlot change:spellSlot", function() {
 	getAttrs(["wepSlot", "spellSlot", "atkType"], function(v) {
 		const isPhys = v.atkType == "Physical" ? 1 : 0;
 		const repeatName = isPhys ? "repeating_weapons" : "repeating_spells";
 		const slotNum = isPhys? v.wepSlot : v.spellSlot;
-		const name=isPhys ? "wepName" : "spellName";
+		const name = isPhys ? "wepName" : "spellName";
 
 		getSectionIDsOrdered(repeatName, function(idarray) {
 			fID = idarray[Number(slotNum)-1];
-			getAttrs([repeatName+"_"+fID+"_descWep", repeatName+"_"+fID+"_effWep", repeatName+"_"+fID+"_"+name, repeatName+"_"+fID+"_wepSkills"], function(v) {
+			getAttrs([repeatName+"_"+fID+"_effWep", repeatName+"_"+fID+"_"+name, repeatName+"_"+fID+"_wepSkills"], function(v) {
 				const nindex = Object.keys(v);
-				let skills = v[nindex[3]];
+				let skills = v[nindex[2]];
 				skills = skills.replace(/(^\w|\s\w)/g, m => m.toUpperCase());
 				skills = skills.replace(/ /g,"");
 				setAttrs({
-					currDesc: v[nindex[0]],
-					currEff: v[nindex[1]],
-					currName: v[nindex[2]],
+					currEff: v[nindex[0]],
+					currName: v[nindex[1]],
 					activeWepSkills: skills,
 				});
 			});
@@ -1136,7 +1157,7 @@ on("change:spdTotal change:All change:conTotal change:repeating_weapons:wt chang
 
 // Initialize values for API, because ded
 on("sheet:opened", function(){
-	getAttrs(["wepSlot","spellSlot","currWt","currEff","currName","currMt","currDesc","currWexp","currWep","currMinDist","currMaxDist","currCounter","currSingle","atkType","exp","swordExp","lanceExp","axeExp","bowExp","stavesExp","darkExp","animaExp","lightExp","level","hpBase","strBase","magBase","sklBase","spdBase","lckBase","defBase","resBase","movBase","hpBuff","strBuff","magBuff","sklBuff","spdBuff","lckBuff","defBuff","resBuff","movBuff","swordRank","lanceRank","axeRank","bowRank","stavesRank","darkRank","animaRank","lightRank","physBuff","mystBuff","wardBuff","protBuff","weakTotal","activeSkills","activeWepSkills","hit","crit","ddg","avo"], function(v){
+	getAttrs(["wepSlot","spellSlot","currWt","currEff","currName","currMt","currWexp","currWep","currTri","currMinDist","currMaxDist","currCounter","currSingle","atkType","exp","swordExp","lanceExp","axeExp","bowExp","stavesExp","darkExp","animaExp","lightExp","level","hpBase","strBase","magBase","sklBase","spdBase","lckBase","defBase","resBase","movBase","hpBuff","strBuff","magBuff","sklBuff","spdBuff","lckBuff","defBuff","resBuff","movBuff","swordRank","lanceRank","axeRank","bowRank","stavesRank","darkRank","animaRank","lightRank","physBuff","mystBuff","wardBuff","protBuff","weakTotal","activeSkills","activeWepSkills","hit","crit","ddg","avo"], function(v){
 		setAttrs({
 			wepSlot: v.wepSlot,
 			spellSlot: v.spellSlot,
@@ -1145,8 +1166,8 @@ on("sheet:opened", function(){
 			currEff: v.currEff,
 			currName: v.currName,
 			currMt: v.currMt,
-			currDesc: v.currDesc,
 			currWep: v.currWep,
+			currTri: v.currTri,
 			currWexp: v.currWexp,
 			currMinDist: v.currMinDist,
 			currMaxDist: v.currMaxDist,

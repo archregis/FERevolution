@@ -14,6 +14,7 @@ const skillMap = {
     "Axebreaker": Axebreaker,
     "Axefaire": Axefaire,
     "Axefaith": Axefaith,
+    "Axeslayer": Axeslayer,
     "Barricade": Barricade,
     "BattleVeteran": BattleVeteran,
     "BlackLotus": BlackLotus,
@@ -22,6 +23,8 @@ const skillMap = {
     "BowRange+1": BowRangePlusOne,
     "Bowbreaker": Bowbreaker,
     "Bowfaire": Bowfaire,
+    "Bowslayer": Bowslayer,
+    "Brave": Brave,
     "CertainBlow": CertainBlow,
     "CheapShot": CheapShot,
     "Chivalry": Chivalry,
@@ -52,10 +55,12 @@ const skillMap = {
     "Desperation": Desperation,
     "Determination": Determination,
     "Determination+": DeterminationPlus,
+    "Devil'sPact": DevilsPact,
+    "Devil'sReversal": DevilsReversal,
+    "Devil'sWhim": DevilsWhim,
     "DistantCounter": DistantCounter,
     "DivineBlow": DivineBlow,
     "DivineSpeed": DivineSpeed,
-    "Brave": Brave,
     "Dragonblood": Dragonblood,
     "Dragonskin": Dragonskin,
     "DrainSoul": DrainSoul,
@@ -87,12 +92,14 @@ const skillMap = {
     "King'sBlow": KingsBlow,
     "Lancebreaker": Lancebreaker,
     "Lancefaire": Lancefaire,
+    "Lanceslayer": Lanceslayer,
     "LaughingWolf": LaughingWolf,
     "Lethality": Lethality,
     "LifeAndDeath": LifeAndDeath,
     "Lifetaker": Lifetaker,
     "Lightning": Lightning,
     "LiquidOoze": LiquidOoze,
+    "Luna+": LunaPlus,
     "LunarBrace": LunarBrace,
     "Mageslayer": Mageslayer,
     "MasterIllusionist": MasterIllusionist,
@@ -101,6 +108,7 @@ const skillMap = {
     "MirrorStance": MirrorStance,
     "Monstrous": Monstrous,
     "Nullify": Nullify,
+    "Nosferatu": Nosferatu,
     "Opportunist": Opportunist,
     "Parry": Parry,
     "Patience": Patience,
@@ -125,6 +133,7 @@ const skillMap = {
     "Reckless": Reckless,
     "Resilience": Resilience,
     "Resolve": Resolve,
+    "Reverse": Reverse,
     "RightfulGod": RightfulGod,
     "RightfulKing": RightfulKing,
     "RightfulLord": RightfulLord,
@@ -336,6 +345,13 @@ function Axefaith(attacker, defender, info) {
     attacker.unbreaking = 1;
 }
 
+// Deal effective damage to foes with an axe rank
+function Axeslayer(attacker, defender, info) {
+    if (info.whoseSkill == 1 || defender.axeExp == 0) { return; }
+    attacker.skillMsg += outputSkill("Axeslayer");
+    attacker.effAll = 1
+}
+
 // Halves damage taken after first attack each combat
 function Barricade(attacker, defender, info) {
     if (info.whoseSkill == 0) { return; }
@@ -405,11 +421,25 @@ function Bowfaire(attacker, defender, info) {
     attacker.addDmg += 4;
 }
 
+// Deal effective damage to foes with a bow rank
+function Bowslayer(attacker, defender, info) {
+    if (info.whoseSkill == 1 || defender.bowExp == 0) { return; }
+    attacker.skillMsg += outputSkill("Bowslayer");
+    attacker.effAll = 1
+}
+
 // +30 hit when initiating battle
 function CertainBlow(attacker, defender, info) {
     if (info.whoseSkill == 1 || info.initiating == 0) { return; }
     attacker.skillMsg += outputSkill("Certain Blow");
     attacker.hit += 30;
+}
+
+// All weapons have the brave effect
+function Brave(attacker, defender, info) {
+    if (info.whoseSkill == 1) { return; }
+    attacker.skillMsg += outputSkill("Brave");
+    attacker.numAttacks = 2;
 }
 
 // +6 damage when initiating battle
@@ -678,6 +708,39 @@ function DeterminationPlus(attacker, defender, info) {
     }
 }
 
+// 31-Lck% chance for foe to deal damage to themselves (Your Lck)
+function DevilsPact(attacker, defender, info) {
+    if (info.whoseSkill == 0) { return; }
+    const odds = Math.max(0, 31 - defender.lck);
+    if (info.isSim == 1 && odds > 0) { defender.skillMsg += outputSkill("Devil's Pact", odds); }
+    else if (randomInteger(100) <= odds) {
+        defender.skillMsg += outputSkill("Devil's Pact");
+        attacker.cursed = 1;
+    }
+}
+
+// 31-Lck% chance for you to deal damage to yourself (Your Lck)
+function DevilsReversal(attacker, defender, info) {
+    if (info.whoseSkill == 1) { return; }
+    const odds = Math.max(0, 31 - attacker.lck);
+    if (info.isSim == 1 && odds > 0) { attacker.skillMsg += outputSkill("Devil's Reversal", odds); }
+    else if (randomInteger(100) <= odds) {
+        attacker.skillMsg += outputSkill("Devil's Reversal");
+        attacker.cursed = 1;
+    }
+}
+
+// 31-Lck% chance for foe to deal damage to themselves (Enemy Lck)
+function DevilsWhim(attacker, defender, info) {
+    if (info.whoseSkill == 0) { return; }
+    const odds = Math.max(0, 31 - attacker.lck);
+    if (info.isSim == 1 && odds > 0) { defender.skillMsg += outputSkill("Devil's Whim", odds); }
+    else if (randomInteger(100) <= odds) {
+        defender.skillMsg += outputSkill("Devil's Whim");
+        attacker.cursed = 1;
+    }
+}
+
 // Can counter from any distance
 function DistantCounter(attacker, defender, info) {
     if (info.whoseSkill == 0) { return; }
@@ -712,13 +775,6 @@ function DivineSpeed(attacker, defender, info) {
     else {
         attacker.extraAttackRoll = odds;
     }
-}
-
-// All weapons have the brave effect
-function Brave(attacker, defender, info) {
-    if (info.whoseSkill == 1) { return; }
-    attacker.skillMsg += outputSkill("Brave");
-    attacker.numAttacks = 2;
 }
 
 // +5 damage when missing hp
@@ -1071,6 +1127,13 @@ function Lancefaire(attacker, defender, info) {
     attacker.addDmg += 4;
 }
 
+// Deal effective damage to foes with a lance rank
+function Lanceslayer(attacker, defender, info) {
+    if (info.whoseSkill == 1 || defender.lanceExp == 0) { return; }
+    attacker.skillMsg += outputSkill("Lanceslayer");
+    attacker.effAll = 1
+}
+
 // +7 damage when initiating combat on a foe who is missing hp
 function LaughingWolf(attacker, defender, info) {
     if (info.whoseSkill == 1 || info.initiating == 0 || defender.currHP >= defender.maxHP) { return; }
@@ -1121,6 +1184,14 @@ function LiquidOoze(attacker, defender, info) {
     if (info.whoseSkill == 0) { return; }
     defender.skillMsg += outputSkill("Liquid Ooze");
     attacker.ooze = 1;
+}
+
+// Ignore enemy def/res during combat
+function LunaPlus(attacker, defender, info) {
+    if (info.whoseSkill == 1) { return; }
+    attacker.skillMsg += outputSkill("Luna+");
+    defender.prot = 0;
+    defender.ward = 0;
 }
 
 // Ignore 25% of enemy def/res
@@ -1190,6 +1261,13 @@ function Nullify(attacker, defender, info) {
     if (info.whoseSkill == 0) { return; }
     defender.skillMsg += outputSkill("Nullify");
     defender.effNegate = 1;
+}
+
+// Restore damage done as HP
+function Nosferatu(attacker, defender, info) {
+    if (info.whoseSkill == 1) { return; }
+    attacker.skillMsg += outputSkill("Nosferatu");
+    attacker.nosferatu = 1;
 }
 
 // +4 damage if foe cannot counter
@@ -1388,7 +1466,7 @@ function ReadyStance(attacker, defender, info) {
 
 // Reduces the cost of Combat Arts by 2 if unit has advantage
 function Reave(attacker, defender, info) {
-    if (info.whoseSkill == 1 || CheckAdvantage(attacker.wepType, defender.wepType) != 1) { return; }
+    if (info.whoseSkill == 1 || CheckAdvantage(attacker.wepTri, defender.wepTri) != 1) { return; }
     attacker.skillMsg += outputSkill("Reave");
     attacker.duraCost = Math.max(1, attacker.duraCost - 2);
 }
@@ -1447,6 +1525,13 @@ function Resolve(attacker, defender, info) {
         defender.skl += Math.floor(defender.skl / 10 * 3);
       }
 }
+
+// Switches stat that weapons target. Physical > Magical, Magical > Physical
+function Reverse(attacker, defender, info) {
+    if (battleInput.whoseSkill == 1) { return; }
+    attacker.skillMsg += outputSkill("Reverse");
+    attacker.reverse = 1;
+  }
 
 // Reduces the cost of Combat Arts by 3
 function RightfulGod(attacker, defender, info) {

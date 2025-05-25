@@ -116,7 +116,7 @@ function processInlinerolls(msg) {
   return newContent;
 }
 
-// Update weapon EXP based on wtype and wepGain
+// Update weapon EXP based on weapon type and exp gain
 function updateWeaponEXP(attackerId, wepType, wepGain) {
   if (!weaponMap[wepType]) return;
   const attr = getAttr(attackerId, weaponMap[wepType]);
@@ -191,6 +191,7 @@ function initializeAtkInfo(unitId, info) {
   output.dmgType = getAttr(output.unit.id, 'atkType').get('current');
   output.wepName = getAttr(output.unit.id, 'currName').get('current');
   output.wepType = getAttr(output.unit.id, "currWep").get('current');
+  output.wepTri = getAttr(output.unit.id, "currTri").get('current');
 
   // Stat info
   output.level = getAttrValue(output.unit.id, "level");
@@ -248,6 +249,7 @@ function initializeDefInfo(unitId, info) {
   output.maxDist = getAttrValue(output.unit.id, 'currMaxDist');
   output.dmgType = getAttr(output.unit.id, 'atkType').get('current');
   output.wepType = getAttr(output.unit.id, "currWep").get('current');
+  output.wepTri = getAttr(output.unit.id, "currTri").get('current');
 
   // Stat info
   output.currWeak = getAttr(output.unit.id,'weakTotal').get('current');
@@ -520,7 +522,7 @@ function DoOneCombatStep(selectedId, targetId, info, initiating, artName, isSim)
 
 
   // Weapon triangle
-  let triangle = CheckAdvantage(attacker.wepType, defender.wepType);
+  let triangle = CheckAdvantage(attacker.wepTri, defender.wepTri);
   let mult = 1;
   if (attacker.reaver == 1) {
     if (triangle == 1) { triangle = -1; }
@@ -576,11 +578,13 @@ function DoOneCombatStep(selectedId, targetId, info, initiating, artName, isSim)
   let wardDef = defender.ward + defender.addWard + getAttrValue(defender.unit.id, "mitBonusTotal");
   if (attacker.dmgType == 'Physical') {
     atkDmg = attacker.phys;
-    defMit = protDef;
+    if (attacker.reverse == 1) { defMit = wardDef; }
+    else { defMit = protDef; }
   }
   else if (attacker.dmgType == 'Magical') {
     atkDmg = attacker.myst;
-    defMit = wardDef;
+    if (attacker.reverse == 1) { defMit = protDef; }
+    else { defMit = wardDef; }
   }
 
   if (attacker.fallenStar == 1) { atkDmg = attacker.currMt + attacker.spd * 1.5; }
@@ -645,7 +649,8 @@ function DoOneCombatStep(selectedId, targetId, info, initiating, artName, isSim)
       if (crit > dodge && defender.critImmune != 1) {
         dmgTaken *= 3;
         if (defender.resilience == 1) { dmgTaken = Math.floor(dmgTaken / 2); }
-        UpdateHealth(defender, dmgTaken);
+        if (attacker.cursed == 1) { UpdateHealth(attacker, dmgTaken); }
+        else { UpdateHealth(defender, dmgTaken); }
         if (attacker.swordVassal == 1) {
           attacker.skillMsg += outputSkill("Sword Vassal");
           attacker.postHeal = attacker.maxHP;
@@ -653,10 +658,14 @@ function DoOneCombatStep(selectedId, targetId, info, initiating, artName, isSim)
         content += 'You crit and deal '+ dmgTaken + ' damage!'; // Intentionally not capping damage numbers put in chat. Hitting low hp enemies for ludicrous damage numbers is fun
       }
       else {
-        UpdateHealth(defender, dmgTaken);
+        if (attacker.cursed == 1) { UpdateHealth(attacker, dmgTaken); }
+        else { UpdateHealth(defender, dmgTaken); }
         content += 'You hit and deal '+ dmgTaken + ' damage!'; // See above
       }
       if (attacker.sol == 1) {
+        UpdateHealth(attacker, -Math.min(defender.currHP, dmgTaken));
+      }
+      if (attacker.nosferatu == 1) {
         UpdateHealth(attacker, -Math.min(defender.currHP, dmgTaken));
       }
       if (attacker.solar == 1) {
