@@ -707,7 +707,7 @@ function DoOneCombatStep(selectedId, targetId, info, initiating, artName, isSim)
     aether: artName == "Aether" ? 1 : 0,
   });
 
-  if (info.killed != 1 && defender.counterDmg == 1) { attacker.miracle = 1; UpdateHealth(attacker, dmgTaken); }
+  if (info.killed != 1 && hit >= avoid && defender.counterDmg == 1) { attacker.miracle = 1; UpdateHealth(attacker, dmgTaken); }
   if (info.killed == 1 && attacker.profiteer == 1) { content += "<br> You find 500 gold on the ground!" }
 
   attacker.skillMsg += "</ul>";
