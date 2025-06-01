@@ -52,7 +52,7 @@ function handleLevelUp(attackerId, CurrEXP, LvA, who, growthMult) {
     // Build inline roll msg
     for (let i = 0; i < growthslist.length; i++) {
       var gi = growthslist[i];
-      if (gi > 100) {
+      while (gi >= 100) {
         gi -= 100;
       }
       lvlStr += `[[d100<${gi}]] Test `;
@@ -64,7 +64,7 @@ function handleLevelUp(attackerId, CurrEXP, LvA, who, growthMult) {
       for (let i=0; i<growthslist.length; i++) {
         let roll = libInline.getRollTip(val[0].inlinerolls[i]);
         let result = libInline.getValue(val[0].inlinerolls[i]);
-        let increase = growthslist[i]>100 ? result+1 : result;
+        let increase = result + Math.floor(growthslist[i]/100);
         
         const currentVal = Number(statslist[i].get("current")) || 0;
         statslist[i].setWithWorker("current", currentVal + increase);
