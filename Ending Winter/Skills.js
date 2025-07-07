@@ -10,6 +10,7 @@ const skillMap = {
     "Arrogance": Arrogance,
     "Assassinate": Assassinate,
     "Aurelian": Aurelian,
+    "Aurelian+": AurelianPlus,
     "Awakening": Awakening,
     "Axebreaker": Axebreaker,
     "Axefaire": Axefaire,
@@ -18,6 +19,7 @@ const skillMap = {
     "Barricade": Barricade,
     "BattleVeteran": BattleVeteran,
     "BlackLotus": BlackLotus,
+    "BlackLotus+": BlackLotusPlus,
     "Bloodlust": Bloodlust,
     "Bloodlust+": BloodlustPlus,
     "BowRange+1": BowRangePlusOne,
@@ -58,6 +60,8 @@ const skillMap = {
     "Devil'sPact": DevilsPact,
     "Devil'sReversal": DevilsReversal,
     "Devil'sWhim": DevilsWhim,
+    "Discipline": Discipline,
+    "Discipline+": DisciplinePlus,
     "DistantCounter": DistantCounter,
     "DivineBlow": DivineBlow,
     "DivineSpeed": DivineSpeed,
@@ -87,6 +91,7 @@ const skillMap = {
     "Imperturbable": Imperturbable,
     "Insight": Insight,
     "JadeTiger": JadeTiger,
+    "JadeTiger+": JadeTigerPlus,
     "KestrelStance": KestrelStance,
     "KillingMachine": KillingMachine,
     "King'sBlow": KingsBlow,
@@ -127,6 +132,7 @@ const skillMap = {
     "PushStrength": PushStrength,
     "QuickDraw": QuickDraw,
     "RadiantBlazar": RadiantBlazar,
+    "RadiantBlazar+": RadiantBlazarPlus,
     "ReadyStance": ReadyStance,
     "Reave": Reave,
     "Reaver": Reaver,
@@ -170,6 +176,7 @@ const skillMap = {
     "Trample": Trample,
     "TriangleAdept": TriangleAdept,
     "TwilightSeraph": TwilightSeraph,
+    "TwilightSeraph+": TwilightSeraphPlus,
     "Vampiric": Vampiric,
     "Vantage": Vantage,
     "Vantage+": VantagePlus,
@@ -187,6 +194,9 @@ const skillMap = {
 const staffSkillMap = {
     "Armsthrift": Armsthrift,
     "TwilightSeraph": TwilightSeraph,
+    "TwilightSeraph+": TwilightSeraphPlus,
+    "PushMagic": PushMagic,
+    "DefiantMagic": DefiantMagic,
 }
 
 // Skills
@@ -293,15 +303,47 @@ function Assassinate(attacker, defender, info) {
     attacker.addDmg += 2;
 }
 
-// When above 75% hp, gain +5 damage and +20 avo
+// Lck% chance to halve incoming damage and immune to stat debuffs
 function Aurelian(attacker, defender, info) {
-    if (info.whoseSkill == 0 && attacker.currHP > Math.floor(3 * attacker.maxHP / 4)) {
-        attacker.skillMsg += outputSkill("Aurelian");
-        attacker.addDmg += 5;
-    }
-    else if (info.whoseSkill == 1 && defender.currHP > Math.floor(3 * defender.maxHP / 4)) {
+    if (info.whoseSkill == 0) { return; }
+    const odds = defender.lck + defender.activationBonus;
+    if (info.isSim == 1 && odds > 0) { defender.skillMsg += outputSkill("Aurelian", odds); }
+    else if (randomInteger(100) <= odds) {
         defender.skillMsg += outputSkill("Aurelian");
-        defender.avoid += 20;
+        attacker.dmgMult *= 0.5;
+    }
+}
+
+// Lck% chance to halve incoming damage, Skl% chance to Sol, Def% chance to Ignis, and immune to stat debuffs
+function AurelianPlus(attacker, defender, info) {
+    const oddsAurelian = defender.lck + defender.activationBonus;
+    const oddsSol = attacker.skl + attacker.activationBonus;
+    const oddsIgnis = attacker.def + attacker.activationBonus;
+
+    if (info.whoseSkill == 0) {
+        if (info.isSim == 1 && oddsSol > 0) { 
+            attacker.skillMsg += outputSkill("Sol", oddsSol);
+        }
+        else if (randomInteger(100) <= oddsSol) {
+            defender.skillMsg += outputSkill("Sol");
+            attacker.sol = 1;
+        }
+        if (info.isSim == 1 && oddsIgnis > 0) { 
+            attacker.skillMsg += outputSkill("Ignis", oddsIgnis);
+        }
+        else if (randomInteger(100) <= oddsIgnis) {
+            defender.skillMsg += outputSkill("Ignis");
+            attacker.addDmg += Math.floor(attacker.res / 2) + Math.floor(attacker.def/ 2);
+        }
+    }
+    else {
+        if (info.isSim == 1 && oddsAurelian > 0) { 
+            defender.skillMsg += outputSkill("Aurelian+", oddsAurelian);
+        }
+        else if (randomInteger(100) <= oddsAurelian) {
+            defender.skillMsg += outputSkill("Aurelian+");
+            attacker.dmgMult *= 0.5;
+        }
     }
 }
 
@@ -372,6 +414,13 @@ function BlackLotus(attacker, defender, info) {
     if (info.whoseSkill == 1) { return; }
     attacker.skillMsg += outputSkill("Black Lotus");
     attacker.duraCost = Math.max(1, attacker.duraCost - 1);
+}
+
+// Reduces the cost of Combat Arts by 2
+function BlackLotusPlus(attacker, defender, info) {
+    if (info.whoseSkill == 1) { return; }
+    attacker.skillMsg += outputSkill("Black Lotus+");
+    attacker.duraCost = Math.max(1, attacker.duraCost - 2);
 }
 
 // Adds 1 damage for every 4 hp missing
@@ -741,6 +790,20 @@ function DevilsWhim(attacker, defender, info) {
     }
 }
 
+// Doubles weapon exp gain
+function Discipline(attacker, defender, info) {
+    if (info.whoseSkill == 1) { return; }
+    attacker.skillMsg += outputSkill("Discipline");
+    attacker.wepGain *= 2;
+}
+
+// Doubles weapon exp gain
+function DisciplinePlus(attacker, defender, info) {
+    if (info.whoseSkill == 1) { return; }
+    attacker.skillMsg += outputSkill("Discipline+");
+    attacker.wepGain *= 3;
+}
+
 // Can counter from any distance
 function DistantCounter(attacker, defender, info) {
     if (info.whoseSkill == 0) { return; }
@@ -1059,11 +1122,18 @@ function Insight(attacker, defender, info) {
     attacker.hit += 20;
 }
 
-// Crit increased by half of unit's missing hp
+// Crit increased by half of unit's missing hp, +15 crit
 function JadeTiger(attacker, defender, info) {
     if (info.whoseSkill == 1) { return; }
     attacker.skillMsg += outputSkill("Jade Tiger");
-    attacker.crit += Math.floor((attacker.maxHP - attacker.currHP) / 2);
+    attacker.crit += Math.floor((attacker.maxHP - attacker.currHP) / 2) + 15;
+}
+
+// Crit increased by unit's missing hp, +15 crit
+function JadeTigerPlus(attacker, defender, info) {
+    if (info.whoseSkill == 1) { return; }
+    attacker.skillMsg += outputSkill("Jade Tiger");
+    attacker.crit += attacker.maxHP - attacker.currHP + 15;
 }
 
 // +4 damage and spd when foe initiates
@@ -1444,6 +1514,27 @@ function RadiantBlazar(attacker, defender, info) {
     if (info.whoseSkill == 1) { return; }
     attacker.skillMsg += outputSkill("Radiant Blazar");
     attacker.wepGain *= 3;
+    if (attacker.wepType == "Sword" && attacker.swordExp == 255) { attacker.addDmg += 5; }
+    else if (attacker.wepType == "Axe" && attacker.axeExp == 255) { attacker.addDmg += 5; }
+    else if (attacker.wepType == "Lance" && attacker.lanceExp == 255) { attacker.addDmg += 5; }
+    else if (attacker.wepType == "Bow" && attacker.bowExp == 255) { attacker.addDmg += 5; }
+    else if (attacker.wepType == "Anima" && attacker.animaExp == 255) { attacker.addDmg += 5; }
+    else if (attacker.wepType == "Dark" && attacker.darkExp == 255) { attacker.addDmg += 5; }
+    else if (attacker.wepType == "Light" && attacker.lightExp == 255) { attacker.addDmg += 5; }
+}
+
+// Weapon experience gain is tripled
+function RadiantBlazarPlus(attacker, defender, info) {
+    if (info.whoseSkill == 1) { return; }
+    attacker.skillMsg += outputSkill("Radiant Blazar+");
+    attacker.wepGain *= 3;
+    if (attacker.wepType == "Sword" && attacker.swordExp == 255) { attacker.addDmg += 5; }
+    else if (attacker.wepType == "Axe" && attacker.axeExp == 255) { attacker.addDmg += 5; }
+    else if (attacker.wepType == "Lance" && attacker.lanceExp == 255) { attacker.addDmg += 5; }
+    else if (attacker.wepType == "Bow" && attacker.bowExp == 255) { attacker.addDmg += 5; }
+    else if (attacker.wepType == "Anima" && attacker.animaExp == 255) { attacker.addDmg += 5; }
+    else if (attacker.wepType == "Dark" && attacker.darkExp == 255) { attacker.addDmg += 5; }
+    else if (attacker.wepType == "Light" && attacker.lightExp == 255) { attacker.addDmg += 5; }
 }
 
 //+4 spd and def when foe initiates
@@ -1528,7 +1619,7 @@ function Resolve(attacker, defender, info) {
 
 // Switches stat that weapons target. Physical > Magical, Magical > Physical
 function Reverse(attacker, defender, info) {
-    if (battleInput.whoseSkill == 1) { return; }
+    if (info.whoseSkill == 1) { return; }
     attacker.skillMsg += outputSkill("Reverse");
     attacker.reverse = 1;
   }
@@ -1781,7 +1872,7 @@ function Templar(attacker, defender, info) {
 // Perform an extra attack at 50% damage at the end of combat
 function ThreeLeggedCrow(attacker, defender, info) {
     if (info.whoseSkill == 1) { return; }
-    const odds = attacker.spd + defender.activationBonus;
+    const odds = attacker.spd + attacker.activationBonus;
     if (info.isSim == 1 && odds > 0) { attacker.skillMsg += outputSkill("Three Legged Crow", odds); }
     else {
         attacker.extraAttackRoll = odds;
@@ -1869,6 +1960,17 @@ function TwilightSeraph(attacker, defender, info) {
     if (info.isSim == 1 && odds > 0) { attacker.skillMsg += outputSkill("Twilight Seraph", odds); }
     else if (randomInteger(100) <= odds) {
         attacker.skillMsg += outputSkill("Twilight Seraph");
+        attacker.armsthrift = 1;
+    }
+}
+
+// Mag% chance to use no staff durability
+function TwilightSeraphPlus(attacker, defender, info) {
+    if (info.whoseSkill == 1 || attacker.wepType != "Staff") { return; }
+    const odds = attacker.mag + attacker.activationBonus;
+    if (info.isSim == 1 && odds > 0) { attacker.skillMsg += outputSkill("Twilight Seraph+", odds); }
+    else if (randomInteger(100) <= odds) {
+        attacker.skillMsg += outputSkill("Twilight Seraph+");
         attacker.armsthrift = 1;
     }
 }
@@ -2100,19 +2202,18 @@ const SkillHandler = {
             isSim: isSim,
         }
 
-        const aSkills = getAttr(attacker.unit.id, 'activeSkills').get('current').split(',');
-        for(let i=0; i<aSkills.length; i++) {
-            if (staffSkillMap[aSkills[i]]) {
-                staffSkillMap[aSkills[i]](attacker, "", info);
-            }
-        }
-      
-      
-        // Weapon Skill Checks
+                // Weapon Skill Checks
         const aWepSkills = getAttr(attacker.unit.id, 'activeWepSkills').get('current').split(',');
         for(let i=0; i<aWepSkills.length; i++) {
             if (staffSkillMap[aWepSkills[i]]) {
                 staffSkillMap[aWepSkills[i]](attacker, "", info);
+            }
+        }
+
+        const aSkills = getAttr(attacker.unit.id, 'activeSkills').get('current').split(',');
+        for(let i=0; i<aSkills.length; i++) {
+            if (staffSkillMap[aSkills[i]]) {
+                staffSkillMap[aSkills[i]](attacker, "", info);
             }
         }
     },
@@ -2194,9 +2295,16 @@ const CombatArt = {
                 attacker.skillMsg += outputSkill("Eclipse");
                 attacker.duraCost = 10;
                 attacker.single = 1;
-                attacker.addDmg += attacker.str * 4;
                 defender.ward = 0;
                 defender.prot = 0;
+                if (attacker.dmgType == "Physical") {
+                    attacker.addDmg += attacker.str * 4;
+                }
+                else if (attacker.dmgType == "Magical") {
+                    attacker.str += attacker.str * 4;
+                    const aSkills = getAttr(attacker.unit.id, 'activeSkills').get('current').split(',');
+                    if (aSkills.includes("ArcaneBlade") == 1) { attacker.addDmg += Math.floor(attacker.str / 4); }
+                }
                 break;
             case "Eviscerate":
                 attacker.skillMsg += outputSkill("Eviscerate");
@@ -2232,6 +2340,10 @@ const CombatArt = {
                 attacker.skillMsg += outputSkill("Golden Orthus");
                 attacker.duraCost = 2;
                 attacker.numAttacks = 2;
+                break;
+            case "GoldenOrthusPlus":
+                attacker.skillMsg += outputSkill("Golden Orthus+");
+                attacker.duraCost = 2;
                 break;
             case "HeavensGrace": // Need to find way to add 30 avo to this
                 attacker.skillMsg += outputSkill("Heaven's Grace");

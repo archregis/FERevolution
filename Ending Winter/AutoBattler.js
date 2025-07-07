@@ -457,7 +457,7 @@ function CombatBlock(firstId, secondId, info, initiating, artName) {
 function DoOneCombatStep(selectedId, targetId, info, initiating, artName, isSim) {
   // Set up attacker/defender info
   let attacker = initializeAtkInfo(selectedId, info);
-  attacker.artName = artName == "None" ? 0 : 1;
+  attacker.combatArt = artName == "None" ? 0 : 1;
   let defender = initializeDefInfo(targetId, info);
   let combatMsg = `${attacker.name} ${isSim == 1 ? "simulates attacking " : "attacks "} ${defender.name} with ${attacker.wepName}! <br>`
 
@@ -466,7 +466,7 @@ function DoOneCombatStep(selectedId, targetId, info, initiating, artName, isSim)
  SkillHandler.CheckSkills(attacker, defender, initiating, isSim);
 
  
-  // Add Combat Art if using
+ // Add Combat Art if using
  CombatArt.UseArt(artName, attacker, defender);
 
 
