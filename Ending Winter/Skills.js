@@ -186,6 +186,7 @@ const skillMap = {
     "WardingStance": WardingStance,
     "WaryFighter": WaryFighter,
     "WatchfulMantis": WatchfulMantis,
+    "WeatherMastery": WeatherMastery,
     "WindDisciple": WindDisciple,
     "WolfBlood": WolfBlood,
     "Wrath": Wrath,
@@ -2059,6 +2060,14 @@ function WatchfulMantis(attacker, defender, info) {
     }
 }
 
+// +20 hit and +10 crit in adverse weather
+function WeatherMastery(attacker, defender, info) {
+    if (info.whoseSkill == 1 || info.weatherCond == "ClearSkies") { return; }
+    attacker.skillMsg += outputSkill("Weather Mastery");
+    attacker.hit += 20;
+    attacker.crit += 10;
+}
+
 // +10 hit and avo when missing HP
 function WindDisciple(attacker, defender, info) {
     if (info.whoseSkill == 0 && attacker.currHP < attacker.maxHP) {
@@ -2097,16 +2106,22 @@ function outputSkill(skill, odds) {
 const SkillHandler = {
     // Checks basic skills that work post combat block
     CheckSkills: function(attacker, defender, initiating, isSim) {
-        let info = {
-            initiating: initiating,
-            isSim: isSim,
-        }
 
         const aSkills = getAttr(attacker.unit.id, 'activeSkills').get('current').split(',');
         const dSkills = getAttr(defender.unit.id, 'activeSkills').get('current').split(',');
 
         const aWepSkills = getAttr(attacker.unit.id, 'activeWepSkills').get('current').split(',');
         const dWepSkills = getAttr(defender.unit.id, 'activeWepSkills').get('current').split(',');
+
+        const weather = findObjs({_type: "character", name: "Weather"});
+        const weatherId = weather[0].get("_id")
+        const weatherCond = getAttr(weatherId, 'activeSkills').get('current').split(',');
+
+        let info = {
+            initiating: initiating,
+            isSim: isSim,
+            weatherCond: weatherCond
+        }
       
         // Defender skills first to handle things like foresight or luna
         info.whoseSkill = 1;
