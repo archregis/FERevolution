@@ -271,6 +271,9 @@ function initializeDefInfo(unitId, info) {
   output.dodge = getAttrValue(output.unit.id, "ddg");
   output.atkSpd = getAttrValue(output.unit.id, 'atkSpd');
   output.swordExp = getAttrValue(output.unit.id, weaponMap["Sword"]);
+  output.lanceExp = getAttrValue(output.unit.id, weaponMap["Lance"]);
+  output.axeExp = getAttrValue(output.unit.id, weaponMap["Axe"]);
+  output.bowExp = getAttrValue(output.unit.id, weaponMap["Bow"]);
   output.staffExp = getAttrValue(output.unit.id, weaponMap["Staff"]);
   output.darkExp = getAttrValue(output.unit.id, weaponMap["Dark"]);
   output.animaExp = getAttrValue(output.unit.id, weaponMap["Anima"]);
