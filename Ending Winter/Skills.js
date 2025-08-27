@@ -25,6 +25,7 @@ const skillMap = {
     "BowRange+1": BowRangePlusOne,
     "Bowbreaker": Bowbreaker,
     "Bowfaire": Bowfaire,
+    "Bowfaith": Bowfaith,
     "Bowslayer": Bowslayer,
     "Brave": Brave,
     "CertainBlow": CertainBlow,
@@ -130,6 +131,7 @@ const skillMap = {
     "PushSkill": PushSkill,
     "PushSpeed": PushSpeed,
     "PushStrength": PushStrength,
+    "Queen'sBlow": QueensBlow,
     "QuickDraw": QuickDraw,
     "RadiantBlazar": RadiantBlazar,
     "RadiantBlazar+": RadiantBlazarPlus,
@@ -469,6 +471,14 @@ function Bowfaire(attacker, defender, info) {
     if (info.whoseSkill == 1 || attacker.wepType != "Bow") { return; }
     attacker.skillMsg += outputSkill("Bowfaire");
     attacker.addDmg += 4;
+}
+
+// Bows can't be broken and grants lck * 1.5 hit when using axes
+function Bowfaith(attacker, defender, info) {
+    if (info.whoseSkill == 1 || attacker.wepType != "Bow") { return; }
+    attacker.skillMsg += outputSkill("Bowfaith");
+    attacker.hit += Math.floor(attacker.lck * 1.5);
+    attacker.unbreaking = 1;
 }
 
 // Deal effective damage to foes with a bow rank
@@ -1503,6 +1513,25 @@ function PushStrength(attacker, defender, info) {
     }
 }
 
+// +6 mag, +6 def, +6 res when initiating
+function QueensBlow(attacker, defender, info) {
+    if (info.whoseSkill == 0 && info.initiating == 1) {
+        attacker.skillMsg += outputSkill("King's Blow");
+        attacker.mag += 6;
+        attacker.def += 6;
+        attacker.res += 6;
+        attacker.myst += 6;
+    }
+    else if (info.whoseSkill == 1 && info.initiating == 0) {
+        defender.skillMsg += outputSkill("King's Blow");
+        defender.mag += 6;
+        defender.def += 6;
+        defender.res += 6;
+        defender.prot += 6;
+        defender.ward += 6;
+    }
+}
+
 // +5 damage when initiating
 function QuickDraw(attacker, defender, info) {
     if (info.whoseSkill == 1 || info.initiating == 0) { return; }
@@ -2279,6 +2308,14 @@ const CombatArt = {
                 attacker.addDmg += attacker.res;
                 attacker.postHeal = attacker.res;
                 break;
+            case "BladeOfLight":
+                attacker.skillMsg += outputSkill("Blade of Light");
+                attacker.hit += 20;
+                attacker.crit += 15;
+                attacker.addDmg += 10;
+                attacker.currMt += 10;
+                attacker.currEff += ",Dragon";
+                attacker.duraCost = 4;
             case "Blowback":
                 attacker.skillMsg += outputSkill("Blowback");
                 attacker.duraCost = 3;
