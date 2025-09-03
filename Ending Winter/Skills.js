@@ -516,7 +516,7 @@ function Chivalry(attacker, defender, info) {
         attacker.addDmg += 4;
       }
       else if (info.whoseSkill == 1 && attacker.currHP >= attacker.maxHP) {
-        defender.dSkillMsg += outputSkill("Chivalry");
+        defender.skillMsg += outputSkill("Chivalry");
         defender.addProt += 4;
         defender.addWard += 4;
       }
@@ -529,7 +529,7 @@ function Conquest(attacker, defender, info) {
         attacker.addDmg += 6;
       }
       else if (info.whoseSkill == 1) {
-        defender.dSkillMsg += outputSkill("Conquest");
+        defender.skillMsg += outputSkill("Conquest");
         defender.effNegate = 1;
       }
 }
@@ -855,7 +855,7 @@ function DivineSpeed(attacker, defender, info) {
 function Dragonblood(attacker, defender, info) {
     if (info.whoseSkill == 1 || attacker.currHP >= attacker.maxHP) { return; }
     attacker.skillMsg += outputSkill("Dragonblood");
-    attacker.addDmg = 5;
+    attacker.addDmg += 5;
 }
 
 // Non-effective weapons do half damage and cannot reduce hp to 0
@@ -2113,7 +2113,7 @@ function WindDisciple(attacker, defender, info) {
 function WolfBlood(attacker, defender, info) {
     if (info.whoseSkill == 1 || attacker.currHP >= attacker.maxHP) { return; }
     attacker.skillMsg += outputSkill("Wolf Blood");
-    attacker.addDmg = 5;
+    attacker.addDmg += 5;
 }
 
 // When below 50% hp, gain +50 crit
@@ -2157,8 +2157,9 @@ const SkillHandler = {
         if (aSkills.includes("Nihil") == true || aWepSkills.includes('Nihil') == true) {
           attacker.skillMsg += outputSkill("Nihil");
         }
-        else if (aSkills.includes("VoidLion") == true || aWepSkills.includes('VoidLion') == true) {
-          attacker.skillMsg += outputSkill("Void Lion");
+        else if (aSkills.includes("VoidDragon") == true || aWepSkills.includes('VoidDragon') == true) {
+            attacker.skillMsg += outputSkill("Void Dragon");
+            if (attacker.currHP < attacker.maxHP) { attacker.addDmg += 10; }
         }
         else {
             info.whoseSkill = 1;
@@ -2180,8 +2181,8 @@ const SkillHandler = {
         if (dSkills.includes('Nihil') == true || dWepSkills.includes('Nihil') == true) {
             defender.skillMsg += outputSkill("Nihil");
         }
-        else if (dSkills.includes('VoidLion') == true || dWepSkills.includes('VoidLion') == true) {
-            defender.skillMsg += outputSkill("Void Lion");
+        else if (dSkills.includes('VoidDragon') == true || dWepSkills.includes('VoidDragon') == true) {
+            defender.skillMsg += outputSkill("Void Dragon");
         }
         else {
             for(let i=0; i<aSkills.length; i++) {
@@ -2210,7 +2211,7 @@ const SkillHandler = {
         const aWepSkills = getAttr(attacker.unit.id, 'activeWepSkills').get('current').split(',');
         const dWepSkills = getAttr(defender.unit.id, 'activeWepSkills').get('current').split(',');
 
-        if (aSkills.includes("Nihil") == false && aWepSkills.includes('Nihil') == false && aSkills.includes("VoidLion") == false && aWepSkills.includes('VoidLion') == false) {
+        if (aSkills.includes("Nihil") == false && aWepSkills.includes('Nihil') == false && aSkills.includes("VoidDragon") == false && aWepSkills.includes('VoidDragon') == false) {
             if (dSkills.includes("VantagePlus") || (dSkills.includes("Vantage") && belowHalf == 1)) { return 1; }
         }
 
@@ -2231,7 +2232,7 @@ const SkillHandler = {
         const aWepSkills = getAttr(attacker.unit.id, 'activeWepSkills').get('current').split(',');
         const dWepSkills = getAttr(defender.unit.id, 'activeWepSkills').get('current').split(',');
 
-        if (dSkills.includes("Nihil") == false && dWepSkills.includes('Nihil') == false && dSkills.includes("VoidLion") == false && dWepSkills.includes('VoidLion') == false) {
+        if (dSkills.includes("Nihil") == false && dWepSkills.includes('Nihil') == false && dSkills.includes("VoidDragon") == false && dWepSkills.includes('VoidDragon') == false) {
             if ((aSkills.includes("Desperation") && belowHalf == 1) || (aSkills.includes("Assassinate") && Led.from(attacker.token).to(defender.token).byManhattan().inSquares() == 1)) { return 1; }
         }
 
@@ -2316,6 +2317,7 @@ const CombatArt = {
                 attacker.currMt += 10;
                 attacker.currEff += ",Dragon";
                 attacker.duraCost = 4;
+                break;
             case "Blowback":
                 attacker.skillMsg += outputSkill("Blowback");
                 attacker.duraCost = 3;
@@ -2502,6 +2504,12 @@ const CombatArt = {
                 attacker.skillMsg += outputSkill("Sandstorm");
                 attacker.duraCost = 2;
                 attacker.sandstorm = 1;
+                break;
+            case "SeventhHeaven":
+                attacker.skillMsg += outputSkill("Seventh Heaven");
+                attacker.duraCost = 7;
+                attacker.addDmg += Math.floor((attacker.str + attacker.mag + attacker.skl + attacker.spd + attacker.lck + attacker.def + attacker.res) / 7);
+                attacker.currMt += Math.floor((attacker.str + attacker.mag + attacker.skl + attacker.spd + attacker.lck + attacker.def + attacker.res) / 7);
                 break;
             case "StolenHeaven":
                 attacker.skillMsg += outputSkill("Stolen Heaven");
