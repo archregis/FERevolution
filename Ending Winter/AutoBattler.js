@@ -211,6 +211,10 @@ function initializeAtkInfo(unitId, info) {
   output.crit = getAttrValue(output.unit.id, "crit");
   output.atkSpd = getAttrValue(output.unit.id, 'atkSpd');
   output.addDmg = 0;
+  output.swordExp = getAttrValue(output.unit.id, weaponMap["Sword"]);
+  output.lanceExp = getAttrValue(output.unit.id, weaponMap["Lance"]);
+  output.axeExp = getAttrValue(output.unit.id, weaponMap["Axe"]);
+  output.bowExp = getAttrValue(output.unit.id, weaponMap["Bow"]);
   output.staffExp = getAttrValue(output.unit.id, weaponMap["Staff"]);
   output.darkExp = getAttrValue(output.unit.id, weaponMap["Dark"]);
   output.animaExp = getAttrValue(output.unit.id, weaponMap["Anima"]);
@@ -476,7 +480,7 @@ function DoOneCombatStep(selectedId, targetId, info, initiating, artName, isSim)
   // Check for broken weapon
   let prefix = attacker.dmgType == "Physical" ? "repeating_weapons" : "repeating_spells";
   let [currUses, attr] = GetWeaponStats(attacker.unit.id, attacker.dmgType, prefix);
-  if (currUses < attacker.duraCost) {
+  if (currUses < Math.max(1, attacker.duraCost)) {
     sendChat('System', "Durability cost is higher than uses remaining.");
     return;
   }
@@ -678,7 +682,7 @@ function DoOneCombatStep(selectedId, targetId, info, initiating, artName, isSim)
         UpdateHealth(attacker, -Math.min(defender.currHP, Math.floor(dmgTaken / 2)));
       }
       if (attacker.armsthrift != 1) {
-        let usesLeft = Math.max(0, currUses - attacker.duraCost);
+        let usesLeft = Math.max(0, currUses - Math.max(1, attacker.duraCost));
         if (attacker.unbreaking == 1 && usesLeft == 0) { usesLeft = 1; }
         attr.setWithWorker("current", usesLeft); }
       updateWeaponEXP(attacker.unit.id, attacker.wepType, attacker.wepGain);

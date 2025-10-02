@@ -328,14 +328,14 @@ function AurelianPlus(attacker, defender, info) {
             attacker.skillMsg += outputSkill("Sol", oddsSol);
         }
         else if (randomInteger(100) <= oddsSol) {
-            defender.skillMsg += outputSkill("Sol");
+            attacker.skillMsg += outputSkill("Sol");
             attacker.sol = 1;
         }
         if (info.isSim == 1 && oddsIgnis > 0) { 
             attacker.skillMsg += outputSkill("Ignis", oddsIgnis);
         }
         else if (randomInteger(100) <= oddsIgnis) {
-            defender.skillMsg += outputSkill("Ignis");
+            attacker.skillMsg += outputSkill("Ignis");
             attacker.addDmg += Math.floor(attacker.res / 2) + Math.floor(attacker.def/ 2);
         }
     }
@@ -416,14 +416,14 @@ function BattleVeteran(attacker, defender, info) {
 function BlackLotus(attacker, defender, info) {
     if (info.whoseSkill == 1) { return; }
     attacker.skillMsg += outputSkill("Black Lotus");
-    attacker.duraCost = Math.max(1, attacker.duraCost - 1);
+    attacker.duraCost -=  1;
 }
 
 // Reduces the cost of Combat Arts by 2
 function BlackLotusPlus(attacker, defender, info) {
     if (info.whoseSkill == 1) { return; }
     attacker.skillMsg += outputSkill("Black Lotus+");
-    attacker.duraCost = Math.max(1, attacker.duraCost - 2);
+    attacker.duraCost -=  2;
 }
 
 // Adds 1 damage for every 4 hp missing
@@ -752,14 +752,14 @@ function Desperation(attacker, defender, info) {
 function Determination(attacker, defender, info) {
     if (info.whoseSkill == 1 || attacker.currHP * 2 >= attacker.maxHP) { return; }
     attacker.skillMsg += outputSkill("Determination");
-    attacker.duraCost = Math.max(1, attacker.duraCost - 1);
+    attacker.duraCost -=  1;
 }
 
 // Reduces the cost of Combat Arts by 1 and increase skill activation by 20% when below 50% hp
 function DeterminationPlus(attacker, defender, info) {
     if (info.whoseSkill == 0 && attacker.currHP * 2 < attacker.maxHP) {
         attacker.skillMsg += outputSkill("Determination+");
-        attacker.duraCost = Math.max(1, attacker.duraCost - 1);
+        attacker.duraCost -=  1;
         attacker.activationBonus += 20;
     }
     else if (info.whoseSkill == 1 && defender.currHP * 2 < defender.maxHP) {
@@ -1589,7 +1589,7 @@ function ReadyStance(attacker, defender, info) {
 function Reave(attacker, defender, info) {
     if (info.whoseSkill == 1 || CheckAdvantage(attacker.wepTri, defender.wepTri) != 1) { return; }
     attacker.skillMsg += outputSkill("Reave");
-    attacker.duraCost = Math.max(1, attacker.duraCost - 2);
+    attacker.duraCost -=  2;
 }
 
 // Reverses weapon triangle and doubles bonuses
@@ -1658,21 +1658,21 @@ function Reverse(attacker, defender, info) {
 function RightfulGod(attacker, defender, info) {
     if (info.whoseSkill == 1) { return; }
     attacker.skillMsg += outputSkill("Rightful God");
-    attacker.duraCost = Math.max(1, attacker.duraCost - 3);
+    attacker.duraCost -=  3;
 }
 
 // Reduces the cost of Combat Arts by 2
 function RightfulKing(attacker, defender, info) {
     if (info.whoseSkill == 1) { return; }
     attacker.skillMsg += outputSkill("Rightful King");
-    attacker.duraCost = Math.max(1, attacker.duraCost - 2);
+    attacker.duraCost -=  2;
 }
 
 // Reduces the cost of Combat Arts by 1
 function RightfulLord(attacker, defender, info) {
     if (info.whoseSkill == 1) { return; }
     attacker.skillMsg += outputSkill("Rightful Lord");
-    attacker.duraCost = Math.max(1, attacker.duraCost - 1);
+    attacker.duraCost -=  1;
 }
 
 // +30 avoid when initiating
@@ -2270,12 +2270,12 @@ const CombatArt = {
         switch(artName) {
             case "Adept":
                 attacker.skillMsg += outputSkill("Adept");
-                attacker.duraCost = 2;
+                attacker.duraCost += 1;
                 attacker.extraAttack = 1;
                 break;
             case "Aether":
                 attacker.skillMsg += outputSkill("Aether");
-                attacker.duraCost = 5;
+                attacker.duraCost += 4;
                 attacker.numAttacks = 2;
                 attacker.single = 1;
                 if (attacker.aether == 0) {
@@ -2288,13 +2288,13 @@ const CombatArt = {
                 break;
             case "Aim":
                 attacker.skillMsg += outputSkill("Aim");
-                attacker.duraCost = 3;
+                attacker.duraCost += 2;
                 attacker.single = 1;
                 attacker.aim = 1;
                 break;
             case "Allslayer":
                 attacker.skillMsg += outputSkill("Allslayer");
-                attacker.duraCost = 3;
+                attacker.duraCost += 2;
                 attacker.effAll = 1;
                 break;
             case "Astra":
@@ -2305,7 +2305,7 @@ const CombatArt = {
                 break;
             case "BladeOfHonor":
                 attacker.skillMsg += outputSkill("Blade of Honor");
-                attacker.duraCost = 3;
+                attacker.duraCost += 2;
                 attacker.addDmg += attacker.res;
                 attacker.postHeal = attacker.res;
                 break;
@@ -2316,38 +2316,38 @@ const CombatArt = {
                 attacker.addDmg += 10;
                 attacker.currMt += 10;
                 attacker.currEff += ",Dragon";
-                attacker.duraCost = 4;
+                attacker.duraCost += 3;
                 break;
             case "Blowback":
                 attacker.skillMsg += outputSkill("Blowback");
-                attacker.duraCost = 3;
+                attacker.duraCost += 2;
                 break;
             case "BrokenHeaven":
                 attacker.skillMsg += outputSkill("Broken Heaven");
-                attacker.duraCost = 3;
+                attacker.duraCost += 2;
                 attacker.addDmg += Math.floor(attacker.def / 2);
                 attacker.currMt += Math.floor(attacker.def / 2);
                 break;
             case "CarveHeaven":
                 attacker.skillMsg += outputSkill("Carve Heaven");
-                attacker.duraCost = 3;
+                attacker.duraCost += 2;
                 attacker.addDmg += Math.floor(attacker.skl / 2);
                 attacker.currMt += Math.floor(attacker.skl / 2);
                 break;
             case "Colossus":
                 attacker.skillMsg += outputSkill("Colossus");
-                attacker.duraCost = 2;
+                attacker.duraCost += 1;
                 attacker.single = 1;
                 attacker.addDmg += attacker.str;
                 break;
             case "CrushingBlow":
                 attacker.skillMsg += outputSkill("Crushing Blow");
-                attacker.duraCost = 2;
+                attacker.duraCost += 1;
                 attacker.dmgMult *= 1.5;
                 break;
             case "Eclipse":
                 attacker.skillMsg += outputSkill("Eclipse");
-                attacker.duraCost = 10;
+                attacker.duraCost += 9;
                 attacker.single = 1;
                 defender.ward = 0;
                 defender.prot = 0;
@@ -2362,22 +2362,22 @@ const CombatArt = {
                 break;
             case "Eviscerate":
                 attacker.skillMsg += outputSkill("Eviscerate");
-                attacker.duraCost = 2;
+                attacker.duraCost += 1;
                 attacker.eviscerate = 1;
                 break;
             case "FallenStar":
                 attacker.skillMsg += outputSkill("Fallen Star");
-                attacker.duraCost = 2;
+                attacker.duraCost += 1;
                 attacker.fallenStar = 1;
                 break;
             case "Flare":
                 attacker.skillMsg += outputSkill("Flare");
-                attacker.duraCost = 2;
+                attacker.duraCost += 1;
                 defender.ward = Math.floor(defender.ward/2);
                 break;
             case "Gambit":
                 attacker.skillMsg += outputSkill("Gambit");
-                attacker.duraCost = 2;
+                attacker.duraCost += 1;
                 attacker.single = 1;
                 attacker.addDmg += 5;
                 attacker.crit += 30;
@@ -2385,51 +2385,51 @@ const CombatArt = {
                 break;
             case "Gamble":
                 attacker.skillMsg += outputSkill("Gamble");
-                attacker.duraCost = 2;
+                attacker.duraCost += 1;
                 attacker.single = 1
                 attacker.hit = Math.floor(attacker.hit / 2);
                 attacker.crit = attacker.crit * 2;
                 break;
             case "GoldenOrthus":
                 attacker.skillMsg += outputSkill("Golden Orthus");
-                attacker.duraCost = 2;
+                attacker.duraCost += 1;
                 attacker.numAttacks = 2;
                 break;
             case "GoldenOrthusPlus":
                 attacker.skillMsg += outputSkill("Golden Orthus+");
-                attacker.duraCost = 2;
+                attacker.duraCost += 1;
                 break;
             case "HeavensGrace": // Need to find way to add 30 avo to this
                 attacker.skillMsg += outputSkill("Heaven's Grace");
-                attacker.duraCost = 3;
+                attacker.duraCost += 2;
                 attacker.dmgMult *= 1.5;
                 attacker.hit += 10;
                 break;
             case "Impale":
                 attacker.skillMsg += outputSkill("Impale");
-                attacker.duraCost = 4;
+                attacker.duraCost += 3;
                 attacker.dmgMult *= 3;
                 attacker.single = 1;
                 break;
             case "ImpalePlus":
                 attacker.skillMsg += outputSkill("Impale+");
-                attacker.duraCost = 3;
+                attacker.duraCost += 2;
                 attacker.dmgMult *= 3;
                 break;
             case "InfernalAstra":
                 attacker.skillMsg += outputSkill("Infernal Astra");
-                attacker.duraCost = 3;
+                attacker.duraCost += 2;
                 attacker.numAttacks = 3;
                 attacker.single = 1
                 break;
             case "Ire":
                 attacker.skillMsg += outputSkill("Ire");
-                attacker.duraCost = 4;
+                attacker.duraCost += 3;
                 attacker.addDmg += (attacker.maxHP - attacker.currHP) * 2;
                 break;
             case "Luna":
                 attacker.skillMsg += outputSkill("Luna");
-                attacker.duraCost = 4;
+                attacker.duraCost += 3;
                 defender.prot = 0;
                 defender.ward = 0;
                 break;
@@ -2439,56 +2439,56 @@ const CombatArt = {
                 break;
             case "MoonlitRider":
                 attacker.skillMsg += outputSkill("Moonlit Rider");
-                attacker.duraCost = 5;
+                attacker.duraCost += 4;
                 attacker.numAttacks = 3;
                 attacker.single = 1;
                 break;
             case "Perforate":
                 attacker.skillMsg += outputSkill("Perforate");
-                attacker.duraCost = 3;
+                attacker.duraCost += 2;
                 attacker.dmgMult *= 4;
             case "PerpetualGuardian":
                 attacker.skillMsg += outputSkill("Perpetual Guardian");
-                attacker.duraCost = 3;
+                attacker.duraCost += 2;
                 attacker.numAttacks = 1;
                 attacker.addDmg += attacker.def;
                 break;
             case "PerpetualGuardianPlus":
                 attacker.skillMsg += outputSkill("Perpetual Guardian+");
-                attacker.duraCost = 4;
+                attacker.duraCost += 3;
                 attacker.addDmg += attacker.def * 2;
                 break;
             case "Pierce": // Needs to work with targeted skills
                 attacker.skillMsg += outputSkill("Pierce");
-                attacker.duraCost = 2;
+                attacker.duraCost += 1;
                 attacker.pierce = 1;
                 break;
             case "ProfaneHeaven":
                 attacker.skillMsg += outputSkill("Profane Heaven");
-                attacker.duraCost = 3;
+                attacker.duraCost += 2;
                 attacker.addDmg += Math.floor(attacker.res / 2);
                 attacker.currMt += Math.floor(attacker.res / 2);
                 break;
             case "Purity":
                 attacker.skillMsg += outputSkill("Purity");
-                attacker.duraCost = 5;
+                attacker.duraCost += 4;
                 attacker.effAll = 1;
                 break;
             case "RendHeaven":
                 attacker.skillMsg += outputSkill("Rend Heaven");
-                attacker.duraCost = 3;
+                attacker.duraCost += 2;
                 attacker.addDmg += Math.floor(attacker.str / 2);
                 attacker.currMt += Math.floor(attacker.str / 2);
                 break;
             case "Resourceful":
                 attacker.skillMsg += outputSkill("Resourceful");
-                attacker.duraCost = 3;
+                attacker.duraCost += 2;
                 attacker.single = 1;
                 attacker.doubleEff = 1;
                 break;
             case "RuinedSky":
                 attacker.skillMsg += outputSkill("Ruined Sky");
-                attacker.duraCost = 2;
+                attacker.duraCost += 1;
                 attacker.single = 1;
                 attacker.addDmg += 5;
                 attacker.currMt += 5;
@@ -2496,48 +2496,48 @@ const CombatArt = {
                 break;
             case "RuptureHeaven":
                 attacker.skillMsg += outputSkill("Rupture Heaven");
-                attacker.duraCost = 3;
+                attacker.duraCost += 2;
                 attacker.addDmg += Math.floor(attacker.mag / 2);
                 attacker.currMt += Math.floor(attacker.mag / 2);
                 break;
             case "Sandstorm":
                 attacker.skillMsg += outputSkill("Sandstorm");
-                attacker.duraCost = 2;
+                attacker.duraCost += 1;
                 attacker.sandstorm = 1;
                 break;
             case "SeventhHeaven":
                 attacker.skillMsg += outputSkill("Seventh Heaven");
-                attacker.duraCost = 7;
+                attacker.duraCost += 6;
                 attacker.addDmg += Math.floor((attacker.str + attacker.mag + attacker.skl + attacker.spd + attacker.lck + attacker.def + attacker.res) / 7);
                 attacker.currMt += Math.floor((attacker.str + attacker.mag + attacker.skl + attacker.spd + attacker.lck + attacker.def + attacker.res) / 7);
                 break;
             case "StolenHeaven":
                 attacker.skillMsg += outputSkill("Stolen Heaven");
-                attacker.duraCost = 3;
+                attacker.duraCost += 2;
                 attacker.addDmg += Math.floor(attacker.lck / 2);
                 attacker.currMt += Math.floor(attacker.lck / 2);
                 break;
             case "SublimeHeaven":
                 attacker.skillMsg += outputSkill("Sublime Heaven");
-                attacker.duraCost = 3;
+                attacker.duraCost += 2;
                 attacker.addDmg += Math.floor(attacker.spd / 2);
                 attacker.currMt += Math.floor(attacker.spd / 2);
                 break;
             case "SureShot":
                 attacker.skillMsg += outputSkill("Sure Shot");
-                attacker.duraCost = 3;
+                attacker.duraCost += 2;
                 attacker.single = 1;
                 attacker.dmgMult *= 1.5;
                 attacker.sureShot = 1;
                 break;
             case "Vengeance":
                 attacker.skillMsg += outputSkill("Vengeance");
-                attacker.duraCost = 3;
+                attacker.duraCost += 2;
                 attacker.addDmg += attacker.addDmg += Math.floor((attacker.maxHP - attacker.currHP) / 2);
                 break;
             case "WindGod":
                 attacker.skillMsg += outputSkill("Wind God");
-                attacker.duraCost = 4;
+                attacker.duraCost += 3;
                 attacker.single = 1;
                 attacker.addDmg += 5;
                 attacker.crit += 20;
