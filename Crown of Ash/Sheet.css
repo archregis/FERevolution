@@ -1,0 +1,486 @@
+@font-face {
+  font-family:'Merriweather';
+  font-style:normal;
+  font-weight:300;
+  src:local('Merriweather Light'), local('Merriweather-Light'), format('woff2');
+  unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2212, U+2215;
+}
+
+*, *::before, *::after {
+    box-sizing: border-box;
+  }
+
+/*equip the tab buttons*/
+.sheet-character,
+.sheet-misc,
+.sheet-bonuses {
+	display:none;
+}
+
+/* show the selected tab */
+.sheet-tabstoggle[value="character"] ~ div.sheet-character,
+.sheet-tabstoggle[value="misc"] ~ div.sheet-misc,
+.sheet-tabstoggle[value="bonuses"] ~ div.sheet-bonuses {
+	display:block;
+}
+
+.charsheet { /*background function*/
+    background-color:#353535;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    font-family:"Merriweather";
+    font-size:11px;
+    min-height:100%;
+    min-width:100%;
+    clear:both;
+    overflow:auto;
+}
+
+.sheet-maindiv {
+	margin: 0px;
+	padding: 0px;
+	width: 100%;
+    height: 100%;
+}
+
+.sheet-character-grid {
+    display: grid;
+    grid-template-columns: 72% 28%;
+    grid-template-areas:
+    "info  notes " 
+    "vals  notes " 
+    "stats notes " 
+    "stats derive";
+}
+
+.sheet-info {
+    grid-area:"info";
+    background-color:#f3f3f3;
+    margin-bottom:10px;
+    margin-right:4px;
+    padding:3px;
+}
+
+.sheet-current-vals {
+    grid-area:"vals";
+    background-color:#f3f3f3;
+    margin-bottom:10px;
+    margin-right:4px;
+    padding:3px;
+}
+
+.sheet-stats {
+    grid-area:stats;
+    background-color:#f3f3f3;
+    margin-bottom:10px;
+    margin-right:4px;
+    padding:3px;
+}
+
+.sheet-derived {
+    grid-area:derive;
+    background-color:#f3f3f3;
+    margin-bottom:10px;
+    margin-left:4px;
+    padding:3px;
+}
+
+.sheet-notes {
+    grid-area:notes;
+    background-color:#f3f3f3;
+    margin-bottom:10px;
+    margin-left:4px;
+    padding:3px;
+}
+
+.sheet-char-row {
+    background-color:#f3f3f3;
+    width:100%;
+    display:inline-block;
+    padding-left:10px;
+}
+
+.sheet-label-row {
+    font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-weight:bold;
+    background-color:#353535;
+    color:#f3f3f3;
+    text-transform:uppercase;
+    font-size:15px;
+}
+
+.sheet-current-vals-row {
+    display:grid;
+    grid-template-columns:repeat(5, 1fr);
+    padding-top:5px;
+    align-items: center;
+    text-align:center;
+    font-size:13px;
+    margin-bottom:10px;
+}
+
+.sheet-stats-grid {
+    display:grid;
+    background-color:#f3f3f3;
+    padding-bottom:5px;
+    row-gap:10px;
+}
+
+.sheet-attributes-header {
+    grid-template-columns: repeat(7, 1fr);
+    display:grid;
+}
+
+.sheet-attributes-header .empty-col {
+    grid-column: 1 / 2;
+}
+
+.sheet-attributes-header .stats-col{
+    grid-column: 2 / 4;
+    text-align: center;
+}
+
+.sheet-attributes-header .mid-col {
+    grid-column: 4 / 6;
+}
+
+.sheet-attributes-header .growths-col{
+    grid-column: 6 / 8;
+    text-align: center;
+}
+
+.sheet-stats-row {
+    display:grid;
+    grid-template-columns:repeat(7, 1fr);
+    align-items: center;
+    text-align:center;
+    font-size:13px;
+}
+
+.sheet-info label {
+    display:inline;
+    font-weight:normal;
+}
+
+.charsheet label input,
+.charsheet sheet-info select {
+    margin-right:2px;
+    width:20%;
+    margin-bottom:5px;
+    margin-top:5px;
+}
+
+.charsheet select {
+    display:inline;
+    background-color:#F9F9F9;
+    color:rgb(85, 85, 85);
+    box-shadow:0px 1px 1px rgba(0, 0, 0, 0.075) inset;
+}
+
+.sheet-derived-grid {
+    display:grid;
+    background-color:#f3f3f3;
+    margin-bottom:10px;
+    row-gap:10px;
+}
+
+.sheet-derived-row {
+    display:grid;
+    grid-template-columns:repeat(3, 1fr);
+    align-items: center;
+    text-align:center;
+    font-size:13px;
+}
+
+.sheet-weapons-grid,
+.sheet-spells-grid {
+    display:inline-grid;
+    background-color:#f3f3f3;
+    padding:3px;
+    width:49.33%;
+    margin-bottom:10px;
+}
+
+.sheet-weapons-grid {
+    margin-right:4px;
+}
+
+.sheet-spells-grid {
+    margin-left:4px;
+}
+
+.sheet-weapons-container {
+    border-bottom:#353535 4px solid;
+}
+
+.sheet-weapons-grid-container {
+    display:grid;
+    background-color:#f3f3f3;
+    row-gap:5px;
+    text-align: center;
+}
+
+.sheet-weapons-grid-row {
+    display:grid;
+    width:100%;
+    grid-template-columns:60% 20% 20%;
+    font-weight:bold;
+    font-size:13px;
+}
+
+.sheet-hidden-grid-container {
+    display:grid;
+    background-color:#f3f3f3;
+    row-gap:5px;
+    text-align: center;
+}
+
+.sheet-hidden-grid-row {
+    display:grid;
+    width:100%;
+    grid-template-columns:repeat(5, 1fr);
+    font-weight:bold;
+    font-size:13px;
+    margin-left:5px;
+}
+
+.sheet-skill-info {
+    background-color:#f3f3f3;
+    margin-bottom:10px;
+    margin-right:4px;
+    padding:3px;
+    
+}
+
+.sheet-support-info {
+    background-color:#f3f3f3;
+    margin-bottom:10px;
+    margin-left:4px;
+    padding:3px;
+}
+
+.sheet-weapon-rank-grid {
+    display:grid;
+    background-color:#f3f3f3;
+    row-gap:10px;
+    margin-right:4px;
+    margin-bottom:10px;
+    padding:3px;
+}
+
+.sheet-weapon-rank-row {
+    display:grid;
+    grid-template-columns:repeat(3, 1fr);
+    text-align:center;
+    font-size:13px;
+}
+
+.sheet-weapon-rank-header,
+.sheet-stat-label {
+    font-weight:bold;
+    font-size:14px;
+}
+
+.sheet-bonus-grid-container {
+    background-color:#f3f3f3;
+    margin-bottom:10px;
+    padding:3px;
+}
+
+.sheet-bonus-grid-row {
+    display:grid;
+    width:100%;
+    grid-template-columns:30px 100px repeat(14, 1fr);
+}
+
+.sheet-bonus-grid input[type="checkbox"] {
+    width:20px;
+    margin-left:5px;
+}
+
+.sheet-header {
+    text-align:center;
+    font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-size:15px;
+    padding:3px;
+    background-color:#353535;
+    color:#f3f3f3;
+    border-bottom-width:2px;
+    font-weight:bold;
+}
+
+.sheet-bonuses-info {
+    background-color:#f3f3f3;
+    margin-bottom:10px;
+    margin-right:4px;
+    padding:3px;
+}
+
+.sheet-equipment-info {
+    background-color:#f3f3f3;
+    margin-bottom:10px;
+    margin-left:4px;
+    padding:3px;
+}
+
+.sheet-grid-section {
+    display:grid;
+    grid-template-columns:.5fr .5fr
+}
+
+.sheet-notes textarea {
+    margin-left:5px;
+    margin-top:5px;
+    width:95%;
+    height:88%;
+}
+
+.sheet-grid-section textarea {
+    margin-left:5px;
+    margin-top:5px;
+    width:98%;
+    height:450px;
+}
+
+.sheet-info input[type="checkbox"] {
+    width:13px;
+}
+
+input.sheet-toggle-stats {
+    background-color:transparent;
+    border:none;
+    margin-bottom:10px;
+    margin-left:10px;
+    -webkit-appearance:none;
+    -moz-appearance:none;
+    appearance:none;
+    width:16px;
+    height:16px;
+}
+
+.sheet-toggle-label {
+    display:inline-grid;
+    font-size:13px;
+    font-weight:bold;
+}
+
+input.sheet-toggle-stats::after {
+    content:"⏷";
+}
+
+input.sheet-toggle-stats:checked::after {
+    content:"⏶";
+}
+
+.sheet-hiddenstats {
+    display:none;
+}
+
+.sheet-hiddenstats-row {
+    display:grid;
+    grid-template-columns:repeat(6, 1fr);
+    text-align:center;
+    font-weight:bold;
+}
+
+.sheet-hiddenskill {
+    display: none;
+    margin-left: 8px;
+    margin-top: 10px;
+}
+
+.sheet-hidden-grid-container {
+    display:none;
+}
+
+input.sheet-toggle-stats:checked ~ .sheet-hiddenstats {
+    display:grid;
+}
+
+input.sheet-toggle-stats:checked ~ .sheet-hidden-grid-container {
+    display:grid;
+}
+
+input.sheet-toggle-stats:checked ~ .sheet-hiddenskill {
+    display:inline-grid;
+}
+
+.charsheet .sheet-hiddenskill label {
+    display:block;
+    font-size:13px;
+    font-weight:bold;
+}
+
+.charsheet .sheet-hiddenskill input {
+    width:100%;
+}
+
+.sheet-useBackground input[value="2"]:checked ~ *.sheet-background {
+	background-image: url("https://mrwallpaper.com/images/hd/download-fire-wallpaper-hifs64j4zn4uhbe7.jpg");
+	background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-origin: content-box;
+}
+
+.sheet-useBackground input[value="3"]:checked ~ *.sheet-background {
+	background-image: url("https://i.pinimg.com/736x/d0/88/6b/d0886bec60c9e94909e7f5e802e49b62.jpg");
+	background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-origin: content-box;
+}
+
+.sheet-useBackground input[value="4"]:checked ~ *.sheet-background {
+	background-image: url("https://bargainmama.com/wp-content/uploads/2024/09/Two-Tropical-Threats-Show-Up-in-the-Atlantic-as-the-Hurricane-Season-Coming-to-an-End.webp");
+	background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-origin: content-box;
+}
+
+.sheet-useBackground input[value="5"]:checked ~ *.sheet-background {
+	background-image: url("https://img.freepik.com/free-photo/summer-background-sea-water_64049-163.jpg");
+	background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-origin: content-box;
+}
+
+.sheet-useBackground input[value="6"]:checked ~ *.sheet-background {
+	background-image: url("https://c1.wallpaperflare.com/preview/589/986/568/rock-red-rock-red-vertical.jpg");
+	background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-origin: content-box;
+}
+
+.sheet-useBackground input[value="7"]:checked ~ *.sheet-background {
+	background-image: url("https://i.pinimg.com/736x/15/e8/08/15e8080d7752ee271e57edb7fa42bdb8.jpg");
+	background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-origin: content-box;
+}
+
+.sheet-useBackground input[value="8"]:checked ~ *.sheet-background {
+	background-image: url("https://i.pinimg.com/736x/5a/2b/3b/5a2b3baee1db4d3e27376c2b07ba1edb.jpg");
+	background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-origin: content-box;
+}
+
+.sheet-useBackground input[value="9"]:checked ~ *.sheet-background {
+	background-image: url("https://i.pinimg.com/736x/95/c1/1f/95c11f3fe0113b2ad683a2fd7d511370.jpg");
+	background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-origin: content-box;
+}
+
+.sheet-holder {
+    margin-left:10px;
+    margin-right:10px;
+}
