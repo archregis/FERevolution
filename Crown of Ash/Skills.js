@@ -99,6 +99,7 @@ const skillMap = {
     "Luna+": LunaPlus,
     "LunarBrace": LunarBrace,
     "Mageslayer": Mageslayer,
+    "MagicBlade": MagicBlade,
     "MasterIllusionist": MasterIllusionist,
     "Miracle": Miracle,
     "MirrorStance": MirrorStance,
@@ -1133,6 +1134,15 @@ function Mageslayer(attacker, defender, info) {
     attacker.skillMsg += outputSkill("Mageslayer");
     attacker.addDmg += 2;
     attacker.crit += 10;
+}
+
+// When initiating at 1 range with a physical weapon, add 50% mag to damage and 30% mag to hit and crit
+function MagicBlade(attacker, defender, info) {
+    if (info.whoseSkill == 1 || attacker.dmgType == "Magical" || Led.from(attacker.token).to(defender.token).byManhattan().inSquares() != 1) { return; }
+        attacker.skillMsg += outputSkill("Magic Blade");
+        attacker.addDmg += Math.floor(attacker.mag / 2);
+        attacker.hit += Math.floor((attacker.mag / 10 * 3));
+        attacker.crit += Math.floor((attacker.mag / 10 * 3));
 }
 
 // +30 avo when being attacked
