@@ -544,12 +544,12 @@ function DoOneCombatStep(selectedId, targetId, info, initiating, artName, isSim)
 
   var triangleMsg = "";
   if (triangle == 1) {
-    hit += 15 * mult;
+    hit += 20 * mult;
     addedDmg += 1 * mult;
     triangleMsg = '<div>Attacking with advantage!</div>';
   }
   else if (triangle == -1) {
-    hit += -15 * mult;
+    hit += -20 * mult;
     addedDmg += -1 * mult;
     triangleMsg = '<div>Attacking with disadvantage!</div>';
   }
