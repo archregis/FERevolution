@@ -86,6 +86,7 @@ const skillMap = {
     "King'sBlow": KingsBlow,
     "Lancebreaker": Lancebreaker,
     "Lancefaire": Lancefaire,
+    "Lancefaith": Lancefaith,
     "Lanceslayer": Lanceslayer,
     "Lethality": Lethality,
     "LifeAndDeath": LifeAndDeath,
@@ -141,6 +142,7 @@ const skillMap = {
     "SwiftStance": SwiftStance,
     "Swordbreaker": Swordbreaker,
     "Swordfaire": Swordfaire,
+    "Swordfaith": Swordfaith,
     "Swordslayer": Swordslayer,
     "Templar": Templar,
     "Thunderstorm": Thunderstorm,
@@ -1016,6 +1018,14 @@ function Lancefaire(attacker, defender, info) {
     attacker.addDmg += 4;
 }
 
+// Lances can't be broken and grants lck * 1.5 hit when using lances
+function Lancefaith(attacker, defender, info) {
+    if (info.whoseSkill == 1 || attacker.wepType != "Lance") { return; }
+    attacker.skillMsg += outputSkill("Lancefaith");
+    attacker.hit += Math.floor(attacker.lck * 1.5);
+    attacker.unbreaking = 1;
+}
+
 // Deal effective damage to foes with a lance rank
 function Lanceslayer(attacker, defender, info) {
     if (info.whoseSkill == 1 || defender.wepType != "Lance") { return; }
@@ -1570,6 +1580,14 @@ function Swordfaire(attacker, defender, info) {
     if (info.whoseSkill == 1 || attacker.wepType != "Sword") { return; }
     attacker.skillMsg += outputSkill("Swordfaire");
     attacker.addDmg += 4;
+}
+
+// Swords can't be broken and grants lck * 1.5 hit when using swords
+function Swordfaith(attacker, defender, info) {
+    if (info.whoseSkill == 1 || attacker.wepType != "Sword") { return; }
+    attacker.skillMsg += outputSkill("Swordfaith");
+    attacker.hit += Math.floor(attacker.lck * 1.5);
+    attacker.unbreaking = 1;
 }
 
 // Deal effective damage to foes with a sword rank
