@@ -111,6 +111,7 @@ const skillMap = {
     "PoisonStrike": PoisonStrike,
     "Pragmatic": Pragmatic,
     "Prescience": Prescience,
+    "Puissance": Puissance,
     "Pursuit": Pursuit,
     "PushDefense": PushDefense,
     "PushMagic": PushMagic,
@@ -1238,6 +1239,13 @@ function Prescience(attacker, defender, info) {
         defender.skillMsg += outputSkill("Prescience");
         defender.avoid += 15;
     }
+}
+
+// +3 damage when the user's str is higher than the enemy's
+function Puissance(attacker, defender, info) {
+    if (info.whoseSkill == 1 || attacker.str <= defender.str) { return; }
+    attacker.skillMsg += outputSkill("Puissance");
+    attacker.addDmg += 3;
 }
 
 // +2 atk spd when foe initiates
