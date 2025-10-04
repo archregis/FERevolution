@@ -257,6 +257,8 @@ function initializeDefInfo(unitId, info) {
 
   // Stat info
   output.currWeak = getAttr(output.unit.id,'weakTotal').get('current');
+  output.level = getAttrValue(output.unit.id, "level");
+  output.gender = getAttrValue(output.unit.id, "gender");
   output.currHP = output.obj.get("bar3_value");
   output.maxHP = output.obj.get("bar3_max");
   output.str = getAttrValue(output.unit.id, "strTotal");

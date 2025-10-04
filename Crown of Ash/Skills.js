@@ -158,6 +158,7 @@ const skillMap = {
     "Trample": Trample,
     "TriangleAdept": TriangleAdept,
     "Underdog": Underdog,
+    "Unmask": Unmask,
     "Vampiric": Vampiric,
     "Vantage": Vantage,
     "Vantage+": VantagePlus,
@@ -1725,6 +1726,14 @@ function Underdog(attacker, defender, info) {
         defender.skillMsg += outputSkill("Underdog");
         defender.avoid += 15;
     }
+}
+
+// +4 damage and +20 crit when initiating against female enemies
+function Unmask(attacker, defender, info) {
+    if (info.whoseSkill == 1 || info.initiating == 0 || defender.gender != "Female") { return; }
+    attacker.skillMsg += outputSkill("Unmask");
+    attacker.addDmg += 4;
+    attacker.crit += 20;
 }
 
 // Heal for 50% of damage dealt
