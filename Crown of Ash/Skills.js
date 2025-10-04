@@ -204,15 +204,15 @@ function Apprehension(attacker, defender, info) {
     defender.addProt += 4;
 }
 
-// Add mag/4 to physical attacks and str/4 to magical attacks
+// Add mag/2 to physical attacks and str/2 to magical attacks
 function ArcaneBlade(attacker, defender, info) {
     if (info.whoseSkill == 1) { return; }
     attacker.skillMsg += outputSkill("Arcane Blade");
     if (attacker.dmgType == "Physical") {
-        attacker.addDmg += Math.floor(attacker.mag / 4);
+        attacker.addDmg += Math.floor(attacker.mag / 2);
     }
     else if (attacker.dmgType == "Magical") {
-        attacker.addDmg += Math.floor(attacker.str / 4);
+        attacker.addDmg += Math.floor(attacker.str / 2);
     }
 }
 
