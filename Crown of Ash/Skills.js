@@ -1962,6 +1962,11 @@ const CombatArt = {
                 attacker.single = 1;
                 attacker.addDmg += attacker.str;
                 break;
+            case "Corona":
+                attacker.skillMsg += outputSkill("Corona");
+                attacker.duraCost += 3;
+                defender.ward = 0;
+                break;
             case "CrushingBlow":
                 attacker.skillMsg += outputSkill("Crushing Blow");
                 attacker.duraCost += 1;
