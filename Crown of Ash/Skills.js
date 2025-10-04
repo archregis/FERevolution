@@ -161,6 +161,7 @@ const skillMap = {
     "Vantage": Vantage,
     "Vantage+": VantagePlus,
     "Vengeful": Vengeful,
+    "Veteran": Veteran,
     "Vigilance": Vigilance,
     "WarProfiteer": WarProfiteer,
     "WardingBlow": WardingBlow,
@@ -1752,6 +1753,13 @@ function Vengeful(attacker, defender, info) {
         defender.ward -= 2;
         defender.prot -= 2;
     }
+}
+
+// Unit is immune to critical hits
+function Veteran(attacker, defender, info) {
+    if (info.whoseSkill == 0) { return; }
+    defender.skillMsg += outputSkill("Veteran");
+    defender.critImmune = 1;
 }
 
 // +30 avo when below 25% hp
