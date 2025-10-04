@@ -160,6 +160,7 @@ const skillMap = {
     "Vampiric": Vampiric,
     "Vantage": Vantage,
     "Vantage+": VantagePlus,
+    "Vengeful": Vengeful,
     "Vigilance": Vigilance,
     "WarProfiteer": WarProfiteer,
     "WardingBlow": WardingBlow,
@@ -1733,6 +1734,24 @@ function Vantage(attacker, defender, info) {
 function VantagePlus(attacker, defender, info) {
     if (info.whoseSkill == 1 || info.initiating == 1) { return; }
     attacker.skillMsg += outputSkill("Vantage+");
+}
+
+// +4 damage, +2 atk spd, +10 hit/crit, -10 avo/dodge, -2 mit
+function Vengeful(attacker, defender, info) {
+    if (info.whoseSkill == 0) {
+        attacker.skillMsg += outputSkill("Vengeful");
+        attacker.addDmg += 4;
+        attacker.atkSpd += 2;
+        attacker.hit += 10;
+        attacker.crit += 10;
+    }
+    else if (info.whoseSkill == 1) {
+        defender.skillMsg += outputSkill("Vengeful");
+        defender.avoid -= 10;
+        defender.dodge -= 10;
+        defender.ward -= 2;
+        defender.prot -= 2;
+    }
 }
 
 // +30 avo when below 25% hp
