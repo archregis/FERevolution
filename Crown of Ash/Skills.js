@@ -102,6 +102,7 @@ const skillMap = {
     "MasterIllusionist": MasterIllusionist,
     "Miracle": Miracle,
     "MirrorStance": MirrorStance,
+    "Misandrist": Misandrist,
     "Monstrous": Monstrous,
     "Nullify": Nullify,
     "Nosferatu": Nosferatu,
@@ -1160,6 +1161,15 @@ function MirrorStance(attacker, defender, info) {
         defender.res += 4;
         defender.ward += 4;
     }
+}
+
+// +2 damage, +15 hit, +10 crit against male enemies
+function Misandrist(attacker, defender, info) {
+    if (info.whoseSkill == 1 || defender.gender != "Male") { return; }
+    attacker.skillMsg += outputSkill("Misandrist");
+    attacker.addDmg += 2;
+    attacker.hit += 15;
+    attacker.crit += 10;
 }
 
 // Take half damage from the first attack in combat and fourth damage from any further attacks
