@@ -1421,6 +1421,7 @@ function RightfulGod(attacker, defender, info) {
     if (info.whoseSkill == 1) { return; }
     attacker.skillMsg += outputSkill("Rightful God");
     attacker.duraCost -=  3;
+    attacker.activationBonus += 100;
 }
 
 // Reduces the cost of Combat Arts by 2
@@ -1428,6 +1429,7 @@ function RightfulKing(attacker, defender, info) {
     if (info.whoseSkill == 1) { return; }
     attacker.skillMsg += outputSkill("Rightful King");
     attacker.duraCost -=  2;
+    attacker.activationBonus += 30;
 }
 
 // Reduces the cost of Combat Arts by 1
@@ -1435,6 +1437,7 @@ function RightfulLord(attacker, defender, info) {
     if (info.whoseSkill == 1) { return; }
     attacker.skillMsg += outputSkill("Rightful Lord");
     attacker.duraCost -=  1;
+    attacker.activationBonus += 10;
 }
 
 // Deal effective damage to Flying units
