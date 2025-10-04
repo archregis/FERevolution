@@ -169,6 +169,7 @@ const skillMap = {
     "WaryFighter": WaryFighter,
     "WeatherMastery": WeatherMastery,
     "WindDisciple": WindDisciple,
+    "WorldTree": WorldTree,
     "Wrath": Wrath,
 }
 
@@ -176,6 +177,7 @@ const staffSkillMap = {
     "Armsthrift": Armsthrift,
     "PushMagic": PushMagic,
     "DefiantMagic": DefiantMagic,
+    "WorldTree": WorldTree,
 }
 
 // Skills
@@ -1824,6 +1826,17 @@ function WindDisciple(attacker, defender, info) {
     else if (info.whoseSkill == 1 && defender.currHP < defender.maxHP) {
         defender.skillMsg += outputSkill("Wind Disciple");
         defender.avoid += 10;
+    }
+}
+
+// Mag% chance to use no staff durability
+function WorldTree(attacker, defender, info) {
+    if (info.whoseSkill == 1 || attacker.wepType != "Staff") { return; }
+    const odds = attacker.mag + attacker.activationBonus;
+    if (info.isSim == 1 && odds > 0) { attacker.skillMsg += outputSkill("World Tree", odds); }
+    else if (randomInteger(100) <= odds) {
+        attacker.skillMsg += outputSkill("World Tree");
+        attacker.armsthrift = 1;
     }
 }
 
