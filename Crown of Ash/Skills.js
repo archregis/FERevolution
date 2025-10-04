@@ -131,6 +131,7 @@ const skillMap = {
     "RightfulGod": RightfulGod,
     "RightfulKing": RightfulKing,
     "RightfulLord": RightfulLord,
+    "SilentPride": SilentPride,
     "Skybreaker": Skybreaker,
     "Slayer": Slayer,
     "Sol": Sol,
@@ -1456,6 +1457,21 @@ function RightfulLord(attacker, defender, info) {
     attacker.skillMsg += outputSkill("Rightful Lord");
     attacker.duraCost -=  1;
     attacker.activationBonus += 10;
+}
+
+// Deal +2 damage and take -2 damage per missing 25% hp
+function SilentPride(attacker, defender, info) {
+    if (info.whoseSkill == 0) { 
+        let stacks = 4 - Math.ceil(4 * attacker.currHP / attacker.maxHP);
+        if (stacks > 0) { attacker.skillMsg += outputSkill("Silent Pride"); }
+        attacker.addDmg += 2 * stacks;
+    }
+    else {
+        let stacks = 4 - Math.ceil(4 * defender.currHP / defender.maxHP);
+        if (stacks > 0) { defender.skillMsg += outputSkill("Silent Pride"); }
+        defender.prot += 2 * stacks;
+        defender.ward += 2 * stacks;
+    }
 }
 
 // Deal effective damage to Flying units
