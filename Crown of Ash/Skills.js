@@ -726,11 +726,8 @@ function DivineBlow(attacker, defender, info) {
 // Perform an extra attack at 50% damage at the end of combat
 function DivineSpeed(attacker, defender, info) {
     if (info.whoseSkill == 1) { return; }
-    const odds = attacker.spd + attacker.activationBonus;
-    if (info.isSim == 1 && odds > 0) { attacker.skillMsg += outputSkill("Divine Speed", odds); }
-    else {
-        attacker.extraAttackRoll = odds;
-    }
+    attacker.skillMsg += outputSkill("Divine Speed");
+    attacker.extraAttackRoll = 100;
 }
 
 // +5 damage when missing hp
