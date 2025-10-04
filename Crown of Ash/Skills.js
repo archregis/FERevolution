@@ -66,6 +66,7 @@ const skillMap = {
     "DrainSoul": DrainSoul,
     "Duelist'sBlow": DuelistsBlow,
     "FierceStance": FierceStance,
+    "Focus": Focus,
     "Foresight": Foresight,
     "FortressDefense": FortressDefense,
     "FortressResistance": FortressResistance,
@@ -786,6 +787,13 @@ function FierceStance(attacker, defender, info) {
     if (info.whoseSkill == 1 || info.initiating == 1) { return; }
     attacker.skillMsg += outputSkill("Fierce Stance");
     attacker.addDmg += 6;
+}
+
+// Crit +10 if foe cannot counter
+function Focus(attacker, defender, info) {
+    if (info.whoseSkill == 1 || CanCounter(defender, Led.from(attacker.token).to(defender.token).byManhattan().inSquares())) { return; }
+        attacker.skillMsg += outputSkill("Focus");
+        attacker.crit += 10;
 }
 
 // Prevent damage from critical hits and skill activations
