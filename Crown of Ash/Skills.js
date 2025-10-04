@@ -77,6 +77,7 @@ const skillMap = {
     "Hawkeye": Hawkeye,
     "HeavyStrikes": HeavyStrikes,
     "HolyAura": HolyAura,
+    "Honeypot": Honeypot,
     "HuntingHound": HuntingHound,
     "Iaido": Iaido,
     "Ignis": Ignis,
@@ -926,6 +927,13 @@ function HolyAura(attacker, defender, info) {
         defender.skillMsg += outputSkill("Holy Aura")
         defender.avoid += 5;
     }
+}
+
+// +40 hit against adjacent male enemies
+function Honeypot(attacker, defender, info) {
+    if (info.whoseSkill == 1 || defender.gender != "Male" || Led.from(attacker.token).to(defender.token).byManhattan().inSquares() != 1) { return; }
+    attacker.skillMsg += outputSkill("Honeypot");
+    attacker.hit += 40;
 }
 
 // Swords can't be broken and grants lck * 1.5 hit when using swords
