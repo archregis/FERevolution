@@ -26,6 +26,7 @@ const skillMap = {
     "CertainBlow": CertainBlow,
     "CheapShot": CheapShot,
     "Chivalry": Chivalry,
+    "ClutchShot": ClutchShot,
     "Conquest": Conquest,
     "Corrosion": Corrosion,
     "Counter": Counter,
@@ -418,6 +419,13 @@ function Chivalry(attacker, defender, info) {
         defender.addProt += 4;
         defender.addWard += 4;
       }
+}
+
+// Guaranteed criticals if hp below 25%
+function ClutchShot(attacker, defender, info) {
+    if (info.whoseSkill == 1 || attacker.currHP >= Math.floor(attacker.maxHP / 4)) { return; }
+    attacker.skillMsg += outputSkill("Clutch Shot");
+    attacker.aim = 1;
 }
 
 // Negates enemy effective damage and increases dmg by 6
