@@ -156,6 +156,7 @@ const skillMap = {
     "TowerShield": TowerShield,
     "Trample": Trample,
     "TriangleAdept": TriangleAdept,
+    "Underdog": Underdog,
     "Vampiric": Vampiric,
     "Vantage": Vantage,
     "Vantage+": VantagePlus,
@@ -1700,6 +1701,18 @@ function TriangleAdept(attacker, defender, info) {
     if (info.whoseSkill == 0) { attacker.skillMsg += outputSkill("Triangle Adept"); }
     else if (info.whoseSkill == 1) { defender.skillMsg += outputSkill("Triangle Adept"); }
     attacker.triangleAdept = 1;
+}
+
+// +15 hit/avo when enemy's level is higher than user's level
+function Underdog(attacker, defender, info) {
+    if (info.whoseSkill == 0 && attacker.level < defender.level) {
+        attacker.skillMsg += outputSkill("Underdog");
+        attacker.hit += 15;
+    }
+    else if (info.whoseSkill == 1 && defender.level < attacker.level) {
+        defender.skillMsg += outputSkill("Underdog");
+        defender.avoid += 15;
+    }
 }
 
 // Heal for 50% of damage dealt
