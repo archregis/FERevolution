@@ -295,7 +295,7 @@ function Axefaith(attacker, defender, info) {
 
 // Deal effective damage to foes with an axe rank
 function Axeslayer(attacker, defender, info) {
-    if (info.whoseSkill == 1 || defender.axeExp == 0) { return; }
+    if (info.whoseSkill == 1 || defender.wepType != "Axe") { return; }
     attacker.skillMsg += outputSkill("Axeslayer");
     attacker.effAll = 1
 }
@@ -372,7 +372,7 @@ function Bowfaith(attacker, defender, info) {
 
 // Deal effective damage to foes with a bow rank
 function Bowslayer(attacker, defender, info) {
-    if (info.whoseSkill == 1 || defender.bowExp == 0) { return; }
+    if (info.whoseSkill == 1 || defender.wepType != "Bow") { return; }
     attacker.skillMsg += outputSkill("Bowslayer");
     attacker.effAll = 1
 }
@@ -1021,7 +1021,7 @@ function Lancefaire(attacker, defender, info) {
 
 // Deal effective damage to foes with a lance rank
 function Lanceslayer(attacker, defender, info) {
-    if (info.whoseSkill == 1 || defender.lanceExp == 0) { return; }
+    if (info.whoseSkill == 1 || defender.wepType != "Lance") { return; }
     attacker.skillMsg += outputSkill("Lanceslayer");
     attacker.effAll = 1
 }
@@ -1574,7 +1574,7 @@ function Swordfaire(attacker, defender, info) {
 
 // Deal effective damage to foes with a sword rank
 function Swordslayer(attacker, defender, info) {
-    if (info.whoseSkill == 1 || defender.swordExp == 0) { return; }
+    if (info.whoseSkill == 1 || defender.wepType != "Sword") { return; }
     attacker.skillMsg += outputSkill("Swordslayer");
     attacker.effAll = 1
 }
