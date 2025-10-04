@@ -640,12 +640,12 @@ function Desperation(attacker, defender, info) {
 // Reduces the cost of Combat Arts by 1 and increase skill activation by 20% when below 50% hp
 function Determination(attacker, defender, info) {
     if (info.whoseSkill == 0 && attacker.currHP * 2 < attacker.maxHP) {
-        attacker.skillMsg += outputSkill("Determination+");
+        attacker.skillMsg += outputSkill("Determination");
         attacker.duraCost -=  1;
         attacker.activationBonus += 20;
     }
     else if (info.whoseSkill == 1 && defender.currHP * 2 < defender.maxHP) {
-        defender.skillMsg += outputSkill("Determination+");
+        defender.skillMsg += outputSkill("Determination");
         defender.activationBonus += 20;
     }
 }
