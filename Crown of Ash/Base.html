@@ -92,19 +92,35 @@
 								<div class="sheet-hiddenstats">
 									<div class="sheet-hiddenstats-row">
 										<div>Flying</div>
-										<div>Armor</div>
 										<div>Cavalry</div>
+										<div>Beast</div>
+										<div>Armor</div>
 										<div>Dragon</div>
 										<div>Terror</div>
-										<div>Flammable</div>
 									</div>
 									<div class="sheet-hiddenstats-row">
 										<div><input type="checkbox" name="attr_flyingCheck" value="1"></div>
-										<div><input type="checkbox" name="attr_armorCheck" value="1"></div>
 										<div><input type="checkbox" name="attr_cavalryCheck" value="1"></div>
+										<div><input type="checkbox" name="attr_beastCheck" value="1"></div>
+										<div><input type="checkbox" name="attr_armorCheck" value="1"></div>
 										<div><input type="checkbox" name="attr_dragonCheck" value="1"></div>
 										<div><input type="checkbox" name="attr_terrorCheck" value="1"></div>
+									</div>
+									<div class="sheet-hiddenstats-row">
+										<div>Flammable</div>
+										<div>Aquatic</div>
+										<div>Soluble</div>
+										<div>Unholy</div>
+										<div>Structure</div>
+										<div>Divine</div>
+									</div>
+									<div class="sheet-hiddenstats-row">
 										<div><input type="checkbox" name="attr_flammableCheck" value="1"></div>
+										<div><input type="checkbox" name="attr_aquaticCheck" value="1"></div>
+										<div><input type="checkbox" name="attr_solubleCheck" value="1"></div>
+										<div><input type="checkbox" name="attr_unholyCheck" value="1"></div>
+										<div><input type="checkbox" name="attr_structureCheck" value="1"></div>
+										<div><input type="checkbox" name="attr_divineCheck" value="1"></div>
 									</div>
 								</div>
 								</label>
@@ -854,9 +870,9 @@ on("change:skillList", function() {
 });
 
 // Weaknesses
-const weak = ['Flying', 'Armor', 'Cavalry', 'Dragon', 'Terror', 'Flammable'];
-on("change:flyingCheck change:armorCheck change:cavalryCheck change:dragonCheck change:terrorCheck change:flammableCheck", function() {
-	getAttrs(["flyingCheck", "armorCheck", "cavalryCheck", "dragonCheck", "terrorCheck", "flammableCheck"], function(values) {
+const weak = ['Flying', 'Cavalry', 'Beast', 'Armor', 'Dragon', 'Terror', 'Flammable', 'Aquatic', 'Soluble', 'Unholy', 'Structure', 'Divine'];
+on("change:flyingCheck change:cavalryCheck change:beastCheck change:armorCheck change:dragonCheck change:terrorCheck change:flammableCheck change:aquaticCheck change:solubleCheck change:unholyCheck change:structureCheck change:divineCheck", function() {
+	getAttrs(["flyingCheck", "cavalryCheck", "beastCheck", "armorCheck", "dragonCheck", "terrorCheck", "flammableCheck", "aquaticCheck", "solubleCheck", "unholyCheck", "structureCheck", "divineCheck"], function(values) {
 		let sumWeak = [];
 		for (let i=0; i<weak.length; i++) {
 			if (Object.values(values)[i] == 1) {
