@@ -132,7 +132,12 @@ const expHandler = {
 
     // Handle level ups if EXP >= 100
     handleLevelUp(attacker.id, CurrEXP, LvA, who, growthMult);
-    }
+    },
+
+    staffExpCalc: function(staffVal, targetLevel, selectedLevel, classPower) {
+      calcExp = Math.floor((staffVal + targetLevel + 20*(targetLevel>20) - selectedLevel - 20*(selectedLevel>20)) / classPower);
+      return Math.min(100, Math.max(1, calcExp));
+    },
 }
 
 // Main command handler
