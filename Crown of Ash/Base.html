@@ -174,6 +174,7 @@
 									<div class="sheet-stat-label">Total</div>
 									<div class="sheet-stat-label"></div>
 									<div class="sheet-stat-label">Personal</div>
+									<div class="sheet-stat-label">Buff/Debuff</div>
 									<div class="sheet-stat-label">Total</div>
 								</div>
 								<div class="sheet-stats-row">
@@ -183,7 +184,8 @@
 									<div><span name="attr_hpTotal">0</span></div>
 									<div></div>
 									<div><input name= "attr_hpGrow" type= "number" value="0"/></div>
-									<div><span name="attr_hpTotalGrow">10</span></div>
+									<div><input name= "attr_hpGrowBuff" type= "number" value="0"/></div>
+									<div><span name="attr_hpTotalGrow">0</span></div>
 								</div>
 								<div class="sheet-stats-row">
 									<div class="sheet-stat-label">Str</div>
@@ -192,6 +194,7 @@
 									<div><span name="attr_strTotal">0</span></div>
 									<div></div>
 									<div><input name="attr_strGrow" type="number" value="0"></div>
+									<div><input name="attr_strGrowBuff" type="number" value="0"></div>
 									<div><span name="attr_strTotalGrow">0</span></div>
 								</div>
 								<div class="sheet-stats-row">
@@ -201,6 +204,7 @@
 									<div><span name="attr_magTotal">0</span></div>
 									<div></div>
 									<div><input name="attr_magGrow" type="number" value="0"></div>
+									<div><input name="attr_magGrowBuff" type="number" value="0"></div>
 									<div><span name="attr_magTotalGrow">0</span></div>
 								</div>
 								<div class="sheet-stats-row">
@@ -210,6 +214,7 @@
 									<div><span name="attr_sklTotal">0</span></div>
 									<div></div>
 									<div><input name="attr_sklGrow" type="number" value="0"></div>
+									<div><input name="attr_sklGrowBuff" type="number" value="0"></div>
 									<div><span name="attr_sklTotalGrow">0</span></div>
 								</div>
 								<div class="sheet-stats-row">
@@ -219,6 +224,7 @@
 									<div><span name="attr_spdTotal">0</span></div>
 									<div></div>
 									<div><input name="attr_spdGrow" type="number" value="0"></div>
+									<div><input name="attr_spdGrowBuff" type="number" value="0"></div>
 									<div><span name="attr_spdTotalGrow">0</span></div>
 								</div>
 								<div class="sheet-stats-row">
@@ -228,6 +234,7 @@
 									<div><span name="attr_lckTotal">0</span></div>
 									<div></div>
 									<div><input name="attr_lckGrow" type="number" value="0"></div>
+									<div><input name="attr_lckGrowBuff" type="number" value="0"></div>
 									<div><span name="attr_lckTotalGrow">0</span></div>
 								</div>
 								<div class="sheet-stats-row">
@@ -237,6 +244,7 @@
 									<div><span name="attr_defTotal">0</span></div>
 									<div></div>
 									<div><input name="attr_defGrow" type="number" value="0"></div>
+									<div><input name="attr_defGrowBuff" type="number" value="0"></div>
 									<div><span name="attr_defTotalGrow">0</span></div>
 								</div>
 								<div class="sheet-stats-row">
@@ -246,6 +254,7 @@
 									<div><span name="attr_resTotal">0</span></div>
 									<div></div>
 									<div><input name="attr_resGrow" type="number" value="0"></div>
+									<div><input name="attr_resGrowBuff" type="number" value="0"></div>
 									<div><span name="attr_resTotalGrow">0</span></div>
 								</div>
 								<div class="sheet-stats-row">
@@ -841,10 +850,10 @@ stats.forEach( function(stat) {
 // Growths
 const growths = ["hp", "str", "mag", "skl", "spd", "lck", "def", "res"];
 growths.forEach( function(growth) {
-	on(`change:${growth}Grow`, function() {
-		getAttrs([`${growth}Grow`], function(v) {
+	on(`change:${growth}Grow change:${growth}GrowBuff`, function() {
+		getAttrs([`${growth}Grow`, `${growth}GrowBuff`], function(v) {
 			setAttrs({
-				[growth+"TotalGrow"]: Number(v[growth+"Grow"]),
+				[growth+"TotalGrow"]: Number(v[growth+"Grow"]) + Number(v[growth+"GrowBuff"]),
 			});
 		})
 	});
