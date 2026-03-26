@@ -123,7 +123,7 @@ function UpdateHealth(unit, damage) {
   if (damage < 0) { // Healing
     unit.obj.set("bar3_value", Math.min(unit.maxHP, unit.obj.get("bar3_value") - damage));
   }
-  else if (damage > 0) {
+  else if (damage >= 0) {
     let hpLeft = Math.max(0, unit.obj.get("bar3_value") - damage);
     if (unit.lethalHit == 1) { hpLeft = 0; }
     if (hpLeft == 0 && unit.miracle == 1) { hpLeft = 1; }
@@ -226,6 +226,7 @@ function initializeAtkInfo(unitId, info) {
   output.numAttacks = 1;
   output.dmgMult = 1;
   output.duraCost = 1;
+  output.hasDiscipline = 0;
 
   return output;
 }
@@ -507,7 +508,7 @@ function DoOneCombatStep(selectedId, targetId, info, initiating, artName, isSim)
       }
       expCalc = expHandler.staffExpCalc(staffInfo[attacker.wepName].exp, defender.level, attacker.level, attacker.classPower)
       expHandler.expIncrease(selectedId, expCalc);
-      updateWeaponEXP(attacker.unit.id, attacker.wepType, staffInfo[attacker.wepName].wexp);
+      updateWeaponEXP(attacker.unit.id, attacker.wepType, staffInfo[attacker.wepName].wexp * (1 + attacker.hasDiscipline));
 
       // Gather info for future battle steps
       Object.assign(info, {
@@ -621,13 +622,7 @@ function DoOneCombatStep(selectedId, targetId, info, initiating, artName, isSim)
     // End of calculation stuff
     if (attacker.aim == 1) { crit = dodge + 1; }
     if (attacker.sureShot == 1) { hit = avoid + 1; }
-    if (defender.aegis == 1 && attacker.dmgType == "Magical") {
-      dmgTaken = 0;
-    }
-    if (defender.pavise == 1 && attacker.dmgType == "Physical") {
-      dmgTaken = 0;
-    }
-    if (defender.greatShield == 1) {
+    if (defender.aegis == 1 || defender.pavise == 1|| defender.greatShield == 1) {
       dmgTaken = 0;
     }
     if (defender.barricade == 1) {
@@ -752,7 +747,7 @@ function DoOneStaffStep(selectedId, targetId, isSim) {
     }
     expCalc = expHandler.staffExpCalc(staffInfo[attacker.wepName].exp, defender.level, attacker.level, attacker.classPower)
     expHandler.expIncrease(selectedId, expCalc);
-    updateWeaponEXP(attacker.unit.id, attacker.wepType, staffInfo[attacker.wepName].wexp);
+    updateWeaponEXP(attacker.unit.id, attacker.wepType, staffInfo[attacker.wepName].wexp * (1 + attacker.hasDiscipline));
   }
 
   attacker.skillMsg += "</ul>";

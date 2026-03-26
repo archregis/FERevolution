@@ -67,7 +67,6 @@ const skillMap = {
     "Duelist'sBlow": DuelistsBlow,
     "FierceStance": FierceStance,
     "Focus": Focus,
-    "Foresight": Foresight,
     "FortressDefense": FortressDefense,
     "FortressResistance": FortressResistance,
     "Fury": Fury,
@@ -184,13 +183,15 @@ const staffSkillMap = {
     "PushMagic": PushMagic,
     "DefiantMagic": DefiantMagic,
     "WorldTree": WorldTree,
+    "Discipline": Discipline,
+    "Discipline+": DisciplinePlus,
 }
 
 // Skills
 
 // Skl% chance to nullify a magical attack
 function Aegis(attacker, defender, info) {
-    if (info.whoseSkill == 0) { return; }
+    if (info.whoseSkill == 0 || attacker.dmgType == "Physical") { return; }
     const odds = defender.skl + defender.activationBonus;
     if (info.isSim == 1 && odds > 0) { defender.skillMsg += outputSkill("Aegis", odds); }
     else if (randomInteger(100) <= odds) {
@@ -675,7 +676,7 @@ function Determination(attacker, defender, info) {
 // 31-Lck% chance for foe to deal damage to themselves (Your Lck)
 function DevilsPact(attacker, defender, info) {
     if (info.whoseSkill == 0) { return; }
-    const odds = Math.max(0, 31 - defender.lck);
+    const odds = Math.max(0, 31 - defender.lck + info.foresightAtk);
     if (info.isSim == 1 && odds > 0) { defender.skillMsg += outputSkill("Devil's Pact", odds); }
     else if (randomInteger(100) <= odds) {
         defender.skillMsg += outputSkill("Devil's Pact");
@@ -686,7 +687,7 @@ function DevilsPact(attacker, defender, info) {
 // 31-Lck% chance for you to deal damage to yourself (Your Lck)
 function DevilsReversal(attacker, defender, info) {
     if (info.whoseSkill == 1) { return; }
-    const odds = Math.max(0, 31 - attacker.lck);
+    const odds = Math.max(0, 31 - attacker.lck + info.foresightAtk);
     if (info.isSim == 1 && odds > 0) { attacker.skillMsg += outputSkill("Devil's Reversal", odds); }
     else if (randomInteger(100) <= odds) {
         attacker.skillMsg += outputSkill("Devil's Reversal");
@@ -697,7 +698,7 @@ function DevilsReversal(attacker, defender, info) {
 // 31-Lck% chance for foe to deal damage to themselves (Enemy Lck)
 function DevilsWhim(attacker, defender, info) {
     if (info.whoseSkill == 0) { return; }
-    const odds = Math.max(0, 31 - attacker.lck);
+    const odds = Math.max(0, 31 - attacker.lck + info.foresightAtk);
     if (info.isSim == 1 && odds > 0) { defender.skillMsg += outputSkill("Devil's Whim", odds); }
     else if (randomInteger(100) <= odds) {
         defender.skillMsg += outputSkill("Devil's Whim");
@@ -710,13 +711,15 @@ function Discipline(attacker, defender, info) {
     if (info.whoseSkill == 1) { return; }
     attacker.skillMsg += outputSkill("Discipline");
     attacker.wepGain *= 2;
+    attacker.hasDiscipline = 1; // Specifically for staves
 }
 
-// Doubles weapon exp gain
+// Triples weapon exp gain
 function DisciplinePlus(attacker, defender, info) {
     if (info.whoseSkill == 1) { return; }
     attacker.skillMsg += outputSkill("Discipline+");
     attacker.wepGain *= 3;
+    attacker.hasDiscipline = 2; // Specifically for staves
 }
 
 // Can counter from any distance
@@ -799,14 +802,6 @@ function Focus(attacker, defender, info) {
         attacker.crit += 10;
 }
 
-// Prevent damage from critical hits and skill activations
-function Foresight(attacker, defender, info) {
-    if (info.whoseSkill == 0) { return; }
-    defender.skillMsg += outputSkill("Foresight");
-    attacker.activationBonus += -999;
-    defender.critImmune = 1;
-}
-
 // +5 def, -3 str, -3 mag
 function FortressDefense(attacker, defender, info) {
     if (info.whoseSkill == 0) {
@@ -877,7 +872,7 @@ function Fury(attacker, defender, info) {
 // Skl% chance to add res to damage
 function Glacies(attacker, defender, info) {
     if (info.whoseSkill == 1) { return; }
-    const odds = attacker.skl + attacker.activationBonus;
+    const odds = attacker.skl + attacker.activationBonus + info.foresightDef;
     if (info.isSim == 1 && odds > 0) { attacker.skillMsg += outputSkill("Glacies", odds); }
     else if (randomInteger(100) <= odds) {
         attacker.skillMsg += outputSkill("Glacies");
@@ -949,7 +944,7 @@ function HuntingHound(attacker, defender, info) {
 // Spd% chance to deal damage equal to str when targeted at range
 function Iaido(attacker, defender, info) {
     if (info.whoseSkill == 0) { return; }
-    const odds = defender.spd + defender.activationBonus;
+    const odds = defender.spd + defender.activationBonus + info.foresightAtk;
     if (info.isSim == 1 && odds > 0) { defender.skillMsg += outputSkill("Iaido", odds); }
     else if (randomInteger(100) <= odds && (Led.from(attacker.token).to(defender.token).byManhattan().inSquares() >= 2)) {
         defender.skillMsg += outputSkill("Iaido");
@@ -960,7 +955,7 @@ function Iaido(attacker, defender, info) {
 // Skl% chance to add half of res and def to damage
 function Ignis(attacker, defender, info) {
     if (info.whoseSkill == 1) { return; }
-    const odds = attacker.skl + attacker.activationBonus;
+    const odds = attacker.skl + attacker.activationBonus + info.foresightDef;
     if (info.isSim == 1 && odds > 0) { attacker.skillMsg += outputSkill("Ignis", odds); }
     else if (randomInteger(100) <= odds) {
         attacker.skillMsg += outputSkill("Ignis");
@@ -1070,7 +1065,7 @@ function Lanceslayer(attacker, defender, info) {
 // Skl/2% chance to instantly kill the enemy
 function Lethality(attacker, defender, info) {
     if (info.whoseSkill == 1) { return; }
-    const odds = Math.floor(attacker.skl / 2) + attacker.activationBonus;
+    const odds = Math.floor(attacker.skl / 2) + attacker.activationBonus + info.foresightDef;
     if (info.isSim == 1 && odds > 0) { attacker.skillMsg += outputSkill("Lethality", odds); }
     else if (randomInteger(100) <= odds) {
         attacker.skillMsg += outputSkill("Lethality");
@@ -1231,7 +1226,7 @@ function Patience(attacker, defender, info) {
 
 // Skl% chance to nullify a physical attack
 function Pavise(attacker, defender, info) {
-    if (info.whoseSkill == 0) { return; }
+    if (info.whoseSkill == 0 || attacker.dmgType == "Magical") { return; }
     const odds = defender.skl + defender.activationBonus;
     if (info.isSim == 1 && odds > 0) { defender.skillMsg += outputSkill("Pavise", odds); }
     else if (randomInteger(100) <= odds) {
@@ -1323,11 +1318,9 @@ function PushDefense(attacker, defender, info) {
 // +5 mag when full hp
 function PushMagic(attacker, defender, info) {
     if (info.whoseSkill == 1 || attacker.currHP < attacker.maxHP) { return; }
-    if (attacker.dmgType == "Magical") {
-        attacker.skillMsg += outputSkill("Push Magic");
-        attacker.mag += 5;
-        attacker.myst += 5;
-    }
+    attacker.skillMsg += outputSkill("Push Magic");
+    attacker.mag += 5;
+    attacker.myst += 5;
 }
 
 // +5 res when full hp
@@ -1365,24 +1358,22 @@ function PushSpeed(attacker, defender, info) {
 // +5 str when full hp
 function PushStrength(attacker, defender, info) {
     if (info.whoseSkill == 1 || attacker.currHP < attacker.maxHP) { return; }
-    if (attacker.dmgType == "Physical") {
-        attacker.skillMsg += outputSkill("Push Strength");
-        attacker.str += 5;
-        attacker.phys += 5;
-    }
+    attacker.skillMsg += outputSkill("Push Strength");
+    attacker.str += 5;
+    attacker.phys += 5;
 }
 
 // +6 mag, +6 def, +6 res when initiating
 function QueensBlow(attacker, defender, info) {
     if (info.whoseSkill == 0 && info.initiating == 1) {
-        attacker.skillMsg += outputSkill("King's Blow");
+        attacker.skillMsg += outputSkill("Queens's Blow");
         attacker.mag += 6;
         attacker.def += 6;
         attacker.res += 6;
         attacker.myst += 6;
     }
     else if (info.whoseSkill == 1 && info.initiating == 0) {
-        defender.skillMsg += outputSkill("King's Blow");
+        defender.skillMsg += outputSkill("Queens's Blow");
         defender.mag += 6;
         defender.def += 6;
         defender.res += 6;
@@ -1487,26 +1478,42 @@ function Reverse(attacker, defender, info) {
 
 // Reduces the cost of Combat Arts by 3
 function RightfulGod(attacker, defender, info) {
-    if (info.whoseSkill == 1) { return; }
-    attacker.skillMsg += outputSkill("Rightful God");
-    attacker.duraCost -=  3;
-    attacker.activationBonus += 100;
+    if (info.whoseSkill == 0) {
+        attacker.skillMsg += outputSkill("Rightful God");
+        attacker.duraCost -=  3;
+        attacker.activationBonus += 100;
+    }
+    else if (info.whoseSkill == 1) {
+        defender.skillMsg += outputSkill("Rightful God");
+        defender.activationBonus += 100;
+    }
 }
 
 // Reduces the cost of Combat Arts by 2
 function RightfulKing(attacker, defender, info) {
-    if (info.whoseSkill == 1) { return; }
-    attacker.skillMsg += outputSkill("Rightful King");
-    attacker.duraCost -=  2;
-    attacker.activationBonus += 30;
+    if (info.whoseSkill == 0) {
+        attacker.skillMsg += outputSkill("Rightful King");
+        attacker.duraCost -=  2;
+        attacker.activationBonus += 30;
+    }
+    else if (info.whoseSkill == 1) {
+        defender.skillMsg += outputSkill("Rightful King");
+        defender.activationBonus += 30;
+    }
 }
 
 // Reduces the cost of Combat Arts by 1
 function RightfulLord(attacker, defender, info) {
     if (info.whoseSkill == 1) { return; }
-    attacker.skillMsg += outputSkill("Rightful Lord");
-    attacker.duraCost -=  1;
-    attacker.activationBonus += 10;
+    if (info.whoseSkill == 0) {
+        attacker.skillMsg += outputSkill("Rightful Lord");
+        attacker.duraCost -=  1;
+        attacker.activationBonus += 10;
+    }
+    else if (info.whoseSkill == 1) {
+        defender.skillMsg += outputSkill("Rightful Lord");
+        defender.activationBonus += 10;
+    }
 }
 
 // Deal +2 damage and take -2 damage per missing 25% hp
@@ -1803,10 +1810,11 @@ function Vengeful(attacker, defender, info) {
     }
     else if (info.whoseSkill == 1) {
         defender.skillMsg += outputSkill("Vengeful");
-        defender.avoid -= 10;
+        defender.avoid -= 6;
+        defender.atkSpd += 2;
         defender.dodge -= 10;
-        defender.ward -= 2;
-        defender.prot -= 2;
+        defender.addWard -= 2;
+        defender.addProt -= 2;
     }
 }
 
@@ -1921,36 +1929,51 @@ const SkillHandler = {
 
         const weather = findObjs({_type: "character", name: "Weather"});
         const weatherId = weather[0].get("_id")
-        const weatherCond = getAttr(weatherId, 'activeSkills').get('current').split(',');
+        const weatherCond = getAttr(weatherId, 'activeSkills').get('current').split(',') == "" ? "ClearSkies" : getAttr(weatherId, 'activeSkills').get('current').split(',');
 
         let info = {
             initiating: initiating,
             isSim: isSim,
-            weatherCond: weatherCond
+            weatherCond: weatherCond,
+            foresightAtk: 0,
+            foresightDef: 0,
         }
       
-        // Defender skills first to handle things like foresight or luna
+        // Defender skills first to handle things like luna
         info.whoseSkill = 1;
+        for (let i=0; i<dWepSkills.length; i++) {
+            if (skillMap[dWepSkills[i]]) {
+                skillMap[dWepSkills[i]](attacker, defender, info);
+            }
+        }
+        if (aSkills.includes("Foresight") == true || aWepSkills.includes('Foresight') == true) {
+          attacker.skillMsg += outputSkill("Foresight");
+          info.foresightAtk = -999;
+        }
         if (aSkills.includes("Nihil") == true || aWepSkills.includes('Nihil') == true) {
           attacker.skillMsg += outputSkill("Nihil");
         }
         else {
             info.whoseSkill = 1;
-            for(let i=0; i<dSkills.length; i++) {
+            for (let i=0; i<dSkills.length; i++) {
                 if (skillMap[dSkills[i]]) {
                     skillMap[dSkills[i]](attacker, defender, info);
                 }
             }
         }
 
-        for (let i=0; i<dWepSkills.length; i++) {
-            if (skillMap[dWepSkills[i]]) {
-                skillMap[dWepSkills[i]](attacker, defender, info);
-            }
-        }
-
         // Attacker skills
         info.whoseSkill = 0;
+        for(let i=0; i<aWepSkills.length; i++) {
+            if (skillMap[aWepSkills[i]]) {
+                skillMap[aWepSkills[i]](attacker, defender, info);
+            }
+        }
+        if (dSkills.includes('Foresight') == true || dWepSkills.includes('Foresight') == true) {
+            defender.skillMsg += outputSkill("Foresight");
+            info.foresightDef = -999;
+            defender.critImmune = 1;
+        }
         if (dSkills.includes('Nihil') == true || dWepSkills.includes('Nihil') == true) {
             defender.skillMsg += outputSkill("Nihil");
         }
@@ -1959,12 +1982,6 @@ const SkillHandler = {
                 if (skillMap[aSkills[i]]) {
                     skillMap[aSkills[i]](attacker, defender, info);
                 }
-            }
-        }
-
-        for(let i=0; i<aWepSkills.length; i++) {
-            if (skillMap[aWepSkills[i]]) {
-                skillMap[aWepSkills[i]](attacker, defender, info);
             }
         }
     },
@@ -1982,10 +1999,10 @@ const SkillHandler = {
         const dWepSkills = getAttr(defender.unit.id, 'activeWepSkills').get('current').split(',');
 
         if (aSkills.includes("Nihil") == false && aWepSkills.includes('Nihil') == false) {
-            if (dSkills.includes("VantagePlus") || (dSkills.includes("Vantage") && belowHalf == 1)) { return 1; }
+            if (dSkills.includes("Vantage+") || (dSkills.includes("Vantage") && belowHalf == 1)) { return 1; }
         }
 
-        if (dWepSkills.includes("VantagePlus") || (dWepSkills.includes("Vantage") && belowHalf == 1)) { return 1; }
+        if (dWepSkills.includes("Vantage+") || (dWepSkills.includes("Vantage") && belowHalf == 1)) { return 1; }
 
         return 0;
     },
