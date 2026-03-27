@@ -105,7 +105,7 @@ const skillMap = {
     "Iaido": Iaido,
     "Ignis": Ignis,
     "Illusionist": Illusionist,
-    "Inpenetrable": Inpenetrable,
+    "Impenetrable": Impenetrable,
     "Imperturbable": Imperturbable,
     "InferiorityComplex": InferiorityComplex,
     "Insight": Insight,
@@ -1126,7 +1126,7 @@ function Illusionist(attacker, defender, info) {
 }
 
 // +3 mit and +10 crit when foe initiates
-function Impentrable(attacker, defender, info) {
+function Impenetrable(attacker, defender, info) {
 
 }
 
