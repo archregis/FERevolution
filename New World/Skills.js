@@ -1,9 +1,12 @@
 // Global skill map
 const skillMap = {
+    "AdaptiveForm": AdaptiveForm,
     "Aegis": Aegis,
     "Allbreaker": Allbreaker,
+    "Apotrope": Apotrope,
     "Apprehension": Apprehension,
     "ArcaneBlade": ArcaneBlade,
+    "ArcaneCannon": ArcaneCannon,
     "ArmoredBlow": ArmoredBlow,
     "Armsthrift": Armsthrift,
     "Arrogance": Arrogance,
@@ -15,8 +18,10 @@ const skillMap = {
     "Axeslayer": Axeslayer,
     "Barricade": Barricade,
     "BattleVeteran": BattleVeteran,
+    "BlackSun": BlackSun,
     "Bloodlust": Bloodlust,
     "Bloodlust+": BloodlustPlus,
+    "BoldFighter": BoldFighter,
     "BowRange+1": BowRangePlusOne,
     "Bowbreaker": Bowbreaker,
     "Bowfaire": Bowfaire,
@@ -27,6 +32,7 @@ const skillMap = {
     "CheapShot": CheapShot,
     "Chivalry": Chivalry,
     "ClutchShot": ClutchShot,
+    "Commander": Commander,
     "Conquest": Conquest,
     "Corrosion": Corrosion,
     "Counter": Counter,
@@ -35,6 +41,7 @@ const skillMap = {
     "Cowardice": Cowardice,
     "CritBoost": CritBoost,
     "CritBoost+": CritBoostPlus,
+    "DarkMight": DarkMight,
     "DartingBlow": DartingBlow,
     "DartingStance": DartingStance,
     "Dazzle": Dazzle,
@@ -51,37 +58,56 @@ const skillMap = {
     "DefiantSpeed": DefiantSpeed,
     "DefiantStrength": DefiantStrength,
     "Demolish": Demolish,
+    "Demure": Demure,
     "Desperation": Desperation,
     "Determination": Determination,
     "Devil'sPact": DevilsPact,
     "Devil'sReversal": DevilsReversal,
     "Devil'sWhim": DevilsWhim,
+    "Dhampir": Dhampir,
     "Discipline": Discipline,
     "Discipline+": DisciplinePlus,
-    "DistantCounter": DistantCounter,
+    "Disregard": Disregard,
     "DivineBlow": DivineBlow,
     "DivineSpeed": DivineSpeed,
     "Dragonblood": Dragonblood,
     "Dragonskin": Dragonskin,
     "DrainSoul": DrainSoul,
     "Duelist'sBlow": DuelistsBlow,
+    "Eclipse": Eclipse,
+    "EnchantedAmmo": EnchantedAmmo,
+    "EternalEclipse": EternalEclipse,
+    "ExtremeDisregard": ExtremeDisregard,
+    "FasterThanStrong": FasterThanStrong,
     "FierceStance": FierceStance,
+    "Fistbreaker": Fistbreaker,
+    "Fistfaire": Fistfaire,
+    "Fistfaith": Fistfaith,
+    "Fistslayer": Fistslayer,
     "Focus": Focus,
     "FortressDefense": FortressDefense,
     "FortressResistance": FortressResistance,
     "Fury": Fury,
     "Glacies": Glacies,
+    "GraspingVoid": GraspingVoid,
     "GreatShield": GreatShield,
+    "GrislyWound": GrislyWound,
     "Guarded": Guarded,
+    "GunRange+1": GunRangePlusOne,
+    "Gunbreaker": Gunbreaker,
+    "Gunfaire": Gunfaire,
+    "Gunfaith": Gunfaith,
+    "Gunslayer": Gunslayer,
     "Hawkeye": Hawkeye,
     "HeavyStrikes": HeavyStrikes,
     "HolyAura": HolyAura,
     "Honeypot": Honeypot,
-    "HuntingHound": HuntingHound,
     "Iaido": Iaido,
     "Ignis": Ignis,
     "Illusionist": Illusionist,
+    "Inpenetrable": Inpenetrable,
     "Imperturbable": Imperturbable,
+    "InferiorityComplex": InferiorityComplex,
     "Insight": Insight,
     "KestrelStance": KestrelStance,
     "KillingMachine": KillingMachine,
@@ -95,17 +121,20 @@ const skillMap = {
     "Lifetaker": Lifetaker,
     "Lightning": Lightning,
     "LiquidOoze": LiquidOoze,
+    "LuckBeALady": LuckBeALady,
     "Luna+": LunaPlus,
     "LunarBrace": LunarBrace,
     "Mageslayer": Mageslayer,
     "MagicBlade": MagicBlade,
+    "MaleficAura": MaleficAura,
+    "Marauder": Marauder,
     "MasterIllusionist": MasterIllusionist,
     "Miracle": Miracle,
     "MirrorStance": MirrorStance,
     "Misandrist": Misandrist,
     "Monstrous": Monstrous,
-    "Nullify": Nullify,
     "Nosferatu": Nosferatu,
+    "Nullify": Nullify,
     "Opportunist": Opportunist,
     "Parry": Parry,
     "Patience": Patience,
@@ -125,6 +154,8 @@ const skillMap = {
     "PushStrength": PushStrength,
     "Queen'sBlow": QueensBlow,
     "QuickDraw": QuickDraw,
+    "RaisedFist": RaisedFist,
+    "RapidResponse": RapidResponse,
     "ReadyStance": ReadyStance,
     "Reave": Reave,
     "Reaver": Reaver,
@@ -135,28 +166,35 @@ const skillMap = {
     "RightfulGod": RightfulGod,
     "RightfulKing": RightfulKing,
     "RightfulLord": RightfulLord,
+    "Rivalry": Rivalry,
+    "Shatter": Shatter,
     "SilentPride": SilentPride,
     "Skybreaker": Skybreaker,
     "Slayer": Slayer,
     "Sol": Sol,
     "SolarBrace": SolarBrace,
     "SpectrumStance": SpectrumStance,
+    "SpellEcho": SpellEcho,
     "SteadyStance": SteadyStance,
     "StoneBody": StoneBody,
     "StrongRiposte": StrongRiposte,
+    "StunningStrike": StunningStrike,
     "SturdyStance": SturdyStance,
     "SwiftStance": SwiftStance,
     "Swordbreaker": Swordbreaker,
     "Swordfaire": Swordfaire,
     "Swordfaith": Swordfaith,
     "Swordslayer": Swordslayer,
+    "Sympathetic": Sympathetic,
     "Templar": Templar,
+    "TheOne": TheOne,
     "Thunderstorm": Thunderstorm,
     "TitanicBlow": TitanicBlow,
     "TomeRange+1": TomeRangePlusOne,
     "TomeRange+2": TomeRangePlusTwo,
     "Tomebreaker": Tomebreaker,
     "Tomefaire": Tomefaire,
+    "Tomefaith": Tomefaith,
     "TowerShield": TowerShield,
     "Trample": Trample,
     "TriangleAdept": TriangleAdept,
@@ -180,6 +218,9 @@ const skillMap = {
 
 const staffSkillMap = {
     "Armsthrift": Armsthrift,
+    "Disregard": Disregard,
+    "ExtremeDisregard": ExtremeDisregard,
+    "FasterThanStrong": FasterThanStrong,
     "PushMagic": PushMagic,
     "DefiantMagic": DefiantMagic,
     "WorldTree": WorldTree,
@@ -188,6 +229,11 @@ const staffSkillMap = {
 }
 
 // Skills
+
+// When enemy initiates and deals damage, that damage is converted to overhealth. Overhealth must be depleted before more can be generated.
+function AdaptiveForm(attacker, defender, info) {
+
+}
 
 // Skl% chance to nullify a magical attack
 function Aegis(attacker, defender, info) {
@@ -212,6 +258,11 @@ function Allbreaker(attacker, defender, info) {
       }
 }
 
+// Halves damage from magic
+function Apotrope(attacker, defender, info) {
+
+}
+
 // -4 damage whenever being attacked
 function Apprehension(attacker, defender, info) {
     if (info.whoseSkill == 0) { return; }
@@ -230,6 +281,11 @@ function ArcaneBlade(attacker, defender, info) {
     else if (attacker.dmgType == "Magical") {
         attacker.addDmg += Math.floor(attacker.str / 2);
     }
+}
+
+// Add 50% of mag to damage. Unit cannot counter
+function ArcaneCannon(attacker, defender, info) {
+
 }
 
 // +10 def when initiating battle
@@ -331,6 +387,11 @@ function BattleVeteran(attacker, defender, info) {
     attacker.hit += 10 * Math.floor(attacker.level / 10);
 }
 
+// Skl% chance to ignore def/res
+function BlackSun(attacker, defender, info) {
+
+}
+
 // Adds 1 damage for every 4 hp missing
 function Bloodlust(attacker, defender, info) {
     if (info.whoseSkill == 1 || (attacker.currHP > attacker.maxHP - 4)) { return; }
@@ -350,6 +411,11 @@ function BloodlustPlus(attacker, defender, info) {
         defender.atkSpd += Math.floor((attacker.maxHP - attacker.currHP) / 3);
         defender.avoid += 2 * Math.floor((attacker.maxHP - attacker.currHP) / 3);
     }
+}
+
+// Strike twice when initiating on a foe that can follow-up.
+function BoldFighter(attacker, defender, info) {
+
 }
 
 // Maximum range of equipped bows is increased by 1
@@ -393,18 +459,18 @@ function Bowslayer(attacker, defender, info) {
     attacker.effAll = 1
 }
 
-// +30 hit when initiating battle
-function CertainBlow(attacker, defender, info) {
-    if (info.whoseSkill == 1 || info.initiating == 0) { return; }
-    attacker.skillMsg += outputSkill("Certain Blow");
-    attacker.hit += 30;
-}
-
 // All weapons have the brave effect
 function Brave(attacker, defender, info) {
     if (info.whoseSkill == 1) { return; }
     attacker.skillMsg += outputSkill("Brave");
     attacker.numAttacks = 2;
+}
+
+// +30 hit when initiating battle
+function CertainBlow(attacker, defender, info) {
+    if (info.whoseSkill == 1 || info.initiating == 0) { return; }
+    attacker.skillMsg += outputSkill("Certain Blow");
+    attacker.hit += 30;
 }
 
 // +6 damage when initiating battle
@@ -432,6 +498,11 @@ function ClutchShot(attacker, defender, info) {
     if (info.whoseSkill == 1 || attacker.currHP >= Math.floor(attacker.maxHP / 4)) { return; }
     attacker.skillMsg += outputSkill("Clutch Shot");
     attacker.aim = 1;
+}
+
+// Halve damage from combar arts and critical hits. Halve activation chance of skills. Quarter % health based skills.
+function Commander(attacker, defender, info) {
+
 }
 
 // Negates enemy effective damage and increases dmg by 6
@@ -500,6 +571,11 @@ function CritBoostPlus(attacker, defender, info) {
     if (info.whoseSkill == 1) { return; }
     attacker.skillMsg += outputSkill("Crit Boost+");
     attacker.crit += 20;
+}
+
+// Add mag to phys if at 1 range
+function DarkMight(attacker, defender, info) {
+
 }
 
 // +5 atk spd when initiating
@@ -653,6 +729,11 @@ function Demolish(attacker, defender, info) {
     attacker.addDmg += 5;
 }
 
+// Avoid +25 and Mit +3 when enemy is male
+function Demure(attacker, defender, info) {
+
+}
+
 // Double attacks occur immediately when below 50% hp
 function Desperation(attacker, defender, info) {
     if (info.whoseSkill == 1 || info.initiating == 0) { return; }
@@ -706,6 +787,11 @@ function DevilsWhim(attacker, defender, info) {
     }
 }
 
+// +5 attack and cure negative status effects on player phase start. Gain flammable, unholy, and terror weaknesses
+function Dhampir(attacker, defender, info) {
+
+}
+
 // Doubles weapon exp gain
 function Discipline(attacker, defender, info) {
     if (info.whoseSkill == 1) { return; }
@@ -722,12 +808,9 @@ function DisciplinePlus(attacker, defender, info) {
     attacker.hasDiscipline = 2; // Specifically for staves
 }
 
-// Can counter from any distance
-function DistantCounter(attacker, defender, info) {
-    if (info.whoseSkill == 0) { return; }
-    defender.skillMsg += outputSkill("Distant Counter");
-    defender.minDist = 0;
-    defender.maxDist = 99;
+// +10 hit, crit, and skill activation for unit and foe
+function Disregard(attacker, defender, info) {
+
 }
 
 // +6 str and +6 spd when initiating combat
@@ -788,11 +871,56 @@ function DuelistsBlow(attacker, defender, info) {
     defender.avoid += 30;
 }
 
+// Increase str multiplier by 1
+function Eclipse(attacker, defender, info) {
+
+}
+
+// Physical weapons target res
+function EnchantedAmmo(attacker, defender, info) {
+
+}
+
+// %mag chance to activate eclipse, rolls 4 times
+function EternalEclipse(attacker, defender, info) {
+
+}
+
+// +20 hit, crit, and skill activation for unit and foe
+function ExtremeDisregard(attacker, defender, info) {
+
+}
+
+// May act twice per turn but str and mag are halved
+function FasterThanStrong(attacker, defender, info) {
+
+}
+
 // +6 damage when enemy initiates
 function FierceStance(attacker, defender, info) {
     if (info.whoseSkill == 1 || info.initiating == 1) { return; }
     attacker.skillMsg += outputSkill("Fierce Stance");
     attacker.addDmg += 6;
+}
+
+// +30 hit and avoid when enemy has fists equipped
+function Fistbreaker(attacker, defender, info) {
+
+}
+
+// +4 damage when equipping fists
+function Fistfaire(attacker, defender, info) {
+
+}
+
+// Fists can't be broken and grants lck * 1.5 hit when using fists
+function Fistfaith(attacker, defender, info) {
+
+}
+
+// Deal effective damage to foes with a fist rank
+function Fistslayer(attacker, defender, info) {
+
 }
 
 // Crit +10 if foe cannot counter
@@ -880,6 +1008,11 @@ function Glacies(attacker, defender, info) {
     }
 }
 
+// Add half foe's mag to dmg when initiating
+function GraspingVoid(attacker, defender, info) {
+
+}
+
 // Def% chance to negate all damage
 function GreatShield(attacker, defender, info) {
     if (info.whoseSkill == 0) { return; }
@@ -891,11 +1024,41 @@ function GreatShield(attacker, defender, info) {
     }
 }
 
+// Inflict 33% of foe's max hp as damage after combat
+function GrislyWound(attacker, defender, info) {
+
+}
+
 // Combat Arts do 50% damage
 function Guarded(attacker, defender, info) {
     if (info.whoseSkill == 0 || attacker.combatArt != 1) { return; }
     defender.skillMsg += outputSkill("Guarded");
     attacker.dmgMult *= 0.5;
+}
+
+// Maximum range of equipped guns is increased by 1
+function GunRangePlusOne(attacker, defender, info) {
+
+}
+
+// +30 hit/avo when enemy has a gun equipped
+function Gunbreaker(attacker, defender, info) {
+
+}
+
+// +4 dmg when equipping a gun
+function Gunfaire(attacker, defender, info) {
+
+}
+
+// Guns can't be broken and grants lck * 1.5 hit when using guns
+function Gunfaith(attacker, defender, info) {
+
+}
+
+// Deal effective damage to foes with a gun rank
+function Gunslayer(attacker, defender, info) {
+
 }
 
 // Attacks always hit
@@ -933,14 +1096,6 @@ function Honeypot(attacker, defender, info) {
     attacker.hit += 40;
 }
 
-// Swords can't be broken and grants lck * 1.5 hit when using swords
-function HuntingHound(attacker, defender, info) {
-    if (info.whoseSkill == 1 || attacker.wepType != "Sword") { return; }
-    attacker.skillMsg += outputSkill("Hunting Hound");
-    attacker.hit += Math.floor(attacker.lck * 1.5);
-    attacker.unbreaking = 1;
-}
-
 // Spd% chance to deal damage equal to str when targeted at range
 function Iaido(attacker, defender, info) {
     if (info.whoseSkill == 0) { return; }
@@ -970,6 +1125,11 @@ function Illusionist(attacker, defender, info) {
     defender.avoid += 15;
 }
 
+// +3 mit and +10 crit when foe initiates
+function Impentrable(attacker, defender, info) {
+
+}
+
 // +3 prot/ward for every 25% hp missing
 function Imperturbable(attacker, defender, info) {
     if (info.whoseSkill == 0) { return; }
@@ -977,6 +1137,11 @@ function Imperturbable(attacker, defender, info) {
     if (stacks > 0) { defender.skillMsg += outputSkill("Imperturbable"); }
     defender.prot += 3 * stacks;
     defender.ward += 3 * stacks;
+}
+
+// Add 1/2 of unit's str/mag to damage dealth when initiating against an enemy with higher str/mag
+function InferiorityComplex(attacker, defender, info) {
+
 }
 
 // +20 hit
@@ -1107,6 +1272,11 @@ function LiquidOoze(attacker, defender, info) {
     attacker.ooze = 1;
 }
 
+// Add 1/2 lck to damage
+function LuckBeALady(attacker, defender, info) {
+
+}
+
 // Ignore enemy def/res during combat
 function LunaPlus(attacker, defender, info) {
     if (info.whoseSkill == 1) { return; }
@@ -1138,6 +1308,16 @@ function MagicBlade(attacker, defender, info) {
         attacker.addDmg += Math.floor(attacker.mag / 2);
         attacker.hit += Math.floor((attacker.mag / 10 * 3));
         attacker.crit += Math.floor((attacker.mag / 10 * 3));
+}
+
+// Attacks that miss inflict half damage
+function MaleficAura(attacker, defender, info) {
+
+}
+
+// Make a guaranteed follow-up attack when initiating against an injured foe
+function Marauder(attacker, defender, info) {
+
 }
 
 // +30 avo when being attacked
@@ -1184,18 +1364,18 @@ function Monstrous(attacker, defender, info) {
     defender.monstrous = 1;
 }
 
-// Unit is protected from all effective attacks
-function Nullify(attacker, defender, info) {
-    if (info.whoseSkill == 0) { return; }
-    defender.skillMsg += outputSkill("Nullify");
-    defender.effNegate = 1;
-}
-
 // Restore damage done as HP
 function Nosferatu(attacker, defender, info) {
     if (info.whoseSkill == 1) { return; }
     attacker.skillMsg += outputSkill("Nosferatu");
     attacker.nosferatu = 1;
+}
+
+// Unit is protected from all effective attacks
+function Nullify(attacker, defender, info) {
+    if (info.whoseSkill == 0) { return; }
+    defender.skillMsg += outputSkill("Nullify");
+    defender.effNegate = 1;
 }
 
 // +4 damage if foe cannot counter
@@ -1389,6 +1569,16 @@ function QuickDraw(attacker, defender, info) {
     attacker.addDmg += 5;
 }
 
+// Increases damage by half of lowest stat
+function RaisedFist(attacker, defender, info) {
+
+}
+
+// Unit may counter with guns
+function RapidResponse(attacker, defender, info) {
+
+}
+
 //+4 spd and def when foe initiates
 function ReadyStance(attacker, defender, info) {
     if (info.whoseSkill == 0 && info.initiating == 0) {
@@ -1516,6 +1706,16 @@ function RightfulLord(attacker, defender, info) {
     }
 }
 
+// +5 atk when foe is using the same weapon type
+function Rivalry(attacker, defender, info) {
+
+}
+
+// Add 2x difference in weapon wt to damage
+function Shatter(attacker, defender, info) {
+
+}
+
 // Deal +2 damage and take -2 damage per missing 25% hp
 function SilentPride(attacker, defender, info) {
     if (info.whoseSkill == 0) { 
@@ -1590,6 +1790,11 @@ function SpectrumStance(attacker, defender, info) {
     }
 }
 
+// %mag chance to attack again when using a tome
+function SpellEcho(attacker, defender, info) {
+
+}
+
 // +6 def when foe initiates
 function SteadyStance(attacker, defender, info) {
     if (info.whoseSkill == 0 || info.initiating == 0)  { return; }
@@ -1610,6 +1815,11 @@ function StrongRiposte(attacker, defender, info) {
     if (info.whoseSkill == 1 || info.initiating == 1) { return; }
     attacker.skillMsg += outputSkill("Strong Riposte");
     attacker.addDmg += 3;
+}
+
+// %skl chance to prevent a counter attack
+function StunningStrike(attacker, defender, info) {
+
 }
 
 //+4 damage and def when foe initiates
@@ -1678,11 +1888,21 @@ function Swordslayer(attacker, defender, info) {
     attacker.effAll = 1
 }
 
+// Unit hp is set to enemy hp at start of combat. Cannot exceed hp max
+function Sympathetic(attacker, defender, info) {
+
+}
+
 // Deal effective damage to magical units
 function Templar(attacker, defender, info) {
     if (info.whoseSkill == 1 || (defender.staffExp == 0 && defender.darkExp == 0 && defender.animaExp == 0 && defender.lightExp == 0)) { return; }
     attacker.skillMsg += outputSkill("Templar");
     attacker.effAll = 1
+}
+
+// +4 atk, +30 hit, +30 crit, +30 avoid. Only one inventory slot
+function TheOne(attacker, defender, info) {
+
 }
 
 // +2 damage, +15 hit, +5 crit when weapon weighs more than enemy's
@@ -1734,6 +1954,11 @@ function Tomefaire(attacker, defender, info) {
     if (info.whoseSkill == 1 || (attacker.wepType != "Anima" && attacker.wepType != "Dark" && attacker.wepType != "Light")) { return; }
     attacker.skillMsg += outputSkill("Tomefaire");
     attacker.addDmg += 4;
+}
+
+// Tomes can't be broken and grants lck * 1.5 hit when using tomes
+function Tomefaith(attacker, defender, info) {
+
 }
 
 // Negate all damage from ranged attacks
@@ -2096,15 +2321,6 @@ const CombatArt = {
                 attacker.addDmg += attacker.res;
                 attacker.postHeal = attacker.res;
                 break;
-            case "BladeOfLight":
-                attacker.skillMsg += outputSkill("Blade of Light");
-                attacker.hit += 20;
-                attacker.crit += 15;
-                attacker.addDmg += 10;
-                attacker.currMt += 10;
-                attacker.currEff += ",Dragon";
-                attacker.duraCost += 3;
-                break;
             case "Blowback":
                 attacker.skillMsg += outputSkill("Blowback");
                 attacker.duraCost += 2;
@@ -2137,25 +2353,14 @@ const CombatArt = {
                 attacker.duraCost += 1;
                 attacker.dmgMult *= 1.5;
                 break;
-            case "Eclipse":
-                attacker.skillMsg += outputSkill("Eclipse");
-                attacker.duraCost += 9;
-                attacker.single = 1;
-                defender.ward = 0;
-                defender.prot = 0;
-                if (attacker.dmgType == "Physical") {
-                    attacker.addDmg += attacker.str * 4;
-                }
-                else if (attacker.dmgType == "Magical") {
-                    attacker.str += attacker.str * 4;
-                    const aSkills = getAttr(attacker.unit.id, 'activeSkills').get('current').split(',');
-                    if (aSkills.includes("ArcaneBlade") == 1) { attacker.addDmg += Math.floor(attacker.str / 4); }
-                }
-                break;
             case "Eviscerate":
                 attacker.skillMsg += outputSkill("Eviscerate");
                 attacker.duraCost += 1;
                 attacker.eviscerate = 1;
+                break;
+            case "Execute":
+                break;
+            case "FanTheHammer":
                 break;
             case "Flare":
                 attacker.skillMsg += outputSkill("Flare");
@@ -2176,12 +2381,6 @@ const CombatArt = {
                 attacker.single = 1
                 attacker.hit = Math.floor(attacker.hit / 2);
                 attacker.crit = attacker.crit * 2;
-                break;
-            case "HeavensGrace": // Need to find way to add 30 avo to this
-                attacker.skillMsg += outputSkill("Heaven's Grace");
-                attacker.duraCost += 2;
-                attacker.dmgMult *= 1.5;
-                attacker.hit += 10;
                 break;
             case "Impale":
                 attacker.skillMsg += outputSkill("Impale");
@@ -2236,6 +2435,8 @@ const CombatArt = {
                 attacker.duraCost += 4;
                 attacker.effAll = 1;
                 break;
+            case "RagingStorm":
+                break;
             case "RendHeaven":
                 attacker.skillMsg += outputSkill("Rend Heaven");
                 attacker.duraCost += 2;
@@ -2273,6 +2474,8 @@ const CombatArt = {
                 attacker.addDmg += Math.floor((attacker.str + attacker.mag + attacker.skl + attacker.spd + attacker.lck + attacker.def + attacker.res) / 7);
                 attacker.currMt += Math.floor((attacker.str + attacker.mag + attacker.skl + attacker.spd + attacker.lck + attacker.def + attacker.res) / 7);
                 break;
+            case "Snipe":
+                break;
             case "StolenHeaven":
                 attacker.skillMsg += outputSkill("Stolen Heaven");
                 attacker.duraCost += 2;
@@ -2285,6 +2488,8 @@ const CombatArt = {
                 attacker.addDmg += Math.floor(attacker.spd / 2);
                 attacker.currMt += Math.floor(attacker.spd / 2);
                 break;
+            case "Suplex":
+                break;
             case "SureShot":
                 attacker.skillMsg += outputSkill("Sure Shot");
                 attacker.duraCost += 2;
@@ -2296,6 +2501,8 @@ const CombatArt = {
                 attacker.skillMsg += outputSkill("Vengeance");
                 attacker.duraCost += 2;
                 attacker.addDmg += attacker.addDmg += Math.floor((attacker.maxHP - attacker.currHP) / 2);
+                break;
+            case "WhiteMoon":
                 break;
             case "WindGod":
                 attacker.skillMsg += outputSkill("Wind God");
