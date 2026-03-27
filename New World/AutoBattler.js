@@ -596,23 +596,24 @@ function DoOneCombatStep(selectedId, targetId, info, initiating, artName, isSim)
   if (attacker.sandstorm == 1) { atkDmg = attacker.currMt + attacker.def * 1.5; }
   if (attacker.eviscerate == 1) { defMit = Math.min(protDef, wardDef); }
 
-  let dmgTaken = Math.max(0, (atkDmg - defMit + addedDmg) / (1 + attacker.astra));
-  dmgTaken *= attacker.dmgMult;
-  if (info.extraAttackMult > 0) { dmgTaken *= info.extraAttackMult; }
+  let dmgDisp = (atkDmg - defMit + addedDmg) / (1 + attacker.astra);
+  dmgDisp *= attacker.dmgMult;
+  if (info.extraAttackMult > 0) { dmgDisp *= info.extraAttackMult; }
   if (defender.monstrous == 1) {
-    if (info.monstrous == 1) { dmgTaken = dmgTaken / 4; }
-    else { dmgTaken = dmgTaken / 2; }
+    if (info.monstrous == 1) { dmgDisp = dmgDisp / 4; }
+    else { dmgDisp = dmgDisp / 2; }
     info.monstrous = 1;
   }
 
-  dmgTaken = Math.floor(dmgTaken); // Remove any fractions
+  dmgDisp = Math.floor(dmgDisp); // Remove any fractions
+  let dmgTaken = Math.max(0, dmgDisp);
 
 
   // Actual Combat
   if (isSim == 1) { // Simulate battle outcome
     const init = initiating == 1 ? "Initiating" : "Countering"
-    if (defender.monstrous == 1 || defender.barricade == 1) { dmgTaken += " / " + Math.floor(dmgTaken / 2); }
-    content += `${attacker.name} is ${init} <br> Atk Spd: ${atkSpdDiff} <br> Dmg Done: ${dmgTaken} <br> Hit Rate: ${101+hit-avoid} <br> Crit Rate: ${(101+crit-dodge)}`;
+    if (defender.monstrous == 1 || defender.barricade == 1) { dmgDisp += " / " + Math.floor(dmgDisp / 2); }
+    content += `${attacker.name} is ${init} <br> Atk Spd: ${atkSpdDiff} <br> Dmg Done: ${dmgDisp} <br> Hit Rate: ${101+hit-avoid} <br> Crit Rate: ${(101+crit-dodge)}`;
   }
   else { // Output battle outcome
     // Add variance
