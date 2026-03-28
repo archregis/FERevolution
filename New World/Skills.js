@@ -814,7 +814,14 @@ function DevilsWhim(attacker, defender, info) {
 
 // +5 attack and cure negative status effects on player phase start. Gain flammable, unholy, and terror weaknesses
 function Dhampir(attacker, defender, info) {
-
+    if (info.whoseSkill == 0) {
+        attacker.skillMsg += outputSkill("Dhampir");
+        attacker.addDmg += 5;
+    }
+    else if (info.whoseSkill == 1) {
+        defender.skillMsg += outputSkill("Dhampir");
+        defender.currWeak += ",Flammable,Unholy,Terror";
+    }
 }
 
 // Doubles weapon exp gain
