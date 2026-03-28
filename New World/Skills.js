@@ -1147,7 +1147,9 @@ function Gunfaith(attacker, defender, info) {
 
 // Deal effective damage to foes with a gun rank
 function Gunslayer(attacker, defender, info) {
-
+    if (info.whoseSkill == 1 || defender.wepType != "Gun") { return; }
+    attacker.skillMsg += outputSkill("Gunslayer");
+    attacker.effAll = 1
 }
 
 // Attacks always hit
