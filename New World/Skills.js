@@ -923,7 +923,9 @@ function Eclipse(attacker, defender, info) {
 
 // Physical weapons target res
 function EnchantedAmmo(attacker, defender, info) {
-
+    if (info.whoseSkill == 1 || attacker.wepType != "Gun" || attacker.dmgType == "Magical") { return; }
+    attacker.skillMsg += outputSkill("Enchanted Ammo");
+    attacker.dmgType = "Magical";
 }
 
 // Mag% chance to activate eclipse, rolls 4 times
