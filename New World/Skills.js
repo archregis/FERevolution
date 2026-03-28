@@ -980,7 +980,9 @@ function Fistbreaker(attacker, defender, info) {
 
 // +4 damage when equipping fists
 function Fistfaire(attacker, defender, info) {
-
+    if (info.whoseSkill == 1 || attacker.wepType != "Fist") { return; }
+    attacker.skillMsg += outputSkill("Fistfaire");
+    attacker.addDmg += 4;
 }
 
 // Fists can't be broken and grants lck * 1.5 hit when using fists
