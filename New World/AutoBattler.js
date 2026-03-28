@@ -610,7 +610,7 @@ function DoOneCombatStep(selectedId, targetId, info, initiating, artName, isSim)
     }
     else { // Output battle outcome
       // Add variance
-      hit += randomInteger(100);
+      hit += Math.ceil((randomInteger(100) + randomInteger(100)) / 2); // 2 RN system
       crit += randomInteger(100);
 
       // End of calculation stuff
