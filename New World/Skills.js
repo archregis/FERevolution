@@ -1103,7 +1103,14 @@ function GreatShield(attacker, defender, info) {
 
 // Inflict 33% of foe's max hp as damage after combat
 function GrislyWound(attacker, defender, info) {
-
+    if (info.whoseSkill == 0) {
+        attacker.skillMsg += outputSkill("Grisly Wound");
+        defender.postDamage += Math.floor(defender.maxHP / 3);
+    }
+    else if (info.whoseSkill == 1) {
+        defender.skillMsg += outputSkill("Grisly Wound");
+        attacker.postDamage += Math.floor(attacker.maxHP / 3);
+    }
 }
 
 // Combat Arts do 50% damage
