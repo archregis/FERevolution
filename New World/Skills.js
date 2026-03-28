@@ -1820,7 +1820,9 @@ function Rivalry(attacker, defender, info) {
 
 // Add 2x difference in weapon wt to damage
 function Shatter(attacker, defender, info) {
-
+    if (info.whoseSkill == 1 || attacker.currWt <= defender.currWt) { return; }
+    attacker.skillMsg += outputSkill("Shatter");
+    attacker.addDmg += 2 * (attacker.currWt - defender.currWt);
 }
 
 // Deal +2 damage and take -2 damage per missing 25% hp
