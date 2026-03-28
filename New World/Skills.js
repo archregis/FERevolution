@@ -260,7 +260,9 @@ function Allbreaker(attacker, defender, info) {
 
 // Halves damage from magic
 function Apotrope(attacker, defender, info) {
-
+if (info.whoseSkill == 0 || attacker.dmgType == "Physical") { return; }
+defender.skillMsg += outputSkill("Apotrope");
+attacker.dmgMult *= 0.5;
 }
 
 // -4 damage whenever being attacked
