@@ -968,7 +968,14 @@ function FierceStance(attacker, defender, info) {
 
 // +30 hit and avoid when enemy has fists equipped
 function Fistbreaker(attacker, defender, info) {
-
+    if (info.whoseSkill == 0 && defender.wepType == "Fist") {
+        attacker.skillMsg += outputSkill("Fistbreaker");
+        attacker.hit += 30;
+      }
+      if (info.whoseSkill == 1 && attacker.wepType == "Fist")  {
+        defender.skillMsg += outputSkill("Fistbreaker");
+        defender.avoid += 30;
+      }
 }
 
 // +4 damage when equipping fists
