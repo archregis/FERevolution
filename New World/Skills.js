@@ -1813,7 +1813,9 @@ function RightfulLord(attacker, defender, info) {
 
 // +5 atk when foe is using the same weapon type
 function Rivalry(attacker, defender, info) {
-
+    if (info.whoseSkill == 1 || attacker.wepType != defender.wepType) { return; }
+    attacker.skillMsg += outputSkill("Rivalry");
+    attacker.addDmg += 5;
 }
 
 // Add 2x difference in weapon wt to damage
