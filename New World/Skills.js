@@ -1139,7 +1139,10 @@ function Gunfaire(attacker, defender, info) {
 
 // Guns can't be broken and grants lck * 1.5 hit when using guns
 function Gunfaith(attacker, defender, info) {
-
+    if (info.whoseSkill == 1 || attacker.wepType != "Gun") { return; }
+    attacker.skillMsg += outputSkill("Gunfaith");
+    attacker.hit += Math.floor(attacker.lck * 1.5);
+    attacker.unbreaking = 1;
 }
 
 // Deal effective damage to foes with a gun rank
