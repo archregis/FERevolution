@@ -987,7 +987,10 @@ function Fistfaire(attacker, defender, info) {
 
 // Fists can't be broken and grants lck * 1.5 hit when using fists
 function Fistfaith(attacker, defender, info) {
-
+    if (info.whoseSkill == 1 || attacker.wepType != "Fist") { return; }
+    attacker.skillMsg += outputSkill("Fistfaith");
+    attacker.hit += Math.floor(attacker.lck * 1.5);
+    attacker.unbreaking = 1;
 }
 
 // Deal effective damage to foes with a fist rank
