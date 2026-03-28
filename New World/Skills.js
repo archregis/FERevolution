@@ -1673,7 +1673,10 @@ function QuickDraw(attacker, defender, info) {
 
 // Increases damage by half of lowest stat
 function RaisedFist(attacker, defender, info) {
-
+    if (info.whoseSkill == 1) { return; }
+    attacker.skillMsg += outputSkill("Raised Fist");
+    const lowest = Math.min(attacker.str, attacker.mag, attacker.skl, attacker.spd, attacker.lck, attacker.def, attacker.res);
+    attacker.addDmg += Math.floor(lowest / 2);
 }
 
 // Unit may counter with guns
