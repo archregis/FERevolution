@@ -926,7 +926,7 @@ function EnchantedAmmo(attacker, defender, info) {
 
 }
 
-// %mag chance to activate eclipse, rolls 4 times
+// Mag% chance to activate eclipse, rolls 4 times
 function EternalEclipse(attacker, defender, info) {
 
 }
@@ -1895,7 +1895,7 @@ function SpectrumStance(attacker, defender, info) {
     }
 }
 
-// %mag chance to attack again when using a tome
+// Mag% chance to attack again when using a tome
 function SpellEcho(attacker, defender, info) {
 
 }
@@ -1922,9 +1922,15 @@ function StrongRiposte(attacker, defender, info) {
     attacker.addDmg += 3;
 }
 
-// %skl chance to prevent a counter attack
+// Skl% chance to prevent a counter attack
 function StunningStrike(attacker, defender, info) {
-
+    if (info.whoseSkill == 1) { return; }
+    const odds = attacker.skl + attacker.activationBonus;
+    if (info.isSim == 1 && odds > 0) { attacker.skillMsg += outputSkill("Stunning Strike", odds); }
+    else if (randomInteger(100) <= odds) {
+        attacker.skillMsg += outputSkill("Stunning Strike");
+        attacker.dazzle = 1;
+    }
 }
 
 //+4 damage and def when foe initiates
