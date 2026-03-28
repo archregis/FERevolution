@@ -951,7 +951,12 @@ function ExtremeDisregard(attacker, defender, info) {
 
 // May act twice per turn but str and mag are halved
 function FasterThanStrong(attacker, defender, info) {
-
+    if (info.whoseSkill == 1) { return; }
+    attacker.skillMsg += outputSkill("Faster Than Strong");
+    attacker.phys -= Math.ceil(attacker.str / 2);
+    attacker.myst -= Math.ceil(attacker.mag / 2);
+    attacker.str = Math.floor(attacker.str / 2);
+    attacker.mag = Math.floor(attacker.mag / 2);
 }
 
 // +6 damage when enemy initiates
