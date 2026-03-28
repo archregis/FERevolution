@@ -2508,6 +2508,12 @@ const CombatArt = {
                 attacker.currMt += Math.floor(attacker.spd / 2);
                 break;
             case "Suplex":
+                attacker.skillMsg += outputSkill("Suplex");
+                attacker.duraCost += 1;
+                attacker.addDmg += 10;
+                attacker.currMt += 10;
+                attacker.hit += 30;
+                attacker.single = 1;
                 break;
             case "SureShot":
                 attacker.skillMsg += outputSkill("Sure Shot");
