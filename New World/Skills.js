@@ -2359,6 +2359,11 @@ const CombatArt = {
                 attacker.eviscerate = 1;
                 break;
             case "Execute":
+                attacker.skillMsg += outputSkill("Execute");
+                attacker.duraCost += 1;
+                if (defender.currHP < Math.ceil(defender.maxHP / 2)) {
+                    attacker.aim = 1;
+                }
                 break;
             case "FanTheHammer":
                 break;
