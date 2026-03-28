@@ -1681,7 +1681,9 @@ function RaisedFist(attacker, defender, info) {
 
 // Unit may counter with guns
 function RapidResponse(attacker, defender, info) {
-
+    if (info.whoseSkill == 0 || defender.wepType != "Gun") { return; }
+    defender.skillMsg += outputSkill("Rapid Response");
+    defender.counter = 1;
 }
 
 //+4 spd and def when foe initiates
