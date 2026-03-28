@@ -2013,7 +2013,16 @@ function Templar(attacker, defender, info) {
 
 // +4 atk, +30 hit, +30 crit, +30 avoid. Only one inventory slot
 function TheOne(attacker, defender, info) {
-
+        if (info.whoseSkill == 0) {
+            attacker.skillMsg += outputSkill("The One");
+            attacker.addDmg += 4;
+            attacker.hit += 30;
+            attacker.crit += 30;
+        }
+        else if (info.whoseSkill == 1) {
+            defender.skillMsg += outputSkill("The One");
+            defender.avoid += 30;
+        }
 }
 
 // +2 damage, +15 hit, +5 crit when weapon weighs more than enemy's
