@@ -2078,7 +2078,10 @@ function Tomefaire(attacker, defender, info) {
 
 // Tomes can't be broken and grants lck * 1.5 hit when using tomes
 function Tomefaith(attacker, defender, info) {
-
+    if (info.whoseSkill == 1 || (attacker.wepType != "Anima" && attacker.wepType != "Dark" && attacker.wepType != "Light")) { return; }
+    attacker.skillMsg += outputSkill("Tomefaith");
+    attacker.hit += Math.floor(attacker.lck * 1.5);
+    attacker.unbreaking = 1;
 }
 
 // Negate all damage from ranged attacks
