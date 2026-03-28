@@ -842,7 +842,20 @@ function DisciplinePlus(attacker, defender, info) {
 
 // +10 hit, crit, and skill activation for unit and foe
 function Disregard(attacker, defender, info) {
-
+    if (info.whoseSkill == 0) {
+        attacker.skillMsg += outputSkill("Disregard");
+        attacker.hit += 10;
+        attacker.crit += 10;
+        attacker.activationBonus += 10;
+        defender.activationBonus += 10;
+    }
+    else if (info.whoseSkill == 1) {
+        defender.skillMsg += outputSkill("Disregard");
+        attacker.hit += 10;
+        attacker.crit += 10;
+        attacker.activationBonus += 10;
+        defender.activationBonus += 10;
+    }
 }
 
 // +6 str and +6 spd when initiating combat
