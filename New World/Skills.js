@@ -2490,6 +2490,10 @@ const CombatArt = {
                 attacker.currMt += Math.floor((attacker.str + attacker.mag + attacker.skl + attacker.spd + attacker.lck + attacker.def + attacker.res) / 7);
                 break;
             case "Snipe":
+                attacker.skillMsg += outputSkill("Snipe");
+                attacker.duraCost += 2;
+                attacker.single = 1;
+                attacker.crit += 30;
                 break;
             case "StolenHeaven":
                 attacker.skillMsg += outputSkill("Stolen Heaven");
