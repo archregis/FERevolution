@@ -658,9 +658,6 @@ function DoOneCombatStep(selectedId, targetId, info, initiating, artName, isSim)
         if (attacker.sol == 1) {
           UpdateHealth(attacker, -Math.min(defender.currHP, dmgTaken));
         }
-        if (attacker.nosferatu == 1) {
-          UpdateHealth(attacker, -Math.min(defender.currHP, dmgTaken));
-        }
         if (attacker.solar == 1) {
           UpdateHealth(attacker, -Math.min(defender.currHP, Math.floor(dmgTaken / 4)));
         }

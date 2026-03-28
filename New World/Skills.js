@@ -1368,7 +1368,7 @@ function Monstrous(attacker, defender, info) {
 function Nosferatu(attacker, defender, info) {
     if (info.whoseSkill == 1) { return; }
     attacker.skillMsg += outputSkill("Nosferatu");
-    attacker.nosferatu = 1;
+    attacker.sol = 1;
 }
 
 // Unit is protected from all effective attacks
@@ -2528,6 +2528,8 @@ const CombatArt = {
                 attacker.addDmg += attacker.addDmg += Math.floor((attacker.maxHP - attacker.currHP) / 2);
                 break;
             case "WhiteMoon":
+                attacker.skillMsg += outputSkill("White Moon");
+                attacker.sol = 1;
                 break;
             case "WindGod":
                 attacker.skillMsg += outputSkill("Wind God");
