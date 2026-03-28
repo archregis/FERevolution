@@ -1089,7 +1089,9 @@ function Glacies(attacker, defender, info) {
 
 // Add half foe's mag to dmg when initiating
 function GraspingVoid(attacker, defender, info) {
-
+    if (info.whoseSkill == 1 || info.initiating == 0) { return; }
+    attacker.skillMsg += outputSkill("Grasping Void");
+    attacker.addDmg += Math.floor(defender.mag / 2);
 }
 
 // Def% chance to negate all damage
