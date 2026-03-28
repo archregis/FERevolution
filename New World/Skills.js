@@ -431,7 +431,10 @@ function BloodlustPlus(attacker, defender, info) {
 
 // Strike twice when initiating on a foe that can follow-up.
 function BoldFighter(attacker, defender, info) {
-
+    if (info.whoseSkill == 0 && info.initiating == 1 && defender.atkSpd >= attacker.atkSpd + 4) {
+        attacker.skillMsg += outputSkill("Bold Fighter");
+        attacker.atkSpd = defender.atkSpd + 4;
+    }
 }
 
 // Maximum range of equipped bows is increased by 1
