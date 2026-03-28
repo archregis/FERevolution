@@ -1374,7 +1374,9 @@ function LiquidOoze(attacker, defender, info) {
 
 // Add 1/2 lck to damage
 function LuckBeALady(attacker, defender, info) {
-
+    if (info.whoseSkill == 1) { return; }
+    attacker.skillMsg += outputSkill("Luck be a Lady");
+    attacker.addDmg += Math.floor(attacker.lck / 2);
 }
 
 // Ignore enemy def/res during combat
