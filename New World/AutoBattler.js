@@ -188,6 +188,7 @@ function initializeAtkInfo(unitId, info) {
   // Stat info
   output.classPower = getAttrValue(output.unit.id, "classPower");
   output.level = getAttrValue(output.unit.id, "level");
+  output.gender = getAttr(output.unit.id, "gender").get('current');
   output.currHP = output.obj.get("bar3_value");
   output.maxHP = output.obj.get("bar3_max");
   output.str = getAttrValue(output.unit.id, "strTotal");

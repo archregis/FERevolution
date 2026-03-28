@@ -752,7 +752,11 @@ function Demolish(attacker, defender, info) {
 
 // Avoid +25 and Mit +3 when enemy is male
 function Demure(attacker, defender, info) {
-
+    if (info.whoseSkill == 0 || attacker.gender != "Male") { log(attacker.gender); return; }
+    defender.skillMsg += outputSkill("Demure");
+    defender.avoid += 25;
+    defender.addProt += 3;
+    defender.addWard += 3;
 }
 
 // Double attacks occur immediately when below 50% hp
