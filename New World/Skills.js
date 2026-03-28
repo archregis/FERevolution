@@ -594,7 +594,9 @@ function CritBoostPlus(attacker, defender, info) {
 
 // Add mag to phys if at 1 range
 function DarkMight(attacker, defender, info) {
-
+    if (info.whoseSkill == 1 || Led.from(attacker.token).to(defender.token).byManhattan().inSquares() != 1) { return; }
+    attacker.skillMsg += outputSkill("Dark Might");
+    attacker.phys += attacker.mag;
 }
 
 // +5 atk spd when initiating
