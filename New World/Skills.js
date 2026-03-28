@@ -1120,7 +1120,14 @@ function GunRangePlusOne(attacker, defender, info) {
 
 // +30 hit/avo when enemy has a gun equipped
 function Gunbreaker(attacker, defender, info) {
-
+    if (info.whoseSkill == 0 && defender.wepType == "Gun") {
+        attacker.skillMsg += outputSkill("Gunbreaker");
+        attacker.hit += 30;
+      }
+      if (info.whoseSkill == 1 && attacker.wepType == "Gun")  {
+        defender.skillMsg += outputSkill("Gunbreaker");
+        defender.avoid += 30;
+      }
 }
 
 // +4 dmg when equipping a gun
