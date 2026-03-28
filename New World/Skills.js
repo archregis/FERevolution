@@ -1132,7 +1132,9 @@ function Gunbreaker(attacker, defender, info) {
 
 // +4 dmg when equipping a gun
 function Gunfaire(attacker, defender, info) {
-
+    if (info.whoseSkill == 1 || attacker.wepType != "Gun") { return; }
+    attacker.skillMsg += outputSkill("Gunfaire");
+    attacker.addDmg += 4;
 }
 
 // Guns can't be broken and grants lck * 1.5 hit when using guns
