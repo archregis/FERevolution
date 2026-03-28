@@ -287,7 +287,14 @@ function ArcaneBlade(attacker, defender, info) {
 
 // Add 50% of mag to damage. Unit cannot counter
 function ArcaneCannon(attacker, defender, info) {
-
+    if (info.whoseSkill == 0) {
+        attacker.skillMsg += outputSkill("Arcane Cannon");
+        attacker.addDmg += Math.floor(attacker.mag / 2);
+    }
+    else if (info.whoseSkill == 1) {
+        defender.skillMsg += outputSkill("Arcane Cannon");
+        defender.counter = 0;
+    }
 }
 
 // +10 def when initiating battle
