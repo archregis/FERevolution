@@ -323,6 +323,13 @@ on('chat:message', function(msg) {
   if (command == "hit") {
     const attacker = initializeAtkInfo(selectedId, info)
     const defender = initializeDefInfo(targetId, info)
+    const isSympathetic = SkillHandler.CheckSympathetic(attacker, defender);
+    if (isSympathetic == 1) {
+      UpdateHealth(attacker, attacker.currHP - defender.currHP);
+    }
+    else if (isSympathetic == 2) {
+      UpdateHealth(defender, defender.currHP - attacker.currHP);
+    }
     if (SkillHandler.CheckVantage(attacker, defender) == 1) {
       combatBlock: {
         // Can the enemy counter?

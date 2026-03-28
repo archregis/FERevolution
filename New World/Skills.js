@@ -2009,9 +2009,14 @@ function Swordslayer(attacker, defender, info) {
     attacker.effAll = 1
 }
 
-// Unit hp is set to enemy hp at start of combat. Cannot exceed hp max
+// Unit's HP is set to Enemy HP at the start of combat
 function Sympathetic(attacker, defender, info) {
-
+    if (info.whoseSkill == 0) {
+        attacker.skillMsg += outputSkill("Sympathetic");
+    }
+    else if (info.whoseSkill == 1) {
+        defender.skillMsg += outputSkill("Sympathetic");
+    }
 }
 
 // Deal effective damage to magical units
@@ -2342,6 +2347,29 @@ const SkillHandler = {
                 }
             }
         }
+    },
+
+    // Returns 1 if the attacker has sympathetic, 2 if the defender has sympathetic, 0 otherwise
+    CheckSympathetic: function(attacker, defender) {
+        const aSkills = getAttr(attacker.unit.id, 'activeSkills').get('current').split(',');
+        const dSkills = getAttr(defender.unit.id, 'activeSkills').get('current').split(',');
+
+        const aWepSkills = getAttr(attacker.unit.id, 'activeWepSkills').get('current').split(',');
+        const dWepSkills = getAttr(defender.unit.id, 'activeWepSkills').get('current').split(',');
+
+        if (dSkills.includes("Nihil") == false && dWepSkills.includes('Nihil') == false) {
+            if (aSkills.includes("Sympathetic")) { return 1; }
+        }
+
+        if (aWepSkills.includes("Sympathetic")) { return 1; }
+        
+        if (aSkills.includes("Nihil") == false && aWepSkills.includes('Nihil') == false) {
+            if (dSkills.includes("Sympathetic")) { return 2; }
+        }
+
+        if (dWepSkills.includes("Sympathetic")) { return 2; }
+
+        return 0;
     },
 
     // Returns 1 if the defender should attack first, 0 otherwise
