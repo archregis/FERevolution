@@ -2366,6 +2366,11 @@ const CombatArt = {
                 }
                 break;
             case "FanTheHammer":
+                attacker.skillMsg += outputSkill("Fan the Hammer");
+                attacker.duraCost += 1;
+                attacker.numAttacks = 6;
+                attacker.hit += -50;
+                attacker.crit += 30;
                 break;
             case "Flare":
                 attacker.skillMsg += outputSkill("Flare");
