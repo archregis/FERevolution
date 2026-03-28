@@ -933,7 +933,20 @@ function EternalEclipse(attacker, defender, info) {
 
 // +20 hit, crit, and skill activation for unit and foe
 function ExtremeDisregard(attacker, defender, info) {
-
+    if (info.whoseSkill == 0) {
+        attacker.skillMsg += outputSkill("Extreme Disregard");
+        attacker.hit += 20;
+        attacker.crit += 20;
+        attacker.activationBonus += 20;
+        defender.activationBonus += 20;
+    }
+    else if (info.whoseSkill == 1) {
+        defender.skillMsg += outputSkill("Extreme Disregard");
+        attacker.hit += 20;
+        attacker.crit += 20;
+        attacker.activationBonus += 20;
+        defender.activationBonus += 20;
+    }
 }
 
 // May act twice per turn but str and mag are halved
