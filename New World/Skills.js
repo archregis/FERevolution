@@ -1231,7 +1231,15 @@ function Illusionist(attacker, defender, info) {
 
 // +3 mit and +10 crit when foe initiates
 function Impenetrable(attacker, defender, info) {
-
+    if (info.whoseSkill == 0 && info.initiating == 0) {
+        attacker.skillMsg += outputSkill("Impenetrable");
+        attacker.crit += 10;
+    }
+    else if (info.whoseSkill == 1 && info.initiating == 1) {
+        defender.skillMsg += outputSkill("Impenetrable");
+        defender.addProt += 3;
+        defender.addWard += 3;
+    }
 }
 
 // +3 prot/ward for every 25% hp missing
