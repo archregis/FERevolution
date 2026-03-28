@@ -398,7 +398,14 @@ function BattleVeteran(attacker, defender, info) {
 
 // Skl% chance to ignore def/res
 function BlackSun(attacker, defender, info) {
-
+    if (info.whoseSkill == 1) { return; }
+    const odds = attacker.skl + attacker.activationBonus + info.foresightDef;
+    if (info.isSim == 1 && odds > 0) { attacker.skillMsg += outputSkill("Black Sun", odds); }
+    else if (randomInteger(100) <= odds) {
+        attacker.skillMsg += outputSkill("Black Sun");
+        defender.prot = 0;
+        defender.ward = 0;
+    }
 }
 
 // Adds 1 damage for every 4 hp missing
