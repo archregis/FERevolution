@@ -2446,6 +2446,11 @@ const CombatArt = {
                 attacker.effAll = 1;
                 break;
             case "RagingStorm":
+                attacker.skillMsg += outputSkill("Raging Storm");
+                attacker.duraCost += 4;
+                attacker.addDmg += 5;
+                attacker.currMt += 5;
+                attacker.single = 1;
                 break;
             case "RendHeaven":
                 attacker.skillMsg += outputSkill("Rend Heaven");
