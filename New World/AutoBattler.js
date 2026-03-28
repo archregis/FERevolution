@@ -307,7 +307,7 @@ on('chat:message', function(msg) {
     counter: 0,
     double: 0,
     killed: 0,
-    whisper: parts[3] == 1 ? (getObj('player',('API'===msg.playerid ? lastPlayerId : msg.playerid))||{get:()=>'API'}).get('_displayname') : 0,
+    whisper: parts[3] == 1 ? `/w ${(getObj('player',('API' === msg.playerid ? lastPlayerId : msg.playerid))||{get:()=>'API'}).get('_displayname')}` : "",
     numAttacks: 1,
     aether: 0,
     extraAttackMult: 0,
@@ -490,10 +490,10 @@ function DoOneCombatStep(selectedId, targetId, info, initiating, artName, isSim)
   let hit = attacker.hit;
   let crit = attacker.crit;
   let content = "";
+  let postMsg = "";
 
 
-  // Specific staves can do flat damage
-  if (attacker.wepType == "Staff") {
+  if (attacker.wepType == "Staff") {   // Specific staves can do flat damage
     if (scytheInfo[attacker.wepName] == undefined) { return; }
     content = `${attacker.name} scythes through the enemy and deals ${scytheInfo[attacker.wepName]} damage!`;
     if (isSim != 1) {
@@ -517,203 +517,219 @@ function DoOneCombatStep(selectedId, targetId, info, initiating, artName, isSim)
         postDamageAtk: attacker.postDamage,
       });
     }
-    attacker.skillMsg += "</ul>";
-    defender.skillMsg += "</ul>";
-    if (info.whisper) { sendChat(attacker.name, `/w ${info.whisper} <br> <b>=== Start Combat ===</b> <br> ${combatMsg} ${attacker.skillMsg} ${defender.skillMsg} ${content} <br> <b>=== End Combat ===</b>`); }
-    else { sendChat(attacker.name, `<br> <b>=== Start Combat ===</b> <br> ${combatMsg} ${attacker.skillMsg} ${defender.skillMsg} ${content} <br> <b>=== End Combat ===</b>`); }
-    return;
   }
-
-
-  // Weapon triangle
-  let triangle = CheckAdvantage(attacker.wepTri, defender.wepTri);
-  let mult = 1;
-  if (attacker.reaver == 1) {
-    if (triangle == 1) { triangle = -1; }
-    else if (triangle == -1) { triangle = 1; }
-    mult *= 2;
-  }
-  if (attacker.triangleAdept == 1) {
-    mult *= 2;
-  }
-
-  var triangleMsg = "";
-  if (triangle == 1) {
-    hit += 20 * mult;
-    addedDmg += 1 * mult;
-    attacker.currMt += 1 * mult;
-    triangleMsg = '<div>Attacking with advantage!</div>';
-  }
-  else if (triangle == -1) {
-    hit += -20 * mult;
-    addedDmg += 1 * mult;
-    attacker.currMt += -1 * mult;
-    triangleMsg = '<div>Attacking with disadvantage!</div>';
-  }
-
-    
-  // Effectiveness
-  const aEff = attacker.currEff.split(',').filter(i => i);
-  const dWeak = defender.currWeak.split(',').filter(i => i);
-  let isEffective = 0;
-
-  for (let i=0; i<aEff.length; i++) {
-    if (dWeak.includes(aEff[i])) {
-      isEffective = 1;
+  else { // Otherwise normal combat
+    // Weapon triangle
+    let triangle = CheckAdvantage(attacker.wepTri, defender.wepTri);
+    let mult = 1;
+    if (attacker.reaver == 1) {
+      if (triangle == 1) { triangle = -1; }
+      else if (triangle == -1) { triangle = 1; }
+      mult *= 2;
     }
-  }
-
-  if (attacker.effAll == 1) { isEffective = 1; }
-  if (defender.effNegate == 1) { isEffective = 0; }
-
-  if (isEffective == 1) {
-    content += '<p style = "margin-bottom: 0px;"> You deal Effective Damage!</p> <br>';
-    addedDmg += 2 * attacker.currMt;
-    if (attacker.doubleEff == 1) { addedDmg += 3 * attacker.currMt; }
-  }
-  else if (defender.dragonskin == 1) {
-    attacker.dmgMult *= 0.5;
-    defender.miracle = 1;
-  }
-
-
-  // Damage Typing
-  let atkDmg = 0;
-  let defMit = 0;
-  let protDef = defender.prot + defender.addProt + getAttrValue(defender.unit.id, "mitBonusTotal");
-  let wardDef = defender.ward + defender.addWard + getAttrValue(defender.unit.id, "mitBonusTotal");
-  if (attacker.dmgType == 'Physical') {
-    atkDmg = attacker.phys;
-    if (attacker.reverse == 1) { defMit = wardDef; }
-    else { defMit = protDef; }
-  }
-  else if (attacker.dmgType == 'Magical') {
-    atkDmg = attacker.myst;
-    if (attacker.reverse == 1) { defMit = protDef; }
-    else { defMit = wardDef; }
-  }
-
-  if (attacker.sandstorm == 1) { atkDmg = attacker.currMt + attacker.def * 1.5; }
-  if (attacker.eviscerate == 1) { defMit = Math.min(protDef, wardDef); }
-
-  let dmgDisp = (atkDmg - defMit + addedDmg) / (1 + attacker.astra);
-  dmgDisp *= attacker.dmgMult;
-  if (info.extraAttackMult > 0) { dmgDisp *= info.extraAttackMult; }
-  if (defender.monstrous == 1) {
-    if (info.monstrous == 1) { dmgDisp = dmgDisp / 4; }
-    else { dmgDisp = dmgDisp / 2; }
-    info.monstrous = 1;
-  }
-
-  dmgDisp = Math.floor(dmgDisp); // Remove any fractions
-  let dmgTaken = Math.max(0, dmgDisp);
-
-
-  // Actual Combat
-  if (isSim == 1) { // Simulate battle outcome
-    const init = initiating == 1 ? "Initiating" : "Countering"
-    if (defender.monstrous == 1 || defender.barricade == 1) { dmgDisp += " / " + Math.floor(dmgDisp / 2); }
-    content += `${attacker.name} is ${init} <br> Atk Spd: ${atkSpdDiff} <br> Dmg Done: ${dmgDisp} <br> Hit Rate: ${101+hit-avoid} <br> Crit Rate: ${(101+crit-dodge)}`;
-  }
-  else { // Output battle outcome
-    // Add variance
-    hit += randomInteger(100);
-    crit += randomInteger(100);
-
-    // End of calculation stuff
-    if (attacker.aim == 1) { crit = dodge + 1; }
-    if (attacker.sureShot == 1) { hit = avoid + 1; }
-    if (defender.aegis == 1 || defender.pavise == 1|| defender.greatShield == 1) {
-      dmgTaken = 0;
-    }
-    if (defender.barricade == 1) {
-      if (info.barricade == 1) { dmgTaken = Math.floor(dmgTaken  / 2); }
-      info.barricade = 1;
-    }
-    if (attacker.corrode > 0) {
-      prefix = defender.dmgType == "Physical" ? "repeating_weapons" : "repeating_spells";
-      let [currUses2, attr2] = GetWeaponStats(defender.unit.id, defender.dmgType, prefix);
-      attr2.setWithWorker("current", currUses2 - attacker.corrode);
+    if (attacker.triangleAdept == 1) {
+      mult *= 2;
     }
 
-    content += '<div>' + triangleMsg +
-    '<div style = "margin: 0 auto; width: 80%;">' +
-    '<p style = "margin-bottom: 0px;">' + hit + ' hit vs ' + avoid + ' avoid!</p>' +
-    '<p>' + crit + ' crit vs ' + dodge + ' dodge!</p>' +
-    '</div>' +
-    '</div>';
-    content += '<p style = "margin-bottom: 0px;">' + (atkDmg + addedDmg) + ' damage vs ' + defMit + ' mitigation!</p>';
+    let triangleMsg = "";
+    if (triangle == 1) {
+      hit += 20 * mult;
+      addedDmg += 1 * mult;
+      attacker.currMt += 1 * mult;
+      triangleMsg = '<div>Attacking with advantage!</div>';
+    }
+    else if (triangle == -1) {
+      hit += -20 * mult;
+      addedDmg += 1 * mult;
+      attacker.currMt += -1 * mult;
+      triangleMsg = '<div>Attacking with disadvantage!</div>';
+    }
 
-    // Update token values
-    if (hit >= avoid) {
-      if (crit > dodge && defender.critImmune != 1) {
-        dmgTaken *= 3;
-        if (defender.resilience == 1) { dmgTaken = Math.floor(dmgTaken / 2); }
-        if (attacker.cursed == 1) { UpdateHealth(attacker, dmgTaken); }
-        else { UpdateHealth(defender, dmgTaken); }
-        if (attacker.swordVassal == 1) {
-          attacker.skillMsg += outputSkill("Sword Vassal");
-          attacker.postHeal = attacker.maxHP;
+      
+    // Effectiveness
+    const aEff = attacker.currEff.split(',').filter(i => i);
+    const dWeak = defender.currWeak.split(',').filter(i => i);
+    let isEffective = 0;
+
+    for (let i=0; i<aEff.length; i++) {
+      if (dWeak.includes(aEff[i])) {
+        isEffective = 1;
+      }
+    }
+
+    if (attacker.effAll == 1) { isEffective = 1; }
+    if (defender.effNegate == 1) { isEffective = 0; }
+
+    if (isEffective == 1) {
+      content += '<p style = "margin-bottom: 0px;"> You deal Effective Damage!</p> <br>';
+      addedDmg += 2 * attacker.currMt;
+      if (attacker.doubleEff == 1) { addedDmg += 3 * attacker.currMt; }
+    }
+    else if (defender.dragonskin == 1) {
+      attacker.dmgMult *= 0.5;
+      defender.miracle = 1;
+    }
+
+
+    // Damage Typing
+    let atkDmg = 0;
+    let defMit = 0;
+    let protDef = defender.prot + defender.addProt + getAttrValue(defender.unit.id, "mitBonusTotal");
+    let wardDef = defender.ward + defender.addWard + getAttrValue(defender.unit.id, "mitBonusTotal");
+    if (attacker.dmgType == 'Physical') {
+      atkDmg = attacker.phys;
+      if (attacker.reverse == 1) { defMit = wardDef; }
+      else { defMit = protDef; }
+    }
+    else if (attacker.dmgType == 'Magical') {
+      atkDmg = attacker.myst;
+      if (attacker.reverse == 1) { defMit = protDef; }
+      else { defMit = wardDef; }
+    }
+
+    if (attacker.sandstorm == 1) { atkDmg = attacker.currMt + attacker.def * 1.5; }
+    if (attacker.eviscerate == 1) { defMit = Math.min(protDef, wardDef); }
+
+    let dmgDisp = (atkDmg - defMit + addedDmg) / (1 + attacker.astra);
+    dmgDisp *= attacker.dmgMult;
+    if (info.extraAttackMult > 0) { dmgDisp *= info.extraAttackMult; }
+    if (defender.monstrous == 1) {
+      if (info.monstrous == 1) { dmgDisp = dmgDisp / 4; }
+      else { dmgDisp = dmgDisp / 2; }
+      info.monstrous = 1;
+    }
+
+    dmgDisp = Math.floor(dmgDisp); // Remove any fractions
+    let dmgTaken = Math.max(0, dmgDisp);
+
+
+    // Actual Combat
+    if (isSim == 1) { // Simulate battle outcome
+      if (defender.monstrous == 1 || defender.barricade == 1) { dmgDisp += " / " + Math.floor(dmgDisp / 2); }
+      content += `AS: ${atkSpdDiff} <br> Dmg: ${dmgDisp} <br> Hit%: ${101+hit-avoid} <br> Crit%: ${(101+crit-dodge)}`;
+    }
+    else { // Output battle outcome
+      // Add variance
+      hit += randomInteger(100);
+      crit += randomInteger(100);
+
+      // End of calculation stuff
+      if (attacker.aim == 1) { crit = dodge + 1; }
+      if (attacker.sureShot == 1) { hit = avoid + 1; }
+      if (defender.aegis == 1 || defender.pavise == 1|| defender.greatShield == 1) {
+        dmgTaken = 0;
+      }
+      if (defender.barricade == 1) {
+        if (info.barricade == 1) { dmgTaken = Math.floor(dmgTaken  / 2); }
+        info.barricade = 1;
+      }
+      if (attacker.corrode > 0) {
+        prefix = defender.dmgType == "Physical" ? "repeating_weapons" : "repeating_spells";
+        let [currUses2, attr2] = GetWeaponStats(defender.unit.id, defender.dmgType, prefix);
+        attr2.setWithWorker("current", currUses2 - attacker.corrode);
+      }
+
+      content += '<div>' + triangleMsg +
+      '<div style = "margin: 0 auto; width: 80%;">' +
+      '<p style = "margin-bottom: 0px;">' + hit + ' hit vs ' + avoid + ' avoid!</p>' +
+      '<p>' + crit + ' crit vs ' + dodge + ' dodge!</p>' +
+      '</div>' +
+      '</div>';
+      content += '<p style = "margin-bottom: 0px;">' + (atkDmg + addedDmg) + ' damage vs ' + defMit + ' mitigation!</p>';
+
+      // Update token values
+      if (hit >= avoid) {
+        if (crit > dodge && defender.critImmune != 1) {
+          dmgTaken *= 3;
+          if (defender.resilience == 1) { dmgTaken = Math.floor(dmgTaken / 2); }
+          if (attacker.cursed == 1) { UpdateHealth(attacker, dmgTaken); }
+          else { UpdateHealth(defender, dmgTaken); }
+          if (attacker.swordVassal == 1) {
+            attacker.skillMsg += outputSkill("Sword Vassal");
+            attacker.postHeal = attacker.maxHP;
+          }
+          content += 'You crit and deal '+ dmgTaken + ' damage!'; // Intentionally not capping damage numbers put in chat. Hitting low hp enemies for ludicrous damage numbers is fun
         }
-        content += 'You crit and deal '+ dmgTaken + ' damage!'; // Intentionally not capping damage numbers put in chat. Hitting low hp enemies for ludicrous damage numbers is fun
+        else {
+          if (attacker.cursed == 1) { UpdateHealth(attacker, dmgTaken); }
+          else { UpdateHealth(defender, dmgTaken); }
+          content += 'You hit and deal '+ dmgTaken + ' damage!'; // See above
+        }
+        if (attacker.sol == 1) {
+          UpdateHealth(attacker, -Math.min(defender.currHP, dmgTaken));
+        }
+        if (attacker.nosferatu == 1) {
+          UpdateHealth(attacker, -Math.min(defender.currHP, dmgTaken));
+        }
+        if (attacker.solar == 1) {
+          UpdateHealth(attacker, -Math.min(defender.currHP, Math.floor(dmgTaken / 4)));
+        }
+        if (attacker.vampiric == 1) {
+          UpdateHealth(attacker, -Math.min(defender.currHP, Math.floor(dmgTaken / 2)));
+        }
+        if (attacker.armsthrift != 1) {
+          let usesLeft = Math.max(0, currUses - Math.max(1, attacker.duraCost));
+          if (attacker.unbreaking == 1 && usesLeft == 0) { usesLeft = 1; }
+          attr.setWithWorker("current", usesLeft); }
+        updateWeaponEXP(attacker.unit.id, attacker.wepType, attacker.wepGain);
       }
       else {
-        if (attacker.cursed == 1) { UpdateHealth(attacker, dmgTaken); }
-        else { UpdateHealth(defender, dmgTaken); }
-        content += 'You hit and deal '+ dmgTaken + ' damage!'; // See above
+        content += 'You missed!';
       }
-      if (attacker.sol == 1) {
-        UpdateHealth(attacker, -Math.min(defender.currHP, dmgTaken));
+      if (defender.iaido == 1) {
+        UpdateHealth(attacker, defender.str);
       }
-      if (attacker.nosferatu == 1) {
-        UpdateHealth(attacker, -Math.min(defender.currHP, dmgTaken));
-      }
-      if (attacker.solar == 1) {
-        UpdateHealth(attacker, -Math.min(defender.currHP, Math.floor(dmgTaken / 4)));
-      }
-      if (attacker.vampiric == 1) {
-        UpdateHealth(attacker, -Math.min(defender.currHP, Math.floor(dmgTaken / 2)));
-      }
-      if (attacker.armsthrift != 1) {
-        let usesLeft = Math.max(0, currUses - Math.max(1, attacker.duraCost));
-        if (attacker.unbreaking == 1 && usesLeft == 0) { usesLeft = 1; }
-        attr.setWithWorker("current", usesLeft); }
-      updateWeaponEXP(attacker.unit.id, attacker.wepType, attacker.wepGain);
     }
-    else {
-      content += 'You missed!';
-    }
-    if (defender.iaido == 1) {
-      UpdateHealth(attacker, defender.str);
-    }
+
+    const killed = defender.obj.get("bar3_value") == 0;
+    if (attacker.lifetaker == 1 && killed == 1) {
+      attacker.skillMsg += outputSkill("Lifetaker");
+      attacker.postHeal = Math.floor(attacker.maxHP / 2); }
+
+    // Gather info for future battle steps
+    Object.assign(info, {
+      counter: attacker.dazzle == 1 ? 0 : CanCounter(defender, Led.from(attacker.token).to(defender.token).byManhattan().inSquares()),
+      double: attacker.single == 1 ? 0 : atkSpdDiff >= 4,
+      killed: killed,
+      numAttacks: attacker.numAttacks,
+      extraAttack: attacker.extraAttack,
+      extraAttackRoll: attacker.extraAttackRoll,
+      postDamageAtk: attacker.postDamage,
+      postDamageDef: defender.postDamage,
+      postHealAtk: initiating == 1 ? Math.max(info.postHealAtk, attacker.postHeal) : info.postHealAtk,
+      aether: artName == "Aether" ? 1 : 0,
+    });
   }
 
-  const killed = defender.obj.get("bar3_value") == 0;
-  if (attacker.lifetaker == 1 && killed == 1) {
-    attacker.skillMsg += outputSkill("Lifetaker");
-    attacker.postHeal = Math.floor(attacker.maxHP / 2); }
-
-  // Gather info for future battle steps
-  Object.assign(info, {
-    counter: attacker.dazzle == 1 ? 0 : CanCounter(defender, Led.from(attacker.token).to(defender.token).byManhattan().inSquares()),
-    double: attacker.single == 1 ? 0 : atkSpdDiff >= 4,
-    killed: killed,
-    numAttacks: attacker.numAttacks,
-    extraAttack: attacker.extraAttack,
-    extraAttackRoll: attacker.extraAttackRoll,
-    postDamageAtk: attacker.postDamage,
-    postDamageDef: defender.postDamage,
-    postHealAtk: initiating == 1 ? Math.max(info.postHealAtk, attacker.postHeal) : info.postHealAtk,
-    aether: artName == "Aether" ? 1 : 0,
-  });
-
   if (info.killed != 1 && hit >= avoid && defender.counterDmg == 1) { attacker.miracle = 1; UpdateHealth(attacker, dmgTaken); }
-  if (info.killed == 1 && attacker.profiteer == 1) { content += "<br> You find 500 gold on the ground!" }
+  if (info.killed == 1 && attacker.profiteer == 1) { postMsg += "You find 500 gold on the ground!" }
 
   attacker.skillMsg += "</ul>";
   defender.skillMsg += "</ul>";
-  if (info.whisper) { sendChat(attacker.name, `/w ${info.whisper} <br> <b>=== Start Combat ===</b> <br> ${combatMsg} ${attacker.skillMsg} ${defender.skillMsg} ${content} <br> <b>=== End Combat ===</b>`); }
-  else { sendChat(attacker.name, `<br> <b>=== Start Combat ===</b> <br> ${combatMsg} ${attacker.skillMsg} ${defender.skillMsg} ${content} <br> <b>=== End Combat ===</b>`); }
+  let simOrCombat = isSim == 1 ? "Simulation" : "Combat";
+  let divstyle = 'style="width: 189px; border: 1px solid #353535; background-color: #f3f3f3; padding: 5px; color: #353535;"';
+  let headstyle = 'style="color: #f3f3f3; font-size: 18px; text-align: left; font-variant: small-caps; background-color: #353535; padding: 4px; font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;"';
+  let wrapperstyle = 'style="display: block; padding:2px; width: 100%"';
+  let namestyle = 'style="background-color: #353535; color: #f3f3f3; text-align: center; font-weight: bold; margin: 4px; margin-right: 0px; border-radius: 10px; font-family: Helvetica, Arial, sans-serif;"';
+  let statdiv = 'style="border: 1px solid #353535; border-radius: 5px; text-align: left; display: block; padding-left: 4px;"';
+
+  sendChat(attacker.name, info.whisper + '<div ' + divstyle + '>' + //--
+        '<div ' + headstyle + '>' + simOrCombat + '</div>' + //--
+        '<div style = "margin: 0px auto; width: 100%; text-align: left;">' + //--
+        '<div ' + wrapperstyle +'>' + //--
+            '<div  ' + namestyle + '>'+ attacker.name +'</div>' + //--
+            '<div ' + statdiv + '>' + content + '</div>' + //--
+        '</div>' + //--
+        '<div style = "height: 1px; background-color: #353535; width: 90%; margin: 0 auto; margin-bottom: 4px;"></div>' + //--
+        '<div style = "margin: 0 auto; width: 100%; text-align: left;">' + attacker.skillMsg + '</div>' + //--
+        '<div style = "height: 1px; background-color: #353535; width: 90%; margin: 0 auto; margin-bottom: 4px;"></div>' + //--
+        '<div style = "margin: 0 auto; width: 100%; text-align: left;">' + defender.skillMsg + '</div>' + //--
+        '<div style = "height: 1px; background-color: #353535; width: 90%; margin: 0 auto; margin-bottom: 4px;"></div>' + //--
+        '<div style = "margin: 0 auto; width: 100%; text-align: left;">' + postMsg + '</div>' + //--
+        '<div style = "margin: 0 auto; width: 70%">'  + //--
+        '</div>'  + //--
+    '</div>'
+  );
 }
 
 
@@ -722,7 +738,7 @@ function DoOneStaffStep(selectedId, targetId, isSim) {
   let info = {};
   let attacker = initializeAtkInfo(selectedId, info);
   let defender = initializeDefInfo(targetId, info);
-  let combatMsg = `${attacker.name} ${isSim == 1 ? "simulates using " : "uses "} ${attacker.wepName}! <br>`;
+  let content = `${attacker.name} ${isSim == 1 ? "simulates using " : "uses "} ${attacker.wepName}! <br> ${staffInfo[attacker.wepName].textFunc(attacker.mag)}`;
 
 
   // Sanity check
@@ -752,5 +768,23 @@ function DoOneStaffStep(selectedId, targetId, isSim) {
   }
 
   attacker.skillMsg += "</ul>";
-  sendChat(attacker.name, `<br> <b>=== Start Combat ===</b> <br> ${combatMsg} ${attacker.skillMsg} ${staffInfo[attacker.wepName].textFunc(attacker.mag)} <br> <b>=== End Combat ===</b>`);
+  let divstyle = 'style="width: 189px; border: 1px solid #353535; background-color: #f3f3f3; padding: 5px; color: #353535;"';
+  let headstyle = 'style="color: #f3f3f3; font-size: 18px; text-align: left; font-variant: small-caps; background-color: #353535; padding: 4px; font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;"';
+  let wrapperstyle = 'style="display: block; padding:2px; width: 100%"';
+  let namestyle = 'style="background-color: #353535; color: #f3f3f3; text-align: center; font-weight: bold; margin: 4px; margin-right: 0px; border-radius: 10px; font-family: Helvetica, Arial, sans-serif;"';
+  let statdiv = 'style="border: 1px solid #353535; border-radius: 5px; text-align: left; display: block; padding-left: 4px;"';
+
+  sendChat(attacker.name, '<div ' + divstyle + '>' + //--
+        '<div ' + headstyle + '>Simulation</div>' + //--
+        '<div style = "margin: 0px auto; width: 100%; text-align: left;">' + //--
+        '<div ' + wrapperstyle +'>' + //--
+            '<div  ' + namestyle + '>'+ attacker.name +'</div>' + //--
+            '<div ' + statdiv + '>' + content + '</div>' + //--
+        '</div>' + //--
+        '<div style = "height: 1px; background-color: #353535; width: 90%; margin: 0 auto; margin-bottom: 4px;"></div>' + //--
+        '<div style = "margin: 0 auto; width: 100%; text-align: left;">' + attacker.skillMsg + '</div>' + //--
+        '<div style = "margin: 0 auto; width: 70%">'  + //--
+        '</div>'  + //--
+    '</div>'
+  );
 }
