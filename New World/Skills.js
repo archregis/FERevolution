@@ -76,7 +76,6 @@ const skillMap = {
     "Duelist'sBlow": DuelistsBlow,
     "Eclipse": Eclipse,
     "EnchantedAmmo": EnchantedAmmo,
-    "EternalEclipse": EternalEclipse,
     "ExtremeDisregard": ExtremeDisregard,
     "FasterThanStrong": FasterThanStrong,
     "FierceStance": FierceStance,
@@ -916,9 +915,15 @@ function DuelistsBlow(attacker, defender, info) {
     defender.avoid += 30;
 }
 
-// Increase str multiplier by 1
+// Skl/2% chance to increase str multiplier by 1
 function Eclipse(attacker, defender, info) {
-
+    if (info.whoseSkill == 1) { return; }
+    const odds = Math.floor(attacker.skl / 2) + attacker.activationBonus + info.foresightDef;
+    if (info.isSim == 1 && odds > 0) { attacker.skillMsg += outputSkill("Eclipse", odds); }
+    else if (randomInteger(100) <= odds) {
+        attacker.skillMsg += outputSkill("Eclipse");
+        attacker.addDmg += attacker.str;
+    }
 }
 
 // Physical weapons target res
@@ -926,11 +931,6 @@ function EnchantedAmmo(attacker, defender, info) {
     if (info.whoseSkill == 1 || attacker.wepType != "Gun" || attacker.dmgType == "Magical") { return; }
     attacker.skillMsg += outputSkill("Enchanted Ammo");
     attacker.dmgType = "Magical";
-}
-
-// Mag% chance to activate eclipse, rolls 4 times
-function EternalEclipse(attacker, defender, info) {
-
 }
 
 // +20 hit, crit, and skill activation for unit and foe
