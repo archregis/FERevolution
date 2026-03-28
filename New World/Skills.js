@@ -995,7 +995,9 @@ function Fistfaith(attacker, defender, info) {
 
 // Deal effective damage to foes with a fist rank
 function Fistslayer(attacker, defender, info) {
-
+    if (info.whoseSkill == 1 || defender.wepType != "Fist") { return; }
+    attacker.skillMsg += outputSkill("Fistslayer");
+    attacker.effAll = 1
 }
 
 // Crit +10 if foe cannot counter
