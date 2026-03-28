@@ -1115,7 +1115,9 @@ function Guarded(attacker, defender, info) {
 
 // Maximum range of equipped guns is increased by 1
 function GunRangePlusOne(attacker, defender, info) {
-
+    if (info.whoseSkill == 0 || defender.wepType != "Gun") { return; }
+    defender.skillMsg += outputSkill("Gun Range +1");
+    defender.maxDist += 1;
 }
 
 // +30 hit/avo when enemy has a gun equipped
