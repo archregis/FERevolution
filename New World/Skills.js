@@ -401,7 +401,9 @@ function BattleVeteran(attacker, defender, info) {
 function BlackSun(attacker, defender, info) {
     if (info.whoseSkill == 1) { return; }
     const odds = Math.floor((attacker.skl + attacker.activationBonus + defender.foresight) * attacker.activationMult);
-    if (info.isSim == 1 && odds > 0) { attacker.skillMsg += outputSkill("Black Sun", odds); }
+    let bonus = attacker.dmgType == "Physical" ? defender.prot : defender.ward;
+    bonus = '(' + bonus + ')';
+    if (info.isSim == 1 && odds > 0) { attacker.skillMsg += outputSkill("Black Sun", odds, bonus); }
     else if (randomInteger(100) <= odds) {
         attacker.skillMsg += outputSkill("Black Sun");
         defender.prot = 0;
@@ -932,7 +934,8 @@ function DuelistsBlow(attacker, defender, info) {
 function Eclipse(attacker, defender, info) {
     if (info.whoseSkill == 1) { return; }
     const odds = Math.floor((Math.floor(attacker.skl / 2) + attacker.activationBonus + defender.foresight) * attacker.activationMult);
-    if (info.isSim == 1 && odds > 0) { attacker.skillMsg += outputSkill("Eclipse", odds); }
+    const bonus = '(' + attacker.str + ')';
+    if (info.isSim == 1 && odds > 0) { attacker.skillMsg += outputSkill("Eclipse", odds, bonus); }
     else if (randomInteger(100) <= odds) {
         attacker.skillMsg += outputSkill("Eclipse");
         attacker.addDmg += attacker.str;
@@ -1093,7 +1096,8 @@ function Fury(attacker, defender, info) {
 function Glacies(attacker, defender, info) {
     if (info.whoseSkill == 1) { return; }
     const odds = Math.floor((attacker.skl + attacker.activationBonus + defender.foresight) * attacker.activationMult);
-    if (info.isSim == 1 && odds > 0) { attacker.skillMsg += outputSkill("Glacies", odds); }
+    const bonus = '(' + attacker.res + ')';
+    if (info.isSim == 1 && odds > 0) { attacker.skillMsg += outputSkill("Glacies", odds, bonus); }
     else if (randomInteger(100) <= odds) {
         attacker.skillMsg += outputSkill("Glacies");
         attacker.addDmg += attacker.res;
@@ -1217,7 +1221,8 @@ function Honeypot(attacker, defender, info) {
 function Iaido(attacker, defender, info) {
     if (info.whoseSkill == 0) { return; }
     const odds = Math.floor((defender.spd + defender.activationBonus + attacker.foresight) * defender.activationMult);
-    if (info.isSim == 1 && odds > 0) { defender.skillMsg += outputSkill("Iaido", odds); }
+    const bonus = '(' + defender.str + ')';
+    if (info.isSim == 1 && odds > 0) { defender.skillMsg += outputSkill("Iaido", odds, bonus); }
     else if (randomInteger(100) <= odds && (Led.from(attacker.token).to(defender.token).byManhattan().inSquares() >= 2)) {
         defender.skillMsg += outputSkill("Iaido");
         defender.iaido = 1;
@@ -1228,7 +1233,8 @@ function Iaido(attacker, defender, info) {
 function Ignis(attacker, defender, info) {
     if (info.whoseSkill == 1) { return; }
     const odds = Math.floor((attacker.skl + attacker.activationBonus + defender.foresight) * attacker.activationMult);
-    if (info.isSim == 1 && odds > 0) { attacker.skillMsg += outputSkill("Ignis", odds); }
+    const bonus = '(' + (Math.floor(attacker.res / 2) + Math.floor(attacker.def / 2)) + ')';
+    if (info.isSim == 1 && odds > 0) { attacker.skillMsg += outputSkill("Ignis", odds, bonus); }
     else if (randomInteger(100) <= odds) {
         attacker.skillMsg += outputSkill("Ignis");
         attacker.addDmg += Math.floor(attacker.res / 2) + Math.floor(attacker.def/ 2);
@@ -1528,7 +1534,8 @@ function Opportunist(attacker, defender, info) {
 function Parry(attacker, defender, info) {
     if (info.whoseSkill == 0) { return; }
     const odds = Math.floor((defender.spd + defender.activationBonus) * defender.activationMult);
-    if (info.isSim == 1 && odds > 0) { defender.skillMsg += outputSkill("Parry", odds); }
+    const bonus = '(' + defender.skl + ')';
+    if (info.isSim == 1 && odds > 0) { defender.skillMsg += outputSkill("Parry", odds, bonus); }
     else if (randomInteger(100) <= odds) {
         defender.skillMsg += outputSkill("Parry");
         defender.addProt += defender.skl;
@@ -2313,8 +2320,8 @@ function Wrath(attacker, defender, info) {
 
 
 // Displays skill activation
-function outputSkill(skill, odds) {
-    if (odds > 0) { return "<li> " + skill + " : " + odds + "% chance </li>"; }
+function outputSkill(skill, odds, bonus) {
+    if (odds > 0) { return "<li> " + skill + " : " + odds + "% chance " + bonus + "</li>"; }
     else { return "<li> " + skill + " is active. </li>"; }
   }
 
