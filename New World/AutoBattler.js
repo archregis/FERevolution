@@ -655,23 +655,16 @@ function DoOneCombatStep(selectedId, targetId, info, initiating, artName, isSim)
       content += '<p style = "margin-bottom: 0px;">' + (atkDmg + addedDmg) + ' damage vs ' + defMit + ' mitigation!</p>';
 
       // Update token values
-      if (hit >= avoid) {
-        if (crit > dodge && defender.critImmune != 1) {
+      let damagePhrase = "hit";
+      if (crit > dodge && defender.critImmune != 1) {
+        damagePhrase = 'crit';
           dmgTaken *= 3;
           if (defender.resilience == 1) { dmgTaken = Math.floor(dmgTaken / 2); }
+      }
+      if (hit >= avoid) {
           if (attacker.cursed == 1) { UpdateHealth(attacker, dmgTaken); }
           else { UpdateHealth(defender, dmgTaken); }
-          if (attacker.swordVassal == 1) {
-            attacker.skillMsg += outputSkill("Sword Vassal");
-            attacker.postHeal = attacker.maxHP;
-          }
-          content += 'You crit and deal '+ dmgTaken + ' damage!'; // Intentionally not capping damage numbers put in chat. Hitting low hp enemies for ludicrous damage numbers is fun
-        }
-        else {
-          if (attacker.cursed == 1) { UpdateHealth(attacker, dmgTaken); }
-          else { UpdateHealth(defender, dmgTaken); }
-          content += 'You hit and deal '+ dmgTaken + ' damage!'; // See above
-        }
+          content += 'You ' + damagePhrase + ' and deal '+ dmgTaken + ' damage!'; // Intentionally not capping damage numbers put in chat. Hitting low hp enemies for ludicrous damage numbers is fun
         if (attacker.sol == 1) {
           UpdateHealth(attacker, -Math.min(defender.currHP, dmgTaken));
         }
@@ -689,6 +682,11 @@ function DoOneCombatStep(selectedId, targetId, info, initiating, artName, isSim)
       }
       else {
         content += 'You missed!';
+        if (attacker.malefic == 1) {
+          attacker.skillMsg += outputSkill("Malefic Aura");
+          dmgTaken  = Math.floor(dmgTaken / 2);
+          UpdateHealth(defender, dmgTaken);
+        }
       }
       if (defender.iaido == 1) {
         UpdateHealth(attacker, defender.str);

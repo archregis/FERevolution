@@ -1435,7 +1435,8 @@ function MagicBlade(attacker, defender, info) {
 
 // Attacks that miss inflict half damage
 function MaleficAura(attacker, defender, info) {
-
+    if (info.whoseSkill == 1) { return; }
+    attacker.malefic = 1;
 }
 
 // Make a guaranteed follow-up attack when initiating against an injured foe
