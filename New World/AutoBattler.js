@@ -777,7 +777,6 @@ function DoOneStaffStep(selectedId, targetId, isSim) {
   let info = {};
   let attacker = initializeAtkInfo(selectedId, info);
   let defender = initializeDefInfo(targetId, info);
-  let content = `${attacker.name} ${isSim == 1 ? "simulates using " : "uses "} ${attacker.wepName}! <br> ${staffInfo[attacker.wepName].textFunc(attacker.mag)}`;
 
 
   // Sanity check
@@ -807,6 +806,7 @@ function DoOneStaffStep(selectedId, targetId, isSim) {
   }
 
   attacker.skillMsg += "</ul>";
+  let content = `${attacker.name} ${isSim == 1 ? "simulates using " : "uses "} ${attacker.wepName}! <br> ${staffInfo[attacker.wepName].textFunc(attacker.mag)}`;
   let divstyle = 'style="width: 189px; border: 1px solid #353535; background-color: #f3f3f3; padding: 5px; color: #353535;"';
   let headstyle = 'style="color: #f3f3f3; font-size: 18px; text-align: left; font-variant: small-caps; background-color: #353535; padding: 4px; font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;"';
   let wrapperstyle = 'style="display: block; padding:2px; width: 100%"';

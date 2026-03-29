@@ -1,16 +1,4 @@
 // Global skill map
-const staffSkillMap = {
-    "Armsthrift": Armsthrift,
-    "Disregard": Disregard,
-    "ExtremeDisregard": ExtremeDisregard,
-    "FasterThanStrong": FasterThanStrong,
-    "PushMagic": PushMagic,
-    "DefiantMagic": DefiantMagic,
-    "WorldTree": WorldTree,
-    "Discipline": Discipline,
-    "Discipline+": DisciplinePlus,
-}
-
 const priorityOne = {
     "Allbreaker": Allbreaker,
     "ArmoredBlow": ArmoredBlow,
@@ -103,6 +91,7 @@ const priorityOne = {
 const priorityTwo = {
     "Colossus": Colossus,
     "FanTheHammer": FanTheHammer,
+    "FasterThanStrong": FasterThanStrong,
     "Gambit": Gambit,
     "MagicBlade": MagicBlade,
     "Resolve": Resolve,
@@ -168,7 +157,6 @@ const priorityThree = {
     "EnchantedAmmo": EnchantedAmmo,
     "Eviscerate": Eviscerate,
     "Execute": Execute,
-    "FasterThanStrong": FasterThanStrong,
     "FierceStance": FierceStance,
     "Fistfaire": Fistfaire,
     "Fistfaith": Fistfaith,
@@ -268,6 +256,24 @@ const priorityThree = {
     "WarProfiteer": WarProfiteer,
     "WaryFighter": WaryFighter,
     "WhiteMoon": WhiteMoon,
+    "WorldTree": WorldTree,
+}
+
+const staffPriorityOne = {
+    "DefiantMagic": DefiantMagic,
+    "Disregard": Disregard,
+    "ExtremeDisregard": ExtremeDisregard,
+    "PushMagic": PushMagic,
+}
+
+const staffPriorityTwo = {
+    "FasterThanStrong": FasterThanStrong,
+}
+
+const staffPriorityThree = {
+    "Armsthrift": Armsthrift,
+    "Discipline": Discipline,
+    "Discipline+": DisciplinePlus,
     "WorldTree": WorldTree,
 }
 
@@ -655,7 +661,8 @@ function Colossus(attacker, defender, info) {
     attacker.skillMsg += outputSkill("Colossus");
     attacker.duraCost += 1;
     attacker.single = 1;
-    attacker.addDmg += attacker.str;
+    attacker.phys += attacker.str;
+    attacker.str += attacker.str;
 }
 
 // Halve damage from combat arts and critical hits. Halve activation chance of skills. Quarter % health based skills.
@@ -2753,6 +2760,7 @@ function Wrath(attacker, defender, info) {
 
 // Displays skill activation
 function outputSkill(skill, odds, bonus) {
+    bonus = bonus == undefined ? "" : bonus;
     if (odds > 0) { return "<li> " + skill + " : " + odds + "% chance " + bonus + "</li>"; }
     else { return "<li> " + skill + " is active. </li>"; }
   }
@@ -2959,20 +2967,45 @@ const SkillHandler = {
     CheckStaffSkills: function(attacker, isSim) {
         let info = {
             isSim: isSim,
+            whoseSkill: 0,
         }
 
-                // Weapon Skill Checks
         const aWepSkills = getAttr(attacker.unit.id, 'activeWepSkills').get('current').split(',');
+        const aSkills = getAttr(attacker.unit.id, 'activeSkills').get('current').split(',');
+
+        // Priority 1  skills
         for(let i=0; i<aWepSkills.length; i++) {
-            if (staffSkillMap[aWepSkills[i]]) {
-                staffSkillMap[aWepSkills[i]](attacker, "", info);
+            if (staffPriorityOne[aWepSkills[i]]) {
+                staffPriorityOne[aWepSkills[i]](attacker, "", info);
+            }
+        }
+        for (let i=0; i<aSkills.length; i++) {
+            if (staffPriorityOne[aSkills[i]]) {
+                staffPriorityOne[aSkills[i]](attacker, "", info);
             }
         }
 
-        const aSkills = getAttr(attacker.unit.id, 'activeSkills').get('current').split(',');
-        for(let i=0; i<aSkills.length; i++) {
-            if (staffSkillMap[aSkills[i]]) {
-                staffSkillMap[aSkills[i]](attacker, "", info);
+        // Priority 2  skills
+        for(let i=0; i<aWepSkills.length; i++) {
+            if (staffPriorityTwo[aWepSkills[i]]) {
+                staffPriorityTwo[aWepSkills[i]](attacker, "", info);
+            }
+        }
+        for (let i=0; i<aSkills.length; i++) {
+            if (staffPriorityTwo[aSkills[i]]) {
+                staffPriorityTwo[aSkills[i]](attacker, "", info);
+            }
+        }
+
+        // Priority 3  skills
+        for(let i=0; i<aWepSkills.length; i++) {
+            if (staffPriorityThree[aWepSkills[i]]) {
+                staffPriorityThree[aWepSkills[i]](attacker, "", info);
+            }
+        }
+        for (let i=0; i<aSkills.length; i++) {
+            if (staffPriorityThree[aSkills[i]]) {
+                staffPriorityThree[aSkills[i]](attacker, "", info);
             }
         }
     },
