@@ -164,6 +164,7 @@ const priorityThree = {
     "Flare": Flare,
     "Gamble": Gamble,
     "Glacies": Glacies,
+    "GlassBonesPaperSkin": GlassBonesPaperSkin,
     "GraspingVoid": GraspingVoid,
     "GreatShield": GreatShield,
     "GrislyWound": GrislyWound,
@@ -1319,6 +1320,13 @@ function Glacies(attacker, defender, info) {
         attacker.skillMsg += outputSkill("Glacies");
         attacker.addDmg += attacker.res;
     }
+}
+
+// Unit takes effective damage from all attacks, but gains 3 mov and may move again after taking an action
+function GlassBonesPaperSkin(attacker, defender, info) {
+    if (info.whoseSkill == 0) { return; }
+    defender.skillMsg += outputSkill("Glass Bones, Paper Skin");
+    attacker.effAll = 1;
 }
 
 // Add half foe's mag to dmg when initiating
