@@ -7,7 +7,9 @@ const weaponMap = {
   "Staff": "stavesExp",
   "Dark": "darkExp",
   "Anima": "animaExp",
-  "Light": "lightExp"
+  "Light": "lightExp",
+  "Gun": "gunExp",
+  "Fist": "fistExp",
 };
 
 const staffInfo = {
@@ -221,6 +223,8 @@ function initializeAtkInfo(unitId, info) {
   output.darkExp = getAttrValue(output.unit.id, weaponMap["Dark"]);
   output.animaExp = getAttrValue(output.unit.id, weaponMap["Anima"]);
   output.lightExp = getAttrValue(output.unit.id, weaponMap["Light"]);
+  output.gunExp = getAttrValue(output.unit.id, weaponMap["Gun"]);
+  output.fistExp = getAttrValue(output.unit.id, weaponMap["Fist"]);
 
   // Skill info
   output.skillMsg = "Attacker Skills: <ul>";
@@ -292,6 +296,8 @@ function initializeDefInfo(unitId, info) {
   output.darkExp = getAttrValue(output.unit.id, weaponMap["Dark"]);
   output.animaExp = getAttrValue(output.unit.id, weaponMap["Anima"]);
   output.lightExp = getAttrValue(output.unit.id, weaponMap["Light"]);
+  output.gunExp = getAttrValue(output.unit.id, weaponMap["Gun"]);
+  output.fistExp = getAttrValue(output.unit.id, weaponMap["Fist"]);
 
   // Skill info
   output.skillMsg = "Defender Skills: <ul>";
