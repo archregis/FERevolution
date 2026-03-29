@@ -1440,7 +1440,9 @@ function MaleficAura(attacker, defender, info) {
 
 // Make a guaranteed follow-up attack when initiating against an injured foe
 function Marauder(attacker, defender, info) {
-
+    if (info.whoseSkill == 1 || info.initiating == 0 || defender.currHP >= defender.maxHP || attacker.atkSpd >= defender.atkSpd + 4) { return; }
+    attacker.skillMsg += outputSkill("Marauder");
+    attacker.atkSpd = defender.atkSpd + 4;
 }
 
 // +30 avo when being attacked
