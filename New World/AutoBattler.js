@@ -510,11 +510,7 @@ function DoOneCombatStep(selectedId, targetId, info, initiating, artName, isSim)
 
 
  // Skill checks
- SkillHandler.CheckSkills(attacker, defender, initiating, isSim);
-
- 
- // Add Combat Art if using
- CombatArt.UseArt(artName, attacker, defender);
+ SkillHandler.CheckSkills(attacker, defender, initiating, isSim, artName);
 
 
   // Check for broken weapon

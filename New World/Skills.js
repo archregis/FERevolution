@@ -1,220 +1,4 @@
 // Global skill map
-const skillMap = {
-    "AdaptiveForm": AdaptiveForm,
-    "Aegis": Aegis,
-    "Allbreaker": Allbreaker,
-    "Apotrope": Apotrope,
-    "Apprehension": Apprehension,
-    "ArcaneBlade": ArcaneBlade,
-    "ArcaneCannon": ArcaneCannon,
-    "ArmoredBlow": ArmoredBlow,
-    "Armsthrift": Armsthrift,
-    "Arrogance": Arrogance,
-    "Assassinate": Assassinate,
-    "Awakening": Awakening,
-    "Axebreaker": Axebreaker,
-    "Axefaire": Axefaire,
-    "Axefaith": Axefaith,
-    "Axeslayer": Axeslayer,
-    "Barricade": Barricade,
-    "BattleVeteran": BattleVeteran,
-    "BlackSun": BlackSun,
-    "Bloodlust": Bloodlust,
-    "Bloodlust+": BloodlustPlus,
-    "BoldFighter": BoldFighter,
-    "BowRange+1": BowRangePlusOne,
-    "Bowbreaker": Bowbreaker,
-    "Bowfaire": Bowfaire,
-    "Bowfaith": Bowfaith,
-    "Bowslayer": Bowslayer,
-    "Brave": Brave,
-    "CertainBlow": CertainBlow,
-    "CheapShot": CheapShot,
-    "Chivalry": Chivalry,
-    "ClutchShot": ClutchShot,
-    "Commander": Commander,
-    "Conquest": Conquest,
-    "Corrosion": Corrosion,
-    "Counter": Counter,
-    "Counter-Magic": CounterMagic,
-    "CoupDeGrace": CoupDeGrace,
-    "Cowardice": Cowardice,
-    "CritBoost": CritBoost,
-    "CritBoost+": CritBoostPlus,
-    "DarkMight": DarkMight,
-    "DartingBlow": DartingBlow,
-    "DartingStance": DartingStance,
-    "Dazzle": Dazzle,
-    "Deadeye": Deadeye,
-    "DeadlyStrikes": DeadlyStrikes,
-    "DeadlyStrikes+": DeadlyStrikesPlus,
-    "DeathBlow": DeathBlow,
-    "DefiantAvoid": DefiantAvoid,
-    "DefiantDefense": DefiantDefense,
-    "DefiantLuck": DefiantLuck,
-    "DefiantMagic": DefiantMagic,
-    "DefiantResistance": DefiantResistance,
-    "DefiantSkill": DefiantSkill,
-    "DefiantSpeed": DefiantSpeed,
-    "DefiantStrength": DefiantStrength,
-    "Demolish": Demolish,
-    "Demure": Demure,
-    "Desperation": Desperation,
-    "Determination": Determination,
-    "Devil'sPact": DevilsPact,
-    "Devil'sReversal": DevilsReversal,
-    "Devil'sWhim": DevilsWhim,
-    "Dhampir": Dhampir,
-    "Discipline": Discipline,
-    "Discipline+": DisciplinePlus,
-    "Disregard": Disregard,
-    "DivineBlow": DivineBlow,
-    "DivineSpeed": DivineSpeed,
-    "Dragonblood": Dragonblood,
-    "Dragonskin": Dragonskin,
-    "DrainSoul": DrainSoul,
-    "Duelist'sBlow": DuelistsBlow,
-    "Eclipse": Eclipse,
-    "EnchantedAmmo": EnchantedAmmo,
-    "ExtremeDisregard": ExtremeDisregard,
-    "FasterThanStrong": FasterThanStrong,
-    "FierceStance": FierceStance,
-    "Fistbreaker": Fistbreaker,
-    "Fistfaire": Fistfaire,
-    "Fistfaith": Fistfaith,
-    "Fistslayer": Fistslayer,
-    "Focus": Focus,
-    "FortressDefense": FortressDefense,
-    "FortressResistance": FortressResistance,
-    "Fury": Fury,
-    "Glacies": Glacies,
-    "GraspingVoid": GraspingVoid,
-    "GreatShield": GreatShield,
-    "GrislyWound": GrislyWound,
-    "Guarded": Guarded,
-    "GunRange+1": GunRangePlusOne,
-    "Gunbreaker": Gunbreaker,
-    "Gunfaire": Gunfaire,
-    "Gunfaith": Gunfaith,
-    "Gunslayer": Gunslayer,
-    "Hawkeye": Hawkeye,
-    "HeavyStrikes": HeavyStrikes,
-    "HolyAura": HolyAura,
-    "Honeypot": Honeypot,
-    "Iaido": Iaido,
-    "Ignis": Ignis,
-    "Illusionist": Illusionist,
-    "Impenetrable": Impenetrable,
-    "Imperturbable": Imperturbable,
-    "InferiorityComplex": InferiorityComplex,
-    "Insight": Insight,
-    "KestrelStance": KestrelStance,
-    "KillingMachine": KillingMachine,
-    "King'sBlow": KingsBlow,
-    "Lancebreaker": Lancebreaker,
-    "Lancefaire": Lancefaire,
-    "Lancefaith": Lancefaith,
-    "Lanceslayer": Lanceslayer,
-    "Lethality": Lethality,
-    "LifeAndDeath": LifeAndDeath,
-    "Lifetaker": Lifetaker,
-    "Lightning": Lightning,
-    "LiquidOoze": LiquidOoze,
-    "LuckBeALady": LuckBeALady,
-    "Luna+": LunaPlus,
-    "LunarBrace": LunarBrace,
-    "Mageslayer": Mageslayer,
-    "MagicBlade": MagicBlade,
-    "MaleficAura": MaleficAura,
-    "Marauder": Marauder,
-    "MasterIllusionist": MasterIllusionist,
-    "Miracle": Miracle,
-    "MirrorStance": MirrorStance,
-    "Misandrist": Misandrist,
-    "Monstrous": Monstrous,
-    "Nosferatu": Nosferatu,
-    "Nullify": Nullify,
-    "Opportunist": Opportunist,
-    "Parry": Parry,
-    "Patience": Patience,
-    "Pavise": Pavise,
-    "Perfectionist": Perfectionist,
-    "PointBlank": PointBlank,
-    "PoisonStrike": PoisonStrike,
-    "Pragmatic": Pragmatic,
-    "Prescience": Prescience,
-    "Puissance": Puissance,
-    "Pursuit": Pursuit,
-    "PushDefense": PushDefense,
-    "PushMagic": PushMagic,
-    "PushResistance": PushResistance,
-    "PushSkill": PushSkill,
-    "PushSpeed": PushSpeed,
-    "PushStrength": PushStrength,
-    "Queen'sBlow": QueensBlow,
-    "QuickDraw": QuickDraw,
-    "RaisedFist": RaisedFist,
-    "RapidResponse": RapidResponse,
-    "ReadyStance": ReadyStance,
-    "Reave": Reave,
-    "Reaver": Reaver,
-    "Reckless": Reckless,
-    "Resilience": Resilience,
-    "Resolve": Resolve,
-    "Reverse": Reverse,
-    "RightfulGod": RightfulGod,
-    "RightfulKing": RightfulKing,
-    "RightfulLord": RightfulLord,
-    "Rivalry": Rivalry,
-    "Shatter": Shatter,
-    "SilentPride": SilentPride,
-    "Skybreaker": Skybreaker,
-    "Slayer": Slayer,
-    "Sol": Sol,
-    "SolarBrace": SolarBrace,
-    "SpectrumStance": SpectrumStance,
-    "SpellEcho": SpellEcho,
-    "SteadyStance": SteadyStance,
-    "StoneBody": StoneBody,
-    "StrongRiposte": StrongRiposte,
-    "StunningStrike": StunningStrike,
-    "SturdyStance": SturdyStance,
-    "SwiftStance": SwiftStance,
-    "Swordbreaker": Swordbreaker,
-    "Swordfaire": Swordfaire,
-    "Swordfaith": Swordfaith,
-    "Swordslayer": Swordslayer,
-    "Sympathetic": Sympathetic,
-    "Templar": Templar,
-    "TheOne": TheOne,
-    "Thunderstorm": Thunderstorm,
-    "TitanicBlow": TitanicBlow,
-    "TomeRange+1": TomeRangePlusOne,
-    "TomeRange+2": TomeRangePlusTwo,
-    "Tomebreaker": Tomebreaker,
-    "Tomefaire": Tomefaire,
-    "Tomefaith": Tomefaith,
-    "TowerShield": TowerShield,
-    "Trample": Trample,
-    "TriangleAdept": TriangleAdept,
-    "Underdog": Underdog,
-    "Unmask": Unmask,
-    "Vampiric": Vampiric,
-    "Vantage": Vantage,
-    "Vantage+": VantagePlus,
-    "Vengeful": Vengeful,
-    "Veteran": Veteran,
-    "Vigilance": Vigilance,
-    "WarProfiteer": WarProfiteer,
-    "WardingBlow": WardingBlow,
-    "WardingStance": WardingStance,
-    "WaryFighter": WaryFighter,
-    "WeatherMastery": WeatherMastery,
-    "WindDisciple": WindDisciple,
-    "WorldTree": WorldTree,
-    "Wrath": Wrath,
-}
-
 const staffSkillMap = {
     "Armsthrift": Armsthrift,
     "Disregard": Disregard,
@@ -227,6 +11,266 @@ const staffSkillMap = {
     "Discipline+": DisciplinePlus,
 }
 
+const priorityOne = {
+    "Allbreaker": Allbreaker,
+    "ArmoredBlow": ArmoredBlow,
+    "Arrorgance": Arrogance,
+    "Awakening": Awakening,
+    "Axebreaker": Axebreaker,
+    "BattleVeteran": BattleVeteran,
+    "Bloodlust+": BloodlustPlus,
+    "Bowbreaker": Bowbreaker,
+    "CertainBlow": CertainBlow,
+    "Commander": Commander,
+    "Cowardice": Cowardice,
+    "CritBoost": CritBoost,
+    "CritBoost+": CritBoostPlus,
+    "DartingBlow": DartingBlow,
+    "DartingStance": DartingStance,
+    "DeadlyStrikes": DeadlyStrikes,
+    "DeadlyStrikes+": DeadlyStrikesPlus,
+    "DeathBlow": DeathBlow,
+    "DefiantAvoid": DefiantAvoid,
+    "DefiantDefense": DefiantDefense,
+    "DefiantLuck": DefiantLuck,
+    "DefiantMagic": DefiantMagic,
+    "DefiantResistance": DefiantResistance,
+    "DefiantSkill": DefiantSkill,
+    "DefiantSpeed": DefiantSpeed,
+    "DefiantStrength": DefiantStrength,
+    "Demure": Demure,
+    "Determination": Determination,
+    "Disregard": Disregard,
+    "DivineBlow": DivineBlow,
+    "Duelist'sBlow": DuelistsBlow,
+    "ExtremeDisregard": ExtremeDisregard,
+    "Fisbreaker": Fistbreaker,
+    "Focus": Focus,
+    "FortressDefense": FortressDefense,
+    "FortressResistance": FortressResistance,
+    "Fury": Fury,
+    "Gunbreaker": Gunbreaker,
+    "HeavyStrikes": HeavyStrikes,
+    "HolyAura": HolyAura,
+    "Honeypot": Honeypot,
+    "Illusionist": Illusionist,
+    "Impenetrable": Impenetrable,
+    "Insight": Insight,
+    "KestrelStance": KestrelStance,
+    "King'sBlow": KingsBlow,
+    "Lancebreaker": Lancebreaker,
+    "Lightning": Lightning,
+    "Mageslayer": Mageslayer,
+    "MasterIllusionist": MasterIllusionist,
+    "MirrorStance": MirrorStance,
+    "Misandrist": Misandrist,
+    "Patience": Patience,
+    "Perfectionist": Perfectionist,
+    "Prescience": Prescience,
+    "Pursuit": Pursuit,
+    "PushDefense": PushDefense,
+    "PushMagic": PushMagic,
+    "PushResistance": PushResistance,
+    "PushSkill": PushSkill,
+    "PushSpeed": PushSpeed,
+    "PushStrength": PushStrength,
+    "Queen'sBlow": QueensBlow,
+    "ReadyStance": ReadyStance,
+    "Reave": Reave,
+    "RightfulGod": RightfulGod,
+    "RightfulKing": RightfulKing,
+    "RightfulLord": RightfulLord,
+    "SpectrumStance": SpectrumStance,
+    "SteadyStance": SteadyStance,
+    "SturdyStance": SturdyStance,
+    "SwiftStance": SwiftStance,
+    "Swordbreaker": Swordbreaker,
+    "TheOne": TheOne,
+    "Thunderstorm": Thunderstorm,
+    "TitanicBlow": TitanicBlow,
+    "Tomebreaker": Tomebreaker,
+    "Underdog": Underdog,
+    "Unmask": Unmask,
+    "Vengeful": Vengeful,
+    "Vigilance": Vigilance,
+    "WardingBlow": WardingBlow,
+    "WardingStance": WardingStance,
+    "WeatherMastery": WeatherMastery,
+    "WindDisciple": WindDisciple,
+    "Wrath": Wrath,
+}
+
+const priorityTwo = {
+    "Colossus": Colossus,
+    "FanTheHammer": FanTheHammer,
+    "Gambit": Gambit,
+    "MagicBlade": MagicBlade,
+    "Resolve": Resolve,
+    "Snipe": Snipe,
+    "Suplex": Suplex,
+    "WindGod": WindGod,
+}
+
+const priorityThree = {
+    "AdaptiveForm": AdaptiveForm,
+    "Adept": Adept,
+    "Aegis": Aegis,
+    "Aether": Aether,
+    "Aim": Aim,
+    "Allslayer": Allslayer,
+    "Apotrope": Apotrope,
+    "Apprehension": Apprehension,
+    "ArcaneBlade": ArcaneBlade,
+    "ArcaneCannon": ArcaneCannon,
+    "Armsthrift": Armsthrift,
+    "Astra": Astra,
+    "Axefaire": Axefaire,
+    "Axefaith": Axefaith,
+    "Axeslayer": Axeslayer,
+    "Barricade": Barricade,
+    "BlackSun": BlackSun,
+    "BladeOfHonor": BladeOfHonor,
+    "Bloodlust": Bloodlust,
+    "Blowback": Blowback,
+    "BoldFighter": BoldFighter,
+    "BowRange+1": BowRangePlusOne,
+    "Bowfaire": Bowfaire,
+    "Bowfaith": Bowfaith,
+    "Bowslayer": Bowslayer,
+    "Brave": Brave,
+    "BrokenHeaven": BrokenHeaven,
+    "CarveHeaven": CarveHeaven,
+    "CheapShot": CheapShot,
+    "Chivalry": Chivalry,
+    "ClutchShot": ClutchShot,
+    "Conquest": Conquest,
+    "Corona": Corona,
+    "Corrosion": Corrosion,
+    "Counter": Counter,
+    "Counter-Magic": CounterMagic,
+    "CoupDeGrace": CoupDeGrace,
+    "CrushingBlow": CrushingBlow,
+    "DarkMight": DarkMight,
+    "Dazzle": Dazzle,
+    "Deadeye": Deadeye,
+    "Demolish": Demolish,
+    "Devil'sPact": DevilsPact,
+    "Devil'sReversal": DevilsReversal,
+    "Devil'sWhim": DevilsWhim,
+    "Dhampir": Dhampir,
+    "Dicipline": Discipline,
+    "Discipline+": DisciplinePlus,
+    "DivineSpeed": DivineSpeed,
+    "Dragonblood": Dragonblood,
+    "Dragonskin": Dragonskin,
+    "DrainSoul": DrainSoul,
+    "Eclipse": Eclipse,
+    "EnchantedAmmo": EnchantedAmmo,
+    "Eviscerate": Eviscerate,
+    "Execute": Execute,
+    "FasterThanStrong": FasterThanStrong,
+    "FierceStance": FierceStance,
+    "Fistfaire": Fistfaire,
+    "Fistfaith": Fistfaith,
+    "Fistslayer": Fistslayer,
+    "Flare": Flare,
+    "Gamble": Gamble,
+    "Glacies": Glacies,
+    "GraspingVoid": GraspingVoid,
+    "GreatShield": GreatShield,
+    "GrislyWound": GrislyWound,
+    "Guarded": Guarded,
+    "GunRange+1": GunRangePlusOne,
+    "Gunfaire": Gunfaire,
+    "Gunfaith": Gunfaith,
+    "Gunslayer": Gunslayer,
+    "Hawkeye": Hawkeye,
+    "Iaido": Iaido,
+    "Ignis": Ignis,
+    "Impale": Impale,
+    "Impale+": ImpalePlus,
+    "Imperturbable": Imperturbable,
+    "InferiorityComplex": InferiorityComplex,
+    "InfernalAstra": InfernalAstra,
+    "Ire": Ire,
+    "KillingMachine": KillingMachine,
+    "Lancefaire": Lancefaire,
+    "Lancefaith": Lancefaith,
+    "Lanceslayer": Lanceslayer,
+    "Lethality": Lethality,
+    "LifeAndDeath": LifeAndDeath,
+    "Lifetaker": Lifetaker,
+    "LiquidOoze": LiquidOoze,
+    "LuckBeALady": LuckBeALady,
+    "Luna": Luna,
+    "Luna+": LunaPlus,
+    "LunarBrace": LunarBrace,
+    "MaleficAura": MaleficAura,
+    "Marauder": Marauder,
+    "Mercy": Mercy,
+    "Miracle": Miracle,
+    "Monstrous": Monstrous,
+    "MoonlitRider": MoonlitRider,
+    "Nosferatu": Nosferatu,
+    "Nullify": Nullify,
+    "Opportunist": Opportunist,
+    "Parry": Parry,
+    "Pavise": Pavise,
+    "Perforate": Perforate,
+    "PointBlank": PointBlank,
+    "PoisonStrike": PoisonStrike,
+    "Pragmatic": Pragmatic,
+    "ProfaneHeaven": ProfaneHeaven,
+    "Puissance": Puissance,
+    "Purity": Purity,
+    "QuickDraw": QuickDraw,
+    "RagingStorm": RagingStorm,
+    "RaisedFist": RaisedFist,
+    "RapidResponse": RapidResponse,
+    "Reaver": Reaver,
+    "Reckless": Reckless,
+    "RendHeaven": RendHeaven,
+    "Resilience": Resilience,
+    "Resourceful": Resourceful,
+    "Reverse": Reverse,
+    "Rivalry": Rivalry,
+    "RuinedSky": RuinedSky,
+    "RuptureHeaven": RuptureHeaven,
+    "Sandstorm": Sandstorm,
+    "SeventhHeaven": SeventhHeaven,
+    "Shatter": Shatter,
+    "SilentPride": SilentPride,
+    "Skybreaker": Skybreaker,
+    "Slayer": Slayer,
+    "Sol": Sol,
+    "SolarBrace": SolarBrace,
+    "SpellEcho": SpellEcho,
+    "StolenHeaven": StolenHeaven,
+    "StoneBody": StoneBody,
+    "StrongRiposte": StrongRiposte,
+    "StunningStrike": StunningStrike,
+    "SublimeHeaven": SublimeHeaven,
+    "SureShot": SureShot,
+    "Swordfaire": Swordfaire,
+    "Swordfaith": Swordfaith,
+    "Swordslayer": Swordslayer,
+    "Templar": Templar,
+    "TomeRange+1": TomeRangePlusOne,
+    "TomeRange+2": TomeRangePlusTwo,
+    "Tomefaire": Tomefaire,
+    "Tomefaith": Tomefaith,
+    "TowerShield": TowerShield,
+    "Trample": Trample,
+    "TriangleAdept": TriangleAdept,
+    "Vampiric": Vampiric,
+    "Vengeance": Vengeance,
+    "Veteran": Veteran,
+    "WarProfiteer": WarProfiteer,
+    "WaryFighter": WaryFighter,
+    "WhiteMoon": WhiteMoon,
+    "WorldTree": WorldTree,
+}
+
 // Skills
 
 // When enemy initiates and deals damage, that damage is converted to overhealth. Overhealth must be depleted before more can be generated.
@@ -234,6 +278,14 @@ function AdaptiveForm(attacker, defender, info) {
     if (info.whoseSkill == 0 || info.initiating == 0 || defender.tempHP > 0) { return; }
     defender.skillMsg += outputSkill("Adaptive Form");
     defender.adaptive = 1; 
+}
+
+// Gain a consecutive attack
+function Adept(attacker, defender, info) {
+    if (info.whoseSkill == 1) { return; }
+    attacker.skillMsg += outputSkill("Adept");
+    attacker.duraCost += 1;
+    attacker.extraAttack = 1;
 }
 
 // Skl% chance to nullify a magical attack
@@ -247,6 +299,30 @@ function Aegis(attacker, defender, info) {
     }
 }
 
+// First strike absorbs hp, second strike negates defenses
+function Aether(attacker, defender, info) {
+    if (info.whoseSkill == 1) { return; }
+    attacker.skillMsg += outputSkill("Aether");
+    attacker.duraCost += 4;
+    attacker.numAttacks += 1;
+    attacker.single = 1;
+    if (attacker.aether == 0) {
+        attacker.sol = 1;
+    }
+    if (attacker.aether == 1) {
+        defender.ward = 0;
+        defender.prot = 0;
+    }
+}
+
+// Guarantees the next attack is a critical hit, strikes once
+function Aim(attacker, defender, info) {
+    if (info.whoseSkill == 1) { return; }
+    attacker.skillMsg += outputSkill("Aim");
+    attacker.duraCost += 2;
+    attacker.single = 1;
+    attacker.aim = 1;
+}
 // +30 hit/avo when enemy is wielding a weapon
 function Allbreaker(attacker, defender, info) {
     if (info.whoseSkill == 0) {
@@ -257,6 +333,14 @@ function Allbreaker(attacker, defender, info) {
         defender.skillMsg += outputSkill("Allbreaker");
         defender.avoid += 30;
       }
+}
+
+// Grants effective damage against all
+function Allslayer(attacker, defender, info) {
+    if (info.whoseSkill == 1) { return; }
+    attacker.skillMsg += outputSkill("Allslayer");
+    attacker.duraCost += 2;
+    attacker.effAll = 1;
 }
 
 // Halves damage from magic
@@ -335,6 +419,15 @@ function Assassinate(attacker, defender, info) {
     attacker.addDmg += 2;
 }
 
+// Make 5 attacks at half damage
+function Astra(attacker, defender, info) {
+    if (info.whoseSkill == 1) { return; }
+    attacker.skillMsg += outputSkill("Astra");
+    attacker.numAttacks += 4;
+    attacker.single = 1;
+    attacker.astra = 1;
+}
+
 // When below 50% hp, gain +30 hit, avo, and crit
 function Awakening(attacker, defender, info) {
     if (info.whoseSkill == 0 && attacker.currHP * 2 < attacker.maxHP) {
@@ -411,6 +504,15 @@ function BlackSun(attacker, defender, info) {
     }
 }
 
+// Add res to damage and heal equal to res after combat
+function BladeOfHonor(attacker, defender, info) {
+    if (info.whoseSkill == 1) { return; }
+    attacker.skillMsg += outputSkill("Blade of Honor");
+    attacker.duraCost += 2;
+    attacker.addDmg += attacker.res;
+    attacker.postHeal = attacker.res;
+}
+
 // Adds 1 damage for every 4 hp missing
 function Bloodlust(attacker, defender, info) {
     if (info.whoseSkill == 1 || (attacker.currHP > attacker.maxHP - 4)) { return; }
@@ -430,6 +532,13 @@ function BloodlustPlus(attacker, defender, info) {
         defender.atkSpd += Math.floor((attacker.maxHP - attacker.currHP) / 3);
         defender.avoid += 2 * Math.floor((attacker.maxHP - attacker.currHP) / 3);
     }
+}
+
+// Silence all magic units within 3 tiles after combat
+function Blowback(attacker, defender, info) {
+    if (info.whoseSkill == 1) { return; }
+    attacker.skillMsg += outputSkill("Blowback");
+    attacker.duraCost += 2;
 }
 
 // Strike twice when initiating on a foe that can follow-up.
@@ -488,6 +597,24 @@ function Brave(attacker, defender, info) {
     attacker.numAttacks += 1;
 }
 
+// Increase weapon mt by def/2
+function BrokenHeaven(attacker, defender, info) {
+    if (info.whoseSkill == 1) { return; }
+    attacker.skillMsg += outputSkill("Broken Heaven");
+    attacker.duraCost += 2;
+    attacker.addDmg += Math.floor(attacker.def / 2);
+    attacker.currMt += Math.floor(attacker.def / 2);
+}
+
+// Increase weapon mt by skl/2
+function CarveHeaven(attacker, defender, info) {
+    if (info.whoseSkill == 1) { return; }
+    attacker.skillMsg += outputSkill("Carve Heaven");
+    attacker.duraCost += 2;
+    attacker.addDmg += Math.floor(attacker.skl / 2);
+    attacker.currMt += Math.floor(attacker.skl / 2);
+}
+
 // +30 hit when initiating battle
 function CertainBlow(attacker, defender, info) {
     if (info.whoseSkill == 1 || info.initiating == 0) { return; }
@@ -522,6 +649,15 @@ function ClutchShot(attacker, defender, info) {
     attacker.aim = 1;
 }
 
+// Doubles str, strikes once
+function Colossus(attacker, defender, info) {
+    if (info.whoseSkill == 1) { return; }
+    attacker.skillMsg += outputSkill("Colossus");
+    attacker.duraCost += 1;
+    attacker.single = 1;
+    attacker.addDmg += attacker.str;
+}
+
 // Halve damage from combat arts and critical hits. Halve activation chance of skills. Quarter % health based skills.
 function Commander(attacker, defender, info) {
     if (info.whoseSkill == 0) {
@@ -548,6 +684,14 @@ function Conquest(attacker, defender, info) {
         defender.skillMsg += outputSkill("Conquest");
         defender.effNegate = 1;
       }
+}
+
+// Negates enemy res
+function Corona(attacker, defender, info) {
+    if (info.whoseSkill == 1) { return; }
+    attacker.skillMsg += outputSkill("Corona");
+    attacker.duraCost += 3;
+    defender.ward = 0;
 }
 
 // Skl% chance to decrease durability of enemy's weapon by user's level
@@ -604,6 +748,14 @@ function CritBoostPlus(attacker, defender, info) {
     if (info.whoseSkill == 1) { return; }
     attacker.skillMsg += outputSkill("Crit Boost+");
     attacker.crit += 20;
+}
+
+// Deal 50% extra damage
+function CrushingBlow(attacker, defender, info) {
+    if (info.whoseSkill == 1) { return; }
+    attacker.skillMsg += outputSkill("Crushing Blow");
+    attacker.duraCost += 1;
+    attacker.dmgMult *= 1.5;
 }
 
 // Add mag to phys if at 1 range
@@ -949,6 +1101,24 @@ function EnchantedAmmo(attacker, defender, info) {
     attacker.dmgType = "Magical";
 }
 
+// Calculate damage using the lower of def and res
+function Eviscerate(attacker, defender, info) {
+    if (info.whoseSkill == 1) { return; }
+    attacker.skillMsg += outputSkill("Eviscerate");
+    attacker.duraCost += 1;
+    attacker.eviscerate = 1;
+}
+
+// Guarantee a crit when enemy hp below half
+function Execute(attacker, defender, info) {
+    if (info.whoseSkill == 1) { return; }
+    attacker.skillMsg += outputSkill("Execute");
+    attacker.duraCost += 1;
+    if (defender.currHP < Math.ceil(defender.maxHP / 2)) {
+        attacker.aim = 1;
+    }
+}
+
 // +20 hit, crit, and skill activation for unit and foe
 function ExtremeDisregard(attacker, defender, info) {
     if (info.whoseSkill == 0) {
@@ -965,6 +1135,17 @@ function ExtremeDisregard(attacker, defender, info) {
         attacker.activationBonus += 20;
         defender.activationBonus += 20;
     }
+}
+
+// Attack 6 times at -50 hit and +30 crit
+function FanTheHammer(attacker, defender, info) {
+    if (info.whoseSkill == 1) { return; }
+    attacker.skillMsg += outputSkill("Fan the Hammer");
+    attacker.duraCost += 1;
+    attacker.numAttacks += 5;
+    attacker.hit += -50;
+    attacker.crit += 30;
+    attacker.single = 1;
 }
 
 // May act twice per turn but str and mag are halved
@@ -1016,6 +1197,14 @@ function Fistslayer(attacker, defender, info) {
     if (info.whoseSkill == 1 || defender.wepType != "Fist") { return; }
     attacker.skillMsg += outputSkill("Fistslayer");
     attacker.effAll = 1
+}
+
+// Halve enemy res
+function Flare(attacker, defender, info) {
+    if (info.whoseSkill == 1) { return; }
+    attacker.skillMsg += outputSkill("Flare");
+    attacker.duraCost += 1;
+    defender.ward = Math.floor(defender.ward/2);
 }
 
 // Crit +10 if foe cannot counter
@@ -1090,6 +1279,27 @@ function Fury(attacker, defender, info) {
         defender.ward += 2;
         defender.postDamage += 6;
     }
+}
+
+// +5 atk, +30 crit, -25 hit, strikes once
+function Gambit(attacker, defender, info) {
+    if (info.whoseSkill == 1) { return; }
+    attacker.skillMsg += outputSkill("Gambit");
+    attacker.duraCost += 1;
+    attacker.single = 1;
+    attacker.addDmg += 5;
+    attacker.crit += 30;
+    attacker.hit -= 25;
+}
+
+// Halves total hit, doubles crit, strikes once
+function Gamble(attacker, defender, info) {
+    if (info.whoseSkill == 1) { return; }
+    attacker.skillMsg += outputSkill("Gamble");
+    attacker.duraCost += 1;
+    attacker.single = 1
+    attacker.hit = Math.floor(attacker.hit / 2);
+    attacker.crit = attacker.crit * 2;
 }
 
 // Skl% chance to add res to damage
@@ -1248,6 +1458,23 @@ function Illusionist(attacker, defender, info) {
     defender.avoid += 15;
 }
 
+// Deal triple damage, strikes once
+function Impale(attacker, defender, info) {
+    if (info.whoseSkill == 1) { return; }
+    attacker.skillMsg += outputSkill("Impale");
+    attacker.duraCost += 3;
+    attacker.dmgMult *= 3;
+    attacker.single = 1;
+}
+
+// Deal triple damage
+function ImpalePlus(attacker, defender, info) {
+    if (info.whoseSkill == 1) { return; }
+    attacker.skillMsg += outputSkill("Impale+");
+    attacker.duraCost += 2;
+    attacker.dmgMult *= 3;
+}
+
 // +3 mit and +10 crit when foe initiates
 function Impenetrable(attacker, defender, info) {
     if (info.whoseSkill == 0 && info.initiating == 0) {
@@ -1284,11 +1511,28 @@ function InferiorityComplex(attacker, defender, info) {
     }
 }
 
+// Attack 3 times
+function InfernalAstra(attacker, defender, info) {
+    if (info.whoseSkill == 1) { return; }
+    attacker.skillMsg += outputSkill("Infernal Astra");
+    attacker.duraCost += 2;
+    attacker.numAttacks += 2;
+    attacker.single = 1
+}
+
 // +20 hit
 function Insight(attacker, defender, info) {
     if (info.whoseSkill == 1) { return; }
     attacker.skillMsg += outputSkill("Insight");
     attacker.hit += 20;
+}
+
+// Increase damage by missing hp x 2
+function Ire(attacker, defender, info) {
+    if (info.whoseSkill == 1) { return; }
+    attacker.skillMsg += outputSkill("Ire");
+    attacker.duraCost += 3;
+    attacker.addDmg += (attacker.maxHP - attacker.currHP) * 2;
 }
 
 // +4 damage and spd when foe initiates
@@ -1420,6 +1664,15 @@ function LuckBeALady(attacker, defender, info) {
 }
 
 // Ignore enemy def/res during combat
+function Luna(attacker, defender, info) {
+    if (info.whoseSkill == 1) { return; }
+    attacker.skillMsg += outputSkill("Luna");
+    attacker.duraCost += 3;
+    defender.prot = 0;
+    defender.ward = 0;
+}
+
+// Ignore enemy def/res during combat
 function LunaPlus(attacker, defender, info) {
     if (info.whoseSkill == 1) { return; }
     attacker.skillMsg += outputSkill("Luna+");
@@ -1472,6 +1725,13 @@ function MasterIllusionist(attacker, defender, info) {
     defender.avoid += 30;
 }
 
+// Enemies are left with at least 1 hp
+function Mercy(attacker, defender, info) {
+    if (info.whoseSkill == 1) { return; }
+    attacker.skillMsg += outputSkill("Mercy");
+    defender.miracle = 1;
+}
+
 // Lethal hits reduce hp to 1 if unit is above 50% hp
 function Miracle(attacker, defender, info) {
     if (info.whoseSkill == 0 || defender.currHP <= Math.floor(defender.maxHP / 2)) { return; }
@@ -1507,6 +1767,15 @@ function Monstrous(attacker, defender, info) {
     if (info.whoseSkill == 0) { return; }
     defender.skillMsg += outputSkill("Monstrous");
     defender.monstrous = 1;
+}
+
+// Strike 3 times and restore unit's action
+function MoonlitRider(attacker, defender, info) {
+    if (info.whoseSkill == 1) { return; }
+    attacker.skillMsg += outputSkill("Moonlit Rider");
+    attacker.duraCost += 4;
+    attacker.numAttacks += 2;
+    attacker.single = 1;
 }
 
 // Restore damage done as HP
@@ -1573,6 +1842,14 @@ function Perfectionist(attacker, defender, info) {
     }
 }
 
+// Deal 4x damage
+function Perforate(attacker, defender, info) {
+    if (info.whoseSkill == 1) { return; }
+    attacker.skillMsg += outputSkill("Perforate");
+    attacker.duraCost += 2;
+    attacker.dmgMult *= 4;
+}
+
 // Minimum range of bows is set to 1
 function PointBlank(attacker, defender, info) {
     if (info.whoseSkill == 0 || defender.wepType != "Bow") { return; }
@@ -1613,11 +1890,28 @@ function Prescience(attacker, defender, info) {
     }
 }
 
+// Increase weapon mt by res/2
+function ProfaneHeaven(attacker, defender, info) {
+    if (info.whoseSkill == 1) { return; }
+    attacker.skillMsg += outputSkill("Profane Heaven");
+    attacker.duraCost += 2;
+    attacker.addDmg += Math.floor(attacker.res / 2);
+    attacker.currMt += Math.floor(attacker.res / 2);
+}
+
 // +3 damage when the user's str is higher than the enemy's
 function Puissance(attacker, defender, info) {
     if (info.whoseSkill == 1 || attacker.str <= defender.str) { return; }
     attacker.skillMsg += outputSkill("Puissance");
     attacker.addDmg += 3;
+}
+
+// Grants effective damage vs all
+function Purity(attacker, defender, info) {
+    if (info.whoseSkill == 1) { return; }
+    attacker.skillMsg += outputSkill("Purity");
+    attacker.duraCost += 4;
+    attacker.effAll = 1;
 }
 
 // +2 atk spd when foe initiates
@@ -1715,6 +2009,16 @@ function QuickDraw(attacker, defender, info) {
     attacker.addDmg += 5;
 }
 
+// +5 mt, strikes once, act again if enemy killed
+function RagingStorm(attacker, defender, info) {
+    if (info.whoseSkill == 1) { return; }
+    attacker.skillMsg += outputSkill("Raging Storm");
+    attacker.duraCost += 4;
+    attacker.addDmg += 5;
+    attacker.currMt += 5;
+    attacker.single = 1;
+}
+
 // Increases damage by half of lowest stat
 function RaisedFist(attacker, defender, info) {
     if (info.whoseSkill == 1) { return; }
@@ -1769,6 +2073,15 @@ function Reckless(attacker, defender, info) {
     attacker.atkSpd = defender.atkSpd + 4;
 }
 
+// Increase weapon mt by str/2
+function RendHeaven(attacker, defender, info) {
+    if (info.whoseSkill == 1) { return; }
+    attacker.skillMsg += outputSkill("Rend Heaven");
+    attacker.duraCost += 2;
+    attacker.addDmg += Math.floor(attacker.str / 2);
+    attacker.currMt += Math.floor(attacker.str / 2);
+}
+
 // Reduces critical hit damage by 50%
 function Resilience(attacker, defender, info) {
     if (info.whoseSkill == 0) { return; }
@@ -1808,6 +2121,15 @@ function Resolve(attacker, defender, info) {
         defender.spd += Math.floor(defender.spd / 10 * 3);
         defender.skl += Math.floor(defender.skl / 10 * 3);
       }
+}
+
+// Double weapon effectiveness for an attack, strikes once
+function Resourceful(attacker, defender, info) {
+    if (info.whoseSkill == 1) { return; }
+    attacker.skillMsg += outputSkill("Resourceful");
+    attacker.duraCost += 2;
+    attacker.single = 1;
+    attacker.doubleEff = 1;
 }
 
 // Switches stat that weapons target. Physical > Magical, Magical > Physical
@@ -1864,6 +2186,43 @@ function Rivalry(attacker, defender, info) {
     attacker.addDmg += 5;
 }
 
+// +5 to weapon mt, grants effective damage vs fliers and dragons, strikes once
+function RuinedSky(attacker, defender, info) {
+    if (info.whoseSkill == 1) { return; }
+    attacker.skillMsg += outputSkill("Ruined Sky");
+    attacker.duraCost += 1;
+    attacker.single = 1;
+    attacker.addDmg += 5;
+    attacker.currMt += 5;
+    attacker.currEff += ",Flying,Dragon";
+}
+
+// Increase weapon mt by mag/2
+function RuptureHeaven(attacker, defender, info) {
+    if (info.whoseSkill == 1) { return; }
+    attacker.skillMsg += outputSkill("Rupture Heaven");
+    attacker.duraCost += 2;
+    attacker.addDmg += Math.floor(attacker.mag / 2);
+    attacker.currMt += Math.floor(attacker.mag / 2);
+}
+
+// Attack using 150% of def
+function Sandstorm(attacker, defender, info) {
+    if (info.whoseSkill == 1) { return; }
+    attacker.skillMsg += outputSkill("Sandstorm");
+    attacker.duraCost += 1;
+    attacker.sandstorm = 1;
+}
+
+// Increase weapon mt by average of all stats
+function SeventhHeaven(attacker, defender, info) {
+    if (info.whoseSkill == 1) { return; }
+    attacker.skillMsg += outputSkill("Seventh Heaven");
+    attacker.duraCost += 6;
+    attacker.addDmg += Math.floor((attacker.str + attacker.mag + attacker.skl + attacker.spd + attacker.lck + attacker.def + attacker.res) / 7);
+    attacker.currMt += Math.floor((attacker.str + attacker.mag + attacker.skl + attacker.spd + attacker.lck + attacker.def + attacker.res) / 7);
+}
+
 // Add 2x difference in weapon wt to damage
 function Shatter(attacker, defender, info) {
     if (info.whoseSkill == 1 || attacker.currWt <= defender.currWt) { return; }
@@ -1899,6 +2258,15 @@ function Slayer(attacker, defender, info) {
     attacker.skillMsg += outputSkill("Slayer");
     attacker.currEff += ",Terror";
 }
+
+// +30 crit, double maximum range, strikes once, gun only
+function Snipe(attacker, defender, info) {
+    if (info.whoseSkill == 1) { return; }
+    attacker.skillMsg += outputSkill("Snipe");
+    attacker.duraCost += 2;
+    attacker.single = 1;
+    attacker.crit += 30;
+}    
 
 // Skl% chance to restore damage done as HP
 function Sol(attacker, defender, info) {
@@ -1964,6 +2332,15 @@ function SteadyStance(attacker, defender, info) {
     defender.prot += 6;
 }
 
+// Increase weapon mt by lck/2
+function StolenHeaven(attacker, defender, info) {
+    if (info.whoseSkill == 1) { return; }
+    attacker.skillMsg += outputSkill("Stolen Heaven");
+    attacker.duraCost += 2;
+    attacker.addDmg += Math.floor(attacker.lck / 2);
+    attacker.currMt += Math.floor(attacker.lck / 2);
+}
+
 // Reduce damage by the difference between your con and your foe
 function StoneBody(attacker, defender, info) {
     if (info.whoseSkill == 0) { return; }
@@ -2001,6 +2378,36 @@ function SturdyStance(attacker, defender, info) {
         defender.def += 4;
         defender.prot += 4;
     }
+}
+
+// Increase weapon mt by spd/2
+function SublimeHeaven(attacker, defender, info) {
+    if (info.whoseSkill == 1) { return; }
+    attacker.skillMsg += outputSkill("Sublime Heaven");
+    attacker.duraCost += 2;
+    attacker.addDmg += Math.floor(attacker.spd / 2);
+    attacker.currMt += Math.floor(attacker.spd / 2);
+}
+
+// +10 mt, +30 hit, strikes once, fist only
+function Suplex(attacker, defender, info) {
+    if (info.whoseSkill == 1) { return; }
+    attacker.skillMsg += outputSkill("Suplex");
+    attacker.duraCost += 1;
+    attacker.addDmg += 10;
+    attacker.currMt += 10;
+    attacker.hit += 30;
+    attacker.single = 1;
+}
+
+// Guaranteed hit at 150% damage, strikes once
+function SureShot(attacker, defender, info) {
+    if (info.whoseSkill == 1) { return; }
+    attacker.skillMsg += outputSkill("Sure Shot");
+    attacker.duraCost += 2;
+    attacker.single = 1;
+    attacker.dmgMult *= 1.5;
+    attacker.sureShot = 1;
 }
 
 // +4 spd and res when foe initiates
@@ -2208,6 +2615,14 @@ function VantagePlus(attacker, defender, info) {
     attacker.skillMsg += outputSkill("Vantage+");
 }
 
+// Add half of missing hp to damage
+function Vengeance(attacker, defender, info) {
+    if (info.whoseSkill == 1) { return; }
+    attacker.skillMsg += outputSkill("Vengeance");
+    attacker.duraCost += 2;
+    attacker.addDmg += attacker.addDmg += Math.floor((attacker.maxHP - attacker.currHP) / 2);
+}
+
 // +4 damage, +2 atk spd, +10 hit/crit, -10 avo/dodge, -2 mit
 function Vengeful(attacker, defender, info) {
     if (info.whoseSkill == 0) {
@@ -2287,6 +2702,13 @@ function WeatherMastery(attacker, defender, info) {
     attacker.crit += 10;
 }
 
+// Restore damage dealt as hp
+function WhiteMoon(attacker, defender, info) {
+    if (info.whoseSkill == 1) { return; }
+    attacker.skillMsg += outputSkill("White Moon");
+    attacker.sol = 1;
+}
+
 // +10 hit and avo when missing HP
 function WindDisciple(attacker, defender, info) {
     if (info.whoseSkill == 0 && attacker.currHP < attacker.maxHP) {
@@ -2297,6 +2719,16 @@ function WindDisciple(attacker, defender, info) {
         defender.skillMsg += outputSkill("Wind Disciple");
         defender.avoid += 10;
     }
+}
+
+// +5 mt, +20 crit, strike from up to 3 tiles, strikes once
+function WindGod(attacker, defender, info) {
+    if (info.whoseSkill == 1) { return; }
+    attacker.skillMsg += outputSkill("Wind God");
+    attacker.duraCost += 3;
+    attacker.single = 1;
+    attacker.addDmg += 5;
+    attacker.crit += 20;
 }
 
 // Mag% chance to use no staff durability
@@ -2328,9 +2760,10 @@ function outputSkill(skill, odds, bonus) {
 // Handles normal skills
 const SkillHandler = {
     // Checks basic skills that work post combat block
-    CheckSkills: function(attacker, defender, initiating, isSim) {
+    CheckSkills: function(attacker, defender, initiating, isSim, artName) {
 
-        const aSkills = getAttr(attacker.unit.id, 'activeSkills').get('current').split(',');
+        let aSkills = getAttr(attacker.unit.id, 'activeSkills').get('current').split(',');
+        aSkills.push(artName);
         const dSkills = getAttr(defender.unit.id, 'activeSkills').get('current').split(',');
 
         const aWepSkills = getAttr(attacker.unit.id, 'activeWepSkills').get('current').split(',');
@@ -2345,49 +2778,113 @@ const SkillHandler = {
             isSim: isSim,
             weatherCond: weatherCond,
         }
-      
-        // Defender skills first to handle things like luna
-        info.whoseSkill = 1;
-        for (let i=0; i<dWepSkills.length; i++) {
-            if (skillMap[dWepSkills[i]]) {
-                skillMap[dWepSkills[i]](attacker, defender, info);
-            }
-        }
-        if (aSkills.includes("Foresight") == true || aWepSkills.includes('Foresight') == true) {
-          attacker.skillMsg += outputSkill("Foresight");
-          attacker.foresight = -999;
-        }
-        if (aSkills.includes("Nihil") == true || aWepSkills.includes('Nihil') == true) {
-          attacker.skillMsg += outputSkill("Nihil");
-        }
-        else {
-            info.whoseSkill = 1;
-            for (let i=0; i<dSkills.length; i++) {
-                if (skillMap[dSkills[i]]) {
-                    skillMap[dSkills[i]](attacker, defender, info);
-                }
-            }
-        }
 
-        // Attacker skills
+        let nihilAtk = (aSkills.includes("Nihil") == true || aWepSkills.includes('Nihil') == true);
+        let nihilDef = (dSkills.includes("Nihil") == true || dWepSkills.includes('Nihil') == true);
+        let foresightAtk = ((aSkills.includes("Foresight") == true && nihilDef == false) || aWepSkills.includes('Foresight') == true);
+        let foresightDef = ((dSkills.includes("Foresight") == true && nihilAtk == false) || dWepSkills.includes('Foresight') == true);
+
+        // Priority 1 attacker skills
         info.whoseSkill = 0;
         for(let i=0; i<aWepSkills.length; i++) {
-            if (skillMap[aWepSkills[i]]) {
-                skillMap[aWepSkills[i]](attacker, defender, info);
+            if (priorityOne[aWepSkills[i]]) {
+                priorityOne[aWepSkills[i]](attacker, defender, info);
             }
         }
-        if (dSkills.includes('Foresight') == true || dWepSkills.includes('Foresight') == true) {
+        if (foresightDef) {
             defender.skillMsg += outputSkill("Foresight");
             defender.foresight = -999;
             defender.critImmune = 1;
         }
-        if (dSkills.includes('Nihil') == true || dWepSkills.includes('Nihil') == true) {
+        if (nihilDef) {
             defender.skillMsg += outputSkill("Nihil");
         }
         else {
-            for(let i=0; i<aSkills.length; i++) {
-                if (skillMap[aSkills[i]]) {
-                    skillMap[aSkills[i]](attacker, defender, info);
+            for (let i=0; i<aSkills.length; i++) {
+                if (priorityOne[aSkills[i]]) {
+                    priorityOne[aSkills[i]](attacker, defender, info);
+                }
+            }
+        }
+
+        // Priority 1 defender skills
+        info.whoseSkill = 1;
+        for (let i=0; i<dWepSkills.length; i++) {
+            if (priorityOne[dWepSkills[i]]) {
+                priorityOne[dWepSkills[i]](attacker, defender, info);
+            }
+        }
+        if (foresightAtk) {
+            attacker.skillMsg += outputSkill("Foresight");
+            attacker.foresight = -999;
+        }
+        if (nihilAtk) {
+            attacker.skillMsg += outputSkill("Nihil");
+        }
+        else {
+            for (let i=0; i<dSkills.length; i++) {
+                if (priorityOne[dSkills[i]]) {
+                    priorityOne[dSkills[i]](attacker, defender, info);
+                }
+            }
+        }
+
+        // Priority 2 attacker skills
+        info.whoseSkill = 0;
+        for(let i=0; i<aWepSkills.length; i++) {
+            if (priorityTwo[aWepSkills[i]]) {
+                priorityTwo[aWepSkills[i]](attacker, defender, info);
+            }
+        }
+        if (!nihilDef) {
+            for (let i=0; i<aSkills.length; i++) {
+                if (priorityTwo[aSkills[i]]) {
+                    priorityTwo[aSkills[i]](attacker, defender, info);
+                }
+            }
+        }
+
+        // Priority 2 defender skills
+        info.whoseSkill = 1;
+        for (let i=0; i<dWepSkills.length; i++) {
+            if (priorityTwo[dWepSkills[i]]) {
+                priorityTwo[dWepSkills[i]](attacker, defender, info);
+            }
+        }
+        if (!nihilAtk) {
+            for (let i=0; i<dSkills.length; i++) {
+                if (priorityTwo[dSkills[i]]) {
+                    priorityTwo[dSkills[i]](attacker, defender, info);
+                }
+            }
+        }
+
+        // Priority 3 attacker skills
+        info.whoseSkill = 0;
+        for(let i=0; i<aWepSkills.length; i++) {
+            if (priorityThree[aWepSkills[i]]) {
+                priorityThree[aWepSkills[i]](attacker, defender, info);
+            }
+        }
+        if (!nihilDef) {
+            for (let i=0; i<aSkills.length; i++) {
+                if (priorityThree[aSkills[i]]) {
+                    priorityThree[aSkills[i]](attacker, defender, info);
+                }
+            }
+        }
+
+        // Priority 3 defender skills
+        info.whoseSkill = 1;
+        for (let i=0; i<dWepSkills.length; i++) {
+            if (priorityThree[dWepSkills[i]]) {
+                priorityThree[dWepSkills[i]](attacker, defender, info);
+            }
+        }
+        if (!nihilAtk) {
+            for (let i=0; i<dSkills.length; i++) {
+                if (priorityThree[dSkills[i]]) {
+                    priorityThree[dSkills[i]](attacker, defender, info);
                 }
             }
         }
@@ -2479,271 +2976,4 @@ const SkillHandler = {
             }
         }
     },
-}
-
-// Handles combat art skills
-const CombatArt = {
-    UseArt: function(artName, attacker, defender) {
-        switch(artName) {
-            case "Adept":
-                attacker.skillMsg += outputSkill("Adept");
-                attacker.duraCost += 1;
-                attacker.extraAttack = 1;
-                break;
-            case "Aether":
-                attacker.skillMsg += outputSkill("Aether");
-                attacker.duraCost += 4;
-                attacker.numAttacks += 1;
-                attacker.single = 1;
-                if (attacker.aether == 0) {
-                    attacker.sol = 1;
-                }
-                if (attacker.aether == 1) {
-                    defender.ward = 0;
-                    defender.prot = 0;
-                }
-                break;
-            case "Aim":
-                attacker.skillMsg += outputSkill("Aim");
-                attacker.duraCost += 2;
-                attacker.single = 1;
-                attacker.aim = 1;
-                break;
-            case "Allslayer":
-                attacker.skillMsg += outputSkill("Allslayer");
-                attacker.duraCost += 2;
-                attacker.effAll = 1;
-                break;
-            case "Astra":
-                attacker.skillMsg += outputSkill("Astra");
-                attacker.numAttacks += 4;
-                attacker.single = 1;
-                attacker.astra = 1;
-                break;
-            case "BladeOfHonor":
-                attacker.skillMsg += outputSkill("Blade of Honor");
-                attacker.duraCost += 2;
-                attacker.addDmg += attacker.res;
-                attacker.postHeal = attacker.res;
-                break;
-            case "Blowback":
-                attacker.skillMsg += outputSkill("Blowback");
-                attacker.duraCost += 2;
-                break;
-            case "BrokenHeaven":
-                attacker.skillMsg += outputSkill("Broken Heaven");
-                attacker.duraCost += 2;
-                attacker.addDmg += Math.floor(attacker.def / 2);
-                attacker.currMt += Math.floor(attacker.def / 2);
-                break;
-            case "CarveHeaven":
-                attacker.skillMsg += outputSkill("Carve Heaven");
-                attacker.duraCost += 2;
-                attacker.addDmg += Math.floor(attacker.skl / 2);
-                attacker.currMt += Math.floor(attacker.skl / 2);
-                break;
-            case "Colossus":
-                attacker.skillMsg += outputSkill("Colossus");
-                attacker.duraCost += 1;
-                attacker.single = 1;
-                attacker.addDmg += attacker.str;
-                break;
-            case "Corona":
-                attacker.skillMsg += outputSkill("Corona");
-                attacker.duraCost += 3;
-                defender.ward = 0;
-                break;
-            case "CrushingBlow":
-                attacker.skillMsg += outputSkill("Crushing Blow");
-                attacker.duraCost += 1;
-                attacker.dmgMult *= 1.5;
-                break;
-            case "Eviscerate":
-                attacker.skillMsg += outputSkill("Eviscerate");
-                attacker.duraCost += 1;
-                attacker.eviscerate = 1;
-                break;
-            case "Execute":
-                attacker.skillMsg += outputSkill("Execute");
-                attacker.duraCost += 1;
-                if (defender.currHP < Math.ceil(defender.maxHP / 2)) {
-                    attacker.aim = 1;
-                }
-                break;
-            case "FanTheHammer":
-                attacker.skillMsg += outputSkill("Fan the Hammer");
-                attacker.duraCost += 1;
-                attacker.numAttacks += 5;
-                attacker.hit += -50;
-                attacker.crit += 30;
-                break;
-            case "Flare":
-                attacker.skillMsg += outputSkill("Flare");
-                attacker.duraCost += 1;
-                defender.ward = Math.floor(defender.ward/2);
-                break;
-            case "Gambit":
-                attacker.skillMsg += outputSkill("Gambit");
-                attacker.duraCost += 1;
-                attacker.single = 1;
-                attacker.addDmg += 5;
-                attacker.crit += 30;
-                attacker.hit -= 25;
-                break;
-            case "Gamble":
-                attacker.skillMsg += outputSkill("Gamble");
-                attacker.duraCost += 1;
-                attacker.single = 1
-                attacker.hit = Math.floor(attacker.hit / 2);
-                attacker.crit = attacker.crit * 2;
-                break;
-            case "Impale":
-                attacker.skillMsg += outputSkill("Impale");
-                attacker.duraCost += 3;
-                attacker.dmgMult *= 3;
-                attacker.single = 1;
-                break;
-            case "ImpalePlus":
-                attacker.skillMsg += outputSkill("Impale+");
-                attacker.duraCost += 2;
-                attacker.dmgMult *= 3;
-                break;
-            case "InfernalAstra":
-                attacker.skillMsg += outputSkill("Infernal Astra");
-                attacker.duraCost += 2;
-                attacker.numAttacks += 2;
-                attacker.single = 1
-                break;
-            case "Ire":
-                attacker.skillMsg += outputSkill("Ire");
-                attacker.duraCost += 3;
-                attacker.addDmg += (attacker.maxHP - attacker.currHP) * 2;
-                break;
-            case "Luna":
-                attacker.skillMsg += outputSkill("Luna");
-                attacker.duraCost += 3;
-                defender.prot = 0;
-                defender.ward = 0;
-                break;
-            case "Mercy":
-                attacker.skillMsg += outputSkill("Mercy");
-                defender.miracle = 1;
-                break;
-            case "MoonlitRider":
-                attacker.skillMsg += outputSkill("Moonlit Rider");
-                attacker.duraCost += 4;
-                attacker.numAttacks += 2;
-                attacker.single = 1;
-                break;
-            case "Perforate":
-                attacker.skillMsg += outputSkill("Perforate");
-                attacker.duraCost += 2;
-                attacker.dmgMult *= 4;
-            case "ProfaneHeaven":
-                attacker.skillMsg += outputSkill("Profane Heaven");
-                attacker.duraCost += 2;
-                attacker.addDmg += Math.floor(attacker.res / 2);
-                attacker.currMt += Math.floor(attacker.res / 2);
-                break;
-            case "Purity":
-                attacker.skillMsg += outputSkill("Purity");
-                attacker.duraCost += 4;
-                attacker.effAll = 1;
-                break;
-            case "RagingStorm":
-                attacker.skillMsg += outputSkill("Raging Storm");
-                attacker.duraCost += 4;
-                attacker.addDmg += 5;
-                attacker.currMt += 5;
-                attacker.single = 1;
-                break;
-            case "RendHeaven":
-                attacker.skillMsg += outputSkill("Rend Heaven");
-                attacker.duraCost += 2;
-                attacker.addDmg += Math.floor(attacker.str / 2);
-                attacker.currMt += Math.floor(attacker.str / 2);
-                break;
-            case "Resourceful":
-                attacker.skillMsg += outputSkill("Resourceful");
-                attacker.duraCost += 2;
-                attacker.single = 1;
-                attacker.doubleEff = 1;
-                break;
-            case "RuinedSky":
-                attacker.skillMsg += outputSkill("Ruined Sky");
-                attacker.duraCost += 1;
-                attacker.single = 1;
-                attacker.addDmg += 5;
-                attacker.currMt += 5;
-                attacker.currEff += ",Flying,Dragon";
-                break;
-            case "RuptureHeaven":
-                attacker.skillMsg += outputSkill("Rupture Heaven");
-                attacker.duraCost += 2;
-                attacker.addDmg += Math.floor(attacker.mag / 2);
-                attacker.currMt += Math.floor(attacker.mag / 2);
-                break;
-            case "Sandstorm":
-                attacker.skillMsg += outputSkill("Sandstorm");
-                attacker.duraCost += 1;
-                attacker.sandstorm = 1;
-                break;
-            case "SeventhHeaven":
-                attacker.skillMsg += outputSkill("Seventh Heaven");
-                attacker.duraCost += 6;
-                attacker.addDmg += Math.floor((attacker.str + attacker.mag + attacker.skl + attacker.spd + attacker.lck + attacker.def + attacker.res) / 7);
-                attacker.currMt += Math.floor((attacker.str + attacker.mag + attacker.skl + attacker.spd + attacker.lck + attacker.def + attacker.res) / 7);
-                break;
-            case "Snipe":
-                attacker.skillMsg += outputSkill("Snipe");
-                attacker.duraCost += 2;
-                attacker.single = 1;
-                attacker.crit += 30;
-                break;
-            case "StolenHeaven":
-                attacker.skillMsg += outputSkill("Stolen Heaven");
-                attacker.duraCost += 2;
-                attacker.addDmg += Math.floor(attacker.lck / 2);
-                attacker.currMt += Math.floor(attacker.lck / 2);
-                break;
-            case "SublimeHeaven":
-                attacker.skillMsg += outputSkill("Sublime Heaven");
-                attacker.duraCost += 2;
-                attacker.addDmg += Math.floor(attacker.spd / 2);
-                attacker.currMt += Math.floor(attacker.spd / 2);
-                break;
-            case "Suplex":
-                attacker.skillMsg += outputSkill("Suplex");
-                attacker.duraCost += 1;
-                attacker.addDmg += 10;
-                attacker.currMt += 10;
-                attacker.hit += 30;
-                attacker.single = 1;
-                break;
-            case "SureShot":
-                attacker.skillMsg += outputSkill("Sure Shot");
-                attacker.duraCost += 2;
-                attacker.single = 1;
-                attacker.dmgMult *= 1.5;
-                attacker.sureShot = 1;
-                break;
-            case "Vengeance":
-                attacker.skillMsg += outputSkill("Vengeance");
-                attacker.duraCost += 2;
-                attacker.addDmg += attacker.addDmg += Math.floor((attacker.maxHP - attacker.currHP) / 2);
-                break;
-            case "WhiteMoon":
-                attacker.skillMsg += outputSkill("White Moon");
-                attacker.sol = 1;
-                break;
-            case "WindGod":
-                attacker.skillMsg += outputSkill("Wind God");
-                attacker.duraCost += 3;
-                attacker.single = 1;
-                attacker.addDmg += 5;
-                attacker.crit += 20;
-            default:
-                outputSkill("Default");
-        }
-    }
 }
