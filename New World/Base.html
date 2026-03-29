@@ -891,7 +891,7 @@ on("change:skillList", function() {
 	getAttrs(["skillList"], function(v) {
 		let skills = v.skillList.split("[").pop().split("]")[0];
 		skills = skills.replace(/([A-Z])(.*)/g, m => m.toLowerCase());
-		skills = skills.replace(/(^\w|\s\w)/g, m => m.toUpperCase());
+		skills = skills.replace(/(^\w|(\s|,)\w)/g, m => m.toUpperCase());
 		skills = skills.replace(/ /g,"");
 		setAttrs({
 			activeSkills: skills,
@@ -974,7 +974,7 @@ on("change:repeating_weapons:wepName change:repeating_spells:spellName change:re
 				const nindex = Object.keys(v);
 				let skills = v[nindex[2]];
 				skills = skills.replace(/([A-Z])(.*)/g, m => m.toLowerCase());
-				skills = skills.replace(/(^\w|\s\w)/g, m => m.toUpperCase());
+				skills = skills.replace(/(^\w|(\s|,)\w)/g, m => m.toUpperCase());
 				skills = skills.replace(/ /g,"");
 				setAttrs({
 					currEff: v[nindex[0]],
