@@ -481,7 +481,7 @@ function Bowslayer(attacker, defender, info) {
 function Brave(attacker, defender, info) {
     if (info.whoseSkill == 1) { return; }
     attacker.skillMsg += outputSkill("Brave");
-    attacker.numAttacks = 2;
+    attacker.numAttacks += 1;
 }
 
 // +30 hit when initiating battle
@@ -1924,7 +1924,13 @@ function SpectrumStance(attacker, defender, info) {
 
 // Mag% chance to attack again when using a tome
 function SpellEcho(attacker, defender, info) {
-
+    if (info.whoseSkill == 1 || (attacker.wepType != "Anima" && attacker.wepType != "Dark" && attacker.wepType != "Light")) { return; }
+    const odds = attacker.mag + attacker.activationBonus + info.foresightDef;
+    if (info.isSim == 1 && odds > 0) { attacker.skillMsg += outputSkill("Spell Echo", odds); }
+    else if (randomInteger(100) <= odds) {
+        attacker.skillMsg += outputSkill("Spell Echo");
+        attacker.spellEcho += 1;
+    }
 }
 
 // +6 def when foe initiates
@@ -2466,7 +2472,7 @@ const CombatArt = {
             case "Aether":
                 attacker.skillMsg += outputSkill("Aether");
                 attacker.duraCost += 4;
-                attacker.numAttacks = 2;
+                attacker.numAttacks += 1;
                 attacker.single = 1;
                 if (attacker.aether == 0) {
                     attacker.sol = 1;
@@ -2489,7 +2495,7 @@ const CombatArt = {
                 break;
             case "Astra":
                 attacker.skillMsg += outputSkill("Astra");
-                attacker.numAttacks = 5;
+                attacker.numAttacks += 4;
                 attacker.single = 1;
                 attacker.astra = 1;
                 break;
@@ -2546,7 +2552,7 @@ const CombatArt = {
             case "FanTheHammer":
                 attacker.skillMsg += outputSkill("Fan the Hammer");
                 attacker.duraCost += 1;
-                attacker.numAttacks = 6;
+                attacker.numAttacks += 5;
                 attacker.hit += -50;
                 attacker.crit += 30;
                 break;
@@ -2584,7 +2590,7 @@ const CombatArt = {
             case "InfernalAstra":
                 attacker.skillMsg += outputSkill("Infernal Astra");
                 attacker.duraCost += 2;
-                attacker.numAttacks = 3;
+                attacker.numAttacks += 2;
                 attacker.single = 1
                 break;
             case "Ire":
@@ -2605,7 +2611,7 @@ const CombatArt = {
             case "MoonlitRider":
                 attacker.skillMsg += outputSkill("Moonlit Rider");
                 attacker.duraCost += 4;
-                attacker.numAttacks = 3;
+                attacker.numAttacks += 2;
                 attacker.single = 1;
                 break;
             case "Perforate":

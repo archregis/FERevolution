@@ -228,6 +228,7 @@ function initializeAtkInfo(unitId, info) {
   output.dmgMult = 1;
   output.duraCost = 1;
   output.hasDiscipline = 0;
+  output.spellEcho = 0;
 
   return output;
 }
@@ -453,10 +454,18 @@ on('chat:message', function(msg) {
 
 // Basic combat block for a single token, returns -1 if enemy killed
 function CombatBlock(firstId, secondId, info, initiating, artName) {
+  info.spellEcho = 0; // Reset spell echo each combat block
 
   DoOneCombatStep(firstId, secondId, info, initiating, artName);
   if (info.killed == 1) { return -1; }
   for (let i=1; i<info.numAttacks; i++) {
+    DoOneCombatStep(firstId, secondId, info, initiating, artName);
+    if (info.killed == 1) { return -1; }
+  }
+
+  // Spell Echo attacks
+  const echoAttacks = info.spellEcho;
+  for (let i=1; i<=echoAttacks; i++) {
     DoOneCombatStep(firstId, secondId, info, initiating, artName);
     if (info.killed == 1) { return -1; }
   }
@@ -703,6 +712,7 @@ function DoOneCombatStep(selectedId, targetId, info, initiating, artName, isSim)
       postDamageDef: defender.postDamage,
       postHealAtk: initiating == 1 ? Math.max(info.postHealAtk, attacker.postHeal) : info.postHealAtk,
       aether: artName == "Aether" ? 1 : 0,
+      spellEcho: info.spellEcho + attacker.spellEcho,
     });
   }
 
