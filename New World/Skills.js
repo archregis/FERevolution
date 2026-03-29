@@ -231,7 +231,9 @@ const staffSkillMap = {
 
 // When enemy initiates and deals damage, that damage is converted to overhealth. Overhealth must be depleted before more can be generated.
 function AdaptiveForm(attacker, defender, info) {
-
+    if (info.whoseSkill == 0 || info.initiating == 0 || defender.tempHP > 0) { return; }
+    defender.skillMsg += outputSkill("Adaptive Form");
+    defender.adaptive = 1; 
 }
 
 // Skl% chance to nullify a magical attack

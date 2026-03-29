@@ -118,17 +118,25 @@ function updateWeaponEXP(attackerId, wepType, wepGain) {
 }
 
 // Updates a given token's health. Inputting negative damage can be used to heal
+// Returns damage done for use in Adaptive Form
 function UpdateHealth(unit, damage) {
+  const shield = unit.obj.get("bar2_value")||0;
   if (damage < 0 && unit.ooze == 1) { damage *= -1; } // Liquid Ooze
   if (damage < 0) { // Healing
     unit.obj.set("bar3_value", Math.min(unit.maxHP, unit.obj.get("bar3_value") - damage));
   }
-  else if (damage >= 0) {
-    let hpLeft = Math.max(0, unit.obj.get("bar3_value") - damage);
-    if (unit.lethalHit == 1) { hpLeft = 0; }
-    if (hpLeft == 0 && unit.miracle == 1) { hpLeft = 1; }
-    unit.obj.set("bar3_value", hpLeft);
+  else if (damage >= 0) { // Deplete shield first, then health
+    unit.obj.set("bar2_value", Math.max(0, shield - damage));
+    if (damage > shield) {
+      damage -= shield;
+      let hpLeft = Math.max(0, unit.obj.get("bar3_value") - damage);
+      if (unit.lethalHit == 1) { hpLeft = 0; }
+      if (hpLeft == 0 && unit.miracle == 1) { hpLeft = 1; }
+      unit.obj.set("bar3_value", hpLeft);
+    }
+    if (shield == 0 && damage > 0) { return damage; }
   }
+  return 0;
 }
 
 // returns 1 if the given token identifier is using a weapon that is within range to counter-attack
@@ -257,6 +265,7 @@ function initializeDefInfo(unitId, info) {
   output.gender = getAttr(output.unit.id, "gender").get('current');
   output.currHP = output.obj.get("bar3_value");
   output.maxHP = output.obj.get("bar3_max");
+  output.tempHP = output.obj.get("bar2_value");
   output.str = getAttrValue(output.unit.id, "strTotal");
   output.mag = getAttrValue(output.unit.id, "magTotal");
   output.skl = getAttrValue(output.unit.id, "sklTotal"),
@@ -314,12 +323,16 @@ on('chat:message', function(msg) {
     aether: 0,
     extraAttackMult: 0,
     postHealAtk: 0,
+    spellEcho: 0,
+    addTempHP: 0,
+    trackTempHP: 0,
   }
   let attackerDoubled = 0;
   let extraAttack = 0;
   let extraAttackRoll = 0;
   let postDamageAtk = 0;
   let postDamageDef = 0;
+  let addTempHP = 0;
 
   if (command == "hit") {
     const attacker = initializeAtkInfo(selectedId, info)
@@ -348,7 +361,8 @@ on('chat:message', function(msg) {
         extraAttack = info.extraAttack; 
         extraAttackRoll = info.extraAttackRoll;
         postDamageAtk = info.postDamageAtk; 
-        postDamageDef = info.postDamageDef; 
+        postDamageDef = info.postDamageDef;
+        addTempHP = info.addTempHP;
 
         // Attacker doubled, go again
         if (attackerDoubled == 1) {
@@ -373,7 +387,8 @@ on('chat:message', function(msg) {
         extraAttack = info.extraAttack; 
         extraAttackRoll = info.extraAttackRoll; 
         postDamageAtk = info.postDamageAtk; 
-        postDamageDef = info.postDamageDef; 
+        postDamageDef = info.postDamageDef;
+        addTempHP = info.addTempHP;
 
         // Attacker doubled, go again
         if (attackerDoubled == 1) {
@@ -408,6 +423,7 @@ on('chat:message', function(msg) {
         extraAttackRoll = info.extraAttackRoll;
         postDamageAtk = info.postDamageAtk; 
         postDamageDef = info.postDamageDef;
+        addTempHP = info.addTempHP;
 
         // Can the enemy counter?
         if (info.counter == 1) {
@@ -438,6 +454,11 @@ on('chat:message', function(msg) {
     if (postDamageAtk > 0) { UpdateHealth(attacker, postDamageAtk); }
     if (postDamageDef > 0) { UpdateHealth(defender, postDamageDef); }
     if (info.postHealAtk > 0 && attacker.obj.get("bar3_value") != 0) { UpdateHealth(attacker, -info.postHealAtk); }
+
+    // Apply shield if adaptive scales + no grey hp at combat start
+    if (addTempHP == 1) { 
+      defender.obj.set("bar2_value", info.trackTempHP + postDamageDef);
+    }
 
   }
   else if (command == "sim") {
@@ -655,6 +676,7 @@ function DoOneCombatStep(selectedId, targetId, info, initiating, artName, isSim)
       content += '<p style = "margin-bottom: 0px;">' + (atkDmg + addedDmg) + ' damage vs ' + defMit + ' mitigation!</p>';
 
       // Update token values
+      var trueDamage = 0;
       let damagePhrase = "hit";
       if (crit > dodge && defender.critImmune != 1) {
         damagePhrase = 'crit';
@@ -663,7 +685,7 @@ function DoOneCombatStep(selectedId, targetId, info, initiating, artName, isSim)
       }
       if (hit >= avoid) {
           if (attacker.cursed == 1) { UpdateHealth(attacker, dmgTaken); }
-          else { UpdateHealth(defender, dmgTaken); }
+          else { trueDamage = UpdateHealth(defender, dmgTaken); }
           content += 'You ' + damagePhrase + ' and deal '+ dmgTaken + ' damage!'; // Intentionally not capping damage numbers put in chat. Hitting low hp enemies for ludicrous damage numbers is fun
         if (attacker.sol == 1) {
           UpdateHealth(attacker, -Math.min(defender.currHP, dmgTaken));
@@ -685,7 +707,7 @@ function DoOneCombatStep(selectedId, targetId, info, initiating, artName, isSim)
         if (attacker.malefic == 1) {
           attacker.skillMsg += outputSkill("Malefic Aura");
           dmgTaken  = Math.floor(dmgTaken / 2);
-          UpdateHealth(defender, dmgTaken);
+          trueDamage = UpdateHealth(defender, dmgTaken);
         }
       }
       if (defender.iaido == 1) {
@@ -711,6 +733,8 @@ function DoOneCombatStep(selectedId, targetId, info, initiating, artName, isSim)
       postHealAtk: initiating == 1 ? Math.max(info.postHealAtk, attacker.postHeal) : info.postHealAtk,
       aether: artName == "Aether" ? 1 : 0,
       spellEcho: info.spellEcho + attacker.spellEcho,
+      addTempHP: defender.adaptive,
+      trackTempHP: info.trackTempHP + initiating * trueDamage,
     });
   }
 
