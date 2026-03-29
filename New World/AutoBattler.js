@@ -226,9 +226,12 @@ function initializeAtkInfo(unitId, info) {
   output.skillMsg = "Attacker Skills: <ul>";
   output.combatArt = 0;
   output.activationBonus = 0;
+  output.activationMult = 1;
+  output.foresight = 0;
   output.extraAttack = 0;
   output.extraAttackRoll = 0;
   output.postDamage = 0;
+  output.postdamageMulk = 1;
   output.aether = info.aether;
   output.astra = 0;
   output.reaver = 0;
@@ -293,7 +296,10 @@ function initializeDefInfo(unitId, info) {
   // Skill info
   output.skillMsg = "Defender Skills: <ul>";
   output.activationBonus = 0;
+  output.activationMult = 1;
+  output.foresight = 0;
   output.postDamage = 0;
+  output.postDamageMult = 1;
 
   return output;
 }

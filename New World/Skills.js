@@ -239,7 +239,7 @@ function AdaptiveForm(attacker, defender, info) {
 // Skl% chance to nullify a magical attack
 function Aegis(attacker, defender, info) {
     if (info.whoseSkill == 0 || attacker.dmgType == "Physical") { return; }
-    const odds = defender.skl + defender.activationBonus;
+    const odds = Math.floor((defender.skl + defender.activationBonus) * defender.activationMult);
     if (info.isSim == 1 && odds > 0) { defender.skillMsg += outputSkill("Aegis", odds); }
     else if (randomInteger(100) <= odds) {
         defender.skillMsg += outputSkill("Aegis");
@@ -308,7 +308,7 @@ function ArmoredBlow(attacker, defender, info) {
 // Lck% chance to use no durability
 function Armsthrift(attacker, defender, info) {
     if (info.whoseSkill == 1) { return; }
-    const odds = attacker.lck + attacker.activationBonus;
+    const odds = Math.floor((attacker.lck + attacker.activationBonus) * attacker.activationMult);
     if (info.isSim == 1 && odds > 0) { attacker.skillMsg += outputSkill("Armsthrift", odds); }
     else if (randomInteger(100) <= odds) {
         attacker.skillMsg += outputSkill("Armsthrift");
@@ -400,7 +400,7 @@ function BattleVeteran(attacker, defender, info) {
 // Skl% chance to ignore def/res
 function BlackSun(attacker, defender, info) {
     if (info.whoseSkill == 1) { return; }
-    const odds = attacker.skl + attacker.activationBonus + info.foresightDef;
+    const odds = Math.floor((attacker.skl + attacker.activationBonus + defender.foresight) * attacker.activationMult);
     if (info.isSim == 1 && odds > 0) { attacker.skillMsg += outputSkill("Black Sun", odds); }
     else if (randomInteger(100) <= odds) {
         attacker.skillMsg += outputSkill("Black Sun");
@@ -520,9 +520,20 @@ function ClutchShot(attacker, defender, info) {
     attacker.aim = 1;
 }
 
-// Halve damage from combar arts and critical hits. Halve activation chance of skills. Quarter % health based skills.
+// Halve damage from combat arts and critical hits. Halve activation chance of skills. Quarter % health based skills.
 function Commander(attacker, defender, info) {
-
+    if (info.whoseSkill == 0) {
+        attacker.skillMsg += outputSkill("Commander");
+        defender.activationMult *= 0.5;
+        attacker.postDamageMult = 0.25;
+    }
+    else if (info.whoseSkill == 1) {
+        defender.skillMsg += outputSkill("Commander");
+        defender.resilience = 1;
+        if (attacker.combatArt == 1) { attacker.dmgMult *= 0.5;}
+        attacker.activationMult *= 0.5;
+        defender.postDamageMult = 0.25;
+    }
 }
 
 // Negates enemy effective damage and increases dmg by 6
@@ -537,10 +548,10 @@ function Conquest(attacker, defender, info) {
       }
 }
 
-// Decrease durability of enemy's weapon by user's level
+// Skl% chance to decrease durability of enemy's weapon by user's level
 function Corrosion(attacker, defender, info) {
     if (info.whoseSkill == 1) { return; }
-    const odds = attacker.skl + attacker.activationBonus;
+    const odds = Math.floor((attacker.skl + attacker.activationBonus) * attacker.activationMult);
     if (info.isSim == 1 && odds > 0) { attacker.skillMsg += outputSkill("Corrosion", odds); }
     else if (randomInteger(100) <= odds) {
         attacker.skillMsg += outputSkill("Corrosion");
@@ -783,7 +794,7 @@ function Determination(attacker, defender, info) {
 // 31-Lck% chance for foe to deal damage to themselves (Your Lck)
 function DevilsPact(attacker, defender, info) {
     if (info.whoseSkill == 0) { return; }
-    const odds = Math.max(0, 31 - defender.lck + info.foresightAtk);
+    const odds = Math.floor((Math.max(0, 31 - defender.lck + attacker.foresight)) * attacker.activationMult);
     if (info.isSim == 1 && odds > 0) { defender.skillMsg += outputSkill("Devil's Pact", odds); }
     else if (randomInteger(100) <= odds) {
         defender.skillMsg += outputSkill("Devil's Pact");
@@ -794,7 +805,7 @@ function DevilsPact(attacker, defender, info) {
 // 31-Lck% chance for you to deal damage to yourself (Your Lck)
 function DevilsReversal(attacker, defender, info) {
     if (info.whoseSkill == 1) { return; }
-    const odds = Math.max(0, 31 - attacker.lck + info.foresightAtk);
+    const odds = Math.floor((Math.max(0, 31 - attacker.lck + attacker.foresight)) * attacker.activationMult);
     if (info.isSim == 1 && odds > 0) { attacker.skillMsg += outputSkill("Devil's Reversal", odds); }
     else if (randomInteger(100) <= odds) {
         attacker.skillMsg += outputSkill("Devil's Reversal");
@@ -805,7 +816,7 @@ function DevilsReversal(attacker, defender, info) {
 // 31-Lck% chance for foe to deal damage to themselves (Enemy Lck)
 function DevilsWhim(attacker, defender, info) {
     if (info.whoseSkill == 0) { return; }
-    const odds = Math.max(0, 31 - attacker.lck + info.foresightAtk);
+    const odds = Math.floor((Math.max(0, 31 - attacker.lck + attacker.foresight)) * attacker.activationMult);
     if (info.isSim == 1 && odds > 0) { defender.skillMsg += outputSkill("Devil's Whim", odds); }
     else if (randomInteger(100) <= odds) {
         defender.skillMsg += outputSkill("Devil's Whim");
@@ -902,11 +913,11 @@ function Dragonskin(attacker, defender, info) {
 function DrainSoul(attacker, defender, info) {
     if (info.whoseSkill == 0) {
         attacker.skillMsg += outputSkill("Drain Soul");
-        defender.postDamage += Math.floor(defender.maxHP / 5);
+        defender.postDamage += Math.floor((defender.maxHP / 5) * defender.postDamageMult);
     }
     else if (info.whoseSkill == 1) {
         defender.skillMsg += outputSkill("Drain Soul");
-        attacker.postDamage += Math.floor(attacker.maxHP / 5);
+        attacker.postDamage += Math.floor((attacker.maxHP / 5) * attacker.postDamageMult);
     }
 }
 
@@ -920,7 +931,7 @@ function DuelistsBlow(attacker, defender, info) {
 // Skl/2% chance to increase str multiplier by 1
 function Eclipse(attacker, defender, info) {
     if (info.whoseSkill == 1) { return; }
-    const odds = Math.floor(attacker.skl / 2) + attacker.activationBonus + info.foresightDef;
+    const odds = Math.floor((Math.floor(attacker.skl / 2) + attacker.activationBonus + defender.foresight) * attacker.activationMult);
     if (info.isSim == 1 && odds > 0) { attacker.skillMsg += outputSkill("Eclipse", odds); }
     else if (randomInteger(100) <= odds) {
         attacker.skillMsg += outputSkill("Eclipse");
@@ -1081,7 +1092,7 @@ function Fury(attacker, defender, info) {
 // Skl% chance to add res to damage
 function Glacies(attacker, defender, info) {
     if (info.whoseSkill == 1) { return; }
-    const odds = attacker.skl + attacker.activationBonus + info.foresightDef;
+    const odds = Math.floor((attacker.skl + attacker.activationBonus + defender.foresight) * attacker.activationMult);
     if (info.isSim == 1 && odds > 0) { attacker.skillMsg += outputSkill("Glacies", odds); }
     else if (randomInteger(100) <= odds) {
         attacker.skillMsg += outputSkill("Glacies");
@@ -1099,7 +1110,7 @@ function GraspingVoid(attacker, defender, info) {
 // Def% chance to negate all damage
 function GreatShield(attacker, defender, info) {
     if (info.whoseSkill == 0) { return; }
-    const odds = defender.def + defender.activationBonus;
+    const odds = Math.floor((defender.def + defender.activationBonus) * defender.activationMult);
     if (info.isSim == 1 && odds > 0) { defender.skillMsg += outputSkill("Great Shield", odds); }
     else if (randomInteger(100) <= odds) {
         defender.skillMsg += outputSkill("Great Shield");
@@ -1111,11 +1122,11 @@ function GreatShield(attacker, defender, info) {
 function GrislyWound(attacker, defender, info) {
     if (info.whoseSkill == 0) {
         attacker.skillMsg += outputSkill("Grisly Wound");
-        defender.postDamage += Math.floor(defender.maxHP / 3);
+        defender.postDamage += Math.floor((defender.maxHP / 3) * defender.postDamageMult);
     }
     else if (info.whoseSkill == 1) {
         defender.skillMsg += outputSkill("Grisly Wound");
-        attacker.postDamage += Math.floor(attacker.maxHP / 3);
+        attacker.postDamage += Math.floor((attacker.maxHP / 3) * attacker.postDamageMult);
     }
 }
 
@@ -1205,7 +1216,7 @@ function Honeypot(attacker, defender, info) {
 // Spd% chance to deal damage equal to str when targeted at range
 function Iaido(attacker, defender, info) {
     if (info.whoseSkill == 0) { return; }
-    const odds = defender.spd + defender.activationBonus + info.foresightAtk;
+    const odds = Math.floor((defender.spd + defender.activationBonus + attacker.foresight) * defender.activationMult);
     if (info.isSim == 1 && odds > 0) { defender.skillMsg += outputSkill("Iaido", odds); }
     else if (randomInteger(100) <= odds && (Led.from(attacker.token).to(defender.token).byManhattan().inSquares() >= 2)) {
         defender.skillMsg += outputSkill("Iaido");
@@ -1216,7 +1227,7 @@ function Iaido(attacker, defender, info) {
 // Skl% chance to add half of res and def to damage
 function Ignis(attacker, defender, info) {
     if (info.whoseSkill == 1) { return; }
-    const odds = attacker.skl + attacker.activationBonus + info.foresightDef;
+    const odds = Math.floor((attacker.skl + attacker.activationBonus + defender.foresight) * attacker.activationMult);
     if (info.isSim == 1 && odds > 0) { attacker.skillMsg += outputSkill("Ignis", odds); }
     else if (randomInteger(100) <= odds) {
         attacker.skillMsg += outputSkill("Ignis");
@@ -1353,7 +1364,7 @@ function Lanceslayer(attacker, defender, info) {
 // Skl/2% chance to instantly kill the enemy
 function Lethality(attacker, defender, info) {
     if (info.whoseSkill == 1) { return; }
-    const odds = Math.floor(attacker.skl / 2) + attacker.activationBonus + info.foresightDef;
+    const odds = Math.floor((Math.floor(attacker.skl / 2) + attacker.activationBonus + defender.foresight) * attacker.activationMult);
     if (info.isSim == 1 && odds > 0) { attacker.skillMsg += outputSkill("Lethality", odds); }
     else if (randomInteger(100) <= odds) {
         attacker.skillMsg += outputSkill("Lethality");
@@ -1516,7 +1527,7 @@ function Opportunist(attacker, defender, info) {
 // Spd% chance to reduce damage by skl
 function Parry(attacker, defender, info) {
     if (info.whoseSkill == 0) { return; }
-    const odds = defender.spd + defender.activationBonus;
+    const odds = Math.floor((defender.spd + defender.activationBonus) * defender.activationMult);
     if (info.isSim == 1 && odds > 0) { defender.skillMsg += outputSkill("Parry", odds); }
     else if (randomInteger(100) <= odds) {
         defender.skillMsg += outputSkill("Parry");
@@ -1535,7 +1546,7 @@ function Patience(attacker, defender, info) {
 // Skl% chance to nullify a physical attack
 function Pavise(attacker, defender, info) {
     if (info.whoseSkill == 0 || attacker.dmgType == "Magical") { return; }
-    const odds = defender.skl + defender.activationBonus;
+    const odds = Math.floor((defender.skl + defender.activationBonus) * defender.activationMult);
     if (info.isSim == 1 && odds > 0) { defender.skillMsg += outputSkill("Pavise", odds); }
     else if (randomInteger(100) <= odds) {
         defender.skillMsg += outputSkill("Pavise");
@@ -1566,7 +1577,7 @@ function PointBlank(attacker, defender, info) {
 function PoisonStrike(attacker, defender, info) {
     if (info.whoseSkill == 0 && info.initiating == 1) {
         attacker.skillMsg += outputSkill("Poison Strike");
-        defender.postDamage += Math.floor(defender.maxHP / 5);
+        defender.postDamage += Math.floor((defender.maxHP / 5) * defender.postDamageMult);
     }
 }
 
@@ -1885,7 +1896,7 @@ function Slayer(attacker, defender, info) {
 // Skl% chance to restore damage done as HP
 function Sol(attacker, defender, info) {
     if (info.whoseSkill == 1) { return; }
-    const odds = attacker.skl + attacker.activationBonus;
+    const odds = Math.floor((attacker.skl + attacker.activationBonus) * attacker.activationMult);
     if (info.isSim == 1 && odds > 0) { attacker.skillMsg += outputSkill("Sol", odds); }
     else if (randomInteger(100) <= odds) {
         attacker.skillMsg += outputSkill("Sol");
@@ -1930,7 +1941,7 @@ function SpectrumStance(attacker, defender, info) {
 // Mag% chance to attack again when using a tome
 function SpellEcho(attacker, defender, info) {
     if (info.whoseSkill == 1 || (attacker.wepType != "Anima" && attacker.wepType != "Dark" && attacker.wepType != "Light")) { return; }
-    const odds = attacker.mag + attacker.activationBonus + info.foresightDef;
+    const odds = Math.floor((attacker.mag + attacker.activationBonus + defender.foresight) * attacker.activationMult);
     if (info.isSim == 1 && odds > 0) { attacker.skillMsg += outputSkill("Spell Echo", odds); }
     else if (randomInteger(100) <= odds) {
         attacker.skillMsg += outputSkill("Spell Echo");
@@ -1963,7 +1974,7 @@ function StrongRiposte(attacker, defender, info) {
 // Skl% chance to prevent a counter attack
 function StunningStrike(attacker, defender, info) {
     if (info.whoseSkill == 1) { return; }
-    const odds = attacker.skl + attacker.activationBonus;
+    const odds = Math.floor((attacker.skl + attacker.activationBonus) * attacker.activationMult);
     if (info.isSim == 1 && odds > 0) { attacker.skillMsg += outputSkill("Stunning Strike", odds); }
     else if (randomInteger(100) <= odds) {
         attacker.skillMsg += outputSkill("Stunning Strike");
@@ -2226,7 +2237,7 @@ function Vigilance(attacker, defender, info) {
 // Lck% chance to gain 500 gold when killing an enemy
 function WarProfiteer(attacker, defender, info) {
     if (info.whoseSkill == 1) { return; }
-    const odds = attacker.lck + attacker.activationBonus;
+    const odds = Math.floor((attacker.lck + attacker.activationBonus) * attacker.activationMult);
     if (info.isSim == 1 && odds > 0) { attacker.skillMsg += outputSkill("War Profiteer", odds); }
     else if (randomInteger(100) <= odds) {
         attacker.skillMsg += outputSkill("War Profiteer");
@@ -2326,8 +2337,6 @@ const SkillHandler = {
             initiating: initiating,
             isSim: isSim,
             weatherCond: weatherCond,
-            foresightAtk: 0,
-            foresightDef: 0,
         }
       
         // Defender skills first to handle things like luna
@@ -2339,7 +2348,7 @@ const SkillHandler = {
         }
         if (aSkills.includes("Foresight") == true || aWepSkills.includes('Foresight') == true) {
           attacker.skillMsg += outputSkill("Foresight");
-          info.foresightAtk = -999;
+          attacker.foresight = -999;
         }
         if (aSkills.includes("Nihil") == true || aWepSkills.includes('Nihil') == true) {
           attacker.skillMsg += outputSkill("Nihil");
@@ -2362,7 +2371,7 @@ const SkillHandler = {
         }
         if (dSkills.includes('Foresight') == true || dWepSkills.includes('Foresight') == true) {
             defender.skillMsg += outputSkill("Foresight");
-            info.foresightDef = -999;
+            defender.foresight = -999;
             defender.critImmune = 1;
         }
         if (dSkills.includes('Nihil') == true || dWepSkills.includes('Nihil') == true) {
