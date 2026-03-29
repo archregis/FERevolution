@@ -760,7 +760,7 @@ function DoOneCombatStep(selectedId, targetId, info, initiating, artName, isSim)
         '<div ' + headstyle + '>' + simOrCombat + '</div>' + //--
         '<div style = "margin: 0px auto; width: 100%; text-align: left;">' + //--
         '<div ' + wrapperstyle +'>' + //--
-            '<div  ' + namestyle + '>'+ attacker.name +'</div>' + //--
+            '<div  ' + namestyle + '>'+ attacker.name + ' (' + attacker.wepName + ')</div>' + //--
             '<div ' + statdiv + '>' + content + '</div>' + //--
         '</div>' + //--
         '<div style = "height: 1px; background-color: #353535; width: 90%; margin: 0 auto; margin-bottom: 4px;"></div>' + //--
