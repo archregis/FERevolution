@@ -330,6 +330,7 @@ function Aim(attacker, defender, info) {
     attacker.single = 1;
     attacker.aim = 1;
 }
+
 // +30 hit/avo when enemy is wielding a weapon
 function Allbreaker(attacker, defender, info) {
     if (info.whoseSkill == 0) {
@@ -391,7 +392,7 @@ function ArcaneCannon(attacker, defender, info) {
 
 // +10 def when initiating battle
 function ArmoredBlow(attacker, defender, info) {
-    if (info.whoseSkill == 0 || info.initiating == 1) { return; }
+    if (info.whoseSkill == 0 || info.initiating == 1 || attacker.dmgType == "Magical") { return; }
     defender.skillMsg += outputSkill("Armored Blow");
     defender.prot += 10
 }
@@ -491,7 +492,7 @@ function Barricade(attacker, defender, info) {
 
 // +1 damage and +10 hit for every 10 levels
 function BattleVeteran(attacker, defender, info) {
-    if (info.whoseSkill == 1) { return; }
+    if (info.whoseSkill == 1 || attacker.level < 10) { return; }
     attacker.skillMsg += outputSkill("Battle Veteran");
     attacker.addDmg += Math.floor(attacker.level / 10);
     attacker.hit += 10 * Math.floor(attacker.level / 10);
@@ -1671,11 +1672,16 @@ function LiquidOoze(attacker, defender, info) {
     attacker.ooze = 1;
 }
 
-// Add 1/2 lck to damage
+// Lck% chance to add 1/2 lck to damage
 function LuckBeALady(attacker, defender, info) {
     if (info.whoseSkill == 1) { return; }
-    attacker.skillMsg += outputSkill("Luck be a Lady");
-    attacker.addDmg += Math.floor(attacker.lck / 2);
+    const odds = Math.floor((attacker.lck + attacker.activationBonus + defender.foresight) * attacker.activationMult);
+    const bonus = '(' + Math.floor(attacker.lck / 2) + ')';
+    if (info.isSim == 1 && odds > 0) { attacker.skillMsg += outputSkill("Luck be a Lady", odds, bonus); }
+    else if (randomInteger(100) <= odds) {
+        attacker.skillMsg += outputSkill("Luck be a Lady");
+        attacker.addDmg += Math.floor(attacker.lck / 2);
+    }
 }
 
 // Ignore enemy def/res during combat

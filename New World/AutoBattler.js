@@ -758,7 +758,7 @@ function DoOneCombatStep(selectedId, targetId, info, initiating, artName, isSim)
   let namestyle = 'style="background-color: #353535; color: #f3f3f3; text-align: center; font-weight: bold; margin: 4px; margin-right: 0px; border-radius: 10px; font-family: Helvetica, Arial, sans-serif;"';
   let statdiv = 'style="border: 1px solid #353535; border-radius: 5px; text-align: left; display: block; padding-left: 4px;"';
 
-  sendChat(attacker.name, info.whisper + '<div ' + divstyle + '>' + //--
+  sendChat(attacker.name, info.whisper + ' <div ' + divstyle + '>' + //--
         '<div ' + headstyle + '>' + simOrCombat + '</div>' + //--
         '<div style = "margin: 0px auto; width: 100%; text-align: left;">' + //--
         '<div ' + wrapperstyle +'>' + //--
