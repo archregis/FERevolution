@@ -384,6 +384,13 @@ input.sheet-toggle-stats:checked::after {
     font-weight:bold;
 }
 
+.sheet-hiddencaps-row {
+    display:grid;
+    grid-template-columns:repeat(8, 1fr);
+    text-align:center;
+    font-weight:bold;
+}
+
 .sheet-hiddenskill {
     display: none;
     margin-left: 8px;

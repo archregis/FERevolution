@@ -124,6 +124,34 @@
 									</div>
 								</div>
 								</label>
+
+								<label>
+								<input type="checkbox" class="sheet-toggle-stats">
+								<span class="sheet-toggle-label">Caps</span>
+								<div class="sheet-hiddenstats">
+									<div class="sheet-hiddencaps-row">
+										<div>HP</div>
+										<div>Str</div>
+										<div>Mag</div>
+										<div>Skl</div>
+										<div>Spd</div>
+										<div>Lck</div>
+										<div>Def</div>
+										<div>Res</div>
+									</div>
+									<div class="sheet-hiddencaps-row">
+										<div><input type="checkbox" name="attr_hpCapCheck" value="1"></div>
+										<div><input type="checkbox" name="attr_strCapCheck" value="1"></div>
+										<div><input type="checkbox" name="attr_magCapCheck" value="1"></div>
+										<div><input type="checkbox" name="attr_sklCapCheck" value="1"></div>
+										<div><input type="checkbox" name="attr_spdCapCheck" value="1"></div>
+										<div><input type="checkbox" name="attr_lckCapCheck" value="1"></div>
+										<div><input type="checkbox" name="attr_defCapCheck" value="1"></div>
+										<div><input type="checkbox" name="attr_resCapCheck" value="1"></div>
+									</div>
+								</div>
+								</label>
+
 							</div>
 						</div>
 						<div class="sheet-current-vals">
@@ -1204,7 +1232,7 @@ on("change:spdTotal change:All change:conTotal change:repeating_weapons:wt chang
 
 // Initialize values for API, because ded
 on("sheet:opened", function(){
-	getAttrs(["wepSlot","spellSlot","currWt","currEff","currName","currMt","currWexp","currWep","currTri","currMinDist","currMaxDist","currCounter","currSingle","atkType","exp","swordExp","lanceExp","axeExp","bowExp","stavesExp","darkExp","animaExp","lightExp","gunExp","fistExp","level","hpBase","strBase","magBase","sklBase","spdBase","lckBase","defBase","resBase","movBase","hpBuff","strBuff","magBuff","sklBuff","spdBuff","lckBuff","defBuff","resBuff","movBuff","swordRank","lanceRank","axeRank","bowRank","stavesRank","darkRank","animaRank","lightRank","gunRank","fistRank","physBuff","mystBuff","wardBuff","protBuff","weakTotal","activeSkills","activeWepSkills","hit","crit","ddg","avo"], function(v){
+	getAttrs(["wepSlot","spellSlot","currWt","currEff","currName","currMt","currWexp","currWep","currTri","currMinDist","currMaxDist","currCounter","currSingle","atkType","exp","swordExp","lanceExp","axeExp","bowExp","stavesExp","darkExp","animaExp","lightExp","gunExp","fistExp","level","hpBase","strBase","magBase","sklBase","spdBase","lckBase","defBase","resBase","movBase","hpBuff","strBuff","magBuff","sklBuff","spdBuff","lckBuff","defBuff","resBuff","movBuff","swordRank","lanceRank","axeRank","bowRank","stavesRank","darkRank","animaRank","lightRank","gunRank","fistRank","physBuff","mystBuff","wardBuff","protBuff","weakTotal","activeSkills","activeWepSkills","hit","crit","ddg","avo","hpCapCheck","strCapCheck","magCapCheck","sklCapCheck","spdCapCheck","lckCapCheck","defCapCheck","resCapCheck"], function(v){
 		setAttrs({
 			wepSlot: v.wepSlot,
 			spellSlot: v.spellSlot,
@@ -1271,6 +1299,14 @@ on("sheet:opened", function(){
 			crit: v.crit,
 			avo: v.avo,
 			ddg: v.ddg,
+			hpCapCheck: v.hpCapCheck,
+			strCapCheck: v.strCapCheck,
+			magCapCheck: v.magCapCheck,
+			sklCapCheck: v.sklCapCheck,
+			spdCapCheck: v.spdCapCheck,
+			lckCapCheck: v.lckCapCheck,
+			defCapCheck: v.defCapCheck,
+			resCapCheck: v.resCapCheck,
 		});
 	});
 });

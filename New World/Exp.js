@@ -75,9 +75,47 @@ function handleLevelUp(attackerId, CurrEXP, LvA, who, growthMult) {
   }
 }
 
+// Bonus level ups guarantee exactly 3 stat increases
+function handleBonusLevelUp(attackerId, CurrEXP, LvA, who) {
+  while (CurrEXP.get("current") >= 100) {
+    CurrEXP.set("current", CurrEXP.get("current") - 100);
+    LvA.set("current", Number(LvA.get("current")) + 1);
+
+    const isCapHP = getAttrValue(attackerId, 'hpCapCheck') === 1;
+    const isCapStr = getAttrValue(attackerId, 'strCapCheck') === 1;
+    const isCapMag = getAttrValue(attackerId, 'magCapCheck') === 1;
+    const isCapSkl = getAttrValue(attackerId, 'sklCapCheck') === 1;
+    const isCapSpd = getAttrValue(attackerId, 'spdCapCheck') === 1;
+    const isCapLck = getAttrValue(attackerId, 'lckCapCheck') === 1;
+    const isCapDef = getAttrValue(attackerId, 'defCapCheck') === 1;
+    const isCapRes = getAttrValue(attackerId, 'resCapCheck') === 1;
+
+    let nonCappedStats = [];
+    if (!isCapHP) nonCappedStats.push('hpBase');
+    if (!isCapStr) nonCappedStats.push('strBase');
+    if (!isCapMag) nonCappedStats.push('magBase');
+    if (!isCapSkl) nonCappedStats.push('sklBase');
+    if (!isCapSpd) nonCappedStats.push('spdBase');
+    if (!isCapLck) nonCappedStats.push('lckBase');
+    if (!isCapDef) nonCappedStats.push('defBase');
+    if (!isCapRes) nonCappedStats.push('resBase');
+
+    for (let i=0; i<3; i++) {
+      if (nonCappedStats.length === 0) break;
+      const randIndex = Math.floor(Math.random() * nonCappedStats.length);
+      const statName = nonCappedStats[randIndex];
+      const attr = getAttr(attackerId, statName);
+      const currentVal = Number(attr.get("current")) || 0;
+      attr.setWithWorker("current", currentVal + 1);
+      nonCappedStats.splice(randIndex, 1);
+      sendChat(who, `Bonus Level Up: ${statName.replace('Base', '')} +1`);
+    }
+  }
+}
+
 // Handles incrementing EXP and the level up if necessary
 const expHandler = {
-    expIncrease: function(selectedId, addedExp) {
+    expIncrease: function(selectedId, addedExp, command) {
     const selectedToken = getObj('graphic', selectedId);
     if (!selectedToken) {
       sendChat('SYSTEM', 'Invalid token id.');
@@ -97,30 +135,32 @@ const expHandler = {
     let who = getObj('character', selectedToken.get('represents'));
     who = selectedToken.get('name');
 
-    // Paragon and Blossom check
     let growthMult = 1;
-    const aSkills = getAttr(attacker.id, 'activeSkills').get('current').split(',');
+    if (command === 'exp') {
+      // Paragon and Blossom check
+      const aSkills = getAttr(attacker.id, 'activeSkills').get('current').split(',');
 
-    for(let i=0; i<aSkills.length; i++) {
-      if (aSkills[i] == "Paragon") {
-        addedExp *= 2;
+      for(let i=0; i<aSkills.length; i++) {
+        if (aSkills[i] == "Paragon") {
+          addedExp *= 2;
+        }
+        if (aSkills[i] == "Blossom") {
+          addedExp = Math.floor(addedExp / 2);
+          growthMult *= 2;
+        }
       }
-      if (aSkills[i] == "Blossom") {
-        addedExp = Math.floor(addedExp / 2);
-        growthMult *= 2;
-      }
-    }
 
-    // Weapon Paragon and Blossom check
-    const aWepSkills = getAttr(attacker.id, 'activeWepSkills').get('current').split(',');
+      // Weapon Paragon and Blossom check
+      const aWepSkills = getAttr(attacker.id, 'activeWepSkills').get('current').split(',');
 
-    for(let i=0; i<aWepSkills.length; i++) {
-      if (aWepSkills[i] == "Paragon") {
-        addedExp *= 2;
-      }
-      if (aWepSkills[i] == "Blossom") {
-        addedExp = Math.floor(addedExp / 2);
-        growthMult *= 2;
+      for(let i=0; i<aWepSkills.length; i++) {
+        if (aWepSkills[i] == "Paragon") {
+          addedExp *= 2;
+        }
+        if (aWepSkills[i] == "Blossom") {
+          addedExp = Math.floor(addedExp / 2);
+          growthMult *= 2;
+        }
       }
     }
 
@@ -131,7 +171,8 @@ const expHandler = {
     sendChat(who, `${addedExp} EXP added!`);
 
     // Handle level ups if EXP >= 100
-    handleLevelUp(attacker.id, CurrEXP, LvA, who, growthMult);
+    if (command === 'exp') { handleLevelUp(attacker.id, CurrEXP, LvA, who, growthMult); }
+    else if (command === 'bexp') { handleBonusLevelUp(attacker.id, CurrEXP, LvA, who); }
     },
 
     staffExpCalc: function(staffVal, targetLevel, selectedLevel, classPower) {
@@ -148,7 +189,7 @@ on('chat:message', function(msg) {
   const parts = content.split(' ');
   const command = parts.shift().substring(1);
 
-  if (command === 'exp') {
+  if (command === 'exp' || command === 'bexp') {
     if (parts.length < 1) {
       sendChat('SYSTEM', 'You must provide a selected token id');
       return;
@@ -160,7 +201,7 @@ on('chat:message', function(msg) {
 
     const selectedId = parts[0];
     const addedExp = parseInt(parts[1], 10) || 0;
-    expHandler.expIncrease(selectedId, addedExp);
+    expHandler.expIncrease(selectedId, addedExp, command);
     return;
   }
 });
