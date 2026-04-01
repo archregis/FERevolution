@@ -1151,7 +1151,7 @@ function FanTheHammer(attacker, defender, info) {
     attacker.skillMsg += outputSkill("Fan the Hammer");
     attacker.duraCost += 1;
     attacker.numAttacks += 5;
-    attacker.hit += -50;
+    attacker.hit += -40;
     attacker.crit += 30;
     attacker.single = 1;
 }
