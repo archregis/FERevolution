@@ -326,6 +326,12 @@ on('chat:message', function(msg) {
   const targetId = parts[1];
   const artName = parts[2] || "None";
 
+  // Quit out if either token is undefined
+  if (!getObj('graphic', selectedId) || !getObj('graphic', targetId)) {
+    sendChat('SYSTEM', 'Invalid token id(s).');
+    return;
+  }
+
   let info = {
     counter: 0,
     double: 0,
