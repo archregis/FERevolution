@@ -586,7 +586,7 @@ function DoOneCombatStep(selectedId, targetId, info, initiating, artName, isSim)
     }
     else if (triangle == -1) {
       hit += -20 * mult;
-      addedDmg += 1 * mult;
+      addedDmg += -1 * mult;
       attacker.currMt += -1 * mult;
       triangleMsg = '<div>Attacking with disadvantage!</div>';
     }
