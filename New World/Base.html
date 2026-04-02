@@ -907,6 +907,26 @@ growths.forEach( function(growth) {
 	});
 });
 
+// Caps
+const caps = ["hp", "str", "mag", "skl", "spd", "lck", "def", "res"];
+caps.forEach( function(cap) {
+	on(`change:${cap}CapCheck`, function() {
+		log(cap + " changed");
+		getAttrs([`${cap}CapCheck`, `${cap}Grow`], function(v) {
+			if (Number(v[cap+"CapCheck"]) == 1) {
+				setAttrs({
+					[cap+"GrowBuff"]: Number(v[cap+"Grow"]) * -1,
+				});
+			}
+			 else {
+				setAttrs({
+					[cap+"GrowBuff"]: 0,
+				});
+			}
+		})
+	});
+});
+
 // Bonus checks
 on("change:repeating_bonuses:bonusCheck change:repeating_bonuses:hp change:repeating_bonuses:str change:repeating_bonuses:mag change:repeating_bonuses:skl change:repeating_bonuses:lck change:repeating_bonuses:spd change:repeating_bonuses:def change:repeating_bonuses:res change:repeating_bonuses:con change:repeating_bonuses:mov change:repeating_bonuses:hit change:repeating_bonuses:avo change:repeating_bonuses:crit change:repeating_bonuses:mit remove:repeating_bonuses", function() {
 	const bonusTotalArr = ["hpBonusTotal", "strBonusTotal", "magBonusTotal", "sklBonusTotal", "lckBonusTotal", "spdBonusTotal", "defBonusTotal", "resBonusTotal", "conBonusTotal", "movBonusTotal", "hitBonusTotal", "avoBonusTotal", "critBonusTotal", "mitBonusTotal"];

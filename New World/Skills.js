@@ -927,7 +927,7 @@ function Demolish(attacker, defender, info) {
 
 // Avoid +25 and Mit +3 when enemy is male
 function Demure(attacker, defender, info) {
-    if (info.whoseSkill == 0 || attacker.gender != "Male") { log(attacker.gender); return; }
+    if (info.whoseSkill == 0 || attacker.gender != "Male") { return; }
     defender.skillMsg += outputSkill("Demure");
     defender.avoid += 25;
     defender.addProt += 3;
