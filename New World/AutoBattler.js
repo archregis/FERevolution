@@ -235,7 +235,7 @@ function initializeAtkInfo(unitId, info) {
   output.extraAttack = 0;
   output.extraAttackRoll = 0;
   output.postDamage = 0;
-  output.postdamageMulk = 1;
+  output.postdamageMult = 1;
   output.aether = info.aether;
   output.astra = 0;
   output.reaver = 0;
@@ -327,7 +327,7 @@ on('chat:message', function(msg) {
   const artName = parts[2] || "None";
 
   // Quit out if either token is undefined
-  if (!getObj('graphic', selectedId) || !getObj('graphic', targetId)) {
+  if (!getObj('graphic', selectedId) || (parts.length >= 2 && !getObj('graphic', targetId))) {
     sendChat('SYSTEM', 'Invalid token id(s).');
     return;
   }
@@ -518,7 +518,6 @@ function DoOneCombatStep(selectedId, targetId, info, initiating, artName, isSim)
   let attacker = initializeAtkInfo(selectedId, info);
   attacker.combatArt = artName == "None" ? 0 : 1;
   let defender = initializeDefInfo(targetId, info);
-  let combatMsg = `${attacker.name} ${isSim == 1 ? "simulates attacking " : "attacks "} ${defender.name} with ${attacker.wepName}! <br>`
 
 
  // Skill checks
@@ -559,7 +558,7 @@ function DoOneCombatStep(selectedId, targetId, info, initiating, artName, isSim)
         attr.setWithWorker("current", currUses - 1);
       }
       expCalc = expHandler.staffExpCalc(staffInfo[attacker.wepName].exp, defender.level, attacker.level, attacker.classPower)
-      expHandler.expIncrease(selectedId, expCalc);
+      expHandler.expIncrease(selectedId, expCalc, "exp");
       updateWeaponEXP(attacker.unit.id, attacker.wepType, staffInfo[attacker.wepName].wexp * (1 + attacker.hasDiscipline));
 
       // Gather info for future battle steps
