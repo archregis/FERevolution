@@ -147,7 +147,7 @@ const priorityThree = {
     "Devil'sReversal": DevilsReversal,
     "Devil'sWhim": DevilsWhim,
     "Dhampir": Dhampir,
-    "Dicipline": Discipline,
+    "Discipline": Discipline,
     "Discipline+": DisciplinePlus,
     "DivineSpeed": DivineSpeed,
     "Dragonblood": Dragonblood,

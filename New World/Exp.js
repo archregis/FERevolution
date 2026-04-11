@@ -136,7 +136,7 @@ const expHandler = {
     who = selectedToken.get('name');
 
     let growthMult = 1;
-    if (command === 'exp') {
+    if (command === "exp") {
       // Paragon and Blossom check
       const aSkills = getAttr(attacker.id, 'activeSkills').get('current').split(',');
 

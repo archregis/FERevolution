@@ -235,7 +235,7 @@ function initializeAtkInfo(unitId, info) {
   output.extraAttack = 0;
   output.extraAttackRoll = 0;
   output.postDamage = 0;
-  output.postdamageMult = 1;
+  output.postDamageMult = 1;
   output.aether = info.aether;
   output.astra = 0;
   output.reaver = 0;
@@ -316,10 +316,7 @@ on('chat:message', function(msg) {
   var parts = processInlinerolls(msg).split(' ');
   var command = parts.shift().substring(1);
 
-  if (parts.length < 1) {
-    sendChat('SYSTEM', 'You must provide a selected token id');
-    return;
-  }
+  if (command != "hit" && command != "sim" && command != "staff" && command != "staffSim") { return; }
 
   // Initialize Attacker and Defender
   const selectedId = parts[0];
@@ -327,7 +324,7 @@ on('chat:message', function(msg) {
   const artName = parts[2] || "None";
 
   // Quit out if either token is undefined
-  if (!getObj('graphic', selectedId) || (parts.length >= 2 && !getObj('graphic', targetId))) {
+  if (!getObj('graphic', selectedId) || !getObj('graphic', targetId)) {
     sendChat('SYSTEM', 'Invalid token id(s).');
     return;
   }
@@ -812,7 +809,7 @@ function DoOneStaffStep(selectedId, targetId, isSim) {
       attr.setWithWorker("current", currUses - 1);
     }
     expCalc = expHandler.staffExpCalc(staffInfo[attacker.wepName].exp, defender.level, attacker.level, attacker.classPower)
-    expHandler.expIncrease(selectedId, expCalc);
+    expHandler.expIncrease(selectedId, expCalc, "exp");
     updateWeaponEXP(attacker.unit.id, attacker.wepType, staffInfo[attacker.wepName].wexp * (1 + attacker.hasDiscipline));
   }
 
