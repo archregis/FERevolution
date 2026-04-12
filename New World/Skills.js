@@ -149,6 +149,7 @@ const priorityThree = {
     "Dhampir": Dhampir,
     "Discipline": Discipline,
     "Discipline+": DisciplinePlus,
+    "DistantCounter": DistantCounter,
     "DivineSpeed": DivineSpeed,
     "Dragonblood": Dragonblood,
     "Dragonskin": Dragonskin,
@@ -1030,6 +1031,17 @@ function Disregard(attacker, defender, info) {
         attacker.crit += 10;
         attacker.activationBonus += 10;
         defender.activationBonus += 10;
+    }
+}
+
+// Can counter from any distance
+function DistantCounter(attacker, defender, info) {
+    if (info.whoseSkill == 0 && info.initiating == 0) { 
+        attacker.skillMsg += outputSkill("Distant Counter");
+    }
+    else if (info.whoseSkill == 1 && info.initiating == 1) {
+        defender.minDist = 0;
+        defender.maxDist = 99;
     }
 }
 
