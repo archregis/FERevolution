@@ -1,25 +1,3 @@
-// Helper function to get an attribute object by name for a given character.
-function getAttr(characterId, attrName) {
-  return findObjs({ characterid: characterId, name: attrName, type: "attribute" })[0];
-}
-
-// Helper to safely get a numeric attribute value. Returns 0 if the attribute doesn't exist.
-function getAttrValue(characterId, attrName) {
-  const attr = getAttr(characterId, attrName);
-  return attr ? Number(attr.get("current")) : 0;
-}
-
-// Process inline rolls more simply without Lodash
-function processInlinerolls(msg) {
-  if (!msg.inlinerolls) return msg.content;
-  let newContent = msg.content;
-  msg.inlinerolls.forEach((roll, i) => {
-    const total = roll.results?.total || 0;
-    newContent = newContent.replace(`$[[${i}]]`, total);
-  });
-  return newContent;
-}
-
 // Handles percentage health changes for a selected token
 function healthChange(selectedId, healthPercent) {
     const selectedToken = getObj('graphic', selectedId);
@@ -54,7 +32,7 @@ function healthChange(selectedId, healthPercent) {
 on('chat:message', function(msg) {
   if (msg.type !== 'api') return;
 
-  const content = processInlinerolls(msg);
+  const content = helpers.processInlinerolls(msg);
   const parts = content.split(' ');
   const command = parts.shift().substring(1);
 

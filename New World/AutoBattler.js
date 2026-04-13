@@ -57,17 +57,6 @@ const scytheInfo = {
 
 // Helpers
 
-// Gets an attribute object by name for a given character.
-function getAttr(characterId, attrName) {
-  return findObjs({ characterid: characterId, name: attrName, type: "attribute" })[0];
-} 
-
-// Safely gets a numeric attribute value. Returns 0 if the attribute doesn't exist.
-function getAttrValue(characterId, attrName) {
-  const attr = getAttr(characterId, attrName);
-  return attr ? Number(attr.get("current")) : 0;
-}
-
 // Gets all section IDs and corresponding attributes for a given repeating section
 function getRepeatingSectionAttrs(charid, prefix, suffix) {
 	// Input
@@ -99,21 +88,10 @@ function getRepeatingSectionAttrs(charid, prefix, suffix) {
 	return [repRowIds, repeatingAttrs];
 }
 
-// Process inline rolls more simply without Lodash
-function processInlinerolls(msg) {
-  if (!msg.inlinerolls) return msg.content;
-  let newContent = msg.content;
-  msg.inlinerolls.forEach((roll, i) => {
-    const total = roll.results?.total || 0;
-    newContent = newContent.replace(`$[[${i}]]`, total);
-  });
-  return newContent;
-}
-
 // Update weapon EXP based on weapon type and exp gain
 function updateWeaponEXP(attackerId, wepType, wepGain) {
   if (!weaponMap[wepType]) return;
-  const attr = getAttr(attackerId, weaponMap[wepType]);
+  const attr = helpers.getAttr(attackerId, weaponMap[wepType]);
   if (!attr) return;
   const currentVal = Number(attr.get("current")) || 0;
   attr.setWithWorker("current", currentVal + wepGain);
@@ -141,15 +119,9 @@ function UpdateHealth(unit, damage) {
   return 0;
 }
 
-// returns 1 if the given token identifier is using a weapon that is within range to counter-attack
-function CanCounter(defender, dist) {
-  if (defender.counter == 0 || dist < defender.minDist || dist > defender.maxDist) { return 0; }
-  return 1;
-}
-
 // Gets a weapon's current uses and the attribute corresponding to them
 function GetWeaponStats(attackerId, dmgType, prefix) {
-  const slot = dmgType == "Physical" ? getAttrValue(attackerId, 'wepSlot') : getAttrValue(attackerId, 'spellSlot');
+  const slot = dmgType == "Physical" ? helpers.getAttrValue(attackerId, 'wepSlot') : helpers.getAttrValue(attackerId, 'spellSlot');
   const [ids, attributes] = getRepeatingSectionAttrs(attackerId, prefix, "uses");
   const id = ids[slot-1];
   const attr = attributes[prefix+"_"+id+"_uses"];
@@ -157,23 +129,6 @@ function GetWeaponStats(attackerId, dmgType, prefix) {
   return [currUses, attr];
 }
 
-// Determines if an attacker has advantage (1), disadvantage (-1), or neutral (0)
-function CheckAdvantage(attackerWep, defenderWep) {
-  const weaponTriangle = { 'Sword': 1, 'Axe':2, 'Lance':3, 'Anima':4, 'Light':5, 'Dark':6 };
-  const atkTriMap = weaponTriangle[attackerWep];
-  const defTriMap = weaponTriangle[defenderWep];
-
-  if ((atkTriMap < 4 && defTriMap < 4) || (atkTriMap >= 4 && defTriMap >= 4)) {
-    if ((atkTriMap+1)%3 == defTriMap%3) {
-      return 1;
-    }
-    else if ((atkTriMap-1)%3 == defTriMap%3) {
-      return -1;
-    }
-  }
-
-  return 0;
-}
 
 // Sets up all the info an attacker needs to complete a round of combat
 function initializeAtkInfo(unitId, info) {
@@ -185,46 +140,46 @@ function initializeAtkInfo(unitId, info) {
   output.obj = findObjs({_type: "graphic", _id: unitId})[0];
 
   // Weapon info
-  output.single = getAttrValue(output.unit.id, 'currSingle');
-  output.wepGain = getAttrValue(output.unit.id, "currWexp");
-  output.currMt = getAttrValue(output.unit.id, 'currMt');
-  output.currWt = getAttrValue(output.unit.id, 'currWt');
-  output.currEff = getAttr(output.unit.id,'currEff').get('current');
-  output.dmgType = getAttr(output.unit.id, 'atkType').get('current');
-  output.wepName = getAttr(output.unit.id, 'currName').get('current');
-  output.wepType = getAttr(output.unit.id, "currWep").get('current');
-  output.wepTri = getAttr(output.unit.id, "currTri").get('current');
+  output.single = helpers.getAttrValue(output.unit.id, 'currSingle');
+  output.wepGain = helpers.getAttrValue(output.unit.id, "currWexp");
+  output.currMt = helpers.getAttrValue(output.unit.id, 'currMt');
+  output.currWt = helpers.getAttrValue(output.unit.id, 'currWt');
+  output.currEff = helpers.getAttr(output.unit.id,'currEff').get('current');
+  output.dmgType = helpers.getAttr(output.unit.id, 'atkType').get('current');
+  output.wepName = helpers.getAttr(output.unit.id, 'currName').get('current');
+  output.wepType = helpers.getAttr(output.unit.id, "currWep").get('current');
+  output.wepTri = helpers.getAttr(output.unit.id, "currTri").get('current');
 
   // Stat info
-  output.classPower = getAttrValue(output.unit.id, "classPower");
-  output.level = getAttrValue(output.unit.id, "level");
-  output.gender = getAttr(output.unit.id, "gender").get('current');
+  output.classPower = helpers.getAttrValue(output.unit.id, "classPower");
+  output.level = helpers.getAttrValue(output.unit.id, "level");
+  output.gender = helpers.getAttr(output.unit.id, "gender").get('current');
   output.currHP = output.obj.get("bar3_value");
   output.maxHP = output.obj.get("bar3_max");
-  output.str = getAttrValue(output.unit.id, "strTotal");
-  output.mag = getAttrValue(output.unit.id, "magTotal");
-  output.skl = getAttrValue(output.unit.id, "sklTotal");
-  output.spd = getAttrValue(output.unit.id, "spdTotal"),
-  output.lck = getAttrValue(output.unit.id, "lckTotal");
-  output.def = getAttrValue(output.unit.id, "defTotal");
-  output.res = getAttrValue(output.unit.id, "resTotal");
-  output.con = getAttrValue(output.unit.id, "conTotal");
-  output.phys = getAttrValue(output.unit.id, "physTotal");
-  output.myst = getAttrValue(output.unit.id, "mystTotal");
-  output.hit = getAttrValue(output.unit.id, "hit");
-  output.crit = getAttrValue(output.unit.id, "crit");
-  output.atkSpd = getAttrValue(output.unit.id, 'atkSpd');
+  output.str = helpers.getAttrValue(output.unit.id, "strTotal");
+  output.mag = helpers.getAttrValue(output.unit.id, "magTotal");
+  output.skl = helpers.getAttrValue(output.unit.id, "sklTotal");
+  output.spd = helpers.getAttrValue(output.unit.id, "spdTotal"),
+  output.lck = helpers.getAttrValue(output.unit.id, "lckTotal");
+  output.def = helpers.getAttrValue(output.unit.id, "defTotal");
+  output.res = helpers.getAttrValue(output.unit.id, "resTotal");
+  output.con = helpers.getAttrValue(output.unit.id, "conTotal");
+  output.phys = helpers.getAttrValue(output.unit.id, "physTotal");
+  output.myst = helpers.getAttrValue(output.unit.id, "mystTotal");
+  output.hit = helpers.getAttrValue(output.unit.id, "hit");
+  output.crit = helpers.getAttrValue(output.unit.id, "crit");
+  output.atkSpd = helpers.getAttrValue(output.unit.id, 'atkSpd');
   output.addDmg = 0;
-  output.swordExp = getAttrValue(output.unit.id, weaponMap["Sword"]);
-  output.lanceExp = getAttrValue(output.unit.id, weaponMap["Lance"]);
-  output.axeExp = getAttrValue(output.unit.id, weaponMap["Axe"]);
-  output.bowExp = getAttrValue(output.unit.id, weaponMap["Bow"]);
-  output.staffExp = getAttrValue(output.unit.id, weaponMap["Staff"]);
-  output.darkExp = getAttrValue(output.unit.id, weaponMap["Dark"]);
-  output.animaExp = getAttrValue(output.unit.id, weaponMap["Anima"]);
-  output.lightExp = getAttrValue(output.unit.id, weaponMap["Light"]);
-  output.gunExp = getAttrValue(output.unit.id, weaponMap["Gun"]);
-  output.fistExp = getAttrValue(output.unit.id, weaponMap["Fist"]);
+  output.swordExp = helpers.getAttrValue(output.unit.id, weaponMap["Sword"]);
+  output.lanceExp = helpers.getAttrValue(output.unit.id, weaponMap["Lance"]);
+  output.axeExp = helpers.getAttrValue(output.unit.id, weaponMap["Axe"]);
+  output.bowExp = helpers.getAttrValue(output.unit.id, weaponMap["Bow"]);
+  output.staffExp = helpers.getAttrValue(output.unit.id, weaponMap["Staff"]);
+  output.darkExp = helpers.getAttrValue(output.unit.id, weaponMap["Dark"]);
+  output.animaExp = helpers.getAttrValue(output.unit.id, weaponMap["Anima"]);
+  output.lightExp = helpers.getAttrValue(output.unit.id, weaponMap["Light"]);
+  output.gunExp = helpers.getAttrValue(output.unit.id, weaponMap["Gun"]);
+  output.fistExp = helpers.getAttrValue(output.unit.id, weaponMap["Fist"]);
 
   // Skill info
   output.skillMsg = "Attacker Skills: <ul>";
@@ -258,46 +213,46 @@ function initializeDefInfo(unitId, info) {
   output.obj = findObjs({_type: "graphic", _id: unitId})[0];
 
   // Weapon info
-  output.currWt = getAttrValue(output.unit.id, 'currWt');
-  output.counter = getAttrValue(output.unit.id, 'currCounter');
-  output.minDist = getAttrValue(output.unit.id, 'currMinDist');
-  output.maxDist = getAttrValue(output.unit.id, 'currMaxDist');
-  output.dmgType = getAttr(output.unit.id, 'atkType').get('current');
-  output.wepType = getAttr(output.unit.id, "currWep").get('current');
-  output.wepTri = getAttr(output.unit.id, "currTri").get('current');
+  output.currWt = helpers.getAttrValue(output.unit.id, 'currWt');
+  output.counter = helpers.getAttrValue(output.unit.id, 'currCounter');
+  output.minDist = helpers.getAttrValue(output.unit.id, 'currMinDist');
+  output.maxDist = helpers.getAttrValue(output.unit.id, 'currMaxDist');
+  output.dmgType = helpers.getAttr(output.unit.id, 'atkType').get('current');
+  output.wepType = helpers.getAttr(output.unit.id, "currWep").get('current');
+  output.wepTri = helpers.getAttr(output.unit.id, "currTri").get('current');
 
   // Stat info
-  output.currWeak = getAttr(output.unit.id,'weakTotal').get('current');
-  output.level = getAttrValue(output.unit.id, "level");
-  output.gender = getAttr(output.unit.id, "gender").get('current');
+  output.currWeak = helpers.getAttr(output.unit.id,'weakTotal').get('current');
+  output.level = helpers.getAttrValue(output.unit.id, "level");
+  output.gender = helpers.getAttr(output.unit.id, "gender").get('current');
   output.currHP = output.obj.get("bar3_value");
   output.maxHP = output.obj.get("bar3_max");
   output.tempHP = output.obj.get("bar2_value");
-  output.str = getAttrValue(output.unit.id, "strTotal");
-  output.mag = getAttrValue(output.unit.id, "magTotal");
-  output.skl = getAttrValue(output.unit.id, "sklTotal"),
-  output.spd = getAttrValue(output.unit.id, "spdTotal"),
-  output.lck = getAttrValue(output.unit.id, "lckTotal");
-  output.def = getAttrValue(output.unit.id, "defTotal"),
-  output.res = getAttrValue(output.unit.id, "resTotal"),
-  output.con = getAttrValue(output.unit.id, "conTotal");
-  output.ward = getAttrValue(output.unit.id, "wardTotal");
-  output.prot = getAttrValue(output.unit.id, "protTotal");
+  output.str = helpers.getAttrValue(output.unit.id, "strTotal");
+  output.mag = helpers.getAttrValue(output.unit.id, "magTotal");
+  output.skl = helpers.getAttrValue(output.unit.id, "sklTotal"),
+  output.spd = helpers.getAttrValue(output.unit.id, "spdTotal"),
+  output.lck = helpers.getAttrValue(output.unit.id, "lckTotal");
+  output.def = helpers.getAttrValue(output.unit.id, "defTotal"),
+  output.res = helpers.getAttrValue(output.unit.id, "resTotal"),
+  output.con = helpers.getAttrValue(output.unit.id, "conTotal");
+  output.ward = helpers.getAttrValue(output.unit.id, "wardTotal");
+  output.prot = helpers.getAttrValue(output.unit.id, "protTotal");
   output.addWard = 0;
   output.addProt = 0;
-  output.avoid = getAttrValue(output.unit.id, "avo");
-  output.dodge = getAttrValue(output.unit.id, "ddg");
-  output.atkSpd = getAttrValue(output.unit.id, 'atkSpd');
-  output.swordExp = getAttrValue(output.unit.id, weaponMap["Sword"]);
-  output.lanceExp = getAttrValue(output.unit.id, weaponMap["Lance"]);
-  output.axeExp = getAttrValue(output.unit.id, weaponMap["Axe"]);
-  output.bowExp = getAttrValue(output.unit.id, weaponMap["Bow"]);
-  output.staffExp = getAttrValue(output.unit.id, weaponMap["Staff"]);
-  output.darkExp = getAttrValue(output.unit.id, weaponMap["Dark"]);
-  output.animaExp = getAttrValue(output.unit.id, weaponMap["Anima"]);
-  output.lightExp = getAttrValue(output.unit.id, weaponMap["Light"]);
-  output.gunExp = getAttrValue(output.unit.id, weaponMap["Gun"]);
-  output.fistExp = getAttrValue(output.unit.id, weaponMap["Fist"]);
+  output.avoid = helpers.getAttrValue(output.unit.id, "avo");
+  output.dodge = helpers.getAttrValue(output.unit.id, "ddg");
+  output.atkSpd = helpers.getAttrValue(output.unit.id, 'atkSpd');
+  output.swordExp = helpers.getAttrValue(output.unit.id, weaponMap["Sword"]);
+  output.lanceExp = helpers.getAttrValue(output.unit.id, weaponMap["Lance"]);
+  output.axeExp = helpers.getAttrValue(output.unit.id, weaponMap["Axe"]);
+  output.bowExp = helpers.getAttrValue(output.unit.id, weaponMap["Bow"]);
+  output.staffExp = helpers.getAttrValue(output.unit.id, weaponMap["Staff"]);
+  output.darkExp = helpers.getAttrValue(output.unit.id, weaponMap["Dark"]);
+  output.animaExp = helpers.getAttrValue(output.unit.id, weaponMap["Anima"]);
+  output.lightExp = helpers.getAttrValue(output.unit.id, weaponMap["Light"]);
+  output.gunExp = helpers.getAttrValue(output.unit.id, weaponMap["Gun"]);
+  output.fistExp = helpers.getAttrValue(output.unit.id, weaponMap["Fist"]);
 
   // Skill info
   output.skillMsg = "Defender Skills: <ul>";
@@ -313,7 +268,7 @@ function initializeDefInfo(unitId, info) {
 
 on('chat:message', function(msg) {
   if (msg.type != 'api') return;
-  var parts = processInlinerolls(msg).split(' ');
+  var parts = helpers.processInlinerolls(msg).split(' ');
   var command = parts.shift().substring(1);
 
   if (command != "hit" && command != "sim" && command != "staff" && command != "staffSim") { return; }
@@ -352,17 +307,17 @@ on('chat:message', function(msg) {
   if (command == "hit") {
     const attacker = initializeAtkInfo(selectedId, info)
     const defender = initializeDefInfo(targetId, info)
-    const isSympathetic = SkillHandler.CheckSympathetic(attacker, defender);
+    const isSympathetic = skillHandler.CheckSympathetic(attacker, defender);
     if (isSympathetic == 1) {
       UpdateHealth(attacker, attacker.currHP - defender.currHP);
     }
     else if (isSympathetic == 2) {
       UpdateHealth(defender, defender.currHP - attacker.currHP);
     }
-    if (SkillHandler.CheckVantage(attacker, defender) == 1) {
+    if (skillHandler.CheckVantage(attacker, defender) == 1) {
       combatBlock: {
         // Can the enemy counter?
-        if (CanCounter(defender, Led.from(attacker.token).to(defender.token).byManhattan().inSquares()) == 1) {
+        if (helpers.canCounter(defender, Led.from(attacker.token).to(defender.token).byManhattan().inSquares()) == 1) {
           if (CombatBlock(targetId, selectedId, info, 0, "None") == -1) { break combatBlock; }
           // Counterer doubled, go again
           if (info.double == 1) {
@@ -394,7 +349,7 @@ on('chat:message', function(msg) {
         }
       }
     }
-    else if (SkillHandler.CheckDesperation(attacker, defender) == 1) {
+    else if (skillHandler.CheckDesperation(attacker, defender) == 1) {
       combatBlock: {
         // Attacker initial combat
         if (CombatBlock(selectedId, targetId, info, 1, artName) == -1) { break combatBlock; }
@@ -518,7 +473,7 @@ function DoOneCombatStep(selectedId, targetId, info, initiating, artName, isSim)
 
 
  // Skill checks
- SkillHandler.CheckSkills(attacker, defender, initiating, isSim, artName);
+ skillHandler.CheckSkills(attacker, defender, initiating, isSim, artName);
 
 
   // Check for broken weapon
@@ -548,7 +503,7 @@ function DoOneCombatStep(selectedId, targetId, info, initiating, artName, isSim)
       // Reset attacker skills and then check only staff skills
       attacker.armsthrift = 0;
       attacker.skillMsg = "Attacker Skills: <ul>";
-      SkillHandler.CheckStaffSkills(attacker, isSim);
+      skillHandler.CheckStaffSkills(attacker, isSim);
 
       UpdateHealth(defender, scytheInfo[attacker.wepName]);
       if (attacker.armsthrift != 1) { 
@@ -568,7 +523,7 @@ function DoOneCombatStep(selectedId, targetId, info, initiating, artName, isSim)
   }
   else { // Otherwise normal combat
     // Weapon triangle
-    let triangle = CheckAdvantage(attacker.wepTri, defender.wepTri);
+    let triangle = helpers.checkAdvantage(attacker.wepTri, defender.wepTri);
     let mult = 1;
     if (attacker.reaver == 1) {
       if (triangle == 1) { triangle = -1; }
@@ -622,8 +577,8 @@ function DoOneCombatStep(selectedId, targetId, info, initiating, artName, isSim)
     // Damage Typing
     let atkDmg = 0;
     let defMit = 0;
-    let protDef = defender.prot + defender.addProt + getAttrValue(defender.unit.id, "mitBonusTotal");
-    let wardDef = defender.ward + defender.addWard + getAttrValue(defender.unit.id, "mitBonusTotal");
+    let protDef = defender.prot + defender.addProt + helpers.getAttrValue(defender.unit.id, "mitBonusTotal");
+    let wardDef = defender.ward + defender.addWard + helpers.getAttrValue(defender.unit.id, "mitBonusTotal");
     if (attacker.dmgType == 'Physical') {
       atkDmg = attacker.phys;
       if (attacker.reverse == 1) { defMit = wardDef; }
@@ -732,7 +687,7 @@ function DoOneCombatStep(selectedId, targetId, info, initiating, artName, isSim)
 
     // Gather info for future battle steps
     Object.assign(info, {
-      counter: attacker.dazzle == 1 ? 0 : CanCounter(defender, Led.from(attacker.token).to(defender.token).byManhattan().inSquares()),
+      counter: attacker.dazzle == 1 ? 0 : helpers.canCounter(defender, Led.from(attacker.token).to(defender.token).byManhattan().inSquares()),
       double: attacker.single == 1 ? 0 : atkSpdDiff >= 4,
       killed: killed,
       numAttacks: attacker.numAttacks,
@@ -800,7 +755,7 @@ function DoOneStaffStep(selectedId, targetId, isSim) {
 
 
   // Skill checks
-  SkillHandler.CheckStaffSkills(attacker, isSim);
+  skillHandler.CheckStaffSkills(attacker, isSim);
 
 
   // End of staff updates
@@ -809,7 +764,7 @@ function DoOneStaffStep(selectedId, targetId, isSim) {
       attr.setWithWorker("current", currUses - 1);
     }
     expCalc = expHandler.staffExpCalc(staffInfo[attacker.wepName].exp, defender.level, attacker.level, attacker.classPower)
-    expHandler.expIncrease(selectedId, expCalc, "exp");
+    expIncrease(selectedId, expCalc, "exp");
     updateWeaponEXP(attacker.unit.id, attacker.wepType, staffInfo[attacker.wepName].wexp * (1 + attacker.hasDiscipline));
   }
 

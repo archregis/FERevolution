@@ -1230,7 +1230,7 @@ function Flare(attacker, defender, info) {
 
 // Crit +10 if foe cannot counter
 function Focus(attacker, defender, info) {
-    if (info.whoseSkill == 1 || CanCounter(defender, Led.from(attacker.token).to(defender.token).byManhattan().inSquares())) { return; }
+    if (info.whoseSkill == 1 || helpers.canCounter(defender, Led.from(attacker.token).to(defender.token).byManhattan().inSquares())) { return; }
         attacker.skillMsg += outputSkill("Focus");
         attacker.crit += 10;
 }
@@ -1827,7 +1827,7 @@ function Nullify(attacker, defender, info) {
 
 // +4 damage if foe cannot counter
 function Opportunist(attacker, defender, info) {
-    if (info.whoseSkill == 1 || CanCounter(defender, Led.from(attacker.token).to(defender.token).byManhattan().inSquares())) { return; }
+    if (info.whoseSkill == 1 || helpers.canCounter(defender, Led.from(attacker.token).to(defender.token).byManhattan().inSquares())) { return; }
         attacker.skillMsg += outputSkill("Opportunist");
         attacker.addDmg += 4;
 }
@@ -2087,7 +2087,7 @@ function ReadyStance(attacker, defender, info) {
 
 // Reduces the cost of Combat Arts by 2 if unit has advantage
 function Reave(attacker, defender, info) {
-    if (info.whoseSkill == 1 || CheckAdvantage(attacker.wepTri, defender.wepTri) != 1) { return; }
+    if (info.whoseSkill == 1 || helpers.checkAdvantage(attacker.wepTri, defender.wepTri) != 1) { return; }
     attacker.skillMsg += outputSkill("Reave");
     attacker.duraCost -=  2;
 }
@@ -2792,20 +2792,20 @@ function outputSkill(skill, odds, bonus) {
   }
 
 // Handles normal skills
-const SkillHandler = {
+const skillHandler = {
     // Checks basic skills that work post combat block
     CheckSkills: function(attacker, defender, initiating, isSim, artName) {
 
-        let aSkills = getAttr(attacker.unit.id, 'activeSkills').get('current').split(',');
+        let aSkills = helpers.getAttr(attacker.unit.id, 'activeSkills').get('current').split(',');
         aSkills.push(artName);
-        const dSkills = getAttr(defender.unit.id, 'activeSkills').get('current').split(',');
+        const dSkills = helpers.getAttr(defender.unit.id, 'activeSkills').get('current').split(',');
 
-        const aWepSkills = getAttr(attacker.unit.id, 'activeWepSkills').get('current').split(',');
-        const dWepSkills = getAttr(defender.unit.id, 'activeWepSkills').get('current').split(',');
+        const aWepSkills = helpers.getAttr(attacker.unit.id, 'activeWepSkills').get('current').split(',');
+        const dWepSkills = helpers.getAttr(defender.unit.id, 'activeWepSkills').get('current').split(',');
 
         const weather = findObjs({_type: "character", name: "Weather"});
         const weatherId = weather[0].get("_id")
-        const weatherCond = getAttr(weatherId, 'activeSkills').get('current').split(',') == "" ? "ClearSkies" : getAttr(weatherId, 'activeSkills').get('current').split(',');
+        const weatherCond = helpers.getAttr(weatherId, 'activeSkills').get('current').split(',') == "" ? "ClearSkies" : helpers.getAttr(weatherId, 'activeSkills').get('current').split(',');
 
         let info = {
             initiating: initiating,
@@ -2926,11 +2926,11 @@ const SkillHandler = {
 
     // Returns 1 if the attacker has sympathetic, 2 if the defender has sympathetic, 0 otherwise
     CheckSympathetic: function(attacker, defender) {
-        const aSkills = getAttr(attacker.unit.id, 'activeSkills').get('current').split(',');
-        const dSkills = getAttr(defender.unit.id, 'activeSkills').get('current').split(',');
+        const aSkills = helpers.getAttr(attacker.unit.id, 'activeSkills').get('current').split(',');
+        const dSkills = helpers.getAttr(defender.unit.id, 'activeSkills').get('current').split(',');
 
-        const aWepSkills = getAttr(attacker.unit.id, 'activeWepSkills').get('current').split(',');
-        const dWepSkills = getAttr(defender.unit.id, 'activeWepSkills').get('current').split(',');
+        const aWepSkills = helpers.getAttr(attacker.unit.id, 'activeWepSkills').get('current').split(',');
+        const dWepSkills = helpers.getAttr(defender.unit.id, 'activeWepSkills').get('current').split(',');
 
         if (dSkills.includes("Nihil") == false && dWepSkills.includes('Nihil') == false) {
             if (aSkills.includes("Sympathetic")) { return 1; }
@@ -2953,11 +2953,11 @@ const SkillHandler = {
         if (defender.currHP < defender.maxHP / 2) { belowHalf = 1; }
 
         // Skill checks
-        const aSkills = getAttr(attacker.unit.id, 'activeSkills').get('current').split(',');
-        const dSkills = getAttr(defender.unit.id, 'activeSkills').get('current').split(',');
+        const aSkills = helpers.getAttr(attacker.unit.id, 'activeSkills').get('current').split(',');
+        const dSkills = helpers.getAttr(defender.unit.id, 'activeSkills').get('current').split(',');
 
-        const aWepSkills = getAttr(attacker.unit.id, 'activeWepSkills').get('current').split(',');
-        const dWepSkills = getAttr(defender.unit.id, 'activeWepSkills').get('current').split(',');
+        const aWepSkills = helpers.getAttr(attacker.unit.id, 'activeWepSkills').get('current').split(',');
+        const dWepSkills = helpers.getAttr(defender.unit.id, 'activeWepSkills').get('current').split(',');
 
         if (aSkills.includes("Nihil") == false && aWepSkills.includes('Nihil') == false) {
             if (dSkills.includes("Vantage+") || (dSkills.includes("Vantage") && belowHalf == 1)) { return 1; }
@@ -2974,11 +2974,11 @@ const SkillHandler = {
         if (attacker.currHP < attacker.maxHP / 2) { belowHalf = 1; }
 
         // Skill checks
-        const aSkills = getAttr(attacker.unit.id, 'activeSkills').get('current').split(',');
-        const dSkills = getAttr(defender.unit.id, 'activeSkills').get('current').split(',');
+        const aSkills = helpers.getAttr(attacker.unit.id, 'activeSkills').get('current').split(',');
+        const dSkills = helpers.getAttr(defender.unit.id, 'activeSkills').get('current').split(',');
 
-        const aWepSkills = getAttr(attacker.unit.id, 'activeWepSkills').get('current').split(',');
-        const dWepSkills = getAttr(defender.unit.id, 'activeWepSkills').get('current').split(',');
+        const aWepSkills = helpers.getAttr(attacker.unit.id, 'activeWepSkills').get('current').split(',');
+        const dWepSkills = helpers.getAttr(defender.unit.id, 'activeWepSkills').get('current').split(',');
 
         if (dSkills.includes("Nihil") == false && dWepSkills.includes('Nihil') == false) {
             if ((aSkills.includes("Desperation") && belowHalf == 1) || (aSkills.includes("Assassinate") && Led.from(attacker.token).to(defender.token).byManhattan().inSquares() == 1)) { return 1; }
@@ -2996,8 +2996,8 @@ const SkillHandler = {
             whoseSkill: 0,
         }
 
-        const aWepSkills = getAttr(attacker.unit.id, 'activeWepSkills').get('current').split(',');
-        const aSkills = getAttr(attacker.unit.id, 'activeSkills').get('current').split(',');
+        const aWepSkills = helpers.getAttr(attacker.unit.id, 'activeWepSkills').get('current').split(',');
+        const aSkills = helpers.getAttr(attacker.unit.id, 'activeSkills').get('current').split(',');
 
         // Priority 1  skills
         for(let i=0; i<aWepSkills.length; i++) {
