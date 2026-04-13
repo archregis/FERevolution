@@ -102,7 +102,7 @@ function handleBonusLevelUp(attackerId, CurrEXP, LvA, who) {
 
     for (let i=0; i<3; i++) {
       if (nonCappedStats.length === 0) break;
-      const randIndex = Math.floor(Math.random() * nonCappedStats.length);
+      const randIndex = randomInteger(nonCappedStats.length) - 1;
       const statName = nonCappedStats[randIndex];
       const attr = getAttr(attackerId, statName);
       const currentVal = Number(attr.get("current")) || 0;
