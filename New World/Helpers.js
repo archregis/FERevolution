@@ -29,16 +29,16 @@ const helpers = {
 
     // Determines if an attacker has advantage (1), disadvantage (-1), or neutral (0)
     checkAdvantage: function(attackerWep, defenderWep) {
-        const weaponTriangle = { 'Sword': 1, 'Axe':2, 'Lance':3, 'Anima':4, 'Light':5, 'Dark':6 };
+        const weaponTriangle = { 'Sword': 1, 'Axe': 2, 'Lance': 3, 'Anima': 4, 'Light': 5, 'Dark': 6 };
         const atkTriMap = weaponTriangle[attackerWep];
         const defTriMap = weaponTriangle[defenderWep];
 
         if ((atkTriMap < 4 && defTriMap < 4) || (atkTriMap >= 4 && defTriMap >= 4)) {
-            if ((atkTriMap+1)%3 == defTriMap%3) {
-            return 1;
+            if ((atkTriMap + 1) % 3 == defTriMap % 3) {
+                return 1;
             }
-            else if ((atkTriMap-1)%3 == defTriMap%3) {
-            return -1;
+            else if ((atkTriMap - 1) % 3 == defTriMap % 3) {
+                return -1;
             }
         }
 

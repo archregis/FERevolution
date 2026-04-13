@@ -337,11 +337,11 @@ function Allbreaker(attacker, defender, info) {
     if (info.whoseSkill == 0) {
         attacker.skillMsg += outputSkill("Allbreaker");
         attacker.hit += 30;
-      }
-      if (info.whoseSkill == 1) {
+    }
+    if (info.whoseSkill == 1) {
         defender.skillMsg += outputSkill("Allbreaker");
         defender.avoid += 30;
-      }
+    }
 }
 
 // Grants effective damage against all
@@ -354,9 +354,9 @@ function Allslayer(attacker, defender, info) {
 
 // Halves damage from magic
 function Apotrope(attacker, defender, info) {
-if (info.whoseSkill == 0 || attacker.dmgType == "Physical") { return; }
-defender.skillMsg += outputSkill("Apotrope");
-attacker.dmgMult *= 0.5;
+    if (info.whoseSkill == 0 || attacker.dmgType == "Physical") { return; }
+    defender.skillMsg += outputSkill("Apotrope");
+    attacker.dmgMult *= 0.5;
 }
 
 // -4 damage whenever being attacked
@@ -455,11 +455,11 @@ function Axebreaker(attacker, defender, info) {
     if (info.whoseSkill == 0 && defender.wepType == "Axe") {
         attacker.skillMsg += outputSkill("Axebreaker");
         attacker.hit += 30;
-      }
-      if (info.whoseSkill == 1 && attacker.wepType == "Axe")  {
+    }
+    if (info.whoseSkill == 1 && attacker.wepType == "Axe") {
         defender.skillMsg += outputSkill("Axebreaker");
         defender.avoid += 30;
-      }
+    }
 }
 
 // +4 dmg when equipping an axe
@@ -570,11 +570,11 @@ function Bowbreaker(attacker, defender, info) {
     if (info.whoseSkill == 0 && defender.wepType == "Bow") {
         attacker.skillMsg += outputSkill("Bowbreaker");
         attacker.hit += 30;
-      }
-      if (info.whoseSkill == 1 && attacker.wepType == "Bow") {
+    }
+    if (info.whoseSkill == 1 && attacker.wepType == "Bow") {
         defender.skillMsg += outputSkill("Bowbreaker");
         defender.avoid += 30;
-      }
+    }
 }
 
 // +4 dmg when equipping a bow
@@ -643,12 +643,12 @@ function Chivalry(attacker, defender, info) {
     if (info.whoseSkill == 0 && defender.currHP >= defender.maxHP) {
         attacker.skillMsg += outputSkill("Chivalry");
         attacker.addDmg += 4;
-      }
-      else if (info.whoseSkill == 1 && attacker.currHP >= attacker.maxHP) {
+    }
+    else if (info.whoseSkill == 1 && attacker.currHP >= attacker.maxHP) {
         defender.skillMsg += outputSkill("Chivalry");
         defender.addProt += 4;
         defender.addWard += 4;
-      }
+    }
 }
 
 // Guaranteed criticals if hp below 25%
@@ -678,7 +678,7 @@ function Commander(attacker, defender, info) {
     else if (info.whoseSkill == 1) {
         defender.skillMsg += outputSkill("Commander");
         defender.resilience = 1;
-        if (attacker.combatArt == 1) { attacker.dmgMult *= 0.5;}
+        if (attacker.combatArt == 1) { attacker.dmgMult *= 0.5; }
         attacker.activationMult *= 0.5;
         defender.postDamageMult = 0.25;
     }
@@ -689,11 +689,11 @@ function Conquest(attacker, defender, info) {
     if (info.whoseSkill == 0) {
         attacker.skillMsg += outputSkill("Conquest");
         attacker.addDmg += 6;
-      }
-      else if (info.whoseSkill == 1) {
+    }
+    else if (info.whoseSkill == 1) {
         defender.skillMsg += outputSkill("Conquest");
         defender.effNegate = 1;
-      }
+    }
 }
 
 // Negates enemy res
@@ -946,7 +946,7 @@ function Desperation(attacker, defender, info) {
 function Determination(attacker, defender, info) {
     if (info.whoseSkill == 0 && attacker.currHP * 2 < attacker.maxHP) {
         attacker.skillMsg += outputSkill("Determination");
-        attacker.duraCost -=  1;
+        attacker.duraCost -= 1;
         attacker.activationBonus += 20;
     }
     else if (info.whoseSkill == 1 && defender.currHP * 2 < defender.maxHP) {
@@ -1098,7 +1098,7 @@ function DrainSoul(attacker, defender, info) {
 
 // +30 avoid when initiating
 function DuelistsBlow(attacker, defender, info) {
-    if (info.whoseSkill == 0 || info.initiating == 1) { return;}
+    if (info.whoseSkill == 0 || info.initiating == 1) { return; }
     defender.skillMsg += outputSkill("Duelist's Blow");
     defender.avoid += 30;
 }
@@ -1191,11 +1191,11 @@ function Fistbreaker(attacker, defender, info) {
     if (info.whoseSkill == 0 && defender.wepType == "Fist") {
         attacker.skillMsg += outputSkill("Fistbreaker");
         attacker.hit += 30;
-      }
-      if (info.whoseSkill == 1 && attacker.wepType == "Fist")  {
+    }
+    if (info.whoseSkill == 1 && attacker.wepType == "Fist") {
         defender.skillMsg += outputSkill("Fistbreaker");
         defender.avoid += 30;
-      }
+    }
 }
 
 // +4 damage when equipping fists
@@ -1225,14 +1225,14 @@ function Flare(attacker, defender, info) {
     if (info.whoseSkill == 1) { return; }
     attacker.skillMsg += outputSkill("Flare");
     attacker.duraCost += 1;
-    defender.ward = Math.floor(defender.ward/2);
+    defender.ward = Math.floor(defender.ward / 2);
 }
 
 // Crit +10 if foe cannot counter
 function Focus(attacker, defender, info) {
     if (info.whoseSkill == 1 || helpers.canCounter(defender, Led.from(attacker.token).to(defender.token).byManhattan().inSquares())) { return; }
-        attacker.skillMsg += outputSkill("Focus");
-        attacker.crit += 10;
+    attacker.skillMsg += outputSkill("Focus");
+    attacker.crit += 10;
 }
 
 // +5 def, -3 str, -3 mag
@@ -1391,11 +1391,11 @@ function Gunbreaker(attacker, defender, info) {
     if (info.whoseSkill == 0 && defender.wepType == "Gun") {
         attacker.skillMsg += outputSkill("Gunbreaker");
         attacker.hit += 30;
-      }
-      if (info.whoseSkill == 1 && attacker.wepType == "Gun")  {
+    }
+    if (info.whoseSkill == 1 && attacker.wepType == "Gun") {
         defender.skillMsg += outputSkill("Gunbreaker");
         defender.avoid += 30;
-      }
+    }
 }
 
 // +4 dmg when equipping a gun
@@ -1475,7 +1475,7 @@ function Ignis(attacker, defender, info) {
     if (info.isSim == 1 && odds > 0) { attacker.skillMsg += outputSkill("Ignis", odds, bonus); }
     else if (randomInteger(100) <= odds) {
         attacker.skillMsg += outputSkill("Ignis");
-        attacker.addDmg += Math.floor(attacker.res / 2) + Math.floor(attacker.def/ 2);
+        attacker.addDmg += Math.floor(attacker.res / 2) + Math.floor(attacker.def / 2);
     }
 }
 
@@ -1610,11 +1610,11 @@ function Lancebreaker(attacker, defender, info) {
     if (info.whoseSkill == 0 && defender.wepType == "Lance") {
         attacker.skillMsg += outputSkill("Lancebreaker");
         attacker.hit += 30;
-      }
-      if (info.whoseSkill == 1 && attacker.wepType == "Lance")  {
+    }
+    if (info.whoseSkill == 1 && attacker.wepType == "Lance") {
         defender.skillMsg += outputSkill("Lancebreaker");
         defender.avoid += 30;
-      }
+    }
 }
 
 // +4 dmg when equipping a lance
@@ -1732,10 +1732,10 @@ function Mageslayer(attacker, defender, info) {
 // When initiating at 1 range with a physical weapon, add 50% mag to damage and 30% mag to hit and crit
 function MagicBlade(attacker, defender, info) {
     if (info.whoseSkill == 1 || attacker.dmgType == "Magical" || Led.from(attacker.token).to(defender.token).byManhattan().inSquares() != 1) { return; }
-        attacker.skillMsg += outputSkill("Magic Blade");
-        attacker.addDmg += Math.floor(attacker.mag / 2);
-        attacker.hit += Math.floor((attacker.mag / 10 * 3));
-        attacker.crit += Math.floor((attacker.mag / 10 * 3));
+    attacker.skillMsg += outputSkill("Magic Blade");
+    attacker.addDmg += Math.floor(attacker.mag / 2);
+    attacker.hit += Math.floor((attacker.mag / 10 * 3));
+    attacker.crit += Math.floor((attacker.mag / 10 * 3));
 }
 
 // Attacks that miss inflict half damage
@@ -1828,8 +1828,8 @@ function Nullify(attacker, defender, info) {
 // +4 damage if foe cannot counter
 function Opportunist(attacker, defender, info) {
     if (info.whoseSkill == 1 || helpers.canCounter(defender, Led.from(attacker.token).to(defender.token).byManhattan().inSquares())) { return; }
-        attacker.skillMsg += outputSkill("Opportunist");
-        attacker.addDmg += 4;
+    attacker.skillMsg += outputSkill("Opportunist");
+    attacker.addDmg += 4;
 }
 
 // Spd% chance to reduce damage by skl
@@ -2089,7 +2089,7 @@ function ReadyStance(attacker, defender, info) {
 function Reave(attacker, defender, info) {
     if (info.whoseSkill == 1 || helpers.checkAdvantage(attacker.wepTri, defender.wepTri) != 1) { return; }
     attacker.skillMsg += outputSkill("Reave");
-    attacker.duraCost -=  2;
+    attacker.duraCost -= 2;
 }
 
 // Reverses weapon triangle and doubles bonuses
@@ -2130,20 +2130,20 @@ function Resolve(attacker, defender, info) {
         attacker.hit += Math.floor((attacker.skl / 10 * 3) * 2);
         attacker.crit += Math.floor((attacker.skl / 10 * 3) / 2);
         attacker.atkSpd += Math.floor(attacker.spd / 10 * 3);
-   
+
         if (attacker.dmgType == 'Physical') {
             attacker.phys += Math.floor(attacker.str / 10 * 3);  
         }
         else if (attacker.dmgType == 'Magical') {
-         attacker.myst += Math.floor(attacker.mag / 10 * 3);
+            attacker.myst += Math.floor(attacker.mag / 10 * 3);
         }
 
         attacker.str += Math.floor(attacker.str / 10 * 3);
         attacker.mag += Math.floor(attacker.mag / 10 * 3);
         attacker.spd += Math.floor(attacker.spd / 10 * 3);
         attacker.skl += Math.floor(attacker.skl / 10 * 3);
-      }
-      else if (info.whoseSkill == 1 && defender.currHP < defender.maxHP / 2) {
+    }
+    else if (info.whoseSkill == 1 && defender.currHP < defender.maxHP / 2) {
         defender.skillMsg += outputSkill("Resolve");
 
         defender.avoid += 2 * Math.floor(defender.spd / 10 * 3);
@@ -2153,7 +2153,7 @@ function Resolve(attacker, defender, info) {
         defender.mag += Math.floor(defender.mag / 10 * 3);
         defender.spd += Math.floor(defender.spd / 10 * 3);
         defender.skl += Math.floor(defender.skl / 10 * 3);
-      }
+    }
 }
 
 // Double weapon effectiveness for an attack, strikes once
@@ -2170,13 +2170,13 @@ function Reverse(attacker, defender, info) {
     if (info.whoseSkill == 1) { return; }
     attacker.skillMsg += outputSkill("Reverse");
     attacker.reverse = 1;
-  }
+}
 
 // Reduces the cost of Combat Arts by 3
 function RightfulGod(attacker, defender, info) {
     if (info.whoseSkill == 0) {
         attacker.skillMsg += outputSkill("Rightful God");
-        attacker.duraCost -=  3;
+        attacker.duraCost -= 3;
         attacker.activationBonus += 100;
     }
     else if (info.whoseSkill == 1) {
@@ -2189,7 +2189,7 @@ function RightfulGod(attacker, defender, info) {
 function RightfulKing(attacker, defender, info) {
     if (info.whoseSkill == 0) {
         attacker.skillMsg += outputSkill("Rightful King");
-        attacker.duraCost -=  2;
+        attacker.duraCost -= 2;
         attacker.activationBonus += 30;
     }
     else if (info.whoseSkill == 1) {
@@ -2203,7 +2203,7 @@ function RightfulLord(attacker, defender, info) {
     if (info.whoseSkill == 1) { return; }
     if (info.whoseSkill == 0) {
         attacker.skillMsg += outputSkill("Rightful Lord");
-        attacker.duraCost -=  1;
+        attacker.duraCost -= 1;
         attacker.activationBonus += 10;
     }
     else if (info.whoseSkill == 1) {
@@ -2359,7 +2359,7 @@ function SpellEcho(attacker, defender, info) {
 
 // +6 def when foe initiates
 function SteadyStance(attacker, defender, info) {
-    if (info.whoseSkill == 0 || info.initiating == 0)  { return; }
+    if (info.whoseSkill == 0 || info.initiating == 0) { return; }
     defender.skillMsg += outputSkill("Steady Stance");
     defender.def += 6;
     defender.prot += 6;
@@ -2466,11 +2466,11 @@ function Swordbreaker(attacker, defender, info) {
     if (info.whoseSkill == 0 && defender.wepType == "Sword") {
         attacker.skillMsg += outputSkill("Swordbreaker");
         attacker.hit += 30;
-      }
-      if (info.whoseSkill == 1 && attacker.wepType == "Sword")  {
+    }
+    if (info.whoseSkill == 1 && attacker.wepType == "Sword") {
         defender.skillMsg += outputSkill("Swordbreaker");
         defender.avoid += 30;
-      }
+    }
 }
 
 // +4 dmg when equipping a sword
@@ -2514,16 +2514,16 @@ function Templar(attacker, defender, info) {
 
 // +4 atk, +30 hit, +30 crit, +30 avoid. Only one inventory slot
 function TheOne(attacker, defender, info) {
-        if (info.whoseSkill == 0) {
-            attacker.skillMsg += outputSkill("The One");
-            attacker.addDmg += 4;
-            attacker.hit += 30;
-            attacker.crit += 30;
-        }
-        else if (info.whoseSkill == 1) {
-            defender.skillMsg += outputSkill("The One");
-            defender.avoid += 30;
-        }
+    if (info.whoseSkill == 0) {
+        attacker.skillMsg += outputSkill("The One");
+        attacker.addDmg += 4;
+        attacker.hit += 30;
+        attacker.crit += 30;
+    }
+    else if (info.whoseSkill == 1) {
+        defender.skillMsg += outputSkill("The One");
+        defender.avoid += 30;
+    }
 }
 
 // +2 damage, +15 hit, +5 crit when weapon weighs more than enemy's
@@ -2563,11 +2563,11 @@ function Tomebreaker(attacker, defender, info) {
     if (info.whoseSkill == 0 && (defender.wepType == "Anima" || defender.wepType == "Dark" || defender.wepType == "Light")) {
         attacker.skillMsg += outputSkill("Tomebreaker");
         attacker.hit += 30;
-      }
-      if (info.whoseSkill == 1 && (attacker.wepType == "Anima" || attacker.wepType == "Dark" || attacker.wepType == "Light"))  {
+    }
+    if (info.whoseSkill == 1 && (attacker.wepType == "Anima" || attacker.wepType == "Dark" || attacker.wepType == "Light")) {
         defender.skillMsg += outputSkill("Tomebreaker");
         defender.avoid += 30;
-      }
+    }
 }
 
 // +4 dmg when equipping a tome
@@ -2637,9 +2637,9 @@ function Vampiric(attacker, defender, info) {
 
 // Counter first when below 50% hp
 function Vantage(attacker, defender, info) {
-  if (info.whoseSkill == 1 || info.initiating == 1) { return; }
-  if (attacker.currHP * 2 >= attacker.maxHP / 2) { return; }
-  attacker.skillMsg += outputSkill("Vantage");
+    if (info.whoseSkill == 1 || info.initiating == 1) { return; }
+    if (attacker.currHP * 2 >= attacker.maxHP / 2) { return; }
+    attacker.skillMsg += outputSkill("Vantage");
 }
 
 // Always counter first
@@ -2710,7 +2710,7 @@ function WardingBlow(attacker, defender, info) {
 
 // +6 res when foe initiates
 function WardingStance(attacker, defender, info) {
-    if (info.whoseSkill == 0 || info.initiating == 0)  { return; }
+    if (info.whoseSkill == 0 || info.initiating == 0) { return; }
     defender.skillMsg += outputSkill("Warding Stance");
     defender.res += 6;
     defender.ward += 6;
@@ -2803,7 +2803,7 @@ const skillHandler = {
         const aWepSkills = helpers.getAttr(attacker.unit.id, 'activeWepSkills').get('current').split(',');
         const dWepSkills = helpers.getAttr(defender.unit.id, 'activeWepSkills').get('current').split(',');
 
-        const weather = findObjs({_type: "character", name: "Weather"});
+        const weather = findObjs({ _type: "character", name: "Weather" });
         const weatherId = weather[0].get("_id")
         const weatherCond = helpers.getAttr(weatherId, 'activeSkills').get('current').split(',') == "" ? "ClearSkies" : helpers.getAttr(weatherId, 'activeSkills').get('current').split(',');
 
