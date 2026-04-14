@@ -6,7 +6,7 @@ const helpers = {
 
     // Safely gets a numeric attribute value. Returns 0 if the attribute doesn't exist.
     getAttrValue: function(characterId, attrName) {
-        const attr = getAttr(characterId, attrName);
+        const attr = helpers.getAttr(characterId, attrName);
         return attr ? Number(attr.get("current")) : 0;
     },
 
