@@ -129,7 +129,6 @@ function GetWeaponStats(attackerId, dmgType, prefix) {
     return [currUses, attr];
 }
 
-
 // Sets up all the info an attacker needs to complete a round of combat
 function initializeAtkInfo(unitId, info) {
     let output = {};
@@ -766,7 +765,7 @@ function DoOneStaffStep(selectedId, targetId, isSim) {
             attr.setWithWorker("current", currUses - 1);
         }
         expCalc = expHandler.staffExpCalc(staffInfo[attacker.wepName].exp, defender.level, attacker.level, attacker.classPower)
-        expIncrease(selectedId, expCalc, "exp");
+        expHandler.expIncrease(selectedId, expCalc, "exp");
         updateWeaponEXP(attacker.unit.id, attacker.wepType, staffInfo[attacker.wepName].wexp * (1 + attacker.hasDiscipline));
     }
 
