@@ -44,4 +44,34 @@ const helpers = {
 
         return 0;
     },
+
+    // Determines if two tokens have the same allegiance
+    isSameAlliance: function(selectedId, targetId) {
+        const allianceA = helpers.getAttr(selectedId, "charAlliance").get("current");
+        const allianceB = helpers.getAttr(targetId, "charAlliance").get("current");
+        return allianceA === allianceB;
+    },
+
+    // Finds tokens within a certain radius of a given token. If radius is -1, finds all tokens on the same page.
+    radiusObjSearch: function(selectedId, radius) {
+        let nearbyUnitIds = [];
+        const unitToken = getObj('graphic', selectedId);
+        const tokens = findObjs({ _pageid: Campaign().get("playerpageid"), _type: "graphic" });
+
+        for (const token of tokens) {
+            const nearbyUnit = getObj('character', token.get('represents'));
+            if (nearbyUnit == null) continue;
+            if (radius === -1) {
+                nearbyUnitIds.push(nearbyUnit.id);
+            }
+            else {
+                const dist = Led.from(unitToken).to(token).byManhattan().inSquares();
+                if (dist > 0 && dist <= radius) {
+                    nearbyUnitIds.push(nearbyUnit.id);
+                }
+            }
+        }
+
+        return nearbyUnitIds;
+    },
 }

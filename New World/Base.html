@@ -59,7 +59,7 @@
 							</div>
 							<div class="sheet-char-row">
 								<label>
-									<select name="attr_all" style="width: 15%;">
+									<select name="attr_charAlliance" style="width: 15%;">
 										<option>Player</option>
 										<option>Ally</option>
 										<option>Enemy</option>
@@ -831,6 +831,13 @@
 	<input name="attr_protTotal" value="0" hidden>
 	<input name="attr_wardTotal" value="0" hidden>
 	<input name="attr_atkSpd" value="0" min="0" hidden>
+    <input name="attr_strRallyCheck" value="0" hidden>
+    <input name="attr_magRallyCheck" value="0" hidden>
+    <input name="attr_sklRallyCheck" value="0" hidden>
+    <input name="attr_spdRallyCheck" value="0" hidden>
+    <input name="attr_lckRallyCheck" value="0" hidden>
+    <input name="attr_defRallyCheck" value="0" hidden>
+    <input name="attr_resRallyCheck" value="0" hidden>
 </div>
 <script type="text/worker">
 
@@ -1252,7 +1259,7 @@ on("change:spdTotal change:All change:conTotal change:repeating_weapons:wt chang
 
 // Initialize values for API, because ded
 on("sheet:opened", function(){
-	getAttrs(["wepSlot","spellSlot","currWt","currEff","currName","currMt","currWexp","currWep","currTri","currMinDist","currMaxDist","currCounter","currSingle","atkType","exp","swordExp","lanceExp","axeExp","bowExp","stavesExp","darkExp","animaExp","lightExp","gunExp","fistExp","level","hpBase","strBase","magBase","sklBase","spdBase","lckBase","defBase","resBase","movBase","hpBuff","strBuff","magBuff","sklBuff","spdBuff","lckBuff","defBuff","resBuff","movBuff","swordRank","lanceRank","axeRank","bowRank","stavesRank","darkRank","animaRank","lightRank","gunRank","fistRank","physBuff","mystBuff","wardBuff","protBuff","weakTotal","activeSkills","activeWepSkills","hit","crit","ddg","avo","hpCapCheck","strCapCheck","magCapCheck","sklCapCheck","spdCapCheck","lckCapCheck","defCapCheck","resCapCheck"], function(v){
+	getAttrs(["wepSlot","spellSlot","currWt","currEff","currName","currMt","currWexp","currWep","currTri","currMinDist","currMaxDist","currCounter","currSingle","atkType","exp","swordExp","lanceExp","axeExp","bowExp","stavesExp","darkExp","animaExp","lightExp","gunExp","fistExp","level","hpBase","strBase","magBase","sklBase","spdBase","lckBase","defBase","resBase","movBase","hpBuff","strBuff","magBuff","sklBuff","spdBuff","lckBuff","defBuff","resBuff","movBuff","swordRank","lanceRank","axeRank","bowRank","stavesRank","darkRank","animaRank","lightRank","gunRank","fistRank","physBuff","mystBuff","wardBuff","protBuff","weakTotal","activeSkills","activeWepSkills","hit","crit","ddg","avo","hpCapCheck","strCapCheck","magCapCheck","sklCapCheck","spdCapCheck","lckCapCheck","defCapCheck","resCapCheck","charAlliance","strRallyCheck","magRallyCheck","sklRallyCheck","spdRallyCheck","lckRallyCheck","defRallyCheck","resRallyCheck"], function(v){
 		setAttrs({
 			wepSlot: v.wepSlot,
 			spellSlot: v.spellSlot,
@@ -1327,6 +1334,14 @@ on("sheet:opened", function(){
 			lckCapCheck: v.lckCapCheck,
 			defCapCheck: v.defCapCheck,
 			resCapCheck: v.resCapCheck,
+            charAlliance: v.charAlliance,
+            strRallyCheck: v.strRallyCheck,
+            magRallyCheck: v.magRallyCheck,
+            sklRallyCheck: v.sklRallyCheck,
+            spdRallyCheck: v.spdRallyCheck,
+            lckRallyCheck: v.lckRallyCheck,
+            defRallyCheck: v.defRallyCheck,
+            resRallyCheck: v.resRallyCheck,
 		});
 	});
 });
