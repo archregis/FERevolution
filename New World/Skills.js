@@ -245,6 +245,7 @@ const priorityThree = {
     "Swordfaith": Swordfaith,
     "Swordslayer": Swordslayer,
     "Templar": Templar,
+    "Titanomachy": Titanomachy,
     "TomeRange+1": TomeRangePlusOne,
     "TomeRange+2": TomeRangePlusTwo,
     "Tomefaire": Tomefaire,
@@ -2542,6 +2543,23 @@ function TitanicBlow(attacker, defender, info) {
     attacker.str += 4;
     attacker.hit += 30;
     attacker.phys += 4;
+}
+
+// +1 Atk and Mit for every 2 Con above the enemy's
+function Titanomachy(attacker, defender, info) {
+    if (info.whoseSkill == 0) {
+        const conDiff = Math.max(0, attacker.con - defender.con);
+        if (conDiff < 2) { return; }
+        attacker.skillMsg += outputSkill("Titanomachy");
+        attacker.addDmg += Math.floor(conDiff / 2);
+    }
+    else if (info.whoseSkill == 1) {
+        const conDiff = Math.max(0, defender.con - attacker.con);
+        if (conDiff < 2) { return; }
+        defender.skillMsg += outputSkill("Titanomachy");
+        defender.addProt += Math.floor(conDiff / 2);
+        defender.addWard += Math.floor(conDiff / 2);
+    }
 }
 
 // Maximum range of equipped tomes is increased by 1
