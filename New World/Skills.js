@@ -2,7 +2,7 @@
 const priorityOne = {
     "Allbreaker": Allbreaker,
     "ArmoredBlow": ArmoredBlow,
-    "Arrorgance": Arrogance,
+    "Arrogance": Arrogance,
     "Awakening": Awakening,
     "Axebreaker": Axebreaker,
     "BattleVeteran": BattleVeteran,
@@ -143,6 +143,7 @@ const priorityThree = {
     "Dazzle": Dazzle,
     "Deadeye": Deadeye,
     "Demolish": Demolish,
+    "Desperation": Desperation,
     "Devil'sPact": DevilsPact,
     "Devil'sReversal": DevilsReversal,
     "Devil'sWhim": DevilsWhim,
@@ -158,6 +159,7 @@ const priorityThree = {
     "EnchantedAmmo": EnchantedAmmo,
     "Eviscerate": Eviscerate,
     "Execute": Execute,
+    "Fiamma": Fiamma,
     "FierceStance": FierceStance,
     "Fistfaire": Fistfaire,
     "Fistfaith": Fistfaith,
@@ -1138,6 +1140,18 @@ function Execute(attacker, defender, info) {
     attacker.duraCost += 1;
     if (defender.currHP < Math.ceil(defender.maxHP / 2)) {
         attacker.aim = 1;
+    }
+}
+
+// Sklx2% chance to add missing HP/2 to damage
+function Fiamma(attacker, defender, info) {
+    if (info.whoseSkill == 1) { return; }
+    const odds = Math.floor((attacker.skl * 2 + attacker.activationBonus + defender.foresight) * attacker.activationMult);
+    const bonus = '(' + (Math.floor((attacker.maxHP - attacker.currHP) / 2)) + ')';
+    if (info.isSim == 1 && odds > 0) { attacker.skillMsg += outputSkill("Fiamma", odds, bonus); }
+    else if (randomInteger(100) <= odds) {
+        attacker.skillMsg += outputSkill("Fiamma");
+        attacker.addDmg += Math.floor((attacker.maxHP - attacker.currHP) / 2);
     }
 }
 
