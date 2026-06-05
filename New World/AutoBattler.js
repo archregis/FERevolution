@@ -670,15 +670,6 @@ function DoOneCombatStep(selectedId, targetId, info, initiating, artName, isSim)
                 if (attacker.cursed == 1) { changeHealth(attacker, dmgTaken); }
                 else { trueDamage = changeHealth(defender, dmgTaken); }
                 content += 'You ' + damagePhrase + ' and deal ' + dmgTaken + ' damage!'; // Intentionally not capping damage numbers put in chat. Hitting low hp enemies for ludicrous damage numbers is fun
-                if (attacker.sol == 1) {
-                    changeHealth(attacker, -Math.min(defender.currHP, dmgTaken));
-                }
-                if (attacker.solar == 1) {
-                    changeHealth(attacker, -Math.min(defender.currHP, Math.floor(dmgTaken / 4)));
-                }
-                if (attacker.vampiric == 1) {
-                    changeHealth(attacker, -Math.min(defender.currHP, Math.floor(dmgTaken / 2)));
-                }
                 if (attacker.armsthrift != 1) {
                     let usesLeft = Math.max(0, currUses - Math.max(1, attacker.duraCost));
                     if (attacker.unbreaking == 1 && usesLeft == 0) { usesLeft = 1; }
@@ -693,6 +684,18 @@ function DoOneCombatStep(selectedId, targetId, info, initiating, artName, isSim)
                     dmgTaken = Math.floor(dmgTaken / 2);
                     trueDamage = changeHealth(defender, dmgTaken);
                 }
+                else {
+                    dmgTaken = 0;
+                }
+            }
+            if (attacker.sol == 1) {
+                changeHealth(attacker, -Math.min(defender.currHP, dmgTaken));
+            }
+            if (attacker.solar == 1) {
+                changeHealth(attacker, -Math.min(defender.currHP, Math.floor(dmgTaken / 4)));
+            }
+            if (attacker.vampiric == 1) {
+                changeHealth(attacker, -Math.min(defender.currHP, Math.floor(dmgTaken / 2)));
             }
             if (defender.iaido == 1) {
                 changeHealth(attacker, defender.str);
