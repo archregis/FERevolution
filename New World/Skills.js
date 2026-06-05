@@ -1543,13 +1543,16 @@ function Imperturbable(attacker, defender, info) {
 // Add 1/2 of unit's str/mag to damage dealth when initiating against an enemy with higher str/mag
 function InferiorityComplex(attacker, defender, info) {
     if (info.whoseSkill == 1 || info.initiating == 0) { return; }
-    if ((attacker.dmgType == "Physical" && attacker.str < defender.str) || (attacker.dmgType == "Magical" && attacker.mag < defender.mag)) {
+    if (attacker.str < defender.str || attacker.mag < defender.mag) {
         attacker.skillMsg += outputSkill("Inferiority Complex");
-        if (attacker.dmgType == "Physical") {
+        if (defender.str > defender.mag) {
             attacker.addDmg += Math.floor(attacker.str / 2);
         }
-        else {
+        else if (defender.str < defender.mag) {
             attacker.addDmg += Math.floor(attacker.mag / 2);
+        }
+        else { // Leniency in case of a tie
+            attacker.addDmg += Math.floor(Math.max(attacker.str, attacker.ag) / 2);
         }
     }
 }
