@@ -1552,7 +1552,7 @@ function InferiorityComplex(attacker, defender, info) {
             attacker.addDmg += Math.floor(attacker.mag / 2);
         }
         else { // Leniency in case of a tie
-            attacker.addDmg += Math.floor(Math.max(attacker.str, attacker.ag) / 2);
+            attacker.addDmg += Math.floor(Math.max(attacker.str, attacker.mag) / 2);
         }
     }
 }
@@ -1749,11 +1749,17 @@ function Mageslayer(attacker, defender, info) {
 
 // When initiating at 1 range with a physical weapon, add 50% mag to damage and 30% mag to hit and crit
 function MagicBlade(attacker, defender, info) {
-    if (info.whoseSkill == 1 || attacker.dmgType == "Magical" || Led.from(attacker.token).to(defender.token).byManhattan().inSquares() != 1) { return; }
-    attacker.skillMsg += outputSkill("Magic Blade");
-    attacker.addDmg += Math.floor(attacker.mag / 2);
-    attacker.hit += Math.floor((attacker.mag / 10 * 3));
-    attacker.crit += Math.floor((attacker.mag / 10 * 3));
+    if (info.whoseSkill == 1 || attacker.dmgType == "Magical") { return; }
+    if (Led.from(attacker.token).to(defender.token).byManhattan().inSquares() == 1) {
+        attacker.skillMsg += outputSkill("Magic Blade");
+        attacker.addDmg += Math.floor(attacker.mag / 2);
+        attacker.hit += Math.floor((attacker.mag / 10 * 3));
+        attacker.crit += Math.floor((attacker.mag / 10 * 3));
+    }
+    else if (info.isSim == 1) {
+        const bonus = Math.floor(attacker.mag / 2) + ' dmg, ' + Math.floor((attacker.mag / 10 * 3)) + ' hit/crit';
+        attacker.skillMsg += outputSkill("Magic Blade", "", bonus);
+    }
 }
 
 // Attacks that miss inflict half damage
@@ -2823,6 +2829,7 @@ function Wrath(attacker, defender, info) {
 function outputSkill(skill, odds, bonus) {
     bonus = bonus == undefined ? "" : bonus;
     if (odds > 0) { return "<li> " + skill + " : " + odds + "% chance " + bonus + "</li>"; }
+    else if (bonus != "") { return "<li> " + skill + " : " + bonus + "</li>"; }
     else { return "<li> " + skill + " is active. </li>"; }
   }
 
