@@ -2224,7 +2224,6 @@ function RightfulKing(attacker, defender, info) {
 
 // Reduces the cost of Combat Arts by 1
 function RightfulLord(attacker, defender, info) {
-    if (info.whoseSkill == 1) { return; }
     if (info.whoseSkill == 0) {
         attacker.skillMsg += outputSkill("Rightful Lord");
         attacker.duraCost -= 1;
