@@ -120,6 +120,7 @@ const priorityThree = {
     "BlackSun": BlackSun,
     "BladeOfHonor": BladeOfHonor,
     "Bloodlust": Bloodlust,
+    "BloodReign": BloodReign,
     "Blowback": Blowback,
     "BoldFighter": BoldFighter,
     "BowRange+1": BowRangePlusOne,
@@ -543,6 +544,17 @@ function BloodlustPlus(attacker, defender, info) {
         defender.skillMsg += outputSkill("Bloodlust+");
         defender.atkSpd += Math.floor((attacker.maxHP - attacker.currHP) / 3);
         defender.avoid += 2 * Math.floor((attacker.maxHP - attacker.currHP) / 3);
+    }
+}
+
+// Mag% chance to add damage dealt as hp. Extra hp stored as overhealth
+function BloodReign(attacker, defender, info) {
+    if (info.whoseSkill == 1) { return; }
+    const odds = Math.floor((attacker.mag + attacker.activationBonus) * defender.activationMult);
+    if (info.isSim == 1 && odds > 0) { attacker.skillMsg += outputSkill("Blood Reign", odds); }
+    else if (randomInteger(100) <= odds) {
+        attacker.skillMsg += outputSkill("Blood Reign");
+        attacker.bloodReign = 1;
     }
 }
 

@@ -171,8 +171,9 @@ function initializeAtkInfo(unitId, info) {
     output.classPower = helpers.getAttrValue(output.unit.id, "classPower");
     output.level = helpers.getAttrValue(output.unit.id, "level");
     output.gender = helpers.getAttr(output.unit.id, "gender").get('current');
-    output.currHP = output.obj.get("bar3_value");
-    output.maxHP = output.obj.get("bar3_max");
+    output.currHP = Number(output.obj.get("bar3_value"));
+    output.maxHP = Number(output.obj.get("bar3_max"));
+    output.tempHP = Number(output.obj.get("bar2_value"));
     output.str = helpers.getAttrValue(output.unit.id, "strTotal");
     output.mag = helpers.getAttrValue(output.unit.id, "magTotal");
     output.skl = helpers.getAttrValue(output.unit.id, "sklTotal");
@@ -216,6 +217,7 @@ function initializeAtkInfo(unitId, info) {
     output.duraCost = 1;
     output.hasDiscipline = 0;
     output.spellEcho = 0;
+    output.bloodReign = 0;
 
     return output;
 }
@@ -243,9 +245,9 @@ function initializeDefInfo(unitId, info) {
     output.currWeak = helpers.getAttr(output.unit.id, 'weakTotal').get('current');
     output.level = helpers.getAttrValue(output.unit.id, "level");
     output.gender = helpers.getAttr(output.unit.id, "gender").get('current');
-    output.currHP = output.obj.get("bar3_value");
-    output.maxHP = output.obj.get("bar3_max");
-    output.tempHP = output.obj.get("bar2_value");
+    output.currHP = Number(output.obj.get("bar3_value"));
+    output.maxHP = Number(output.obj.get("bar3_max"));
+    output.tempHP = Number(output.obj.get("bar2_value"));
     output.str = helpers.getAttrValue(output.unit.id, "strTotal");
     output.mag = helpers.getAttrValue(output.unit.id, "magTotal");
     output.skl = helpers.getAttrValue(output.unit.id, "sklTotal");
@@ -699,6 +701,11 @@ function DoOneCombatStep(selectedId, targetId, info, initiating, artName, isSim)
             }
             if (defender.iaido == 1) {
                 changeHealth(attacker, defender.str);
+            }
+            if (attacker.bloodReign == 1) { // Blood Reign adds temp hp mid-combat
+                var overHealth = Math.max(0, Math.min(defender.currHP, dmgTaken) - (attacker.maxHP - attacker.currHP));
+                changeHealth(attacker, -Math.min(defender.currHP, dmgTaken));
+                attacker.obj.set("bar2_value", Math.min(attacker.maxHP, attacker.tempHP + overHealth));
             }
         }
 
