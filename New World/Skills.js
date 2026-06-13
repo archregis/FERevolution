@@ -255,6 +255,7 @@ const priorityThree = {
     "Tomefaith": Tomefaith,
     "TowerShield": TowerShield,
     "Trample": Trample,
+    "TranscendentSkill": TranscendentSkill,
     "TriangleAdept": TriangleAdept,
     "Vampiric": Vampiric,
     "Vengeance": Vengeance,
@@ -2651,6 +2652,14 @@ function Trample(attacker, defender, info) {
     if (info.whoseSkill == 1 || defender.currWeak.includes("Flying") || defender.currWeak.includes("Cavalry") || defender.currWeak.includes("Dragon")) { return; }
     attacker.skillMsg += outputSkill("Trample");
     attacker.addDmg += 5;
+}
+
+// Increases Mit by difference between your and enemy's Skl
+function TranscendentSkill(attacker, defender, info) {
+    if (info.whoseSkill == 0 || attacker.skl >= defender.skl) { return; }
+    defender.skillMsg += outputSkill("Transcendent Skill");
+    defender.addProt += defender.skl - attacker.skl;
+    defender.addWard += defender.skl - attacker.skl;
 }
 
 // Doubles weapon triangle bonuses
