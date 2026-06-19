@@ -954,8 +954,9 @@ function Demure(attacker, defender, info) {
 // Double attacks occur immediately when below 50% hp
 function Desperation(attacker, defender, info) {
     if (info.whoseSkill == 1 || info.initiating == 0) { return; }
-    if (attacker.currHP >= Math.floor(attacker.maxHP / 2)) { return; }
-    attacker.skillMsg += outputSkill("Desperation");
+    if (attacker.currHP < attacker.maxHP / 2) {
+        attacker.skillMsg += outputSkill("Desperation");
+    }
 }
 
 // Reduces the cost of Combat Arts by 1 and increase skill activation by 20% when below 50% hp
