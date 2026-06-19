@@ -852,30 +852,34 @@ function DeathBlow(attacker, defender, info) {
     attacker.crit += 20;
 }
 
-// +30 avo when below 25% hp
+// +30 avo when at or below 25% hp
 function DefiantAvoid(attacker, defender, info) {
-    if (info.whoseSkill == 0 || defender.currHP * 4 >= defender.maxHP) { return; }
-    defender.skillMsg += outputSkill("Defiant Avoid");
-    defender.avoid += 30;
+    if (info.whoseSkill == 0) { return; }
+    if (defender.currHP <= defender.maxHP / 4) {
+        defender.skillMsg += outputSkill("Defiant Avoid");
+        defender.avoid += 30;
+    }
 }
 
-// +4 def when below 50% hp
+// +4 def when at or below 50% hp
 function DefiantDefense(attacker, defender, info) {
-    if (info.whoseSkill == 0 || defender.currHP * 2 >= defender.maxHP) { return; }
-    defender.skillMsg += outputSkill("Defiant Defense");
-    defender.def += 4;
-    defender.prot += 4;
+    if (info.whoseSkill == 0) { return; }
+    if (defender.currHP <= defender.maxHP / 2) {
+        defender.skillMsg += outputSkill("Defiant Defense");
+        defender.def += 4;
+        defender.prot += 4;
+    }
 }
 
-// +10 lck when below 50% hp
+// +10 lck when at or below 50% hp
 function DefiantLuck(attacker, defender, info) {
-    if (info.whoseSkill == 0 && attacker.currHP * 2 < attacker.maxHP) {
+    if (info.whoseSkill == 0 && attacker.currHP < attacker.maxHP / 2) {
         attacker.skillMsg += outputSkill("Defiant Luck");
         attacker.lck += 10;
         attacker.hit += 5;
         attacker.crit += 5;
     }
-    else if (info.whoseSkill == 1 && defender.currHP * 2 < defender.maxHP) {
+    else if (info.whoseSkill == 1 && defender.currHP < defender.maxHP / 2) {
         defender.skillMsg += outputSkill("Defiant Luck");
         defender.lck += 10;
         defender.avoid += 10;
@@ -883,41 +887,45 @@ function DefiantLuck(attacker, defender, info) {
     }
 }
 
-// +6 mag when below 50% hp
+// +6 mag when at or below 50% hp
 function DefiantMagic(attacker, defender, info) {
-    if (info.whoseSkill == 1 || attacker.currHP * 2 >= attacker.maxHP) { return; }
-    if (attacker.dmgType == "Magical") {
+    if (info.whoseSkill == 1) { return; }
+    if (attacker.currHP < attacker.maxHP / 2) {
         attacker.skillMsg += outputSkill("Defiant Magic");
         attacker.mag += 6;
         attacker.myst += 6;
     }
 }
 
-// +6 res when below 50% hp
+// +6 res when at or below 50% hp
 function DefiantResistance(attacker, defender, info) {
-    if (info.whoseSkill == 0 || defender.currHP * 2 >= defender.maxHP) { return; }
-    defender.skillMsg += outputSkill("Defiant Resistance");
-    defender.res += 6;
-    defender.ward += 6;
+    if (info.whoseSkill == 0) { return; }
+    if (defender.currHP < defender.maxHP / 2) {
+        defender.skillMsg += outputSkill("Defiant Resistance");
+        defender.res += 6;
+        defender.ward += 6;
+    }
 }
 
-// +8 skl when below 50% hp
+// +8 skl when at or below 50% hp
 function DefiantSkill(attacker, defender, info) {
-    if (info.whoseSkill == 1 || attacker.currHP * 2 >= attacker.maxHP) { return; }
-    attacker.skillMsg += outputSkill("Defiant Skill");
-    attacker.skl += 8;
-    attacker.hit += 16;
-    attacker.crit += 8;
+    if (info.whoseSkill == 1) { return; }
+    if (attacker.currHP < attacker.maxHP / 2) {
+        attacker.skillMsg += outputSkill("Defiant Skill");
+        attacker.skl += 8;
+        attacker.hit += 16;
+        attacker.crit += 8;
+    }
 }
 
-// +4 spd when below 50% hp
+// +4 spd when at or below 50% hp
 function DefiantSpeed(attacker, defender, info) {
-    if (info.whoseSkill == 0 && attacker.currHP * 2 < attacker.maxHP) {
+    if (info.whoseSkill == 0 && attacker.currHP < attacker.maxHP / 2) {
         attacker.skillMsg += outputSkill("Defiant Speed");
         attacker.spd += 4;
         attacker.atkSpd += 4
     }
-    else if (info.whoseSkill == 1 && defender.currHP * 2 < defender.maxHP) {
+    else if (info.whoseSkill == 1 && defender.currHP < defender.maxHP / 2) {
         defender.skillMsg += outputSkill("Defiant Speed");
         defender.spd += 4;
         defender.atkSpd += 4;
@@ -925,10 +933,10 @@ function DefiantSpeed(attacker, defender, info) {
     }
 }
 
-// +6 str when below 50% hp
+// +6 str when at or below 50% hp
 function DefiantStrength(attacker, defender, info) {
-    if (info.whoseSkill == 1 || attacker.currHP * 2 >= attacker.maxHP) { return; }
-    if (attacker.dmgType == "Physical") {
+    if (info.whoseSkill == 1) { return; }
+    if (attacker.currHP < attacker.maxHP / 2) {
         attacker.skillMsg += outputSkill("Defiant Strength");
         attacker.str += 6;
         attacker.phys += 6;
@@ -954,7 +962,7 @@ function Demure(attacker, defender, info) {
 // Double attacks occur immediately when below 50% hp
 function Desperation(attacker, defender, info) {
     if (info.whoseSkill == 1 || info.initiating == 0) { return; }
-    if (attacker.currHP < attacker.maxHP / 2) {
+    if (attacker.currHP * 2 < attacker.maxHP) {
         attacker.skillMsg += outputSkill("Desperation");
     }
 }
@@ -3034,7 +3042,7 @@ const skillHandler = {
     // Returns 1 if the attacker should follow-up immediately, 0 otherwise
     CheckDesperation: function(attacker, defender) {
         let belowHalf = 0;
-        if (attacker.currHP < attacker.maxHP / 2) { belowHalf = 1; }
+        if (attacker.currHP * 2 < attacker.maxHP) { belowHalf = 1; }
 
         // Skill checks
         const aSkills = helpers.getAttr(attacker.unit.id, 'activeSkills').get('current').split(',');
