@@ -112,6 +112,7 @@ const priorityThree = {
     "ArcaneBlade": ArcaneBlade,
     "ArcaneCannon": ArcaneCannon,
     "Armsthrift": Armsthrift,
+    "Assassinate": Assassinate,
     "Astra": Astra,
     "Axefaire": Axefaire,
     "Axefaith": Axefaith,
